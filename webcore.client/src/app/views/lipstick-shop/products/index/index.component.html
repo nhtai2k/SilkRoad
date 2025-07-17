@@ -1,0 +1,121 @@
+<h1>Product List</h1>
+<c-accordion class="mb-4">
+  <c-accordion-item #item0="cAccordionItem" [visible]="true">
+    <ng-template cTemplateId="accordionHeaderTemplate">
+      <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
+        Filter:
+      </button>
+    </ng-template>
+    <ng-template cTemplateId="accordionBodyTemplate">
+      <div class="accordion-body">
+        <div class="row">
+          <div class="col-10">
+            <form cForm class="w-100" [formGroup]="filterForm" (ngSubmit)="filter()">
+              <div class="row">
+                <div cFormFloating class="mb-2 col-3">
+                  <label cLabel for="categoryId">Category:</label>
+                  <select class="form-control" formControlName="categoryId" cSelect (change)="changeCategoryId($event)">
+                    <option [value]="-1">All</option>
+                    <option *ngFor="let item of categories" [value]="item.id">{{item.nameEN}}</option>
+                  </select>
+                </div>
+                <div cFormFloating class="mb-2 col-3">
+                  <label cLabel for="subCategoryId">SubCategory:</label>
+                  <select class="form-control" formControlName="subCategoryId" cSelect>
+                    <option [value]="-1">All</option>
+                    <option *ngFor="let item of subCategories" [value]="item.id">{{item.nameEN}}</option>
+                  </select>
+                </div>
+                <div cFormFloating class="mb-2 col-3">
+                  <label cLabel for="brandId">Brand:</label>
+                  <select class="form-control" formControlName="brandId" cSelect>
+                    <option [value]="-1">All</option>
+                    <option *ngFor="let item of brands" [value]="item.id">{{item.name}}</option>
+                  </select>
+                </div>
+                <div cFormFloating class="mb-2 col-3">
+                  <label cLabel for="sizeId">Size:</label>
+                  <select class="form-control" formControlName="sizeId" cSelect>
+                    <option [value]="-1">All</option>
+                    <option *ngFor="let item of sizes" [value]="item.id">{{item.nameEN}}</option>
+                  </select>
+                </div>
+                <div cFormFloating class="mb-2 col-3">
+                  <label cLabel for="colorId">Color:</label>
+                  <select class="form-control" formControlName="colorId" cSelect>
+                    <option [value]="-1">All</option>
+                    <option *ngFor="let item of colors" [value]="item.id">{{item.nameEN}}</option>
+                  </select>
+                </div>
+                <div cFormFloating class="mb-2 col-3">
+                  <label cLabel for="nameEN">NameEN:</label>
+                  <input cInput type="text" formControlName="nameEN" class="form-control" id="nameEN"
+                    placeholder="NameEN">
+                </div>
+                <div cFormFloating class="mb-2 col-3">
+                  <label cLabel for="nameVN">NameVN:</label>
+                  <input cInput type="text" formControlName="nameVN" class="form-control" id="ameVN"
+                    placeholder="NameVN">
+                </div>
+                <div class="mb-2 col-3 d-flex align-items-end">
+                  <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="col-2 ">
+            <div class="justify-content-end d-flex">
+              <button routerLink="./create" class="btn btn-success" i18n="@@create">Create</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </c-accordion-item>
+</c-accordion>
+
+
+<app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
+  (changePageSize)="onPageSizeChange($event)">
+  <thead class="text-nowrap text-truncate">
+    <tr>
+      <th scope="col" i18n="@@thSTT">STT</th>
+      <th scope="col">NameEn</th>
+      <th scope="col">NameVN</th>
+      <th scope="col" i18n="@@thActive">Active</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of data.items; index as i ">
+      <td>{{ (pageInformation.pageIndex *pageInformation.pageSize) + i + 1 - pageInformation.pageSize }}</td>
+      <td>{{ item.nameEN }}</td>
+      <td>{{ item.nameVN }}</td>
+      <td>{{ item.isActive }}</td>
+      <td>
+        <div class="d-flex justify-content-end">
+          <button routerLink="./update/{{item.id}}" class="btn btn-primary me-2">Update</button>
+          <button (click)="deleteData(item.id)" class="btn btn-danger" i18n="@@delete">Delete</button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</app-data-table>
+
+<!--Delete Model-->
+<c-modal backdrop="static" [visible]="visibleDelete" (visibleChange)="handleLiveDeleteChange($event)"
+  id="verticallyCenteredDelete">
+  <c-modal-header>
+    <h5 cModalTitle>Confirmation</h5>
+    <button (click)="toggleLiveDelete()" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <p>Are you sure you want to delete this category?</p>
+  </c-modal-body>
+  <c-modal-footer>
+    <button (click)="toggleLiveDelete()" cButton color="secondary">
+      Close
+    </button>
+    <button cButton color="primary">Confirm</button>
+  </c-modal-footer>
+</c-modal>

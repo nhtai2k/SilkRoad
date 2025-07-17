@@ -1,0 +1,34 @@
+<h1>Question List</h1>
+<div class="d-flex justify-content-between mb-4">
+    <div>
+        <select cFormControl cSelect (change)="onChangeQuestionGroup($event)">
+            <option [value]="-1">Select question group</option>
+            <option *ngFor="let item of questionGroupList" [value]="item.id">{{ item.nameEN }}
+            </option>
+        </select>
+    </div>
+    <button routerLink="./create" class="btn btn-success" i18n="@@create">Create</button>
+</div>
+<app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
+    (changePageSize)="onPageSizeChange($event)">
+    <thead class="text-nowrap text-truncate">
+        <tr>
+            <th scope="col" i18n="@@thSTT">STT</th>
+            <th scope="col">NameEn</th>
+            <th scope="col">NameVN</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of data.items; index as i ">
+            <td>{{ i+1 }}</td>
+            <td>{{ item.nameEN }}</td>
+            <td>{{ item.nameVN }}</td>
+            <td>
+                <div class="d-flex justify-content-end">
+                    <button routerLink="./update/{{item.id}}" class="btn btn-primary me-2">Update</button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</app-data-table>

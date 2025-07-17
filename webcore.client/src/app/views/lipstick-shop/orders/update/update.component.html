@@ -1,0 +1,107 @@
+<h1>Update Order</h1>
+<c-card>
+    <c-card-body>
+        <form cForm [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+            <div class="mb-2 row">
+                 <div class="col-6">
+                    <label cLabel for="paymentMethodId">Select payment method: <span class="text-danger">(*)</span></label>
+                    <select cFormControl formControlName="paymentMethodId" cSelect>
+                        <option value="-1" disabled>Select payment method</option>
+                        <option *ngFor="let item of paymentMethods" [value]="item.value">{{ item.key }}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-6">
+                    <label cLabel for="paymentStatusId">Select payment status: <span class="text-danger">(*)</span></label>
+                    <select cFormControl formControlName="paymentStatusId" cSelect>
+                        <option value="-1" disabled>Select payment status</option>
+                        <option [value]="ePaymentStatus.Pending">Pending</option>
+                        <option [value]="ePaymentStatus.Success">Success</option>
+                    </select>
+                </div>     
+            </div>
+            <div class="mb-2 row">
+                <div class="col-4">
+                    <label cLabel for="fullName">FullName:</label>
+                    <input cFormControl formControlName="fullName" readonly type="text" />
+                </div>
+                <div class="col-4">
+                    <label cLabel for="phoneNumber">PhoneNumber:</label>
+                    <input cFormControl formControlName="phoneNumber" readonly type="text" />
+                </div>
+                <div class="col-4">
+                    <label cLabel for="email">Email:</label>
+                    <input cFormControl formControlName="email" readonly type="text" />
+                </div>
+            </div>
+            <div class="mb-2 row">
+                 <div class="col-4">
+                    <label cLabel for="paymentMethodId">Select province:</label>
+                    <app-select-search-v1 [options]="provinceList" [disabled]="true" [seletedValue]="50"></app-select-search-v1>
+                </div>
+                <div class="col-4">
+                    <label cLabel for="statusId">Select district:</label>
+                    <app-select-search-v1 [options]="districtList" [disabled]="true" [seletedValue]="1"></app-select-search-v1>
+
+                </div>     
+                <div class="col-4">
+                    <label cLabel for="shippingAddress">ShippingAddress:</label>
+                    <input cFormControl formControlName="shippingAddress" readonly type="text" />
+                </div>
+            </div>
+            <c-accordion class="mb-4">
+                <c-accordion-item #item0="cAccordionItem" [visible]="true">
+                    <ng-template cTemplateId="accordionHeaderTemplate">
+                        <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
+                            Product List
+                        </button>
+                    </ng-template>
+                    <ng-template cTemplateId="accordionBodyTemplate">
+                        <table [hover]="true" [responsive]="true" [striped]="true" align="middle" cTable class="mb-0">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>ProductImage</th>
+                                    <th>ProductName</th>
+                                    <th>Price</th>
+                                    <th>Sale Off</th>
+                                    <th>Sale Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of orderDetails; let i = index">
+                                    <td>{{ i + 1 }}</td>
+                                    <td>
+                                        <img [src]="baseUrl + item.avatar" alt="Product Image"
+                                            class="img-fluid" style="width: 50px; height: 50px;">
+                                    </td>
+                                    <td>{{ item.nameVN }}</td>
+                                    <td>{{ item.price | number }} </td>
+                                    <td>{{ item.saleOff }}</td>
+                                    <td>{{ item.saleOff ?  (item.salePrice | number) : (item.price | number)}}</td>
+                                    <td>{{ item.quantity }}</td>          
+                                    <td>{{ item.saleOff ?  
+                                    (item.quantity * (item.salePrice == null ? 0 : item.salePrice) | number) :
+                                     (item.quantity * item.price | number)}} VND</td>            
+                                </tr>
+                                <tr *ngIf="totalQuantity > 0">
+                                    <td colspan="6" class="text-end">Total:</td>
+                                    <td>{{ totalQuantity }}</td>
+                                    <td>{{ amount| number }} VND</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </ng-template>
+                </c-accordion-item>
+            </c-accordion>
+            <div class="d-flex justify-content-end">
+                <button cButton type="submit" type="submit" [disabled]="!orderForm.valid"
+                    i18n="@@submit">Submit</button>
+                <button cButton type="button" routerLink="/lipstick-shop/orders" class="ms-2 btn-info"
+                    i18n="@@backToList">Back to list</button>
+            </div>
+        </form>
+    </c-card-body>
+</c-card>

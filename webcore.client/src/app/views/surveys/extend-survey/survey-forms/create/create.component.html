@@ -1,0 +1,116 @@
+<h1>Create Survey form</h1>
+<c-card>
+    <c-card-body>
+        <form cForm [formGroup]="createForm" (ngSubmit)="onSubmit()">
+            <div class="mb-2 d-flex">
+                <c-form-check class="me-2 d-flex align-items-center">
+                  <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
+                  <label cFormCheckLabel for="isActive" class="me-2" i18n="@@active">Active </label>
+                </c-form-check>
+                <c-form-check class="me-2 d-flex align-items-center">
+                  <input cFormCheckInput formControlName="isPeriodic" id="isPeriodic" class="me-2" type="checkbox" />
+                  <label cFormCheckLabel for="isPeriodic" class="me-2">IsPeriodic </label>
+                </c-form-check>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-6">
+                    <label cLabel for="nameEN">NameEN: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="nameEN" type="text" />
+                    <div *ngIf="nameEN?.invalid && (nameEN?.dirty || nameEN?.touched)" class="text-danger">
+                        <div *ngIf="nameEN?.hasError('required')">
+                            Enter NameEN, please!
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="nameVN" type="text" />
+                    <div *ngIf="nameVN?.invalid && (nameVN?.dirty || nameVN?.touched)" class="text-danger">
+                        <div *ngIf="nameVN?.hasError('required')">
+                            Enter NameVN, please!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-6">
+                    <label cLabel for="titleEN">TitleEN: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="titleEN" type="text" />
+                    <div *ngIf="titleEN?.invalid && (titleEN?.dirty || titleEN?.touched)" class="text-danger">
+                        <div *ngIf="titleEN?.hasError('required')">
+                            Enter TitleEN, please!
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label cLabel for="titleVN">TitleVN: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="titleVN" type="text" />
+                    <div *ngIf="titleVN?.invalid && (titleVN?.dirty || titleVN?.touched)" class="text-danger">
+                        <div *ngIf="titleVN?.hasError('required')">
+                            Enter TitleVN, please!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-6">
+                    <label cLabel for="descriptionEN">DescriptionEN:</label>
+                    <textarea cFormControl formControlName="descriptionEN" rows="3"></textarea>
+                </div>
+                <div class="col-6">
+                    <label cLabel for="descriptionVN">DescriptionVN:</label>
+                    <textarea cFormControl formControlName="descriptionVN" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-6">
+                    <label cLabel for="startDate">StartDate:</label>
+                    <input cFormControl formControlName="startDate" type="datetime-local"/>
+                    <div *ngIf="startDate?.invalid && (startDate?.dirty || startDate?.touched)" class="text-danger">
+                        <div *ngIf="startDate?.hasError('required')">
+                            Enter StartDate, please!
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label cLabel for="endDate">EndDate:</label>
+                    <input cFormControl formControlName="endDate" type="datetime-local"/>
+                    <div *ngIf="endDate?.invalid && (endDate?.dirty || endDate?.touched)" class="text-danger">
+                        <div *ngIf="endDate?.hasError('required')">
+                            Enter EndDate, please!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <c-accordion class="mb-2" *ngFor="let questiongroup of questionGroupList; index as i">
+                <c-accordion-item #item0="cAccordionItem" [visible]="false">
+                    <ng-template cTemplateId="accordionHeaderTemplate">
+                        <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
+                            {{questiongroup.nameVN}}
+                        </button>
+                    </ng-template>
+                    <ng-template cTemplateId="accordionBodyTemplate">
+                        <div class="row px-2 py-1" *ngFor="let question of questiongroup.questions; index as j">
+                            <div class="col-2">
+                                <input cFormControl type="number" [value]="question.priority" (change)="onChangePriority($event, i, j)"/>
+                            </div>
+                            <div class="col-10">
+                                <c-form-check cFormCheckInput class="me-2 d-flex align-items-center">
+                                    <input class="me-2" type="checkbox" [checked]="question.checked" (change)="onCheckQuestion(i, j)" />
+                                    <label cFormCheckLabel for="isActive" class="me-2">{{question.nameVN}}</label>
+                                </c-form-check>
+                            </div>
+                        </div>
+                        <!-- Add more fields as needed -->
+                    </ng-template>
+                </c-accordion-item>
+            </c-accordion>
+            <div class="d-flex justify-content-end">
+                <button cButton type="submit" type="submit" [disabled]="!createForm.valid"
+                    i18n="@@submit">Submit</button>
+                <button cButton type="button" routerLink="/surveys/extend-survey/survey-forms" class="ms-2 btn-info"
+                    i18n="@@backToList">Back to list</button>
+            </div>
+        </form>
+    </c-card-body>
+</c-card>

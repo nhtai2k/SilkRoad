@@ -239,7 +239,7 @@ export enum IconSubset {
   cilCloudDownload = 'cilCloudDownload',
   cilCode = 'cilCode',
   cilCommentSquare = 'cilCommentSquare',
-  cilContrast = 'cilContrast',
+  cilContrast = 'cilContrastś',
   cilCreditCard = 'cilCreditCard',
   cilCursor = 'cilCursor',
   cilDescription = 'cilDescription',

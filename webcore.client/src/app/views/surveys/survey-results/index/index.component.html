@@ -1,0 +1,36 @@
+<h1>Survey result List</h1>
+<div class="d-flex justify-content-between mb-4">
+    <div>
+        <select cFormControl cSelect (change)="onChangeSurveyForm($event)">
+            <option [value]="-1">Select survey form</option>
+            <option *ngFor="let item of surveyFormList" [value]="item.id">{{ item.nameEN }}
+            </option>
+        </select>
+    </div>
+    <!-- <button routerLink="./create" class="btn btn-success" i18n="@@create">Create</button> -->
+</div>
+<app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
+    (changePageSize)="onPageSizeChange($event)">
+    <thead class="text-nowrap text-truncate">
+        <tr>
+            <th scope="col" i18n="@@thSTT">STT</th>
+            <th scope="col">CreatedOn</th>
+            <th scope="col">FullName</th>
+            <th scope="col">PhoneNumber</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of data.items; index as i ">
+            <td>{{ i+1 }}</td>
+            <td>{{ item.createdOn | date : "dd/MM/yyy hh:mm:ss" }}</td>
+            <td>{{ item.fullName }}</td>
+            <td>{{ item.phoneNumber }}</td>
+            <td>
+                <div class="d-flex justify-content-end">
+                    <button routerLink="./update/{{item.id}}" class="btn btn-primary me-2">Details</button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</app-data-table>

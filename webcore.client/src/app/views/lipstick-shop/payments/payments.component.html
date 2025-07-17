@@ -1,0 +1,106 @@
+<h1>Payment List</h1>
+<app-data-table [data]="pageInformation"
+(changePageIndex)="onPageIndexChange($event)" (changePageSize)="onPageSizeChange($event)">
+<thead class="text-nowrap text-truncate">
+  <tr>
+    <th scope="col">STT</th>
+    <th scope="col">PaymentType</th>
+    <th scope="col">Status</th>
+    <th scope="col">Amount</th>
+    <th></th>
+  </tr>
+</thead>
+<tbody>
+  <tr *ngFor="let item of data.items; index as i ">
+        <td>{{ i+1 }}</td>
+        <td>{{ getPaymentTypeName(item.paymentTypeId) }}</td>
+        <td>{{ getPaymentStatusName(item.statusId) }}</td>
+        <td>{{ item.amount | number}} VND</td>
+        <td>
+          <div class="d-flex justify-content-end">
+            <button (click)="updateData(item.id)" class="btn btn-primary me-2">Update</button>
+          </div>
+        </td>
+    </tr>
+</tbody>
+</app-data-table>
+
+<!--Update Model-->
+<c-modal backdrop="static" [visible]="visibleUpdateModal" (visibleChange)="handleLiveUpdateModelChange($event)" id="verticallyCenteredUpdateModal" size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Sepay Information</h5>
+    <button (click)="toggleLiveUpdateModel()" cButtonClose></button>
+  </c-modal-header>
+  <form cForm [formGroup]="updateForm">
+    <c-modal-body>
+      <div class="mb-2 d-flex flex-row">
+        <div>
+          <label for="id" class="me-2">Id: </label>
+          <input formControlName="id" class="me-2 number-control" readonly>
+        </div>
+      </div>
+      <div class="mb-2 row">
+        <div class="col-6">
+          <label cLabel for="gateway">Gateway:</label>
+          <input cFormControl formControlName="gateway" readonly>
+        </div>
+        <div class="col-6">
+          <label cLabel for="transactionDate">Transaction date: </label>
+          <input cFormControl formControlName="transactionDate" readonly>
+        </div>       
+      </div>
+      <div class="mb-2 row">
+        <div class="col-6">
+          <label cLabel for="accountNumber">Account Number:</label>
+          <input cFormControl formControlName="accountNumber" readonly>
+        </div>
+        <div class="col-6">
+          <label cLabel for="code">Code: </label>
+          <input cFormControl formControlName="code" readonly>
+        </div>       
+      </div>
+      <div class="mb-2 row">
+        <div class="col-6">
+          <label cLabel for="content">Content:</label>
+          <input cFormControl formControlName="content">
+        </div>
+        <div class="col-6">
+          <label cLabel for="transferType">TransferType: </label>
+          <input cFormControl formControlName="transferType" readonly>
+        </div>       
+      </div>
+      <div class="mb-2 row">
+        <div class="col-6">
+          <label cLabel for="transferAmount">TransferAmount:</label>
+          <input cFormControl formControlName="transferAmount" readonly>
+        </div>
+        <div class="col-6">
+          <label cLabel for="accumulated">Accumulated: </label>
+          <input cFormControl formControlName="accumulated" readonly>
+        </div>       
+      </div>
+      <div class="mb-2 row">
+        <div class="col-6">
+          <label cLabel for="subAccount">SubAccount:</label>
+          <input cFormControl formControlName="subAccount" readonly>
+        </div>
+        <div class="col-6">
+          <label cLabel for="referenceCode">ReferenceCode: </label>
+          <input cFormControl formControlName="referenceCode" readonly>
+        </div>       
+      </div>
+      <div class="mb-2 row">
+        <div class="col-12">
+          <label cLabel for="description">Description:</label>
+          <textarea cFormControl formControlName="description" rows="3" readonly></textarea>
+        </div>      
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button (click)="toggleLiveUpdateModel()" cButton color="secondary" i18n="@@close">
+        Close
+      </button>
+      <!-- <button cButton type="submit" [disabled]="!updateForm.valid" color="primary">Save</button> -->
+    </c-modal-footer>
+  </form>
+</c-modal>

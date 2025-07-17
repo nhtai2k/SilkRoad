@@ -1,0 +1,264 @@
+<h1>Update Product</h1>
+<c-card>
+    <c-card-body>
+        <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+            <div class="d-flex mb-2">
+                <div class="me-4">
+                    <c-form-check>
+                        <input cFormCheckInput formControlName="isActive" id="isActive" type="checkbox" class="me-2" />
+                        <label cFormCheckLabel for="isActive">Active</label>
+                    </c-form-check>
+                </div>
+                <div class="me-4">
+                    <c-form-check>
+                        <input cFormCheckInput formControlName="saleOff" id="saleOff" type="checkbox"
+                            (change)="onChangeSaleOff($event)" class="me-2" />
+                        <label cFormCheckLabel for="saleOff">Sale Off</label>
+                    </c-form-check>
+                </div>
+                <div class="me-4">
+                    <c-form-check>
+                        <input cFormCheckInput formControlName="inHomePage" id="inHomePage" type="checkbox"
+                            class="me-2" />
+                        <label cFormCheckLabel for="inHomePage">In Homepage</label>
+                    </c-form-check>
+                </div>
+                <div class="me-4">
+                    <c-form-check>
+                        <input cFormCheckInput formControlName="isRecommended" id="isRecommended" type="checkbox"
+                            class="me-2" />
+                        <label cFormCheckLabel for="isRecommended">Recommended</label>
+                    </c-form-check>
+                </div>
+            </div>
+            <div class="mb-2 row" *ngIf="saleOff">
+                <div class="col-3">
+                    <label cLabel for="discountPercent">Discount Percent: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="discountPercent" type="number" />
+                </div>
+                <div class="col-3">
+                    <label cLabel for="salePrice">Sale Price: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="salePrice" type="number" />
+                </div>
+                <div class="col-3">
+                    <label cLabel for="startDiscountDate">Start Discount Date: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="startDiscountDate" type="datetime-local" />
+                </div>
+                <div class="col-3">
+                    <label cLabel for="endDiscountDate">End Discount Date: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="endDiscountDate" type="datetime-local" />
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-6">
+                    <label cLabel for="categoryId">Select Category: <span class="text-danger">(*)</span></label>
+                    <select cFormControl formControlName="categoryId" cSelect (change)="onChangeCategory($event)">
+                        <option value="-1">Select a category</option>
+                        <option *ngFor="let item of categories" [value]="item.id">{{ item.nameEN }}
+                        </option>
+                    </select>
+                    <div *ngIf="categoryId?.invalid && (categoryId?.dirty || categoryId?.touched)" class="text-danger">
+                        <div *ngIf="categoryId?.hasError('min')">
+                            Select category, please!
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label cLabel for="subCategoryId">Select SubCategory: <span class="text-danger">(*)</span></label>
+                    <select cFormControl formControlName="subCategoryId" cSelect>
+                        <option value="-1">Select a subcategory</option>
+                        <option *ngFor="let item of subCategories" [value]="item.id">{{ item.nameEN }}
+                        </option>
+                    </select>
+                    <div *ngIf="subCategoryId?.invalid && (subCategoryId?.dirty || subCategoryId?.touched)"
+                        class="text-danger">
+                        <div *ngIf="subCategoryId?.hasError('min')">
+                            Select sub-category, please!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-6">
+                    <label cLabel for="brandId">Select Brand: <span class="text-danger">(*)</span></label>
+                    <select cFormControl formControlName="brandId" cSelect>
+                        <option value="-1">Select a brand</option>
+                        <option *ngFor="let item of brands" [value]="item.id">{{ item.name }}
+                        </option>
+                    </select>
+                    <div *ngIf="brandId?.invalid && (brandId?.dirty || brandId?.touched)" class="text-danger">
+                        <div *ngIf="brandId?.hasError('min')">
+                            Select brand, please!
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label cLabel for="sizeId">Select size: </label>
+                    <select cFormControl formControlName="sizeId" cSelect>
+                        <option value="-1">Select size</option>
+                        <option *ngFor="let item of sizes" [value]="item.id">{{ item.nameEN }}
+                        </option>
+                    </select>
+                    <div *ngIf="sizeId?.invalid && (sizeId?.dirty || sizeId?.touched)" class="text-danger">
+                        <div *ngIf="sizeId?.hasError('min')">
+                            Select size, please!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-6">
+                    <label cLabel for="colorId">Select color: </label>
+                    <select cFormControl formControlName="colorId" cSelect>
+                        <option value="-1">Select color</option>
+                        <option *ngFor="let item of colors" [value]="item.id">{{ item.nameEN }}
+                        </option>
+                    </select>
+                    <div *ngIf="colorId?.invalid && (colorId?.dirty || colorId?.touched)" class="text-danger">
+                        <div *ngIf="colorId?.hasError('min')">
+                            Select color, please!
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <label cLabel for="price">Price: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="price" type="number" />
+                    <div *ngIf="price?.invalid && (price?.dirty || price?.touched)" class="text-danger">
+                        <div *ngIf="price?.hasError('required')">
+                            Enter price, please!
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <label cLabel for="quantity">Quantity: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="quantity" type="number" />
+                    <div *ngIf="quantity?.invalid && (quantity?.dirty || quantity?.touched)" class="text-danger">
+                        <div *ngIf="quantity?.hasError('required')">
+                            Enter quantity, please!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-6">
+                    <label cLabel for="nameEN">NameEN: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="nameEN" type="text" />
+                    <div *ngIf="nameEN?.invalid && (nameEN?.dirty || nameEN?.touched)" class="text-danger">
+                        <div *ngIf="nameEN?.hasError('required')">
+                            Enter NameEN, please!
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="nameVN" type="text" />
+                    <div *ngIf="nameVN?.invalid && (nameVN?.dirty || nameVN?.touched)" class="text-danger">
+                        <div *ngIf="nameVN?.hasError('required')">
+                            Enter NameVN, please!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-6">
+                    <label cLabel for="descriptionEN">DescriptionEN: <span class="text-danger">(*)</span></label>
+                    <textarea cFormControl formControlName="descriptionEN" rows="3"></textarea>
+                    <div *ngIf="descriptionEN?.invalid && (descriptionEN?.dirty || descriptionEN?.touched)"
+                        class="text-danger">
+                        <div *ngIf="descriptionEN?.hasError('required')">
+                            Enter descriptionEN, please!
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label cLabel for="descriptionVN">DescriptionVN: <span class="text-danger">(*)</span></label>
+                    <textarea cFormControl formControlName="descriptionVN" rows="3"></textarea>
+                    <div *ngIf="descriptionVN?.invalid && (descriptionVN?.dirty || descriptionVN?.touched)"
+                        class="text-danger">
+                        <div *ngIf="descriptionVN?.hasError('required')">
+                            Enter descriptionVN, please!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-6">
+                    <label cLabel for="detailsEN">DetailsEN: <span class="text-danger">(*)</span></label>
+                    <app-ckeditor [initialData]="initialDetailsEN" (result)="composeText($event,'EN')" />
+
+                    <!-- <textarea cFormControl formControlName="contentEN" rows="3"></textarea> -->
+                </div>
+                <div class="col-6">
+                    <label cLabel for="detailsVN">DetailsVN: <span class="text-danger">(*)</span></label>
+                    <app-ckeditor [initialData]="initialDetailsVN" (result)="composeText($event,'VN')" />
+
+                    <!-- <textarea cFormControl formControlName="contentVN" rows="3"></textarea> -->
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-6 col-md-3">
+                    <label cLabel>Upload avatar: <span class="text-danger">(*)</span></label>
+                    <div class="ms-2" (click)="openFileInput('uploadAvatar')">
+                        <svg [cIcon]="icons.cilCloudUpload" width="40" title="Shield Icon"></svg>
+                    </div>
+                    <input class="d-none" id="uploadAvatar" type="file" accept="image/*"
+                        (change)="onChangeUploadImageFile($event,'avatar')" />
+                    <div class="mt-2 reviewImage">
+                        <div *ngIf="reviewUploadAvatar"
+                            class="d-flex align-items-center imageReview">
+                            <img [src]="reviewUploadAvatar" alt="Review Image" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <label cLabel>Upload backgound: <span class="text-danger">(*)</span></label>
+                    <div class="ms-2" (click)="openFileInput('uploadBackgound')">
+                        <svg [cIcon]="icons.cilCloudUpload" width="40" title="Shield Icon"></svg>
+                    </div>
+                    <input class="d-none" id="uploadBackgound" type="file" accept="image/*"
+                        (change)="onChangeUploadImageFile($event,'background')" />
+                    <div class="mt-2 reviewImage">
+                        <div *ngIf="reviewUploadBackGroundImage"
+                            class="d-flex align-items-center imageReview">
+                            <img [src]="reviewUploadBackGroundImage" alt="Review Image" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label cLabel>Upload list image: <span class="text-danger">(*)</span></label>
+                    <div class="ms-2" (click)="openFileInput('uploadImages')">
+                        <svg [cIcon]="icons.cilCloudUpload" width="40" title="Shield Icon"></svg>
+                    </div>
+                    <input class="d-none" id="uploadImages" type="file" multiple accept="image/*"
+                        (change)="onChangeUploadImageFiles($event)" />
+                    <div class="mt-2 reviewImage d-flex">
+                        <!-- <div (click)="openFileInput('uploadImages')" class="me-2 d-flex justify-content-center align-items-center">
+                            <svg [cIcon]="icons.cilCloudUpload" width="140" title="Shield Icon"></svg>
+                        </div> -->
+                        <div class="imageList">
+                            <div *ngFor="let imageSrc of imageSrcs; index as i">
+                                <div class="imageDemo">
+                                    <img [src]="imageSrc" alt="image" />
+                                    <div class="iconRemove" (click)="removeImageItem(i)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                            viewBox="0 0 18 18" fill="none">
+                                            <path
+                                                d="M8.99998 7.11465L15.6 0.514648L17.4853 2.39998L10.8853 8.99998L17.4853 15.6L15.6 17.4853L8.99998 10.8853L2.39998 17.4853L0.514648 15.6L7.11465 8.99998L0.514648 2.39998L2.39998 0.514648L8.99998 7.11465Z"
+                                                fill="#09121F" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button cButton type="submit" type="submit" [disabled]="!updateForm.valid"
+                    i18n="@@submit">Submit</button>
+                <button cButton type="button" routerLink="/lipstick-shop/products" class="ms-2 btn-info"
+                    i18n="@@backToList">Back to list</button>
+            </div>
+        </form>
+    </c-card-body>
+</c-card>

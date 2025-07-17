@@ -1,0 +1,41 @@
+<h1>Member List</h1>
+<div class="d-flex justify-content-between my-2">
+    <form cForm class="w-100" [formGroup]="filterForm" (ngSubmit)="filter()">
+        <div class="d-flex align-items-center">
+            <div class="me-2">
+                <input cInput type="text" formControlName="phoneNumber" class="form-control" id="phoneNumber"
+                    placeholder="PhoneNumber" autocomplete="off">
+            </div>
+            <div class="me-2">
+                <input cInput type="text" formControlName="email" class="form-control" id="email" 
+                placeholder="Email" autocomplete="off">
+            </div>
+            <button type="submit" class="btn btn-primary me-2">Search</button>
+        </div>
+    </form>
+</div>
+<app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
+    (changePageSize)="onPageSizeChange($event)">
+    <thead class="text-nowrap text-truncate">
+        <tr>
+            <th scope="col" i18n="@@thSTT">STT</th>
+            <th scope="col">FullName</th>
+            <th scope="col">PhoneNumber</th>
+            <th scope="col">Email</th>
+            <!-- <th></th> -->
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of data.items; index as i ">
+            <td>{{ i+1 }}</td>
+            <td>{{ item.fullName }}</td>
+            <td>{{ item.phoneNumber }}</td>
+            <td>{{ item.email }}</td>
+            <!-- <td>
+                <div class="d-flex justify-content-end">
+                    <button (click)="updateData(item.id)" class="btn btn-primary me-2">Update</button>
+                </div>
+            </td> -->
+        </tr>
+    </tbody>
+</app-data-table>

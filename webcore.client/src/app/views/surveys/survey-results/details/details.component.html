@@ -1,0 +1,50 @@
+<h1>Survey details</h1>
+<c-card>
+    <c-card-body>
+        <form cForm [formGroup]="formGroup">
+            <div class="mb-2 row">
+                <div class="col-4">
+                    <label cLabel for="fullName">FullName: </label>
+                    <input cFormControl formControlName="fullName" type="text" [disabled]="true" readonly />
+                </div>
+                <div class="col-4">
+                    <label cLabel for="phoneNumber">PhoneNumber: </label>
+                    <input cFormControl formControlName="phoneNumber" type="text" [disabled]="true" readonly />
+                </div>
+                <div class="col-4">
+                    <label cLabel for="email">Email: </label>
+                    <input cFormControl formControlName="email" type="text" [disabled]="true" readonly />
+                </div>
+            </div>
+            <div *ngFor="let questiongroup of questionGroupUIs; index as i">
+                <span>{{questiongroup.questionGroupName}}</span>
+                <div class="mb-2" *ngFor="let question of questiongroup.questionUIs; index as j">
+                    <span>Question {{j+1}}. {{question.questionName}}</span>
+                    <div *ngIf="question.questionTypeID == EQuestionType.Option">
+                        <ng-container *ngFor="let answer of question.answers; index as k">
+                            <input class="me-1" type="radio" [checked]="answer.checked" disabled readonly />
+                            <span class="me-4">{{answer.name }}</span>
+                        </ng-container>
+                    </div>
+                    <div *ngIf="question.questionTypeID == EQuestionType.Open">
+                        <textarea cFormControl [value]="question.answerOfCustomer" rows="3"></textarea>
+                    </div>
+                    <div *ngIf="question.questionTypeID == EQuestionType.OptionOpen">
+                        <ng-container *ngFor="let answer of question.answers; index as k">
+                            <input class="me-1" type="radio" [checked]="answer.checked" disabled readonly />
+                            <span class="me-4">{{answer.name }}</span>
+                        </ng-container>
+                        <textarea cFormControl [value]="question.answerOfCustomer" rows="3"></textarea>
+                    </div>
+                    <div *ngIf="question.questionTypeID == EQuestionType.Rating">                        
+                        <app-rating [rating]="question.rating" [maxStars]="5" [readOnly]="true"></app-rating>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button cButton type="button" routerLink="/survey-results" class="ms-2 btn-info"
+                    i18n="@@backToList">Back to list</button>
+            </div>
+        </form>
+    </c-card-body>
+</c-card>

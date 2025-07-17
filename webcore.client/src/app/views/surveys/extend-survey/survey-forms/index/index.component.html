@@ -1,0 +1,29 @@
+<h1>Survey Form List</h1>
+<div class="d-flex justify-content-end mb-4">
+    <button routerLink="./create" class="btn btn-success" i18n="@@create">Create</button>
+</div>
+<app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
+    (changePageSize)="onPageSizeChange($event)">
+    <thead class="text-nowrap text-truncate">
+        <tr>
+            <th scope="col" i18n="@@thSTT">STT</th>
+            <th scope="col">NameEN</th>
+            <th scope="col">NameVN</th>
+            <th scope="col">Active</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of data.items; index as i ">
+            <td>{{ i+1 }}</td>
+            <td>{{ item.nameEN }}</td>
+            <td>{{ item.nameVN }}</td>
+            <td>{{ item.isActive }}</td>
+            <td>
+                <div class="d-flex justify-content-end">
+                    <button routerLink="./update/{{item.id}}" class="btn btn-primary me-2">Update</button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</app-data-table>

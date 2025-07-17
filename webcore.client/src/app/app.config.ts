@@ -25,8 +25,8 @@ export const appConfig: ApplicationConfig = {
         anchorScrolling: 'enabled'
       }),
       withEnabledBlockingInitialNavigation(),
-      withViewTransitions(),
-      withHashLocation()
+      withViewTransitions()
+      //withHashLocation()
     ),
     provideHttpClient(),
     importProvidersFrom(SidebarModule, DropdownModule),

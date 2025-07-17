@@ -1,0 +1,237 @@
+<h1>Create Order</h1>
+<c-card>
+    <c-card-body>
+        <form cForm [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+            <div class="mb-2 row">
+                 <div class="col-6">
+                    <label cLabel for="paymentMethodId">Select payment method: <span class="text-danger">(*)</span></label>
+                    <select cFormControl formControlName="paymentMethodId" cSelect>
+                        <option value="-1" disabled>Select payment method</option>
+                        <option *ngFor="let item of paymentMethods" [value]="item.value">{{ item.key }}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-6">
+                    <label cLabel for="paymentStatusId">Select payment status: <span class="text-danger">(*)</span></label>
+                    <select cFormControl formControlName="paymentStatusId" cSelect>
+                        <option value="-1" disabled>Select payment status</option>
+                        <option [value]="ePaymentStatus.Pending">Pending</option>
+                        <option [value]="ePaymentStatus.Success">Success</option>
+                    </select>
+                </div>     
+            </div>
+            <div class="mb-2 row">
+                <div class="col-4">
+                    <label cLabel for="fullName">FullName: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="fullName" type="text" />
+                </div>
+                <div class="col-4">
+                    <label cLabel for="phoneNumber">PhoneNumber: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="phoneNumber" type="text" />
+                </div>
+                <div class="col-4">
+                    <label cLabel for="email">Email:</label>
+                    <input cFormControl formControlName="email" type="text" />
+                </div>
+            </div>
+            <div class="mb-2 row">
+                 <div class="col-4">
+                    <label cLabel for="paymentMethodId">Select province: <span class="text-danger">(*)</span></label>
+                    <!-- <app-select-search [options]="provinceList" (onChangeValue)="onProvinceChange($event)"></app-select-search> -->
+                    <app-select-search-v1 [options]="provinceList" (onChangeValue)="onProvinceChange($event)"></app-select-search-v1>
+                </div>
+                <div class="col-4">
+                    <label cLabel for="statusId">Select district: <span class="text-danger">(*)</span></label>
+                    <!-- <app-select-search [options]="districtList" (onChangeValue)="onDistrictChange($event)"></app-select-search> -->
+                    <app-select-search-v1 [options]="districtList" (onChangeValue)="onDistrictChange($event)"></app-select-search-v1>
+
+                </div>     
+                <div class="col-4">
+                    <label cLabel for="shippingAddress">ShippingAddress: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="shippingAddress" type="text" />
+                </div>
+            </div>
+            <div class="d-flex justify-content-end mb-2">
+                <button cButton type="button" class="btn-success me-2" (click)="toggleLiveCreateModel()">Add Item</button>
+            </div>
+            <c-accordion class="mb-4">
+                <c-accordion-item #item0="cAccordionItem" [visible]="true">
+                    <ng-template cTemplateId="accordionHeaderTemplate">
+                        <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
+                            Product List
+                        </button>
+                    </ng-template>
+                    <ng-template cTemplateId="accordionBodyTemplate">
+                        <table [hover]="true" [responsive]="true" [striped]="true" align="middle" cTable class="mb-0">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>ProductImage</th>
+                                    <th>ProductName</th>
+                                    <th>Price</th>
+                                    <th>Sale Off</th>
+                                    <th>Sale Price</th>
+                                    <th>Quantity</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of orderDetails; let i = index">
+                                    <td>{{ i + 1 }}</td>
+                                    <td>
+                                        <img [src]="baseUrl + item.avatar" alt="Product Image"
+                                            class="img-fluid" style="width: 50px; height: 50px;">
+                                    </td>
+                                    <td>{{ item.nameVN }}</td>
+                                    <td>{{ item.price | number }} </td>
+                                    <td>{{ item.saleOff }}</td>
+                                    <td>{{ item.saleOff ?  (item.salePrice | number) : (item.price | number)}}</td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td >
+                                        <div class="d-flex justify-content-center">
+                                            <button cButton type="button" (click)="updateData(i)"
+                                                class="btn btn-warning me-2">Update</button>
+                                            <button cButton type="button" (click)="deleteData(i)"
+                                                class="btn btn-danger">Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="totalQuantity > 0">
+                                    <td colspan="6" class="text-end">Total:</td>
+                                    <td>{{ totalQuantity }}</td>
+                                    <td>{{ amount| number }} VND</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </ng-template>
+                </c-accordion-item>
+            </c-accordion>
+            <div class="d-flex justify-content-end">
+                <button cButton type="submit" type="submit" [disabled]="!orderForm.valid"
+                    i18n="@@submit">Submit</button>
+                <button cButton type="button" routerLink="/lipstick-shop/orders" class="ms-2 btn-info"
+                    i18n="@@backToList">Back to list</button>
+            </div>
+        </form>
+    </c-card-body>
+</c-card>
+<!-- Add Product Modal -->
+<c-modal backdrop="static" [visible]="visibleCreateModal" (visibleChange)="handleLiveCreateModelChange($event)"
+    id="verticallyCenteredCreateModal" size="lg">
+    <c-modal-header>
+        <h5 cModalTitle>Add Product</h5>
+        <button (click)="toggleLiveCreateModel()" cButtonClose></button>
+    </c-modal-header>
+    <form cForm [formGroup]="addProductForm" (ngSubmit)="onSubmitCreateForm()">
+        <c-modal-body>
+            <div class="mb-2 row">
+                <div class="col-6 searchBox">
+                    <label cLabel class="me-2">ProductName: <span class="text-danger">(*)</span> </label>
+                    <input cFormControl id="searchProduct"  (input)="onSearchCreateForm($event)"
+                        placeholder="Search product by name" />
+                    <div id="searchResultCreateForm" class="d-none">
+                        <ng-container *ngFor="let product of searchResults">
+                            <div class="mb-1">
+                                <div class="suggest" (click)="onSelectProductCreateForm(product)">
+                                    <img src="{{baseUrl + product.avatar}}" />
+                                    <span>{{product.nameVN}}</span>
+                                </div>
+                            </div>
+                        </ng-container>                  
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-6" *ngIf="addProductForm.value.avatar">
+                    <img style="width: 150px; height: auto; border: 1px solid #c1c1c1;" src="{{baseUrl +addProductForm.value.avatar}}" />
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-12">
+                    <label cLabel for="nameVN" lass="me-2">NameVN:</label>
+                    <input cFormControl readonly formControlName="nameVN" >
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-4">
+                    <label cLabel for="price" class="me-2">Price: (vnd)</label>
+                    <input cFormControl readonly type="text" formControlName="price">
+                </div>
+                <div class="col-4" *ngIf="addProductForm.value.saleOff">
+                    <label cLabel for="salePrice" class="me-2">Sale Price: (vnd)</label>
+                    <input cFormControl readonly type="text" formControlName="salePrice">
+                </div>
+                <div class="col-4">
+                    <label cLabel for="quantity">Quantity: <span class="text-danger">(*)</span></label>
+                    <input type="number" cFormControl formControlName="quantity">
+                </div>
+            </div>
+        </c-modal-body>
+        <c-modal-footer>
+            <button (click)="toggleLiveCreateModel()" cButton color="secondary" i18n="@@close">
+                Close
+            </button>
+            <button cButton type="submit" [disabled]="!addProductForm.valid" color="primary">Add</button>
+        </c-modal-footer>
+    </form>
+</c-modal>
+<!--Update Product Model-->
+<c-modal backdrop="static" [visible]="visibleUpdateModal" (visibleChange)="handleLiveUpdateModelChange($event)"
+    id="verticallyCenteredUpdateModal" size="lg">
+    <c-modal-header>
+        <h5 cModalTitle>Update Product</h5>
+        <button (click)="toggleLiveUpdateModel()" cButtonClose></button>
+    </c-modal-header>
+    <form cForm [formGroup]="updateProductForm" (ngSubmit)="onSubmitUpdateForm()">
+        <c-modal-body>
+             <div class="mb-2 row">
+                <div class="col-6" *ngIf="updateProductForm.value.avatar">
+                    <img style="width: 150px; height: auto; border: 1px solid #c1c1c1;" src="{{baseUrl +updateProductForm.value.avatar}}" />
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-12">
+                    <label cLabel for="nameVN" lass="me-2">NameVN:</label>
+                    <input cFormControl readonly formControlName="nameVN" >
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-4">
+                    <label cLabel for="price" class="me-2">Price: (vnd)</label>
+                    <input cFormControl readonly type="text" formControlName="price">
+                </div>
+                <div class="col-4" *ngIf="updateProductForm.value.saleOff">
+                    <label cLabel for="salePrice" class="me-2">Sale Price: (vnd)</label>
+                    <input cFormControl readonly type="text" formControlName="salePrice">
+                </div>
+                <div class="col-4">
+                    <label cLabel for="quantity">Quantity: <span class="text-danger">(*)</span></label>
+                    <input cFormControl type="number" formControlName="quantity">
+                </div>
+            </div>
+        </c-modal-body>
+        <c-modal-footer>
+            <button (click)="toggleLiveUpdateModel()" cButton color="secondary" i18n="@@close">
+                Close
+            </button>
+            <button cButton type="submit" [disabled]="!updateProductForm.valid" color="primary">Save</button>
+        </c-modal-footer>
+    </form>
+</c-modal>
+<!--Delete Product Model-->
+<c-modal backdrop="static" [visible]="visibleDelete" (visibleChange)="handleLiveDeleteChange($event)"
+    id="verticallyCenteredDelete">
+    <c-modal-header>
+        <h5 cModalTitle>Confirmation</h5>
+        <button (click)="toggleLiveDelete()" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+        <p>Are you sure you want to delete this category?</p>
+    </c-modal-body>
+    <c-modal-footer>
+        <button (click)="toggleLiveDelete()" cButton color="secondary">
+            Close
+        </button>
+        <button cButton color="primary" (click)="deleteDataConfirm()">Confirm</button>
+    </c-modal-footer>
+</c-modal>

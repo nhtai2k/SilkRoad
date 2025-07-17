@@ -1,0 +1,254 @@
+<h1>Update Question</h1>
+<c-card>
+    <c-card-body>
+        <form cForm [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+            <div class="mb-2 row">
+                <div class="col-6">
+                    <label cLabel for="chartLabel">ChartLabel: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="chartLabel" type="text" />
+                    <div *ngIf="chartLabel?.invalid && (chartLabel?.dirty || chartLabel?.touched)" class="text-danger">
+                        <div *ngIf="chartLabel?.hasError('required')">
+                            Enter chart label, please!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-6">
+                    <label cLabel for="questionTypeId">Select Question type: <span
+                            class="text-danger">(*)</span></label>
+                    <select cFormControl formControlName="questionTypeId" cSelect>
+                        <option [value]="-1">Select a question type</option>
+                        <option *ngFor="let item of questionTypeList" [value]="item.id">{{ item.name }}
+                        </option>
+                    </select>
+                    <div *ngIf="questionTypeId?.invalid && (questionTypeId?.dirty || questionTypeId?.touched)"
+                        class="text-danger">
+                        <div *ngIf="questionTypeId?.hasError('min')">
+                            Select question type, please!
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label cLabel for="questionGroupId">Select Question group: </label>
+                    <select cFormControl formControlName="questionGroupId" cSelect>
+                        <option [value]="-1">Select question group</option>
+                        <option *ngFor="let item of questionGroupList" [value]="item.id">{{ item.nameEN }}
+                        </option>
+                    </select>
+                    <div *ngIf="questionGroupId?.invalid && (questionGroupId?.dirty || questionGroupId?.touched)"
+                        class="text-danger">
+                        <div *ngIf="questionGroupId?.hasError('min')">
+                            Select question group, please!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-6">
+                    <label cLabel for="nameEN">NameEN: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="nameEN" type="text" />
+                    <div *ngIf="nameEN?.invalid && (nameEN?.dirty || nameEN?.touched)" class="text-danger">
+                        <div *ngIf="nameEN?.hasError('required')">
+                            Enter NameEN, please!
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="nameVN" type="text" />
+                    <div *ngIf="nameVN?.invalid && (nameVN?.dirty || nameVN?.touched)" class="text-danger">
+                        <div *ngIf="nameVN?.hasError('required')">
+                            Enter NameVN, please!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-12">
+                    <label cLabel for="description">Description:</label>
+                    <textarea cFormControl formControlName="description" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end mb-2">
+                <button (click)="toggleLiveCreateModel()" cButton type="button" class="ms-2 btn-info">Add
+                    Answer</button>
+            </div>
+            <c-accordion class="mb-4">
+                <c-accordion-item #item0="cAccordionItem" [visible]="true">
+                    <ng-template cTemplateId="accordionHeaderTemplate">
+                        <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
+                            Answer List
+                        </button>
+                    </ng-template>
+                    <ng-template cTemplateId="accordionBodyTemplate">
+                        <table [hover]="true" [responsive]="true" [striped]="true" align="middle" cTable class="mb-0">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>NameEN</th>
+                                    <th>NameVN</th>
+                                    <th>Point</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of predefinedAnswerList; let i = index">
+                                    <td>{{ i + 1 }}</td>
+                                    <td>{{ item.nameEN }}</td>
+                                    <td>{{ item.nameVN }}</td>
+                                    <td>{{ item.point }}</td>
+                                    <td class="d-flex justify-content-center">
+                                        <button cButton type="button" (click)="updateData(i)"
+                                            class="btn btn-warning me-2">Update</button>
+                                        <button cButton type="button" (click)="deleteData(i)"
+                                            class="btn btn-danger">Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </ng-template>
+                </c-accordion-item>
+            </c-accordion>
+            <div class="d-flex justify-content-end">
+                <button cButton type="submit" type="submit" [disabled]="!createForm.valid"
+                    i18n="@@submit">Submit</button>
+                <button cButton type="button" routerLink="/surveys/extend-survey/questions" class="ms-2 btn-info"
+                    i18n="@@backToList">Back to list</button>
+            </div>
+        </form>
+    </c-card-body>
+</c-card>
+<!-- Create Modal -->
+<c-modal backdrop="static" [visible]="visibleCreateModal" (visibleChange)="handleLiveCreateModelChange($event)"
+    id="verticallyCenteredCreateModal" size="lg">
+    <c-modal-header>
+        <h5 cModalTitle>Create Answer</h5>
+        <button (click)="toggleLiveCreateModel()" cButtonClose></button>
+    </c-modal-header>
+    <form cForm [formGroup]="createForm" (ngSubmit)="onSubmitCreateForm()">
+        <c-modal-body>
+            <div class="mb-2 row">
+                <div class="col-6">
+                    <label for="point" class="me-2">Point: <span class="text-danger">(*)</span> </label>
+                    <input formControlName="point" type="number" class="me-2 number-control">
+                    <div *ngIf="pointCreateForm?.invalid && (pointCreateForm?.dirty || pointCreateForm?.touched)"
+                        class="text-danger">
+                        <div *ngIf="pointCreateForm?.hasError('min') || pointCreateForm?.hasError('max')">
+                            Point must be between 1 and 9999.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-6">
+                    <label cLabel for="nameEN" class="me-2">NameEN: <span class="text-danger">(*)</span> </label>
+                    <input cFormControl formControlName="nameEN">
+                    <div *ngIf="nameENCreateForm?.invalid && (nameENCreateForm?.dirty || nameENCreateForm?.touched)"
+                        class="text-danger">
+                        <div *ngIf="nameENCreateForm?.hasError('required')">
+                            NameEN is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="nameVN">
+                    <div *ngIf="nameVNCreateForm?.invalid && (nameVNCreateForm?.dirty || nameVNCreateForm?.touched)"
+                        class="text-danger">
+                        <div *ngIf="nameVNCreateForm?.hasError('required')">
+                            NameVN is required.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-12">
+                    <label cLabel for="description" class="me-2">Description: </label>
+                    <textarea cFormControl formControlName="description" rows="3"></textarea>
+                </div>
+            </div>
+        </c-modal-body>
+        <c-modal-footer>
+            <button (click)="toggleLiveCreateModel()" cButton color="secondary" i18n="@@close">
+                Close
+            </button>
+            <button cButton type="submit" [disabled]="!createForm.valid" color="primary">Save</button>
+        </c-modal-footer>
+    </form>
+</c-modal>
+<!--Update Model-->
+<c-modal backdrop="static" [visible]="visibleUpdateModal" (visibleChange)="handleLiveUpdateModelChange($event)"
+    id="verticallyCenteredUpdateModal" size="lg">
+    <c-modal-header>
+        <h5 cModalTitle>Update Answer</h5>
+        <button (click)="toggleLiveUpdateModel()" cButtonClose></button>
+    </c-modal-header>
+    <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmitUpdateForm()">
+        <c-modal-body>
+            <div class="mb-2 d-flex flex-row">
+                <div>
+                    <label for="point" class="me-2">Point: <span class="text-danger">(*)</span> </label>
+                    <input formControlName="point" type="number" class="me-2 number-control">
+                    <div *ngIf="pointUpdateForm?.invalid && (pointUpdateForm?.dirty || pointUpdateForm?.touched)"
+                        class="text-danger">
+                        <div *ngIf="pointUpdateForm?.hasError('min') || pointUpdateForm?.hasError('max')">
+                            point must be between 1 and 9999.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-6">
+                    <label cLabel for="nameEN" class="me-2">NameEN: <span class="text-danger">(*)</span> </label>
+                    <input cFormControl formControlName="nameEN">
+                    <div *ngIf="nameENUpdateForm?.invalid && (nameENUpdateForm?.dirty || nameENUpdateForm?.touched)"
+                        class="text-danger">
+                        <div *ngIf="nameENUpdateForm?.hasError('required')">
+                            NameEN is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="nameVN">
+                    <div *ngIf="nameVNUpdateForm?.invalid && (nameVNUpdateForm?.dirty || nameVNUpdateForm?.touched)"
+                        class="text-danger">
+                        <div *ngIf="nameVNUpdateForm?.hasError('required')">
+                            NameVN is required.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-12">
+                    <label cLabel for="description" class="me-2">Description: </label>
+                    <textarea cFormControl formControlName="description" rows="3"></textarea>
+                </div>
+            </div>
+        </c-modal-body>
+        <c-modal-footer>
+            <button (click)="toggleLiveUpdateModel()" cButton color="secondary" i18n="@@close">
+                Close
+            </button>
+            <button cButton type="submit" [disabled]="!updateForm.valid" color="primary">Save</button>
+        </c-modal-footer>
+    </form>
+</c-modal>
+<!--Delete Model-->
+<c-modal backdrop="static" [visible]="visibleDelete" (visibleChange)="handleLiveDeleteChange($event)"
+    id="verticallyCenteredDelete">
+    <c-modal-header>
+        <h5 cModalTitle>Confirmation</h5>
+        <button (click)="toggleLiveDelete()" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+        <p>Are you sure you want to delete this category?</p>
+    </c-modal-body>
+    <c-modal-footer>
+        <button (click)="toggleLiveDelete()" cButton color="secondary">
+            Close
+        </button>
+        <button cButton color="primary" (click)="deleteDataConfirm()">Confirm</button>
+    </c-modal-footer>
+</c-modal>
