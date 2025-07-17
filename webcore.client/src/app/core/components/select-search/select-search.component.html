@@ -1,0 +1,15 @@
+<div>
+    <input type="text" cFormControl
+            [placeholder]="placeholder"
+            [formControl]="myControl"
+            [matAutocomplete]="auto"
+            [attr.readonly]="options && options.length > 0 ? null : true"
+            class="{{options && options.length > 0 ? '' : 'readonly'}}"
+            >
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onOptionSelected($event)">
+        @for (option of filteredOptions | async; track option) {
+        <mat-option [value]="option">{{option.name}}</mat-option>
+        }
+    </mat-autocomplete>
+</div>
+
