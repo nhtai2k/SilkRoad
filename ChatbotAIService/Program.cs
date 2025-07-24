@@ -13,12 +13,14 @@ builder.Services.AddSignalR();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", builder => builder
-        .WithOrigins("http://localhost:5026", "http://localhost:59924")
+        .WithOrigins("http://localhost:4200", "http://localhost:59924")
         .AllowAnyMethod()
         .AllowAnyHeader()
         .AllowCredentials());
 });
 builder.Services.AddScoped<ChatService>();
+builder.Services.AddScoped<BeeService>();
+builder.Services.AddSingleton<PromptService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

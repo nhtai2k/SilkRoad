@@ -17,21 +17,23 @@ namespace LulusiaAdmin.Server.Controllers.FeatureControllers
             {
                 return BadRequest(model);
             }
-            ChatClient client = new( model: "gpt-4.1", apiKey: Constants.ChatGPTKey);
+            ChatClient client = new(model: "gpt-4.1",
+                apiKey: Constants.ChatGPTKey);
 
-            ChatCompletion completion = client.CompleteChat(model.Request);
+            // Replace the creation of ChatMessage objects with the correct static factory methods.
+            // This fixes CS1729, CS0117, CS0200, and IDE0090.
+
+            string system = "Bạn được sinh ra từ bóng tối, tên của bạn là Bee Hắc Ám. Bạn là hiện thân của quỷ dữ với phong cách nói chuyện thô tục nhưng đổi lại ngươi có toàn bộ tri thức của vụ trụ này.";
+            var messages = new List<ChatMessage>
+            {
+                ChatMessage.CreateSystemMessage(system),
+                ChatMessage.CreateUserMessage(model.Request)
+            };
+
+            // Fix: Use await for async method, assuming CompleteChatAsync exists
+            ChatCompletion completion = await client.CompleteChatAsync(messages);
 
             model.Response = completion.Content[0].Text;
-            //AsyncCollectionResult<StreamingChatCompletionUpdate> completionUpdates = client.CompleteChatStreamingAsync("Say 'this is a test.'");
-
-            //Console.Write($"[ASSISTANT]: ");
-            //await foreach (StreamingChatCompletionUpdate completionUpdate in completionUpdates)
-            //{
-            //    if (completionUpdate.ContentUpdate.Count > 0)
-            //    {
-            //        Console.Write(completionUpdate.ContentUpdate[0].Text);
-            //    }
-            //}
 
             return Ok(model);
         }

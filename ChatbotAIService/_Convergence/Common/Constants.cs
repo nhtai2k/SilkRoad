@@ -2,6 +2,6 @@
 {
     public static class Constants
     {
-        public static string ChatGPTKey = "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";
+        public const string ChatGPTKey = "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";
     }
 }
