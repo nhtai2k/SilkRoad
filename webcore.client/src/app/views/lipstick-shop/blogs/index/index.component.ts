@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -10,12 +10,14 @@ import { PageInformation, Pagination } from '@models/pagination.model';
 import { BlogService } from '@services/lipstick-shop-services/blog.service';
 import { TopicService } from '@services/lipstick-shop-services/topic.service';
 import { DataTableComponent } from "@components/data-table/data-table.component";
+import { cilPlus, cilTrash, cilPen } from '@coreui/icons';
+import { IconDirective } from '@coreui/icons-angular';
 
 @Component({
   selector: 'app-index',
-  imports: [ ModalBodyComponent, NgFor, RouterLink,
+  imports: [ ModalBodyComponent, RouterLink,CommonModule, IconDirective,
     ModalComponent, ButtonDirective, ReactiveFormsModule, FormSelectDirective,
-    ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, NgIf, DataTableComponent],
+    ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, DataTableComponent],
   templateUrl: './index.component.html',
   styleUrl: './index.component.scss'
 })
@@ -28,6 +30,8 @@ export class IndexComponent implements OnInit {
   topicList: TopicViewModel[] = [];
   data: Pagination<BlogViewModel> = new Pagination<BlogViewModel>();
   baseUrl:string = baseUrl;
+  icons: any = { cilPlus, cilTrash, cilPen };
+
 
 
   constructor(private topicService : TopicService, private blogService : BlogService) {}

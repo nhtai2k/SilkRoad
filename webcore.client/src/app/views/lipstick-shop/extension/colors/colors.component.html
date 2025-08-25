@@ -1,16 +1,20 @@
 <h1>Color List</h1>
 <div class="d-flex justify-content-end mb-2">
-  <button (click)="toggleLiveTrashModal()" class="btn btn-warning me-2"><svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Trash Icon"></svg> </button>
-  <button (click)="toggleLiveCreateModel()" class="btn btn-success" ><svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg> </button>
+  <button (click)="toggleLiveTrashModal()" class="btn btn-warning me-2">
+    <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Trash Icon"></svg> 
+  </button>
+  <button (click)="toggleLiveCreateModel()" class="btn btn-success" >
+    <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg> 
+  </button>
 </div>
 <app-data-table [data]="pageInformation"
 (changePageIndex)="onPageIndexChange($event)" (changePageSize)="onPageSizeChange($event)">
 <thead class="text-nowrap text-truncate">
   <tr>
-    <th scope="col" i18n="@@thSTT">STT</th>
+    <th scope="col">STT</th>
     <th scope="col">NameEn</th>
     <th scope="col">NameVN</th>
-    <th scope="col" i18n="@@thActive">Active</th>
+    <th scope="col">Active</th>
     <th></th>
   </tr>
 </thead>

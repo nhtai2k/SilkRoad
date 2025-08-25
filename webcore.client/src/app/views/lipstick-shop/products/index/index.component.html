@@ -65,7 +65,9 @@
           </div>
           <div class="col-2 ">
             <div class="justify-content-end d-flex">
-              <button routerLink="./create" class="btn btn-success" i18n="@@create">Create</button>
+              <button routerLink="./create" class="btn btn-success" i18n="@@create">
+                <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+              </button>
             </div>
           </div>
         </div>
@@ -79,10 +81,10 @@
   (changePageSize)="onPageSizeChange($event)">
   <thead class="text-nowrap text-truncate">
     <tr>
-      <th scope="col" i18n="@@thSTT">STT</th>
+      <th scope="col">STT</th>
       <th scope="col">NameEn</th>
       <th scope="col">NameVN</th>
-      <th scope="col" i18n="@@thActive">Active</th>
+      <th scope="col">Active</th>
       <th></th>
     </tr>
   </thead>
@@ -94,8 +96,12 @@
       <td>{{ item.isActive }}</td>
       <td>
         <div class="d-flex justify-content-end">
-          <button routerLink="./update/{{item.id}}" class="btn btn-primary me-2">Update</button>
-          <button (click)="deleteData(item.id)" class="btn btn-danger" i18n="@@delete">Delete</button>
+          <button routerLink="./update/{{item.id}}" class="btn btn-primary me-2">
+            <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
+          </button>
+          <button (click)="deleteData(item.id)" class="btn btn-danger" i18n="@@delete">
+            <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+          </button>
         </div>
       </td>
     </tr>

@@ -7,17 +7,19 @@
           <option *ngFor="let item of topicList" [value]="item.id">{{ item.nameEN }}</option>
         </select>
       </div>
-  <button routerLink="./create" class="btn btn-success">Create</button>
+  <button routerLink="./create" class="btn btn-success">
+     <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg> 
+  </button>
 </div>
 <app-data-table [data]="pageInformation"
 (changePageIndex)="onPageIndexChange($event)" (changePageSize)="onPageSizeChange($event)">
 <thead class="text-nowrap text-truncate">
   <tr>
-    <th scope="col" i18n="@@thSTT">STT</th>
+    <th scope="col">STT</th>
     <th scope="col">Avatar</th>
     <th scope="col">SubjectEN</th>
     <th scope="col">SubjectVN</th>
-    <th scope="col" i18n="@@thActive">Active</th>
+    <th scope="col">Active</th>
     <th></th>
   </tr>
 </thead>
@@ -42,8 +44,12 @@
         <td>{{ item.isActive }}</td>
         <td>
           <div class="d-flex justify-content-end">
-            <button routerLink="./update/{{item.id}}" class="btn btn-primary me-2">Update</button>
-            <button (click)="deleteData(item.id)" class="btn btn-danger" i18n="@@delete">Delete</button>
+            <button routerLink="./update/{{item.id}}" class="btn btn-primary me-2">
+               <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
+            </button>
+            <button (click)="deleteData(item.id)" class="btn btn-danger">
+               <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Trash Icon"></svg>
+            </button>
           </div>
         </td>
     </tr>

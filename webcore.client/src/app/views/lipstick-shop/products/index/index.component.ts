@@ -1,4 +1,4 @@
-import { NgFor } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Params, RouterLink } from '@angular/router';
@@ -17,16 +17,18 @@ import { ColorService } from '@services/lipstick-shop-services/color.service';
 import { ProductService } from '@services/lipstick-shop-services/product.service';
 import { SizeService } from '@services/lipstick-shop-services/size.service';
 import { SubCategoryService } from '@services/lipstick-shop-services/sub-category.service';
+import { cilPlus, cilTrash, cilPen } from '@coreui/icons';
+import { IconDirective } from '@coreui/icons-angular';
 
 @Component({
   selector: 'app-index',
-  imports: [ModalBodyComponent, NgFor, RouterLink,
+  imports: [ModalBodyComponent, RouterLink, CommonModule, IconDirective,
     ModalComponent, ButtonDirective, ReactiveFormsModule,  AccordionButtonDirective,
     AccordionComponent,
     AccordionItemComponent,
     TemplateIdDirective,
     ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent,
-    FormSelectDirective,DataTableComponent, NgFor],
+    FormSelectDirective,DataTableComponent],
   templateUrl: './index.component.html',
   styleUrl: './index.component.scss'
 })
@@ -43,6 +45,8 @@ export class IndexComponent {
   sizes: SizeViewModel[] = [];
   colors: ColorViewModel[] = [];
   data: Pagination<ProductViewModel> = new Pagination<ProductViewModel>();
+  icons: any = { cilPlus, cilTrash, cilPen };
+
   filterForm: FormGroup = new FormGroup({
     categoryId: new FormControl(-1),
     subCategoryId: new FormControl(-1),
