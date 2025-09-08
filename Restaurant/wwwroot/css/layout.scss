@@ -6,42 +6,55 @@
     width: 100%;
     margin: auto;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.125);
-    background-color: #fff;
+    background-color: #000;
     z-index: 9;
+    padding: 20px 80px;
 
-    .topHeader {
-        width: 100%;
-        background-color: $color_black_1e1e1e;
-        z-index: 2;
-        position: relative;
+    .headerDesktop {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #fff;
 
-        @include respond(map-get($breakPoint,"lg")) {
-            padding: 0 0.75rem;
+        .logoImage {
+            max-width: 52px;
+            height: auto;
         }
 
-        .nav {
-            height: 30px;
-            width: 100%;
-            max-width: $maxWidthContent;
+        .navBar {
             display: flex;
-            justify-content: space-between;
-            margin: auto;
+            flex-direction: row;
+            padding: 0;
+            margin: 0;
 
-            a, span {
-                color: $color_white_fff;
-                text-decoration: unset;
-                font-size: 11px;
+            .navItem {
+                margin-right: 1.5rem;
+                display: flex;
+                align-items: center;
+
+                a {
+                    color: $color_white_fff;
+                    text-decoration: unset;
+                    display: flex;
+                    align-items: center;
+                    text-transform: uppercase;
+                }
+
+                a:hover {
+                    color: $color_pink_e72f8b;
+                }
+
+                svg {
+                    margin-right: 6px;
+                }
             }
 
-            a {
-                margin: 0 6px;
-            }
-
-            a:hover {
-                color: $color_pink_e72f8b;
+            .navItem:last-child {
+                margin-right: 0;
             }
         }
     }
+
 
     .headerMain {
         max-width: $maxWidthContent;
