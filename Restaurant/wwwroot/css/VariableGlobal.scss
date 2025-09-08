@@ -1,4 +1,10 @@
-﻿/*#region width*/
+﻿
+@font-face {
+    font-family: "Satisfy-Regular";
+    src: url('../assets/fonts/Satisfy/Satisfy-Regular.ttf');
+    font-display: swap;
+}
+/*#region width*/
 $maxWidthContent: 1050px;
 $maxWidthFooterContent: 1080px;
 $maxWidthHomeBanner: 1050px;

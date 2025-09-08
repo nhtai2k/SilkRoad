@@ -7,13 +7,13 @@
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Restaurant.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/root.min.css" asp-append-version="true" />
 </head>
 <body>
 	<header>
 		@await Html.PartialAsync("~/Views/Shared/PartialView/_HeaderPartialView.cshtml")
     </header>
-    <div class="container">
+    <div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

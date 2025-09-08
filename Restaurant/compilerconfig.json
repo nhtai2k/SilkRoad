@@ -2,5 +2,29 @@
   {
     "outputFile": "wwwroot/css/site.css",
     "inputFile": "wwwroot/css/site.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/aboutUs.css",
+    "inputFile": "wwwroot/css/aboutUs.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/general.css",
+    "inputFile": "wwwroot/css/general.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/home.css",
+    "inputFile": "wwwroot/css/home.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/layout.css",
+    "inputFile": "wwwroot/css/layout.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/root.css",
+    "inputFile": "wwwroot/css/root.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/VariableGlobal.css",
+    "inputFile": "wwwroot/css/VariableGlobal.scss"
   }
 ]
