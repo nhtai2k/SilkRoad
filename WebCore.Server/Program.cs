@@ -12,11 +12,10 @@ using System.Globalization;
 using System.Reflection;
 using System.Text;
 using Serilog;
-using LulusiaAdmin.Server._Convergence.Hubs;
 using System.Text.Json.Serialization;
-using WebCore.Server;
+using WebCore.Server._Convergence.Hubs;
 
-namespace LulusiaAdmin.Server
+namespace WebCore.Server
 {
     public class Program
     {

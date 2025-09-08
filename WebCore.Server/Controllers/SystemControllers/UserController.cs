@@ -2,13 +2,13 @@
 using Common;
 using Common.Models;
 using Common.ViewModels.SystemViewModels;
-using LulusiaAdmin.Server.Controllers.BaseApiControllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using WebCore.Server;
+using WebCore.Server.Controllers.BaseApiControllers;
 
-namespace LulusiaAdmin.Server.Controllers.SystemControllers
+namespace WebCore.Server.Controllers.SystemControllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -35,7 +35,7 @@ namespace LulusiaAdmin.Server.Controllers.SystemControllers
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             }
             Pagination<UserViewModel> data = await _userSystemHelper.GetAllAsync(pageIndex, pageSize);
-            return Succeeded<Pagination<UserViewModel>>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
         /// <summary>
         /// Get data by id
@@ -50,7 +50,7 @@ namespace LulusiaAdmin.Server.Controllers.SystemControllers
             {
                 return Failed(EStatusCodes.NotFound, _localizer["dataNotFound"]);
             }
-            return Succeeded<UserViewModel>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace LulusiaAdmin.Server.Controllers.SystemControllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("Create")]
-        [AuthorizeEnumPolicy(Common.ERoles.Admin)]
+        [AuthorizeEnumPolicy(ERoles.Admin)]
         public async Task<IActionResult> Create([FromBody] UserViewModel model)
         {
             if (!ModelState.IsValid)
@@ -78,7 +78,7 @@ namespace LulusiaAdmin.Server.Controllers.SystemControllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut("Update")]
-        [AuthorizeEnumPolicy(Common.ERoles.Admin)]
+        [AuthorizeEnumPolicy(ERoles.Admin)]
         public async Task<IActionResult> Update([FromBody] UserViewModel model)
         {
             if (!ModelState.IsValid)
@@ -97,7 +97,7 @@ namespace LulusiaAdmin.Server.Controllers.SystemControllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPatch("SoftDelete/{id}")]
-        [AuthorizeEnumPolicy(Common.ERoles.Admin)]
+        [AuthorizeEnumPolicy(ERoles.Admin)]
         public async Task<IActionResult> SoftDelete(int id)
         {
             var result = await _userSystemHelper.SoftDeleteAsync(id);
@@ -112,7 +112,7 @@ namespace LulusiaAdmin.Server.Controllers.SystemControllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPatch("Restore/{id}")]
-        [AuthorizeEnumPolicy(Common.ERoles.Admin)]
+        [AuthorizeEnumPolicy(ERoles.Admin)]
         public async Task<IActionResult> Restore(int id)
         {
             bool result = await _userSystemHelper.RestoreAsync(id);
@@ -127,7 +127,7 @@ namespace LulusiaAdmin.Server.Controllers.SystemControllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("Delete/{id}")]
-        [AuthorizeEnumPolicy(Common.ERoles.Admin)]
+        [AuthorizeEnumPolicy(ERoles.Admin)]
         public async Task<IActionResult> Delete(int id)
         {
             bool result = await _userSystemHelper.DeleteAsync(id);

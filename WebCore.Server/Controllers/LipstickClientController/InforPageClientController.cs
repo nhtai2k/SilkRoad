@@ -3,7 +3,7 @@ using Common.Custom.ApiKey;
 using LipstickBusinessLogic.ILipstickClientHelpers;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LulusiaAdmin.Server.Controllers.LipstickClientController
+namespace WebCore.Server.Controllers.LipstickClientController
 {
     [Route("api/[controller]")]
     [ApiController]

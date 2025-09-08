@@ -4,14 +4,14 @@ using Common.Models;
 using Common.Services.ActionLoggingServices;
 using Common.ViewModels.SystemViewModels;
 using DataAccess.DTOs;
-using LulusiaAdmin.Server.Controllers.BaseApiControllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using WebCore.Server;
+using WebCore.Server.Controllers.BaseApiControllers;
 
-namespace LulusiaAdmin.Server.Controllers.SystemControllers
+namespace WebCore.Server.Controllers.SystemControllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -59,7 +59,7 @@ namespace LulusiaAdmin.Server.Controllers.SystemControllers
                 JwtViewModel jwt = await _myAccountHelper.LoginAsync(model);
                 userAction.Status = EUserActionStatus.Successful.ToString();
                 _actionLog.CreateAsync(userAction);
-                return Succeeded<JwtViewModel>(jwt, _localizer["loginSuccess"]);
+                return Succeeded(jwt, _localizer["loginSuccess"]);
             }
             else if (result.IsLockedOut)
             {
@@ -144,7 +144,7 @@ namespace LulusiaAdmin.Server.Controllers.SystemControllers
                 JwtViewModel jwt = await _myAccountHelper.ReNewTokenAsync(refreshToken, token);
                 if (jwt != null)
                 {
-                    return Succeeded<JwtViewModel>(jwt, _localizer["renewTokenSuccess"]);
+                    return Succeeded(jwt, _localizer["renewTokenSuccess"]);
                 }
                 else
                 {

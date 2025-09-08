@@ -1,9 +1,9 @@
 ﻿using Common.Models;
-using LulusiaAdmin.Server._Convergence.Services;
 using Microsoft.AspNetCore.Mvc;
 using Ollama;
+using WebCore.Server._Convergence.Services;
 
-namespace LulusiaAdmin.Server.Controllers.FeatureControllers
+namespace WebCore.Server.Controllers.FeatureControllers
 {
     [Route("api/[controller]")]
     [ApiController]

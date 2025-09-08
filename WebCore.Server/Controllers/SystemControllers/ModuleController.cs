@@ -1,11 +1,11 @@
 ﻿using BusinessLogic.IHelpers.ISystemHelpers;
 using Common.ViewModels.SystemViewModels;
-using LulusiaAdmin.Server.Controllers.BaseApiControllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using WebCore.Server;
+using WebCore.Server.Controllers.BaseApiControllers;
 
-namespace LulusiaAdmin.Server.Controllers.SystemControllers
+namespace WebCore.Server.Controllers.SystemControllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -24,7 +24,7 @@ namespace LulusiaAdmin.Server.Controllers.SystemControllers
         public async Task<IActionResult> GetAll()
         {
             IEnumerable<ModuleViewModel> data = await _moduleHelper.GetAllAsync();
-            return Succeeded<IEnumerable<ModuleViewModel>>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
         /// <summary>
         /// Get data by id
@@ -37,7 +37,7 @@ namespace LulusiaAdmin.Server.Controllers.SystemControllers
             ModuleViewModel data = await _moduleHelper.GetByIdAsync(id);
             if (data == null)
                 return Failed(Common.EStatusCodes.NotFound, _localizer["dataNotFound"]);
-            return Succeeded<ModuleViewModel>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
         /// <summary>
         /// Create data

@@ -2,7 +2,7 @@
 using Common.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LulusiaAdmin.Server.Controllers.FeatureControllers
+namespace WebCore.Server.Controllers.FeatureControllers
 {
     [Route("api/[controller]")]
     [ApiController]

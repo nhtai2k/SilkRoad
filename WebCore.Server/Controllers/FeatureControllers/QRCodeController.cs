@@ -2,13 +2,13 @@
 using Common;
 using Common.Services.ActionLoggingServices;
 using Common.ViewModels.QRViewModels;
-using LulusiaAdmin.Server.Controllers.BaseApiControllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using WebCore.Server;
+using WebCore.Server.Controllers.BaseApiControllers;
 
-namespace LulusiaAdmin.Server.Controllers.FeatureControllers
+namespace WebCore.Server.Controllers.FeatureControllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -55,7 +55,7 @@ namespace LulusiaAdmin.Server.Controllers.FeatureControllers
 
         [HttpPost]
         [Route("GenerateListQRCode")]
-        [AuthorizeEnumPolicy(Common.ERoles.Admin)]
+        [AuthorizeEnumPolicy(ERoles.Admin)]
         public async Task<IActionResult> GenerateListQRCode([FromForm] QRCodeListViewModel model)
         {
             try

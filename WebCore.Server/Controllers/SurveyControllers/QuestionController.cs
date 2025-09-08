@@ -4,13 +4,13 @@ using Common.Services.ActionLoggingServices;
 using Common.Services.JwtServices;
 using Common.ViewModels.SurveyViewModels;
 using DocumentFormat.OpenXml.Office2010.Excel;
-using LulusiaAdmin.Server.Controllers.BaseApiControllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using SurveyBusinessLogic.IHelpers;
 using WebCore.Server;
+using WebCore.Server.Controllers.BaseApiControllers;
 
-namespace LulusiaAdmin.Server.Controllers.SurveyControllers
+namespace WebCore.Server.Controllers.SurveyControllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -35,7 +35,7 @@ namespace LulusiaAdmin.Server.Controllers.SurveyControllers
             IEnumerable<QuestionViewModel> data = await _questionHelper.GetAllAsync();
             _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.View, EUserActionStatus.Successful);
 
-            return Succeeded<IEnumerable<QuestionViewModel>>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
         [HttpGet("GetAllByQuestionGroupId/{id}")]
@@ -52,7 +52,7 @@ namespace LulusiaAdmin.Server.Controllers.SurveyControllers
             Pagination<QuestionViewModel> data = await _questionHelper.GetAllAsync(id, pageIndex, pageSize);
             _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Successful);
 
-            return Succeeded<Pagination<QuestionViewModel>>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
         [HttpGet("GetById/{id}")]
@@ -68,7 +68,7 @@ namespace LulusiaAdmin.Server.Controllers.SurveyControllers
             }
             _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.ViewDetails, EUserActionStatus.Successful);
 
-            return Succeeded<QuestionViewModel>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
         [HttpPost("Create")]

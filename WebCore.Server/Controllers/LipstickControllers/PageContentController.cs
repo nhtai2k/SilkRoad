@@ -3,13 +3,13 @@ using Common.Models;
 using Common.Services.ActionLoggingServices;
 using Common.ViewModels.LipstickViewModels;
 using LipstickBusinessLogic.ILipstickHelpers;
-using LulusiaAdmin.Server.Controllers.BaseApiControllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using WebCore.Server;
+using WebCore.Server.Controllers.BaseApiControllers;
 
-namespace LulusiaAdmin.Server.Controllers.LipstickControllers
+namespace WebCore.Server.Controllers.LipstickControllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -47,7 +47,7 @@ namespace LulusiaAdmin.Server.Controllers.LipstickControllers
             }
             Pagination<PageContentViewModel> data = await _pageContentHelper.GetAllAsync(pageIndex, pageSize);
             _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Successful);
-            return Succeeded<Pagination<PageContentViewModel>>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
         [HttpGet]
         [Route("getByPageTypeId/{pageTyeId}")]
@@ -56,7 +56,7 @@ namespace LulusiaAdmin.Server.Controllers.LipstickControllers
             string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
             IEnumerable<PageContentViewModel> data = _pageContentHelper.GetByPageTypeId(pageTyeId);
             _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.View, EUserActionStatus.Successful);
-            return Succeeded<IEnumerable<PageContentViewModel>>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
         [HttpGet]
@@ -72,11 +72,11 @@ namespace LulusiaAdmin.Server.Controllers.LipstickControllers
                 return Failed(EStatusCodes.NotFound, _localizer["dataNotFound"]);
             }
             _actionLog.CreateAsync(token, controllerName, EUserAction.ViewDetails, EUserActionStatus.Successful);
-            return Succeeded<PageContentViewModel>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
         [HttpPost]
         [Route("create")]
-        [AuthorizeEnumPolicy(Common.ERoles.Admin)]
+        [AuthorizeEnumPolicy(ERoles.Admin)]
         public IActionResult Create([FromBody] PageContentViewModel model)
         {
             string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
@@ -97,7 +97,7 @@ namespace LulusiaAdmin.Server.Controllers.LipstickControllers
         }
         [HttpPut]
         [Route("update")]
-        [AuthorizeEnumPolicy(Common.ERoles.Admin)]
+        [AuthorizeEnumPolicy(ERoles.Admin)]
         public IActionResult Update([FromBody] PageContentViewModel model)
         {
             string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
@@ -119,7 +119,7 @@ namespace LulusiaAdmin.Server.Controllers.LipstickControllers
         }
         [HttpDelete]
         [Route("delete")]
-        [AuthorizeEnumPolicy(Common.ERoles.Admin)]
+        [AuthorizeEnumPolicy(ERoles.Admin)]
         public IActionResult Delete(int Id)
         {
             //if (Id == 0)

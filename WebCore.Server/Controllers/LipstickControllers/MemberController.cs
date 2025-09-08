@@ -3,13 +3,13 @@ using Common.Models;
 using Common.Services.ActionLoggingServices;
 using Common.ViewModels.LipstickViewModels;
 using LipstickBusinessLogic.ILipstickHelpers;
-using LulusiaAdmin.Server.Controllers.BaseApiControllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using WebCore.Server;
+using WebCore.Server.Controllers.BaseApiControllers;
 
-namespace LulusiaAdmin.Server.Controllers.LipstickControllers
+namespace WebCore.Server.Controllers.LipstickControllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -37,7 +37,7 @@ namespace LulusiaAdmin.Server.Controllers.LipstickControllers
             }
             Pagination<MemberViewModel> data = _memberHelper.GetAll(phoneNumber, email, pageIndex, pageSize);
             _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Successful);
-            return Succeeded<Pagination<MemberViewModel>>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
     }
 }

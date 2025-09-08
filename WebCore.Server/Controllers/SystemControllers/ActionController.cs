@@ -1,13 +1,13 @@
 ﻿using BusinessLogic.IHelpers.ISystemHelpers;
 using Common.Models;
 using Common.ViewModels.SystemViewModels;
-using LulusiaAdmin.Server.Controllers.BaseApiControllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using WebCore.Server;
+using WebCore.Server.Controllers.BaseApiControllers;
 
-namespace LulusiaAdmin.Server.Controllers.SystemControllers
+namespace WebCore.Server.Controllers.SystemControllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -33,21 +33,21 @@ namespace LulusiaAdmin.Server.Controllers.SystemControllers
             if (pageIndex < 1)
                 return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             Pagination<ActionViewModel> data = await _actionHelper.GetAllAsync(pageIndex, pageSize);
-            return Succeeded<Pagination<ActionViewModel>>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
         [HttpGet("GetAllActive")]
         public async Task<IActionResult> GetAllActive()
         {
 
             IEnumerable<ActionViewModel> data = await _actionHelper.GetAllActiveAsync();
-            return Succeeded<IEnumerable<ActionViewModel>>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
         [HttpGet("GetEAction")]
         public async Task<IActionResult> GetEAction()
         {
             var data = await _actionHelper.GetEActionsAsync();
-            return Succeeded<List<string>>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace LulusiaAdmin.Server.Controllers.SystemControllers
             ActionViewModel data = await _actionHelper.GetByIdAsync(id);
             if (data == null)
                 return Failed(Common.EStatusCodes.NotFound, _localizer["dataNotFound"]);
-            return Succeeded<ActionViewModel>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
         /// <summary>
         /// Create data

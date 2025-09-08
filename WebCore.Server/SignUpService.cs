@@ -13,12 +13,11 @@ using LipstickBusinessLogic.ILipstickClientHelpers;
 using LipstickBusinessLogic.ILipstickHelpers;
 using LipstickBusinessLogic.LipstickClientHelpers;
 using LipstickBusinessLogic.LipstickHelpers;
-using LulusiaAdmin.Server;
-using LulusiaAdmin.Server._Convergence.Services;
 using StockBusinessLogic.Helpers;
 using StockBusinessLogic.IHelpers;
 using SurveyBusinessLogic.Helpers;
 using SurveyBusinessLogic.IHelpers;
+using WebCore.Server._Convergence.Services;
 
 namespace WebCore.Server
 {

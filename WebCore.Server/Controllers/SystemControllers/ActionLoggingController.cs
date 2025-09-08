@@ -1,12 +1,12 @@
 ﻿using Common.Models;
 using Common.Services.ActionLoggingServices;
-using LulusiaAdmin.Server.Controllers.BaseApiControllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using WebCore.Server;
+using WebCore.Server.Controllers.BaseApiControllers;
 
-namespace LulusiaAdmin.Server.Controllers.SystemControllers
+namespace WebCore.Server.Controllers.SystemControllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -29,7 +29,7 @@ namespace LulusiaAdmin.Server.Controllers.SystemControllers
             if (pageIndex < 1)
                 return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             Pagination<UserActionModel> data = await _actionloggingService.GetAllAsync(controllerName, actionName, startDate, endDate, pageIndex, pageSize);
-            return Succeeded<Pagination<UserActionModel>>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
         [HttpGet("GetById/{id}")]
@@ -38,7 +38,7 @@ namespace LulusiaAdmin.Server.Controllers.SystemControllers
             UserActionModel data = await _actionloggingService.GetAsync(id);
             if (data == null)
                 return Failed(Common.EStatusCodes.NotFound, _localizer["dataNotFound"]);
-            return Succeeded<UserActionModel>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
 
         }
     }

@@ -5,10 +5,10 @@ using Common;
 using LipstickBusinessLogic.ILipstickHelpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using LulusiaAdmin.Server.Controllers.BaseApiControllers;
 using WebCore.Server;
+using WebCore.Server.Controllers.BaseApiControllers;
 
-namespace LulusiaAdmin.Server.Controllers.LipstickControllers
+namespace WebCore.Server.Controllers.LipstickControllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -36,7 +36,7 @@ namespace LulusiaAdmin.Server.Controllers.LipstickControllers
             }
             await _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Successful);
             Pagination<PaymentViewModel> data = await _paymentHelper.GetAllAsync(paymentTypeId, statusId, pageIndex, pageSize);
-            return Succeeded<Pagination<PaymentViewModel>>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
         [HttpGet]
         [Route("getById/{id}")]
@@ -51,7 +51,7 @@ namespace LulusiaAdmin.Server.Controllers.LipstickControllers
                 return Failed(EStatusCodes.NotFound, _localizer["dataNotFound"]);
             }
             await _actionLog.CreateAsync(token, controllerName, EUserAction.ViewDetails, EUserActionStatus.Successful);
-            return Succeeded<PaymentViewModel>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
     }
 }

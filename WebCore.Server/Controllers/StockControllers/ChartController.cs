@@ -1,10 +1,10 @@
-﻿using LulusiaAdmin.Server.Controllers.BaseApiControllers;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using StockBusinessLogic.IHelpers;
+using WebCore.Server.Controllers.BaseApiControllers;
 
-namespace LulusiaAdmin.Server.Controllers.StockControllers
+namespace WebCore.Server.Controllers.StockControllers
 {
     [Route("api/[controller]")]
     [ApiController]

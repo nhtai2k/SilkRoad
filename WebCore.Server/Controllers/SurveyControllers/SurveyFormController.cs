@@ -3,15 +3,15 @@ using Common.Models;
 using Common.Services.ActionLoggingServices;
 using Common.Services.JwtServices;
 using Common.ViewModels.SurveyViewModels;
-using LulusiaAdmin.Server.Controllers.BaseApiControllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 using SurveyBusinessLogic.IHelpers;
 using WebCore.Server;
+using WebCore.Server.Controllers.BaseApiControllers;
 
-namespace LulusiaAdmin.Server.Controllers.SurveyControllers
+namespace WebCore.Server.Controllers.SurveyControllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -42,7 +42,7 @@ namespace LulusiaAdmin.Server.Controllers.SurveyControllers
             }
             Pagination<SurveyFormViewModel> data = await _surveyFormHelper.GetAllAsync(pageIndex, pageSize);
             _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Successful);
-            return Succeeded<Pagination<SurveyFormViewModel>>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
         [HttpGet("GetAllActive")]
@@ -53,7 +53,7 @@ namespace LulusiaAdmin.Server.Controllers.SurveyControllers
             var controllerName = ControllerContext.ActionDescriptor.ControllerName;
             IEnumerable<SurveyFormViewModel> data = await _surveyFormHelper.GetAllActiveAsync();
             _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Successful);
-            return Succeeded<IEnumerable<SurveyFormViewModel>>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
         [HttpGet("GetById/{id}")]
@@ -68,7 +68,7 @@ namespace LulusiaAdmin.Server.Controllers.SurveyControllers
                 return Failed(EStatusCodes.NotFound, _localizer["dataNotFound"]);
             }
             _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.ViewDetails, EUserActionStatus.Successful);
-            return Succeeded<SurveyFormViewModel>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
         [HttpGet("GetEagerById/{id}")]
@@ -83,7 +83,7 @@ namespace LulusiaAdmin.Server.Controllers.SurveyControllers
                 return Failed(EStatusCodes.NotFound, _localizer["dataNotFound"]);
             }
             _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.ViewDetails, EUserActionStatus.Successful);
-            return Succeeded<SurveyFormViewModel>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
         [HttpGet("GetEagerUIById/{id}")]

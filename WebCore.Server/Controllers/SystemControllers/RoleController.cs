@@ -1,13 +1,13 @@
 ﻿using BusinessLogic.IHelpers.ISystemHelpers;
 using Common.Models;
 using Common.ViewModels.SystemViewModels;
-using LulusiaAdmin.Server.Controllers.BaseApiControllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using WebCore.Server;
+using WebCore.Server.Controllers.BaseApiControllers;
 
-namespace LulusiaAdmin.Server.Controllers.SystemControllers
+namespace WebCore.Server.Controllers.SystemControllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -32,7 +32,7 @@ namespace LulusiaAdmin.Server.Controllers.SystemControllers
             if (pageIndex < 1)
                 return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             Pagination<RoleViewModel> data = await _roleHelper.GetAllAsync(pageIndex, pageSize);
-            return Succeeded<Pagination<RoleViewModel>>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
         [HttpGet("GetAllActive")]
@@ -53,7 +53,7 @@ namespace LulusiaAdmin.Server.Controllers.SystemControllers
             RoleViewModel data = await _roleHelper.GetByIdAsync(id);
             if (data == null)
                 return Failed(Common.EStatusCodes.NotFound, _localizer["dataNotFound"]);
-            return Succeeded<RoleViewModel>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
         /// <summary>
         /// Create data

@@ -1,4 +1,4 @@
-@SMSService_HostAddress = http://localhost:5162
+@SMSService_HostAddress = http://localhost:5260
 
 GET {{SMSService_HostAddress}}/weatherforecast/
 Accept: application/json

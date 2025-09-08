@@ -3,13 +3,13 @@ using Common.Models;
 using Common.Services.ActionLoggingServices;
 using Common.ViewModels.LipstickViewModels;
 using LipstickBusinessLogic.ILipstickHelpers;
-using LulusiaAdmin.Server.Controllers.BaseApiControllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using WebCore.Server;
+using WebCore.Server.Controllers.BaseApiControllers;
 
-namespace LulusiaAdmin.Server.Controllers.LipstickControllers
+namespace WebCore.Server.Controllers.LipstickControllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -38,7 +38,7 @@ namespace LulusiaAdmin.Server.Controllers.LipstickControllers
             }
             Pagination<CategoryViewModel> data = await _categoryHelper.GetAllAsync(pageIndex, pageSize);
             _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Successful);
-            return Succeeded<Pagination<CategoryViewModel>>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
         [HttpGet]
         [Route("getAllActive")]
@@ -47,7 +47,7 @@ namespace LulusiaAdmin.Server.Controllers.LipstickControllers
             string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
             IEnumerable<CategoryViewModel> data = _categoryHelper.GetAllActive();
             _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.View, EUserActionStatus.Successful);
-            return Succeeded<IEnumerable<CategoryViewModel>>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
         [HttpGet]
         [Route("getById/{Id}")]
@@ -62,11 +62,11 @@ namespace LulusiaAdmin.Server.Controllers.LipstickControllers
                 return Failed(EStatusCodes.NotFound, _localizer["dataNotFound"]);
             }
             _actionLog.CreateAsync(token, controllerName, EUserAction.ViewDetails, EUserActionStatus.Successful);
-            return Succeeded<CategoryViewModel>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
         [HttpPost]
         [Route("create")]
-        [AuthorizeEnumPolicy(Common.ERoles.Admin)]
+        [AuthorizeEnumPolicy(ERoles.Admin)]
         public IActionResult Create([FromBody] CategoryViewModel model)
         {
             string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
@@ -87,7 +87,7 @@ namespace LulusiaAdmin.Server.Controllers.LipstickControllers
         }
         [HttpPut]
         [Route("update")]
-        [AuthorizeEnumPolicy(Common.ERoles.Admin)]
+        [AuthorizeEnumPolicy(ERoles.Admin)]
         public IActionResult Update([FromBody] CategoryViewModel model)
         {
             string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
@@ -108,7 +108,7 @@ namespace LulusiaAdmin.Server.Controllers.LipstickControllers
         }
         [HttpDelete]
         [Route("softDelete")]
-        [AuthorizeEnumPolicy(Common.ERoles.Admin)]
+        [AuthorizeEnumPolicy(ERoles.Admin)]
         public IActionResult softDalete(int Id)
         {
             string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");

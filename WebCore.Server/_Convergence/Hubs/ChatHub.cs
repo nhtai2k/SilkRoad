@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 
-namespace LulusiaAdmin.Server._Convergence.Hubs
+namespace WebCore.Server._Convergence.Hubs
 {
     public class ChatHub : Hub
     {

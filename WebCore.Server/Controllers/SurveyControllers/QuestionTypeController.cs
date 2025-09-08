@@ -1,13 +1,13 @@
 ﻿using Common;
 using Common.Services.ActionLoggingServices;
 using Common.ViewModels.SurveyViewModels;
-using LulusiaAdmin.Server.Controllers.BaseApiControllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using SurveyBusinessLogic.IHelpers;
 using WebCore.Server;
+using WebCore.Server.Controllers.BaseApiControllers;
 
-namespace LulusiaAdmin.Server.Controllers.SurveyControllers
+namespace WebCore.Server.Controllers.SurveyControllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -30,7 +30,7 @@ namespace LulusiaAdmin.Server.Controllers.SurveyControllers
             string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
             _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.View, EUserActionStatus.Successful);
 
-            return Succeeded<IEnumerable<QuestionTypeViewModel>>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
     }
 }

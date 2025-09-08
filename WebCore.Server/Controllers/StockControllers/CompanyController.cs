@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using System.Threading.Tasks;
-using LulusiaAdmin.Server.Controllers.BaseApiControllers; // Adjust if needed
 using StockBusinessLogic.IHelpers;
 using StockDataAccess.DTOs;
 using WebCore.Server;
+using WebCore.Server.Controllers.BaseApiControllers;
 
-namespace LulusiaAdmin.Server.Controllers.StockControllers
+namespace WebCore.Server.Controllers.StockControllers
 {
     [ApiController]
     [Route("api/[controller]")]

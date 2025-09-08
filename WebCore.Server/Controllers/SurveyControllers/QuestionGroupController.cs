@@ -3,14 +3,14 @@ using Common.Models;
 using Common.Services.ActionLoggingServices;
 using Common.Services.JwtServices;
 using Common.ViewModels.SurveyViewModels;
-using LulusiaAdmin.Server.Controllers.BaseApiControllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 using SurveyBusinessLogic.IHelpers;
 using WebCore.Server;
+using WebCore.Server.Controllers.BaseApiControllers;
 
-namespace LulusiaAdmin.Server.Controllers.SurveyControllers
+namespace WebCore.Server.Controllers.SurveyControllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -38,7 +38,7 @@ namespace LulusiaAdmin.Server.Controllers.SurveyControllers
             }
             Pagination<QuestionGroupViewModel> data = await _questionGroupHelper.GetAllAsync(pageIndex, pageSize, getActive);
             _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Successful);
-            return Succeeded<Pagination<QuestionGroupViewModel>>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
         [HttpGet("GetAllActive")]
         //[AuthorizeEnumPolicy(ERoleClaimGroup.QuestionGroup, ERoleClaim.View, EModule.Survey)]
@@ -47,7 +47,7 @@ namespace LulusiaAdmin.Server.Controllers.SurveyControllers
             string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
             IEnumerable<QuestionGroupViewModel> data = await _questionGroupHelper.GetAllByActiveAsync(true);
             _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.View, EUserActionStatus.Successful);
-            return Succeeded<IEnumerable<QuestionGroupViewModel>>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
         [HttpGet("GetById/{id}")]
@@ -62,7 +62,7 @@ namespace LulusiaAdmin.Server.Controllers.SurveyControllers
                 return Failed(EStatusCodes.NotFound, _localizer["dataNotFound"]);
             }
             _actionLog.CreateAsync(tokin, ControllerContext.ActionDescriptor.ControllerName, EUserAction.ViewDetails, EUserActionStatus.Successful);
-            return Succeeded<QuestionGroupViewModel>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
         [HttpGet("GetEagerById/{id}")]
@@ -77,7 +77,7 @@ namespace LulusiaAdmin.Server.Controllers.SurveyControllers
                 return Failed(EStatusCodes.NotFound, _localizer["dataNotFound"]);
             }
             _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.ViewDetails, EUserActionStatus.Successful);
-            return Succeeded<QuestionGroupViewModel>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
         [HttpGet("GetEagerAllElements")]
@@ -85,7 +85,7 @@ namespace LulusiaAdmin.Server.Controllers.SurveyControllers
         public IActionResult GetEagerAllElements(bool getActive = true)
         {
             IEnumerable<QuestionGroupViewModel> data = _questionGroupHelper.GetEagerAllElements(getActive);
-            return Succeeded<IEnumerable<QuestionGroupViewModel>>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
         [HttpPost("Create")]

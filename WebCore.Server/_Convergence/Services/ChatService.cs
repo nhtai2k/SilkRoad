@@ -1,9 +1,9 @@
 ﻿using Common.Models;
-using LulusiaAdmin.Server._Convergence.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using Ollama;
+using WebCore.Server._Convergence.Hubs;
 
-namespace LulusiaAdmin.Server._Convergence.Services
+namespace WebCore.Server._Convergence.Services
 {
     public class ChatService
     {

@@ -1,7 +1,7 @@
 ﻿using Common;
 using Common.Models;
 using Microsoft.AspNetCore.Mvc;
-namespace LulusiaAdmin.Server.Controllers.BaseApiControllers
+namespace WebCore.Server.Controllers.BaseApiControllers
 {
     [ApiController]
     public abstract class BaseApiController : ControllerBase

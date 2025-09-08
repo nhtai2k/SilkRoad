@@ -2,14 +2,14 @@
 using Common.Models;
 using Common.Services.ActionLoggingServices;
 using Common.ViewModels.SurveyViewModels;
-using LulusiaAdmin.Server.Controllers.BaseApiControllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using SurveyBusinessLogic.IHelpers;
 using WebCore.Server;
+using WebCore.Server.Controllers.BaseApiControllers;
 
-namespace LulusiaAdmin.Server.Controllers.SurveyControllers
+namespace WebCore.Server.Controllers.SurveyControllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -38,7 +38,7 @@ namespace LulusiaAdmin.Server.Controllers.SurveyControllers
             }
             Pagination<ParticipantViewModel> data = await _participantHelper.GetAllAsync(startDate, endDate, surveyFormId, pageIndex, pageSize);
             _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Successful);
-            return Succeeded<Pagination<ParticipantViewModel>>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
         [HttpPost("Create")]
         [AllowAnonymous]
@@ -60,7 +60,7 @@ namespace LulusiaAdmin.Server.Controllers.SurveyControllers
             }
             _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.ViewDetails, EUserActionStatus.Successful);
 
-            return Succeeded<SurveyUIViewModel>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
         [HttpGet("ExportExcel")]
         //[AuthorizeEnumPolicy(ERoleClaimGroup.SurveyResult, ERoleClaim.Export, EModule.Survey)]
@@ -77,7 +77,7 @@ namespace LulusiaAdmin.Server.Controllers.SurveyControllers
             var fileBytes = await System.IO.File.ReadAllBytesAsync(path);
             var fileName = Path.GetFileName(path);
             //return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
-            return Succeeded<FileContentResult>(File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName), _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName), _localizer["dataFetchedSuccessfully"]);
         }
     }
 }

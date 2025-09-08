@@ -6,7 +6,7 @@ using LipstickBusinessLogic.ILipstickClientHelpers;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace LulusiaAdmin.Server.Controllers.LipstickClientController
+namespace WebCore.Server.Controllers.LipstickClientController
 {
     [Route("api/[controller]")]
     [ApiController]
