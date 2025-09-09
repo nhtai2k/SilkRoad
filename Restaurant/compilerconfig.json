@@ -26,5 +26,9 @@
   {
     "outputFile": "wwwroot/css/VariableGlobal.css",
     "inputFile": "wwwroot/css/VariableGlobal.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/contact.css",
+    "inputFile": "wwwroot/css/contact.scss"
   }
 ]
