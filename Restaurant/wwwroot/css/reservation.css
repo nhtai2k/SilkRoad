@@ -1,0 +1,138 @@
+﻿/*#region banner*/
+.reservationBanner {
+  background-image: url("../assets/images/reservation/banner.jpg");
+}
+
+/*#endregion*/
+/*#region section form*/
+.sectionForm .formInner {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.sectionForm .formCol {
+  width: 30.4%;
+  margin-bottom: 43px;
+}
+
+.select {
+  position: relative;
+}
+
+.formHolder {
+  position: relative;
+}
+
+.sectionForm .form-control.style {
+  border-bottom: 1px solid #333;
+  color: #666;
+}
+
+.sectionForm .form-control {
+  height: 31px;
+  border-bottom: 1px solid #ccc;
+  font-size: 18px;
+  color: #ccc;
+}
+
+.formHolder span.primary-color {
+  color: #666;
+}
+
+.formHolder span {
+  position: absolute;
+  right: 0;
+  bottom: 8px;
+  font-size: 12px;
+  color: #ccc;
+}
+
+.lnr {
+  font-family: "Linearicons-Free";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/*#endregion*/
+/*#region reservation*/
+.reservation .info {
+  margin-top: 45px;
+}
+
+.reservation .info h5 {
+  text-transform: uppercase;
+  margin-bottom: 9px;
+}
+
+.reservation .info p {
+  white-space: nowrap;
+}
+
+.reservation .info .openingCol p {
+  display: inline-block;
+  margin-right: 35px;
+  white-space: nowrap;
+}
+
+.reservation .info .openingCol p span {
+  display: block;
+  color: #333;
+  font-family: "Raleway-SemiBold";
+  font-weight: 600;
+}
+
+.reservation .info .support {
+  padding-left: 80px;
+}
+
+.reservation .info .support .address, .reservation .info .support .phone {
+  margin-right: -10px;
+}
+
+.reservation .info .support a, .reservation .info .support p {
+  color: #666;
+}
+
+.reservation .info .support .address span {
+  margin-right: 8px;
+}
+
+.reservation .info .support a span, .reservation .info .support p span {
+  font-family: "Raleway-Bold";
+  font-weight: 700;
+  margin-right: 5px;
+}
+
+.reservation .info .support .phone span {
+  margin-right: 12px;
+}
+
+.reservation .info .support .email, .reservation .info .support .website {
+  padding-left: 14px;
+}
+
+.reservation .info .support .email span {
+  margin-right: 8px;
+}
+
+.reservation .info .support .website span {
+  margin-right: 3px;
+}
+
+.reservation .info .social {
+  padding-top: 27px;
+}
+
+.reservation a {
+  text-decoration: none;
+  color: #666;
+}
+
+/*#endregion*/

@@ -1,0 +1,110 @@
+﻿/*#region banner*/
+.contactBanner {
+  background-image: url("../assets/images/contact/banner.jpg");
+}
+
+/*#endregion*/
+/* #region contact us*/
+.contactUsContent h3 {
+  font-size: 30px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+
+.contactUsContent p {
+  margin-bottom: 89px;
+}
+
+.contactUsContent .contactUsCol h5 {
+  margin-bottom: 11px;
+}
+
+.contactUsContent .contactUsCol .body {
+  margin-bottom: 53px;
+}
+
+.contactUsContent .contactUsCol .address {
+  margin-bottom: 28px;
+}
+
+.contactUsContent .contactUsCol span,
+.contactUsContent .contactUsCol a {
+  display: block;
+  color: #666;
+  text-decoration: none;
+}
+
+.contactUsContent .social a {
+  color: #999;
+}
+
+.social a {
+  font-size: 20px;
+  color: #666;
+  margin-right: 16px;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.contactUsForm {
+  padding-top: 7px;
+}
+
+.contactUsForm .formHolder {
+  margin-bottom: 30px;
+}
+
+.formHolder {
+  position: relative;
+}
+
+.contactUsForm .form-control {
+  height: 60px;
+  border: 1px solid #e5e5e5;
+  padding: 0 19px;
+  color: #999;
+  font-size: 15px;
+}
+
+.contactUsForm textarea.form-control {
+  padding: 18px 19px;
+  height: 200px;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .contactUsContent p {
+    margin-bottom: 36px;
+  }
+}
+@media (max-width: 768px) {
+  .contactUsContent {
+    margin-bottom: 50px;
+  }
+}
+/* #endregion */
+/* #region map */
+.contactUsMapHolder {
+  height: 450px;
+  position: relative;
+  overflow: hidden;
+}
+
+.contactUsMapHolder iframe {
+  height: 100%;
+  width: 100%;
+  /*position: absolute;
+  top: 0px;
+  left: 0px;*/
+  background-color: rgb(229, 227, 223);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .contactUsMapHolder {
+    height: 400px;
+  }
+}
+/* #endregion*/
