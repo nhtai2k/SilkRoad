@@ -1,42 +1,65 @@
 ﻿<footer class="footerContainer">
     <div class="footerBox">
-        <div class="row">
-            <div class="col-4">
-                <img src="~/assets/images/logo.png" alt="logo" />
+        <div class="footerInfor row">
+            <div class="col-3">
+                <img class="logo" src="~/assets/images/logo.png" alt="logo" />
                 <p>
                     Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusan-tium doloremque laudantium, totam rem aperiam,
                 </p>
             </div>
-            <div class="col-4">
-                <h5>Address</h5>
-                <ul>
-                    <li>No 40 Baria Sreet 133/2</li>
-                    <li> + (156) 1800-366-6666</li>
-                    <li> Eric-82@example.com</li>
-                    <li> www.royate.com</li>
-                    <li> Mon - Sat: 7AM - 10PM</li>
-                </ul>
+            <div class="col-3">
+                <h5 class="title font-raleway-semibold">Address</h5>
+                <p><span class="ti-home me-2"></span> No 40 Baria Sreet 133/2</p>
+                <p><span class="ti-headphone me-2"></span> + (156) 1800-366-6666</p>
+                <p><span class="ti-email me-2"></span> jsonmasker@gmail.com</p>
+                <p><span class="ti-hand-point-down me-2"></span> www.royate.com</p>
+                <p><span class="ti-alarm-clock me-2"></span> Mon - Sat: 7AM - 10PM</p>
             </div>
-            <div class="col-4">
-                <h5>Lastest Post</h5>
-                <ul>
-                    <li>
-                        <span>15.07.2018</span>
-                        At vero eos et accusamus
-                    </li>
-                    <li>
-                        <span>14.07.2018</span>
-                        Ut enim ad minima veniam
-                    </li>
-                    <li>
-                        <span>13.07.2018</span>
-                        Nor again is there anyone
-                    </li>
-                </ul>
+            <div class="col-3">
+                <h5 class="title font-raleway-semibold">Lastest Post</h5>
+
+                <div>
+                    <span>15.07.2018</span>
+                    <p class="font-raleway-semibold">At vero eos et accusamus</p>
+                </div>
+                <div>
+                    <span>14.07.2018</span>
+                    <p class="font-raleway-semibold">Ut enim ad minima veniam</p>
+                </div>
+                <div>
+                    <span>13.07.2018</span>
+                    <p class="font-raleway-semibold">Nor again is there anyone</p>
+                </div>
+
+            </div>
+            <div class="col-3">
+                <h5 class="title font-raleway-semibold">Google Map</h5>
+                <div class="embed-map-fixed">
+                    <div class="embed-map-container"><iframe class="embed-map-frame" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=250&height=200&hl=en&q=University%20of%20Oxford&t=&z=14&ie=UTF8&iwloc=B&output=embed"></iframe><a href="https://sprunkiretake.net" style="font-size:2px!important;color:gray!important;position:absolute;bottom:0;left:0;z-index:1;max-height:1px;overflow:hidden">sprunki retake</a></div>
+                    <style>
+                        .embed-map-fixed {
+                            position: relative;
+                            text-align: right;
+                            width: 250px;
+                            height: 200px;
+                        }
+
+                        .embed-map-container {
+                            overflow: hidden;
+                            background: none !important;
+                            width: 250px;
+                            height: 200px;
+                        }
+
+                        .embed-map-frame {
+                            width: 250px !important;
+                            height: 200px !important;
+                        }</style>
+                </div>
             </div>
         </div>
-        <div>
-            &copy; 2025 - Restaurant - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="copyright">
+            &copy; 2025 - Restaurant Website by Json Masker
         </div>
     </div>
 </footer>

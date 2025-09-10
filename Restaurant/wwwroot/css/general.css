@@ -27,22 +27,6 @@
 /*#region responsive*/
 /*#endregion*/
 /*#region text-color*/
-.text-color-white {
-  color: #fff;
-}
-
-.text-color-black {
-  color: #1e1e1e;
-}
-
-.text-color-red {
-  color: #FF4141;
-}
-
-.text-color-pink {
-  color: #e72f8b;
-}
-
 /*#endregion*/
 /*#region text-style*/
 .text-uppercase {
@@ -77,16 +61,20 @@
 
 /*#endregion*/
 /*#region font-family*/
-.font-regular {
-  font-family: "Tinos Regular";
+.font-raleway-semibold {
+  font-family: "Raleway SemiBold";
 }
 
-.font-italic {
-  font-family: "Tinos Italic";
+.font-satisfy-regular {
+  font-family: "Satisfy Regular";
 }
 
-.font-blod {
-  font-family: "Tinos Blod";
+.font-raleway-regular {
+  font-family: "Raleway Regular";
+}
+
+.font-bitter-regular {
+  font-family: "Bitter Regular";
 }
 
 /*#endregion*/
@@ -154,20 +142,6 @@
   border-block-color: #fff;
   border: 2px solid;
   background-color: transparent;
-  padding: 4px 6px;
-}
-
-.button-pink {
-  color: #fff;
-  background-color: #e72f8b;
-  padding: 4px 6px;
-}
-
-.button-red {
-  color: #fff;
-  background-color: #FF4141;
-  border-block-color: #fff;
-  border: 1px solid;
   padding: 4px 6px;
 }
 

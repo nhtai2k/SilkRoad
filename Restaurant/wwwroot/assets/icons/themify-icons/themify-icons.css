@@ -1079,6 +1079,3 @@
 .ti-rss-alt:before {
 	content: "\e75f";
 }
-.ti-eye-close:before {
-	content: url("./SVG/eye-close.svg");
-}
