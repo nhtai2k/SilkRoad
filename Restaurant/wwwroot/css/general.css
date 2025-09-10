@@ -32,6 +32,10 @@
 /*#region responsive*/
 /*#endregion*/
 /*#region text-color*/
+.text-color-yellow {
+  color: #CDAA7C;
+}
+
 /*#endregion*/
 /*#region text-style*/
 .text-uppercase {
@@ -80,6 +84,10 @@
 
 .font-bitter-regular {
   font-family: "Bitter Regular";
+}
+
+.font-satisfy-regular {
+  font-family: "Satisfy Regular";
 }
 
 /*#endregion*/

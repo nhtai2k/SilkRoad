@@ -73,6 +73,10 @@ body {
 /*#region responsive*/
 /*#endregion*/
 /*#region text-color*/
+.text-color-yellow {
+  color: #CDAA7C;
+}
+
 /*#endregion*/
 /*#region text-style*/
 .text-uppercase {
@@ -121,6 +125,10 @@ body {
 
 .font-bitter-regular {
   font-family: "Bitter Regular";
+}
+
+.font-satisfy-regular {
+  font-family: "Satisfy Regular";
 }
 
 /*#endregion*/
@@ -1071,12 +1079,42 @@ html {
   padding: 0.25rem 0;
   text-align: center;
 }
-.homePage .homeContent {
-  overflow: hidden;
+.homePage .slideShowContainer {
+  width: 100%;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: row;
 }
-@media only screen and (width < 1200px) {
-  .homePage .homeContent {
-    max-width: 95%;
-    margin: auto;
-  }
+.homePage .slideShowContainer .slide {
+  max-width: 570px;
+  margin: auto;
+  background-color: #181818;
+  position: relative;
+  color: #fff;
+}
+.homePage .slideShowContainer .slide .slideInfor {
+  padding: 2rem 3rem;
+  text-align: center;
+}
+.homePage .slideShowContainer .slide .slideInfor .heading {
+  margin-bottom: 1.25rem;
+}
+.homePage .slideShowContainer .slide::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  border: 1px solid rgba(205, 170, 124, 0.5);
+}
+.homePage .ourServiceContainer {
+  width: 100%;
+  min-height: 400px;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-image: url("../assets/images/home/our-service-bg.jpg");
 }
