@@ -365,7 +365,6 @@
 		'ti-css3': '&#xe75d;',
 		'ti-rss': '&#xe75e;',
 		'ti-rss-alt': '&#xe75f;',
-		'ti-eye-close': '&#xe760;',
 		'0': 0
 		},
 		els = document.getElementsByTagName('*'),

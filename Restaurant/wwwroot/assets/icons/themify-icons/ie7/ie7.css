@@ -1054,6 +1054,3 @@
 .ti-rss-alt {
 	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe75f;');
 }
-.ti-eye-close {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe760;');
-}

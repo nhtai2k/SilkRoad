@@ -1,0 +1,30 @@
+﻿<header class="headerContainer">
+    <section class="headerDesktop">
+        <a class="logoImage" asp-controller="Home" asp-action="Index">
+            <img class="w-100" src="~/assets/images/logo.png" alt="logo" />
+        </a>
+        <ul class="navBar">
+            <li class="navItem">
+                <a  asp-controller="Home" asp-action="Index">Home</a>
+            </li>
+            <li class="navItem">
+                <a  asp-controller="Category" asp-action="Index">Menu</a>
+            </li>
+            <li class="navItem">
+                <a asp-controller="Promotion" asp-action="Index">Promotion</a>
+            </li>
+            <li class="navItem">
+                <a asp-controller="Reservation" asp-action="Index">Reservation</a>
+            </li>
+            <li class="navItem">
+                <a asp-controller="Blog" asp-action="Index">Blog</a>
+            </li>
+            <li class="navItem">
+                <a asp-controller="AboutUs" asp-action="Index">About Us</a>
+            </li>
+        </ul>
+        <a class="language" asp-controller="Home" asp-action="Index">
+            VN
+        </a>
+    </section>
+</header>

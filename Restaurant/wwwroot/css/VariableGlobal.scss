@@ -1,22 +1,27 @@
 ﻿
 @font-face {
-    font-family: "Satisfy-Regular";
+    font-family: "Satisfy Regular";
     src: url('../assets/fonts/Satisfy/Satisfy-Regular.ttf');
     font-display: swap;
 }
 @font-face {
-    font-family: "Raleway-SemiBold";
+    font-family: "Raleway SemiBold";
     src: url('../assets/fonts/Raleway/Raleway-SemiBold.ttf');
     font-display: swap;
 }
 @font-face {
-    font-family: "Raleway-Bold";
+    font-family: "Raleway Bold";
     src: url('../assets/fonts/Raleway/Raleway-Bold.ttf');
     font-display: swap;
 }
 @font-face {
-    font-family: "Raleway-Regular";
+    font-family: "Raleway Regular";
     src: url('../assets/fonts/Raleway/Raleway-Regular.ttf');
+    font-display: swap;
+}
+@font-face {
+    font-family: "Bitter Regular";
+    src: url('../assets/fonts/Bitter/Bitter-Regular.ttf');
     font-display: swap;
 }
 /*#region width*/
@@ -38,11 +43,12 @@ $maxHieghtBanner_MD: 95%;
 /*#endregion*/
 
 /*#region color*/
-$color_black_1e1e1e: #1e1e1e;
 $color_black_000000: #000000;
+$color_black_181818: #181818;
 $color_white_fff: #fff;
-$color_pink_e72f8b: #e72f8b;
-$color_red_FF4141: #FF4141;
+$color_gray_b2b2b2: #b2b2b2;
+$color_yellow_CDAA7C: #CDAA7C;
+$color_yellow_80694D: #80694D;
 /*#endregion*/
 /*#region font-size*/
 $text-level-1: 60px;
