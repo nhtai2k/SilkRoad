@@ -1178,3 +1178,6 @@ html {
 .homePage .ourMenuContainer .ourMenu .menuBox .menuInfor .menuItem ul li:last-child span::after {
   content: "";
 }
+.homePage .ourMenuContainer .ourMenu .menuBox:nth-child(even) {
+  flex-direction: row-reverse;
+}
