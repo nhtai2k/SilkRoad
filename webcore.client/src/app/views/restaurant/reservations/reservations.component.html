@@ -1,0 +1,293 @@
+<h3>Danh Sách Đặt Bàn</h3>
+<c-accordion class="mb-4">
+  <c-accordion-item #item0="cAccordionItem" [visible]="true">
+    <ng-template cTemplateId="accordionHeaderTemplate">
+      <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
+        Bộ Lọc:
+      </button>
+    </ng-template>
+    <ng-template cTemplateId="accordionBodyTemplate">
+      <div class="accordion-body">
+        <div class="row">
+          <div class="col-8">
+            <form cForm class="w-100" [formGroup]="filterForm" (ngSubmit)="onSubmitFilterForm()">
+              <div class="row">
+                <div cFormFloating class="mb-2 col-6">
+                  <select class="form-control" formControlName="tableId" cSelect>
+                    <option value="-1">Tất cả bàn</option>
+                    @for (item of tableList; track $index) {
+                    <option [value]="item.id">{{ item.name }}</option>
+                    }
+                  </select>
+                </div>
+                <div cFormFloating class="mb-2 col-6">
+                  <select class="form-control" formControlName="statusId" cSelect>
+                    <option value="-1">Tất cả trạng thái</option>
+                    <option value="1">New</option>
+                    <option value="2">Check-In</option>
+                    <option value="3">Check-Out</option>
+
+                  </select>
+                </div>
+                <div cFormFloating class="mb-2 col-6">
+                  <input cInput type="text" formControlName="searchText" class="form-control" placeholder="Search...">
+                </div>
+                <div class="mb-2 col-6 d-flex align-items-end">
+                  <button type="submit" class="btn btn-primary w-100">Lọc</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="col-4 ">
+            <div class="justify-content-end d-flex">
+              <button (click)="toggleLiveCreateModel()" class="btn btn-success me-2">
+                <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+              </button>
+              <button class="btn btn-info">
+                <svg [cIcon]="icons.cilUserPlus" width="25" class="text-white" title="Plus Icon"></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </c-accordion-item>
+</c-accordion>
+
+<app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
+  (changePageSize)="onPageSizeChange($event)">
+  <thead class="text-nowrap text-truncate">
+    <tr>
+      <th scope="col">STT</th>
+      <th scope="col">Mã</th>
+      <th scope="col">Tên</th>
+      <th scope="col">Số Điện Thoại</th>
+      <th scope="col">Số Khách</th>
+      <th scope="col">Ngày Tạo</th>
+      <th scope="col">Tạo Bởi</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (item of data.items; track item.id; let i = $index) {
+    <tr>
+      <td>{{ i+1 }}</td>
+      <td>{{ item.code }}</td>
+      <td>{{ item.fullName }}</td>
+      <td>{{ item.phoneNumber }}</td>
+      <td>{{ item.numberOfGuests }}</td>
+      <td>{{ item.createdAt | date: 'dd/MM/yyyy HH:mm'}}</td>
+      <td>{{ item.createdBy }}</td>
+      <td>
+        <div class="d-flex justify-content-end">
+          @if(!item.hasCheckedIn){
+          <button (click)="checkIn(item.id)" class="btn btn-primary me-2">
+            Check-In
+          </button>
+          }
+          @if(item.hasCheckedIn && !item.hasCheckedOut){
+          <button (click)="checkOut(item.id)" class="btn btn-primary me-2">
+            Check-Out
+          </button>
+          }
+          <button (click)="view(item.id)" class="btn btn-info me-2">
+            <app-eye-icon color="#ffffff"> </app-eye-icon>
+          </button>
+        </div>
+      </td>
+    </tr>
+    }
+  </tbody>
+</app-data-table>
+
+<!-- Create Modal -->
+<c-modal backdrop="static" [visible]="visibleCreateModal" (visibleChange)="handleLiveCreateModelChange($event)"
+  id="verticallyCenteredCreateModal" size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Đặt Bàn</h5>
+    <button (click)="toggleLiveCreateModel()" cButtonClose></button>
+  </c-modal-header>
+  <form cForm [formGroup]="createForm" (ngSubmit)="onSubmitCreateForm()">
+    <c-modal-body>
+      <div class="row mb-2">
+        <div class="col-12">
+          <label cLabel>Chọn Bàn: <span class="text-danger">(*)</span></label>
+          <app-select-search [options]="tableList"
+            (onChangeValue)="createForm.patchValue({ tableId: $event })"></app-select-search>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-6">
+          <label cLabel for="fullName">Họ Tên: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="fullName">
+          @if (fullNameCreateForm?.invalid && (fullNameCreateForm?.dirty || fullNameCreateForm?.touched)) {
+          <div class="text-danger">
+            @if (fullNameCreateForm?.hasError('required')) {
+            <div>
+              Name is required.
+            </div>
+            }
+          </div>
+          }
+        </div>
+        <div class="col-6">
+          <label cLabel for="phoneNumber">Số Điện Thoại: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="phoneNumber">
+          @if (phoneNumberCreateForm?.invalid && (phoneNumberCreateForm?.dirty || phoneNumberCreateForm?.touched)) {
+          <div class="text-danger">
+            @if (phoneNumberCreateForm?.hasError('required')) {
+            <div>
+              Phone is required.
+            </div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+      <div class="mb-2 row">
+
+        <div class="col-6">
+          <label cLabel for="capacity">Số Lượng Khách: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="numberOfGuests" type="number" min="1">
+          @if (numberOfGuestsCreateForm?.invalid && (numberOfGuestsCreateForm?.dirty ||
+          numberOfGuestsCreateForm?.touched)) {
+          <div class="text-danger">
+            @if (numberOfGuestsCreateForm?.hasError('required')) {
+            <div>
+              Number of guests is required.
+            </div>
+            }
+            @if (numberOfGuestsCreateForm?.hasError('min')) {
+            <div>
+              Number of guests must be at least 1.
+            </div>
+            }
+          </div>
+          }
+        </div>
+        <div class="col-6">
+          <label cLabel for="checkInTime">Thời Gian Đặt Bàn: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="checkInTime" type="datetime-local">
+          @if (checkInTimeCreateForm?.invalid && (checkInTimeCreateForm?.dirty || checkInTimeCreateForm?.touched)) {
+          <div class="text-danger">
+            @if (checkInTimeCreateForm?.hasError('required')) {
+            <div>
+              Check-in time is required.
+            </div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+      <div>
+        <label cLabel for="note">Ghi Chú:</label>
+        <textarea cFormControl formControlName="note" rows="3"></textarea>
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button (click)="toggleLiveCreateModel()" cButton color="secondary">
+        Đóng
+      </button>
+      <button cButton type="submit" [disabled]="!createForm.valid" color="primary">Lưu</button>
+    </c-modal-footer>
+  </form>
+</c-modal>
+
+<!-- View Model -->
+<c-modal backdrop="static" [visible]="visibleViewModal" (visibleChange)="handleLiveViewModelChange($event)"
+  id="verticallyCenteredViewModal" size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Thông Tin Đặt Bàn</h5>
+    <button (click)="toggleLiveViewModel()" cButtonClose></button>
+  </c-modal-header>
+  <form cForm [formGroup]="viewForm">
+    <c-modal-body>
+      <div class="row mb-2">
+        <div class="col-12">
+          <label cLabel>Chọn Bàn: <span class="text-danger">(*)</span></label>
+          <select formControlName="tableId" class="form-control" cSelect>
+            <option value="-1">Chọn bàn</option>
+            @@for (item of tableList; track item.id; let i = $index) {
+              <option [value]="item.id">{{ item.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-6">
+          <label cLabel for="fullName">Họ Tên: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="fullName">
+        </div>
+        <div class="col-6">
+          <label cLabel for="phoneNumber">Số Điện Thoại: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="phoneNumber">
+        </div>
+      </div>
+      <div class="mb-2 row">
+
+        <div class="col-6">
+          <label cLabel for="capacity">Số Lượng Khách: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="numberOfGuests" type="number" min="1">
+        </div>
+        <div class="col-6">
+          <label cLabel for="checkInTime">Thời Gian Đặt Bàn: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="checkInTime" type="datetime-local">
+        </div>
+      </div>
+      <div>
+        <label cLabel for="note">Ghi Chú:</label>
+        <textarea cFormControl formControlName="note" rows="3"></textarea>
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button (click)="toggleLiveViewModel()" cButton color="secondary">
+        Đóng
+      </button>
+    </c-modal-footer>
+  </form>
+</c-modal>
+
+
+<!-- Check In Modal -->
+<c-modal backdrop="static" [visible]="visibleCheckInModal" (visibleChange)="handleLiveCheckInModelChange($event)"
+  id="verticallyCenteredCheckInModal">
+  <c-modal-header>
+    <h5 cModalTitle>Check In</h5>
+    <button (click)="toggleLiveCheckInModel()" cButtonClose></button>
+  </c-modal-header>
+  <form cForm [formGroup]="checkInForm" (ngSubmit)="onSubmitCheckInForm()">
+    <c-modal-body>
+      <div class="row mb-2">
+        <div class="col-12">
+          <label cLabel>Chọn Bàn: <span class="text-danger">(*)</span></label>
+          <app-select-search [options]="tableList" [selectedValue]="checkInTableId()"
+            (onChangeValue)="checkInForm.patchValue({ tableId: $event })"></app-select-search>
+        </div>
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button (click)="toggleLiveCheckInModel()" cButton color="secondary">
+        Đóng
+      </button>
+      <button cButton type="submit" [disabled]="!checkInForm.valid" color="primary">Lưu</button>
+    </c-modal-footer>
+  </form>
+</c-modal>
+
+<!-- Check Out Modal -->
+<c-modal backdrop="static" [visible]="visibleCheckOutModal" (visibleChange)="handleLiveCheckOutModelChange($event)"
+  id="verticallyCenteredCheckOutModal">
+  <c-modal-header>
+    <h5 cModalTitle>Check-Out</h5>
+    <button (click)="toggleLiveCheckOutModel()" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <h3>Bạn có chắc là muốn Check-Out?</h3>
+  </c-modal-body>
+  <c-modal-footer>
+    <button (click)="toggleLiveCheckOutModel()" cButton color="secondary">
+      Đóng
+    </button>
+    <button cButton type="submit" color="primary" (click)="confirmCheckOut()">Xác Nhận</button>
+  </c-modal-footer>
+</c-modal>

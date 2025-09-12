@@ -1,0 +1,218 @@
+<h3>Cập Nhật Nhóm Món</h3>
+<c-card>
+  <c-card-body>
+    <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmitUpdateForm()">
+      <div class="mb-2 d-flex flex-row">
+        <c-form-check class="me-2 d-flex align-items-center">
+          <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
+          <label cFormCheckLabel for="isActive" class="me-2">Hoạt Động </label>
+        </c-form-check>
+        <div>
+          <label for="priority" class="me-2">Ưu Tiên: </label>
+          <input formControlName="priority" type="number" class="me-2 priorityInput">
+          @if (priorityUpdateForm?.invalid && (priorityUpdateForm?.dirty || priorityUpdateForm?.touched)) {
+          <div class="text-danger">
+            @if (priorityUpdateForm?.hasError('min') || priorityUpdateForm?.hasError('max')) {
+            Priority must be between 1 and 255.
+            }
+          </div>
+          }
+        </div>
+      </div>
+      <div class="mb-2 row">
+        <div class="col-4">
+          <label cLabel>Chọn Nhóm Món: <span class="text-danger">(*)</span></label>
+          <app-tree-select [options]="categoryOptions" [selectedValue]="setDefaultCategoryId()"
+            (onChangeValue)="updateForm.patchValue({ categoryId: $event })"></app-tree-select>
+        </div>
+        <div class="col-4">
+          <label cLabel for="price">Giá Thành: <span class="text-danger">(*)</span></label>
+          <app-input-currency (valueChange)="updateForm.patchValue({ price: $event })"
+            [initialValue]="setDefaultMoney()"></app-input-currency>
+        </div>
+        <div class="col-2">
+          <label cLabel for="quantity">Số Lượng: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="quantity" class="form-control">
+        </div>
+        <div class="col-2">
+          <label cLabel for="unitId">Đơn Vị: <span class="text-danger">(*)</span></label>
+          <select formControlName="unitId" cSelect>
+            <option value="-1">-- Chọn Đơn Vị --</option>
+            @for (item of unitOptions; track item.id; let i = $index) {
+            <option [value]="item.id">{{ item.name }}</option>
+            }
+          </select>
+          @if (unitIdUpdateForm?.invalid && (unitIdUpdateForm?.dirty || unitIdUpdateForm?.touched)) {
+          <div class="text-danger">
+            @if (unitIdUpdateForm?.hasError('required')) {
+            <div>
+              Unit is required.
+            </div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+      <div class="mb-2 d-flex flex-row justify-content-end">
+        <button type="button" class="btn btn-info text-white" (click)="toggleLiveModel()">
+          <svg [cIcon]="icons.cilPlus" width="20" class="text-white" title="Add Icon"></svg>
+          Thêm Tên
+        </button>
+      </div>
+      @if(nameList().length > 0){
+      <table cTable>
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Tên Tiếng Việt</th>
+            <th scope="col">Tên Tiếng Anh</th>
+            <th scope="col">Tên Tiếng Trung</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of nameList(); track item; let i = $index) {
+          <tr>
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ item.nameVN }}</td>
+            <td>{{ item.nameEN }}</td>
+            <td>{{ item.nameCN }}</td>
+          </tr>
+          }
+      </table>
+      }
+
+
+      <div class="mb-2 row">
+        <div class="col-4">
+          <label cLabel for="descriptionVN">Mô Tả Tiếng Việt: <span class="text-danger">(*)</span></label>
+          <textarea cFormControl formControlName="descriptionVN" rows="3"></textarea>
+          @if (descriptionVNUpdateForm?.invalid && (descriptionVNUpdateForm?.dirty || descriptionVNUpdateForm?.touched))
+          {
+          <div class="text-danger">
+            @if (descriptionVNUpdateForm?.hasError('required')) {
+            <div>
+              descriptionVN is required.
+            </div>
+            }
+          </div>
+          }
+        </div>
+        <div class="col-4">
+          <label cLabel for="descriptionEN">Mô Tả Tiếng Anh: <span class="text-danger">(*)</span></label>
+          <textarea cFormControl formControlName="descriptionEN" rows="3"></textarea>
+          @if (descriptionENUpdateForm?.invalid && (descriptionENUpdateForm?.dirty || descriptionENUpdateForm?.touched))
+          {
+          <div class="text-danger">
+            @if (descriptionENUpdateForm?.hasError('required')) {
+            <div>
+              descriptionEN is required.
+            </div>
+            }
+          </div>
+          }
+        </div>
+        <div class="col-4">
+          <label cLabel for="descriptionCN">Mô Tả Tiếng Trung: <span class="text-danger">(*)</span></label>
+          <textarea cFormControl formControlName="descriptionCN" rows="3"></textarea>
+          @if (descriptionCNUpdateForm?.invalid && (descriptionCNUpdateForm?.dirty || descriptionCNUpdateForm?.touched))
+          {
+          <div class="text-danger">
+            @if (descriptionCNUpdateForm?.hasError('required')) {
+            <div>
+              descriptionCN is required.
+            </div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+      <div class="mb-2">
+        <label cLabel for="note">Ghi Chú: </label>
+        <textarea cFormControl formControlName="note" rows="4"></textarea>
+      </div>
+      <div class="mb-2">
+        <label cLabel for="note">Hình Ảnh:</label>
+        <input class="d-none" id="updateUploadImage" type="file" accept="image/*"
+          (change)="onChangeUploadImage($event,'update')" />
+        <div class="mt-2 reviewImage" (click)="openFileInput('update')">
+          @if (!reviewUpdateUploadImage) {
+          <svg [cIcon]="icons.cilCloudUpload" width="140" title="Shield Icon"></svg>
+          }
+          @if (reviewUpdateUploadImage) {
+          <div [innerHTML]="reviewUpdateUploadImage"
+            class="w-100 h-100 d-flex justify-content-center align-items-center"></div>
+          }
+        </div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button cButton type="submit" [disabled]="!updateForm.valid">
+          <svg [cIcon]="icons.cilSave" width="25" class="text-white" title="Save Icon"></svg>
+        </button>
+        <a routerLink="/dishes" class="ms-2 btn btn-info">
+          <svg [cIcon]="icons.cilExitToApp" width="25" class="text-white" title="Exit Icon"></svg>
+        </a>
+      </div>
+    </form>
+  </c-card-body>
+</c-card>
+
+<!-- Add List Name Modal -->
+<c-modal backdrop="static" [visible]="visibleModal" (visibleChange)="handleLiveModelChange($event)"
+  id="verticallyCenteredUpdateModal">
+  <c-modal-header>
+    <h5 cModalTitle>Thêm Tên Món</h5>
+    <button (click)="toggleLiveModel()" cButtonClose></button>
+  </c-modal-header>
+  <form cForm [formGroup]="addNameForm" (ngSubmit)="onSubmitAddNameForm()">
+    <c-modal-body>
+      <div class="mb-2 row">
+        <div class="col-12">
+          <label cLabel for="nameVN">Tên Tiếng Việt: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="nameVN">
+          @if (nameVNUpdateForm?.invalid && (nameVNUpdateForm?.dirty || nameVNUpdateForm?.touched)) {
+          <div class="text-danger">
+            @if (nameVNUpdateForm?.hasError('required')) {
+            <div>
+              Tên Tiếng Việt là bắt buộc.
+            </div>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="col-12">
+          <label cLabel for="nameEN">Tên Tiếng Anh: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="nameEN">
+          @if (nameENUpdateForm?.invalid && (nameENUpdateForm?.dirty || nameENUpdateForm?.touched)) {
+          <div class="text-danger">
+            @if (nameENUpdateForm?.hasError('required')) {
+            <div>
+              Tên Tiếng Anh là bắt buộc.
+            </div>
+            }
+          </div>
+          }
+        </div>
+        <div class="col-12">
+          <label cLabel for="nameCN">Tên Tiếng Trung: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="nameCN">
+          @if (nameCNUpdateForm?.invalid && (nameCNUpdateForm?.dirty || nameCNUpdateForm?.touched)) {
+          <div class="text-danger">
+            @if (nameCNUpdateForm?.hasError('required')) {
+            <div>
+              Tên Tiếng Trung là bắt buộc.
+            </div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button (click)="toggleLiveModel()" cButton color="secondary">
+        Đóng
+      </button>
+      <button cButton type="submit" [disabled]="!addNameForm.valid" color="primary">Lưu</button>
+    </c-modal-footer>
+  </form>
+</c-modal>

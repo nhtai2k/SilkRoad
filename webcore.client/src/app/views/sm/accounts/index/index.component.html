@@ -1,27 +1,35 @@
 <h1>Account List</h1>
 <div class="d-flex justify-content-end mb-2">
-    <button routerLink="./create" class="btn btn-success">Create</button>
+  <button routerLink="./create" class="btn btn-success">
+    <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Create Icon"></svg>
+  </button>
 </div>
-<app-data-table [data]="pageInformation"
-(changePageIndex)="onPageIndexChange($event)" (changePageSize)="onPageSizeChange($event)">
-<thead class="text-nowrap text-truncate">
-  <tr>
-    <th scope="col">STT</th>
-    <th scope="col">UserName</th>
-    <th scope="col">Email</th>
-    <th scope="col">IsActive</th>
-    <th scope="col"></th>
-  </tr>
-</thead>
-<tbody>
-  <tr *ngFor="let item of data.items; index as i ">
-    <td>{{ i+1 }}</td>
-    <td>{{ item.userName }}</td>
-    <td>{{ item.email }}</td>
-    <td>{{ item.isActive }}</td>
-    <td>
-      <a routerLink="./update/{{ item.id }}" class="btn btn-primary">Edit</a>
-      <!-- <button class="btn btn-danger" (click)="delete(item.id)">Delete</button> -->
-  </tr>
-</tbody>
+<app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
+  (changePageSize)="onPageSizeChange($event)">
+  <thead class="text-nowrap text-truncate">
+    <tr>
+      <th scope="col">STT</th>
+      <th scope="col">UserName</th>
+      <th scope="col">Email</th>
+      <th scope="col">IsActive</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of data.items; index as i ">
+      <td>{{ i+1 }}</td>
+      <td>{{ item.userName }}</td>
+      <td>{{ item.email }}</td>
+      <td>{{ item.isActive }}</td>
+      <td>
+        <div class="d-flex justify-content-end"><!--  -->
+          <a routerLink="./update/{{ item.id }}" class="btn btn-primary me-2">
+            <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
+          </a>
+          <button class="btn btn-danger">
+            <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+          </button>
+        </div>
+    </tr>
+  </tbody>
 </app-data-table>

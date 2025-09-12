@@ -1,0 +1,273 @@
+<h3>Danh Sách Đơn Vị</h3>
+<div class="d-flex justify-content-end mb-2">
+  <button (click)="toggleLiveTrashModal()" class="btn btn-warning me-2">
+    <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Trash Icon"></svg>
+  </button>
+  <button (click)="toggleLiveCreateModel()" class="btn btn-success">
+    <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+  </button>
+</div>
+<app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
+  (changePageSize)="onPageSizeChange($event)">
+  <thead class="text-nowrap text-truncate">
+    <tr>
+      <th scope="col">STT</th>
+      <th scope="col">Tên Tiếng Việt</th>
+      <th scope="col">Tên Tiếng Anh</th>
+      <th scope="col">Tên Tiếng Trung</th>
+      <th scope="col">Hoạt Động</th>
+      <th scope="col">Tạo Bởi</th>
+      <th scope="col">Cập Nhật Bởi</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (item of data.items; track item.id; let i = $index) {
+    <tr>
+      <td>{{ i+1 }}</td>
+      <td>{{ item.nameVN }}</td>
+      <td>{{ item.nameEN }}</td>
+      <td>{{ item.nameCN }}</td>
+      <td>{{ item.isActive }}</td>
+      <td>{{ item.createdBy }}</td>
+      <td>{{ item.modifiedBy }}</td>
+      <td>
+        <div class="d-flex justify-content-end">
+          <button (click)="updateData(item.id)" class="btn btn-primary me-2">
+            <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
+          </button>
+          <button (click)="softDeleteData(item.id)" class="btn btn-danger">
+            <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+          </button>
+        </div>
+      </td>
+    </tr>
+    }
+  </tbody>
+</app-data-table>
+
+<!-- Create Modal -->
+<c-modal backdrop="static" [visible]="visibleCreateModal" (visibleChange)="handleLiveCreateModelChange($event)"
+  id="verticallyCenteredCreateModal" size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Thêm Đơn Vị</h5>
+    <button (click)="toggleLiveCreateModel()" cButtonClose></button>
+  </c-modal-header>
+  <form cForm [formGroup]="createForm" (ngSubmit)="onSubmitCreateForm()">
+    <c-modal-body>
+      <div class="mb-2 d-flex flex-row">
+        <c-form-check class="me-2 d-flex align-items-center">
+          <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
+          <label cFormCheckLabel for="isActive" class="me-2" i18n="@@active">Hoạt Động </label>
+        </c-form-check>
+        <div>
+          <label for="priority" class="me-2">Ưu Tiên: </label>
+          <input formControlName="priority" type="number" class="me-2 priorityInput">
+          @if (priorityCreateForm?.invalid && (priorityCreateForm?.dirty || priorityCreateForm?.touched)) {
+          <div class="text-danger">
+            @if (priorityCreateForm?.hasError('min') || priorityCreateForm?.hasError('max')) {
+            Priority must be between 1 and 255.
+            }
+          </div>
+          }
+        </div>
+      </div>
+      <div class="mb-2 row">
+        <div class="col-6">
+          <label cLabel for="nameVN">Tên Tiếng Việt: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="nameVN">
+          @if (nameVNCreateForm?.invalid && (nameVNCreateForm?.dirty || nameVNCreateForm?.touched)) {
+          <div class="text-danger">
+            @if (nameVNCreateForm?.hasError('required')) {
+            <div>
+              Tên Tiếng Việt là bắt buộc.
+            </div>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="col-6">
+          <label cLabel for="nameEN">Tên Tiếng Anh: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="nameEN">
+          @if (nameENCreateForm?.invalid && (nameENCreateForm?.dirty || nameENCreateForm?.touched)) {
+          <div class="text-danger">
+            @if (nameENCreateForm?.hasError('required')) {
+            <div>
+              Tên Tiếng Anh là bắt buộc.
+            </div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+      <div class="mb-2 row">
+        <div class="col-12">
+          <label cLabel for="nameCN">Tên Tiếng Trung: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="nameCN">
+          @if (nameCNCreateForm?.invalid && (nameCNCreateForm?.dirty || nameCNCreateForm?.touched)) {
+          <div class="text-danger">
+            @if (nameCNCreateForm?.hasError('required')) {
+            <div>
+              Tên Tiếng Trung là bắt buộc.
+            </div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+      <div>
+        <label cLabel for="note">Ghi Chú:</label>
+        <textarea cFormControl formControlName="note" rows="3"></textarea>
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button (click)="toggleLiveCreateModel()" cButton color="secondary">
+        Đóng
+      </button>
+      <button cButton type="submit" [disabled]="!createForm.valid" color="primary">Lưu</button>
+    </c-modal-footer>
+  </form>
+</c-modal>
+<!-- Update Modal -->
+<c-modal backdrop="static" [visible]="visibleUpdateModal" (visibleChange)="handleLiveUpdateModelChange($event)"
+  id="verticallyCenteredUpdateModal" size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Cập Nhật Đơn Vị</h5>
+    <button (click)="toggleLiveUpdateModel()" cButtonClose></button>
+  </c-modal-header>
+  <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmitUpdateForm()">
+    <c-modal-body>
+      <div class="mb-2 d-flex flex-row">
+        <c-form-check class="me-2 d-flex align-items-center">
+          <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
+          <label cFormCheckLabel for="isActive" class="me-2">Hoạt Động </label>
+        </c-form-check>
+        <div>
+          <label for="priority" class="me-2">Ưu Tiên: </label>
+          <input formControlName="priority" type="number" class="me-2 priorityInput">
+          @if (priorityUpdateForm?.invalid && (priorityUpdateForm?.dirty || priorityUpdateForm?.touched)) {
+          <div class="text-danger">
+            @if (priorityUpdateForm?.hasError('min') || priorityUpdateForm?.hasError('max')) {
+            Priority must be between 1 and 255.
+            }
+          </div>
+          }
+        </div>
+      </div>
+      <div class="mb-2 row">
+        <div class="col-6">
+          <label cLabel for="nameVN">Tên Tiếng Việt: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="nameVN">
+          @if (nameVNUpdateForm?.invalid && (nameVNUpdateForm?.dirty || nameVNUpdateForm?.touched)) {
+          <div class="text-danger">
+            @if (nameVNUpdateForm?.hasError('required')) {
+            <div>
+              Tên Tiếng Việt là bắt buộc.
+            </div>
+            }
+          </div>
+          }
+        </div>
+        <div class="col-6">
+          <label cLabel for="nameEN">Tên Tiếng Anh: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="nameEN">
+          @if (nameENUpdateForm?.invalid && (nameENUpdateForm?.dirty || nameENUpdateForm?.touched)) {
+          <div class="text-danger">
+            @if (nameENUpdateForm?.hasError('required')) {
+            <div>
+              Tên Tiếng Anh là bắt buộc.
+            </div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+      <div class="mb-2 row">
+        <div class="col-12">
+          <label cLabel for="nameCN">Tên Tiếng Trung: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="nameCN">
+          @if (nameCNUpdateForm?.invalid && (nameCNUpdateForm?.dirty || nameCNUpdateForm?.touched)) {
+          <div class="text-danger">
+            @if (nameCNUpdateForm?.hasError('required')) {
+            <div>
+              Tên Tiếng Trung là bắt buộc.
+            </div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+      <div>
+        <label cLabel for="note">Ghi Chú:</label>
+        <textarea cFormControl formControlName="note" rows="3"></textarea>
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button (click)="toggleLiveUpdateModel()" cButton color="secondary">
+        Đóng
+      </button>
+      <button cButton type="submit" [disabled]="!updateForm.valid" color="primary">Lưu</button>
+    </c-modal-footer>
+  </form>
+</c-modal>
+<!--Delete Model-->
+<c-modal backdrop="static" [visible]="visibleDelete" (visibleChange)="handleLiveDeleteChange($event)"
+  id="verticallyCenteredDelete">
+  <c-modal-header>
+    <h5 cModalTitle>Xác Nhận</h5>
+    <button (click)="toggleLiveDelete()" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <p>Bạn có chắc là muốn xóa đi phòng ban này?</p>
+  </c-modal-body>
+  <c-modal-footer>
+    <button (click)="toggleLiveDelete()" cButton color="secondary">
+      Đóng
+    </button>
+    <button cButton (click)="onConfirmDelete()" color="primary">Xác Nhận</button>
+  </c-modal-footer>
+</c-modal>
+<!-- Trash Modal -->
+<c-modal backdrop="static" [visible]="visibleTrashModal" (visibleChange)="handleLiveTrashModalChange($event)"
+  id="verticallyCenteredTrashModal" size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Thùng Rác</h5>
+    <button (click)="toggleLiveTrashModal()" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <app-data-table [data]="trashPageInformation" (changePageIndex)="onTrashPageIndexChange($event)"
+      (changePageSize)="onTrashPageSizeChange($event)">
+      <thead class="text-nowrap text-truncate">
+        <tr>
+          <th scope="col">STT</th>
+          <th scope="col">Tên Tiếng Việt</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of trashData.items; track item.id; let i = $index) {
+        <tr>
+          <td>{{ i+1 }}</td>
+          <td>{{ item.nameVN }}</td>
+          <td>
+            <div class="d-flex justify-content-end">
+              <button (click)="restoreData(item.id)" class="btn btn-success me-2">
+                <svg [cIcon]="icons.cilLoopCircular" width="25" class="text-white" title="Restore Icon"></svg>
+              </button>
+              <button (click)="deleteData(item.id)" class="btn btn-danger">
+                <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+              </button>
+            </div>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </app-data-table>
+    @if (trashData.items.length === 0) {
+    <div class="d-flex justify-content-center">
+      <h3 class="opacity-75">Không có dữ liệu!</h3>
+    </div>
+    }
+  </c-modal-body>
+</c-modal>
