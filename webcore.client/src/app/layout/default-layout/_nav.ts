@@ -67,7 +67,38 @@ export const navItems: INavData[] = [
   //   url: '/features/email-service',
   //   iconComponent: { name: 'cil-envelope-closed' }
   // },
-//#endregion
+  //#endregion
+  //#region Restaurant
+  {
+    name: 'Restaurant',
+    title: true
+  },
+  {
+    name: 'Reservations',
+    url: '/reservations',
+    iconComponent: { name: 'cil-calendar' }
+  },
+  {
+    name: 'Categories',
+    url: '/categories',
+    iconComponent: { name: 'cil-list' }
+  },
+  {
+    name: 'Dishes',
+    url: '/dishes',
+    iconComponent: { name: 'cil-fastfood' }
+  },
+  {
+    name: 'Tables',
+    url: '/tables',
+    iconComponent: { name: 'cil-view-module' }
+  },
+  {
+    name: 'Units',
+    url: '/units',
+    iconComponent: { name: 'cil-line-style' }
+  },
+  //#endregion
   //#region Lipstick Shop
   {
     title: true,
@@ -83,7 +114,7 @@ export const navItems: INavData[] = [
     url: '/lipstick-shop/orders',
     iconComponent: { name: 'cil-notes' }
   },
-    {
+  {
     name: 'Payments',
     url: '/lipstick-shop/payments',
     iconComponent: { name: 'cil-money' }
@@ -162,48 +193,48 @@ export const navItems: INavData[] = [
   },
   //#endregion
   //#region Surveys
-  
-  // {
-  //   title: true,
-  //   name: 'Surveys'
-  // },
-  // {
-  //   name: 'Report',
-  //   url: '/surveys/report',
-  //   iconComponent: { name: 'cil-chart-line' }
-  // },
-  // {
-  //   name: 'Survey Results',
-  //   url: '/surveys/survey-results',
-  //   iconComponent: { name: 'cil-notes' }
-  // },
-  // {
-  //   name: 'Extend',
-  //   url: '/surveys/extend-survey',
-  //   iconComponent: { name: 'cil-puzzle' },
-  //   children: [
-  //     {
-  //       name: 'Question Groups',
-  //       url: '/surveys/extend-survey/question-groups',
-  //       icon: 'nav-icon-bullet'
-  //     },
-  //     {
-  //       name: 'Question Types',
-  //       url: '/surveys/extend-survey/question-types',
-  //       icon: 'nav-icon-bullet'
-  //     },
-  //     {
-  //       name: 'Questions',
-  //       url: '/surveys/extend-survey/questions',
-  //       icon: 'nav-icon-bullet'
-  //     },
-  //     {
-  //       name: 'Survey Forms',
-  //       url: '/surveys/extend-survey/survey-forms',
-  //       icon: 'nav-icon-bullet'
-  //     }
-  //   ]
-  // },
+
+  {
+    title: true,
+    name: 'Surveys'
+  },
+  {
+    name: 'Report',
+    url: '/surveys/report',
+    iconComponent: { name: 'cil-chart-line' }
+  },
+  {
+    name: 'Survey Results',
+    url: '/surveys/survey-results',
+    iconComponent: { name: 'cil-notes' }
+  },
+  {
+    name: 'Extend',
+    url: '/surveys/extend-survey',
+    iconComponent: { name: 'cil-puzzle' },
+    children: [
+      {
+        name: 'Question Groups',
+        url: '/surveys/extend-survey/question-groups',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: 'Question Types',
+        url: '/surveys/extend-survey/question-types',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: 'Questions',
+        url: '/surveys/extend-survey/questions',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: 'Survey Forms',
+        url: '/surveys/extend-survey/survey-forms',
+        icon: 'nav-icon-bullet'
+      }
+    ]
+  },
   //#endregion
   //#region System Management
   {

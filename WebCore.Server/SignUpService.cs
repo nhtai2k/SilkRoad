@@ -13,8 +13,6 @@ using LipstickBusinessLogic.ILipstickClientHelpers;
 using LipstickBusinessLogic.ILipstickHelpers;
 using LipstickBusinessLogic.LipstickClientHelpers;
 using LipstickBusinessLogic.LipstickHelpers;
-using RestaurantBusinessLogic.Helpers;
-using RestaurantBusinessLogic.IHelpers;
 using StockBusinessLogic.Helpers;
 using StockBusinessLogic.IHelpers;
 using SurveyBusinessLogic.Helpers;
