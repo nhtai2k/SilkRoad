@@ -1,30 +1,29 @@
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EColors } from '@common/global';
-import { ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, FormCheckComponent, FormControlDirective, FormDirective, FormLabelDirective, FormSelectDirective, TableDirective } from '@coreui/angular';
+import { ButtonDirective, CardBodyComponent, CardComponent,FormControlDirective, FormDirective, FormLabelDirective, FormSelectDirective, TableDirective } from '@coreui/angular';
 import { cilCloudUpload } from '@coreui/icons';
-import { IconDirective } from '@coreui/icons-angular';
 import { QrCodeService } from '@services/feature-services/qr-code.service';
 import { LoadingService } from '@services/helper-services/loading.service';
 import { ToastService } from '@services/helper-services/toast.service';
 @Component({
   selector: 'app-qr-code',
-  imports: [ CardComponent, CardBodyComponent,FormDirective, FormLabelDirective,
-     FormSelectDirective,NgIf, NgFor,
-      FormControlDirective, ButtonDirective, ReactiveFormsModule],
+  imports: [CardComponent, CardBodyComponent, FormDirective, FormLabelDirective, FormSelectDirective,
+     CommonModule, FormControlDirective, ButtonDirective, ReactiveFormsModule],
   templateUrl: './qr-code.component.html',
   styleUrl: './qr-code.component.scss'
 })
 export class QrCodeComponent {
+  //#region Variables
   color: string = '#ffffff';
   icons: any = { cilCloudUpload };
-  demoLogo:string = '';  
-  qrCodeImageUrl: string = '';  
-  qrCodeTypeList: string[] = ["Numbers","Characters","Characters and Numbers"];
+  demoLogo: string = '';
+  qrCodeImageUrl: string = '';
+  qrCodeTypeList: string[] = ["Numbers", "Characters", "Characters and Numbers"];
   generateAQrCodeForm: FormGroup = new FormGroup({
     content: new FormControl('https://lulusia.com/', Validators.required),
-    size: new FormControl(1,[Validators.min(1), Validators.max(500)]),
+    size: new FormControl(1, [Validators.min(1), Validators.max(500)]),
     logo: new FormControl(''),
     text: new FormControl(''),
     fontSize: new FormControl(12, [Validators.min(10), Validators.max(100)]),
@@ -36,23 +35,28 @@ export class QrCodeComponent {
   });
   generateListQRCodeForm: FormGroup = new FormGroup({
     prefix: new FormControl(''),
-    quantity: new FormControl(1,[Validators.min(1),Validators.max(10000)]),
-    codeLength: new FormControl(6,[Validators.min(1), Validators.max(10)]),
+    quantity: new FormControl(1, [Validators.min(1), Validators.max(10000)]),
+    codeLength: new FormControl(6, [Validators.min(1), Validators.max(10)]),
     randomType: new FormControl(0),
   });
+  //#endregion
 
-  constructor(private qrCodeService: QrCodeService, private toastService: ToastService, private loadingService : LoadingService) { }
+  //#region LifeCycle
+  constructor(private qrCodeService: QrCodeService, private toastService: ToastService, private loadingService: LoadingService) { }
+  //#endregion
+
+  //#region Methods
   onFileChange(event: any) {
-    const file:File = event.target.files[0];
+    const file: File = event.target.files[0];
     if (file) {
       //show image preview
       const reader = new FileReader();
       reader.onload = (e: any) => {
-          this.demoLogo = `<img src="${e.target.result}" alt="Image Preview"  class="w-50"/>`;
-          this.generateAQrCodeForm.patchValue({
-            logo: file
-          });
-        
+        this.demoLogo = `<img src="${e.target.result}" alt="Image Preview"  class="w-50"/>`;
+        this.generateAQrCodeForm.patchValue({
+          logo: file
+        });
+
       };
       reader.readAsDataURL(file);
     }
@@ -75,14 +79,17 @@ export class QrCodeComponent {
       formData.append('border', this.generateAQrCodeForm.value.border);
       formData.append('fontFamily', this.generateAQrCodeForm.value.fontFamily);
       formData.append('fontSize', this.generateAQrCodeForm.value.fontSize);
-      this.qrCodeService.generateAQRCode(formData).subscribe((res) => {
-        //how to display the qr code image
-        const blob = new Blob([res], { type: 'image/png' });
-        this.qrCodeImageUrl = URL.createObjectURL(blob);
-      }, err => {
-        this.toastService.showToast(EColors.danger,err.message);
+      this.qrCodeService.generateAQRCode(formData).subscribe({
+        next: (res) => {
+          //how to display the qr code image
+          const blob = new Blob([res], { type: 'image/png' });
+          this.qrCodeImageUrl = URL.createObjectURL(blob);
+        },
+        error: (err) => {
+          this.toastService.showToast(EColors.danger, err.message);
+        }
       });
-       
+
     }
   }
 
@@ -108,7 +115,7 @@ export class QrCodeComponent {
     formData.append('codeLength', this.generateListQRCodeForm.value.codeLength);
     formData.append('randomType', this.generateListQRCodeForm.value.randomType);
     this.qrCodeService.generateListQRCode(formData).subscribe((res) => {
-    this.loadingService.showLoadingComponent(false);
+      this.loadingService.showLoadingComponent(false);
       const blob = new Blob([res], { type: 'application/zip' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -117,17 +124,18 @@ export class QrCodeComponent {
       link.click();
     }, err => {
       this.loadingService.showLoadingComponent(false);
-      this.toastService.showToast(EColors.danger,err.message);
+      this.toastService.showToast(EColors.danger, err.message);
     });
   }
 
 
-  get content(){return this.generateAQrCodeForm.get('content');}
-  get size(){return this.generateAQrCodeForm.get('size');}
-  get border(){return this.generateAQrCodeForm.get('border');}
+  get content() { return this.generateAQrCodeForm.get('content'); }
+  get size() { return this.generateAQrCodeForm.get('size'); }
+  get border() { return this.generateAQrCodeForm.get('border'); }
 
-  get prefix(){return this.generateListQRCodeForm.get('prefix');}
-  get quantity(){return this.generateListQRCodeForm.get('quantity');}
-  get codeLength(){return this.generateListQRCodeForm.get('codeLength');}
-  get randomType(){return this.generateListQRCodeForm.get('randomType');}
+  get prefix() { return this.generateListQRCodeForm.get('prefix'); }
+  get quantity() { return this.generateListQRCodeForm.get('quantity'); }
+  get codeLength() { return this.generateListQRCodeForm.get('codeLength'); }
+  get randomType() { return this.generateListQRCodeForm.get('randomType'); }
+  //#endregion
 }

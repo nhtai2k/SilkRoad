@@ -38,10 +38,10 @@ namespace WebCore.Server.Controllers.FeatureControllers
                 string controllerName = ControllerContext.ActionDescriptor.ControllerName;
                 if (!ModelState.IsValid)
                 {
-                    _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Failed, model);
+                    // _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Failed, model);
                     return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
                 }
-                _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Successful, model);
+                // _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Successful, model);
                 // Generate the QR code as a base64 string
                 byte[] fileBytes = await _qrCodeHelper.GenerateQRCodeAsync(model);
                 // Return the byte array as a PNG image
@@ -64,10 +64,10 @@ namespace WebCore.Server.Controllers.FeatureControllers
                 string controllerName = ControllerContext.ActionDescriptor.ControllerName;
                 if (!ModelState.IsValid)
                 {
-                    _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Failed, model);
+                    // _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Failed, model);
                     return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
                 }
-                _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Successful, model);
+                // _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Successful, model);
                 string filePath = await _qrCodeHelper.GenerateListQRCodeAsync(model);
                 var fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
                 var fileName = Path.GetFileName(filePath);

@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EUrl } from '@common/url-api';
-import { BrandViewModel } from '@models/lipstick-shop-models/brand.model';
 import { AuthenticationService } from '@services/system-services/authentication.service';
 import { catchError, Observable, switchMap, throwError } from 'rxjs';
 
@@ -25,7 +24,7 @@ export class QrCodeService {
               }))
             );
           } else {
-            return throwError(error);
+            return throwError(() => error);
           }
         })
       );
@@ -45,7 +44,7 @@ export class QrCodeService {
               }))
             );
           } else {
-            return throwError(error);
+            return throwError(() => error);
           }
         })
       );

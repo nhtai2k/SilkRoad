@@ -34,7 +34,7 @@ export enum EUrl {
 
     //#region Feature
     //QRCode
-    generateAQRCode = "/api/qrCode/generateQRCode",
+    generateAQRCode = "/api/qrCode/generateAQRCode",
     generateListQRCode = "/api/qrCode/generateListQRCode",
     //#endregion
 
