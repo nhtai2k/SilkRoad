@@ -110,6 +110,7 @@ namespace Common
         ReportFiles,
         QRCodes,
         PageIntros,
+        Dishes
     }
     public enum EActions
     {

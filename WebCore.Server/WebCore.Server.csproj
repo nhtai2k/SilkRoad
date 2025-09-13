@@ -33,6 +33,8 @@
     <ProjectReference Include="..\Libraries\LipstickDataAccess\LipstickDataAccess.csproj" />
     <ProjectReference Include="..\Libraries\MemberBusinessLogic\MemberBusinessLogic.csproj" />
     <ProjectReference Include="..\Libraries\MemberDataAccess\MemberDataAccess.csproj" />
+    <ProjectReference Include="..\Libraries\RestaurantBusinessLogic\RestaurantBusinessLogic.csproj" />
+    <ProjectReference Include="..\Libraries\RestaurantDataAccess\RestaurantDataAccess.csproj" />
     <ProjectReference Include="..\Libraries\SlideshowBusinessLogic\SlideshowBusinessLogic.csproj" />
     <ProjectReference Include="..\Libraries\SlideshowDataAccess\SlideshowDataAccess.csproj" />
     <ProjectReference Include="..\Libraries\StockBusinessLogic\StockBusinessLogic.csproj" />
