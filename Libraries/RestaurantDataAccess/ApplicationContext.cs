@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace SlideshowDataAccess
+namespace RestaurantDataAccess
 {
     public class ApplicationContext : DbContext
     {

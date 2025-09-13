@@ -13,6 +13,8 @@ using LipstickBusinessLogic.ILipstickClientHelpers;
 using LipstickBusinessLogic.ILipstickHelpers;
 using LipstickBusinessLogic.LipstickClientHelpers;
 using LipstickBusinessLogic.LipstickHelpers;
+using RestaurantBusinessLogic.Helpers;
+using RestaurantBusinessLogic.IHelpers;
 using StockBusinessLogic.Helpers;
 using StockBusinessLogic.IHelpers;
 using SurveyBusinessLogic.Helpers;
@@ -69,6 +71,14 @@ namespace WebCore.Server
             services.AddScoped<ISurveyFormHelper, SurveyFormHelper>();
             services.AddScoped<ISurveyReportHelper, SurveyReportHelper>();
             services.AddScoped<IQuestionTypeHelper, QuestionTypeHelper>();
+            #endregion
+            #region Restaurant
+            //services.AddScoped<ICategoryHelper, CategoryHelper>();
+            //services.AddScoped<IChatMessageHelper, ChatMessageHelper>();
+            //services.AddScoped<IDishHelper, DishHelper>();
+            //services.AddScoped<IReservationHelper, ReservationHelper>();
+            //services.AddScoped<ITableHelper, TableHelper>();
+            //services.AddScoped<IUnitHelper, UnitHelper>();
             #endregion
             #region Stock
             services.AddScoped<StockDataAccess.IUnitOfWork, StockDataAccess.UnitOfWork>();
