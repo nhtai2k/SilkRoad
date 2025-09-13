@@ -22,9 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj" />
-    <ProjectReference Include="..\MemberBusinessLogic\MemberBusinessLogic.csproj" />
-    <ProjectReference Include="..\MemberDataAccess\MemberDataAccess.csproj" />
+    <ProjectReference Include="..\..\Libraries\Common\Common.csproj" />
+    <ProjectReference Include="..\..\Libraries\MemberBusinessLogic\MemberBusinessLogic.csproj" />
+    <ProjectReference Include="..\..\Libraries\MemberDataAccess\MemberDataAccess.csproj" />
   </ItemGroup>
 
 </Project>
