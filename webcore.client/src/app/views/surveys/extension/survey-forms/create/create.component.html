@@ -16,40 +16,48 @@
                 <div class="col-6">
                     <label cLabel for="nameEN">NameEN: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="nameEN" type="text" />
-                    <div *ngIf="nameEN?.invalid && (nameEN?.dirty || nameEN?.touched)" class="text-danger">
-                        <div *ngIf="nameEN?.hasError('required')">
-                            Enter NameEN, please!
+                    @if (nameEN?.invalid && (nameEN?.dirty || nameEN?.touched)) {
+                        <div class="text-danger">
+                            @if (nameEN?.hasError('required')) {
+                                <div>Enter NameEN, please!</div>
+                            }
                         </div>
-                    </div>
+                    }
                 </div>
                 <div class="col-6">
                     <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="nameVN" type="text" />
-                    <div *ngIf="nameVN?.invalid && (nameVN?.dirty || nameVN?.touched)" class="text-danger">
-                        <div *ngIf="nameVN?.hasError('required')">
-                            Enter NameVN, please!
+                    @if (nameVN?.invalid && (nameVN?.dirty || nameVN?.touched)) {
+                        <div class="text-danger">
+                            @if (nameVN?.hasError('required')) {
+                                <div>Enter NameVN, please!</div>
+                            }
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
             <div class="mb-2 row">
                 <div class="col-6">
                     <label cLabel for="titleEN">TitleEN: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="titleEN" type="text" />
-                    <div *ngIf="titleEN?.invalid && (titleEN?.dirty || titleEN?.touched)" class="text-danger">
-                        <div *ngIf="titleEN?.hasError('required')">
-                            Enter TitleEN, please!
+                    @if (titleEN?.invalid && (titleEN?.dirty || titleEN?.touched)) {
+                        <div class="text-danger">
+                            @if (titleEN?.hasError('required')) {
+                                <div>Enter TitleEN, please!</div>
+                            }
                         </div>
-                    </div>
+                    }
                 </div>
                 <div class="col-6">
                     <label cLabel for="titleVN">TitleVN: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="titleVN" type="text" />
-                    <div *ngIf="titleVN?.invalid && (titleVN?.dirty || titleVN?.touched)" class="text-danger">
-                        <div *ngIf="titleVN?.hasError('required')">
-                            Enter TitleVN, please!
+                    @if (titleVN?.invalid && (titleVN?.dirty || titleVN?.touched)) {
+                        <div class="text-danger">
+                            @if (titleVN?.hasError('required')) {
+                                <div>Enter TitleVN, please!</div>
+                            }
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
             <div class="mb-2 row">
@@ -66,23 +74,28 @@
                 <div class="col-6">
                     <label cLabel for="startDate">StartDate:</label>
                     <input cFormControl formControlName="startDate" type="datetime-local"/>
-                    <div *ngIf="startDate?.invalid && (startDate?.dirty || startDate?.touched)" class="text-danger">
-                        <div *ngIf="startDate?.hasError('required')">
-                            Enter StartDate, please!
+                    @if (startDate?.invalid && (startDate?.dirty || startDate?.touched)) {
+                        <div class="text-danger">
+                            @if (startDate?.hasError('required')) {
+                                <div>Enter StartDate, please!</div>
+                            }
                         </div>
-                    </div>
+                    }
                 </div>
                 <div class="col-6">
                     <label cLabel for="endDate">EndDate:</label>
                     <input cFormControl formControlName="endDate" type="datetime-local"/>
-                    <div *ngIf="endDate?.invalid && (endDate?.dirty || endDate?.touched)" class="text-danger">
-                        <div *ngIf="endDate?.hasError('required')">
-                            Enter EndDate, please!
+                    @if (endDate?.invalid && (endDate?.dirty || endDate?.touched)) {
+                        <div class="text-danger">
+                            @if (endDate?.hasError('required')) {
+                                <div>Enter EndDate, please!</div>
+                            }
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
-            <c-accordion class="mb-2" *ngFor="let questiongroup of questionGroupList; index as i">
+            @for (questiongroup of questionGroupList; track $index; let i = $index) {
+            <c-accordion class="mb-2">
                 <c-accordion-item #item0="cAccordionItem" [visible]="false">
                     <ng-template cTemplateId="accordionHeaderTemplate">
                         <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
@@ -90,7 +103,8 @@
                         </button>
                     </ng-template>
                     <ng-template cTemplateId="accordionBodyTemplate">
-                        <div class="row px-2 py-1" *ngFor="let question of questiongroup.questions; index as j">
+                        @for (question of questiongroup.questions; track $index; let j = $index) {
+                        <div class="row px-2 py-1">
                             <div class="col-2">
                                 <input cFormControl type="number" [value]="question.priority" (change)="onChangePriority($event, i, j)"/>
                             </div>
@@ -101,10 +115,12 @@
                                 </c-form-check>
                             </div>
                         </div>
+                        }
                         <!-- Add more fields as needed -->
                     </ng-template>
                 </c-accordion-item>
             </c-accordion>
+            }
             <div class="d-flex justify-content-end">
                 <button cButton type="submit" type="submit" [disabled]="!createForm.valid"
                    >Submit</button>

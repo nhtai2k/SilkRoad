@@ -12,7 +12,7 @@ using SurveyDataAccess;
 namespace SurveyDataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250418091122_InitialDB")]
+    [Migration("20250916005646_InitialDB")]
     partial class InitialDB
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace SurveyDataAccess.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.3")
+                .HasAnnotation("ProductVersion", "9.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -286,7 +286,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2025, 4, 18, 16, 11, 21, 7, DateTimeKind.Local).AddTicks(6120),
+                            CreatedOn = new DateTime(2025, 9, 16, 7, 56, 46, 46, DateTimeKind.Local).AddTicks(4546),
                             Description = "Câu hỏi đóng (Closed-ended question) – Chỉ có các câu trả lời sẵn.",
                             IsActive = true,
                             Name = "Câu hỏi đóng"
@@ -294,7 +294,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2025, 4, 18, 16, 11, 21, 8, DateTimeKind.Local).AddTicks(4392),
+                            CreatedOn = new DateTime(2025, 9, 16, 7, 56, 46, 46, DateTimeKind.Local).AddTicks(5788),
                             Description = "Câu hỏi mở (Open-ended question) – Người dùng nhập câu trả lời.",
                             IsActive = true,
                             Name = "Câu hỏi mở"
@@ -302,7 +302,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedOn = new DateTime(2025, 4, 18, 16, 11, 21, 8, DateTimeKind.Local).AddTicks(4406),
+                            CreatedOn = new DateTime(2025, 9, 16, 7, 56, 46, 46, DateTimeKind.Local).AddTicks(5793),
                             Description = "Câu hỏi kết hợp (Hybrid question) hoặc Câu hỏi mở rộng (Extended question) – Vừa có câu trả lời sẵn, vừa cho phép người dùng nhập câu trả lời riêng.",
                             IsActive = true,
                             Name = "Câu hỏi kết hợp"
@@ -310,7 +310,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedOn = new DateTime(2025, 4, 18, 16, 11, 21, 8, DateTimeKind.Local).AddTicks(4407),
+                            CreatedOn = new DateTime(2025, 9, 16, 7, 56, 46, 46, DateTimeKind.Local).AddTicks(5794),
                             Description = "Cẩu hỏi đáng giá (rating question) - Cho người dùng đánh giá mức độ trên 5 sao.",
                             IsActive = true,
                             Name = "Câu hỏi đánh giá"

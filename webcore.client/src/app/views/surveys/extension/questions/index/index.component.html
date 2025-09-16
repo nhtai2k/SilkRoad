@@ -3,8 +3,9 @@
     <div>
         <select cFormControl cSelect (change)="onChangeQuestionGroup($event)">
             <option [value]="-1">Select question group</option>
-            <option *ngFor="let item of questionGroupList" [value]="item.id">{{ item.nameEN }}
-            </option>
+            @for (item of questionGroupList; track item?.id) {
+                <option [value]="item.id">{{ item.nameEN }}</option>
+            }
         </select>
     </div>
     <button routerLink="./create" class="btn btn-success">Create</button>
@@ -20,15 +21,17 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let item of data.items; index as i ">
-            <td>{{ i+1 }}</td>
-            <td>{{ item.nameEN }}</td>
-            <td>{{ item.nameVN }}</td>
-            <td>
-                <div class="d-flex justify-content-end">
-                    <button routerLink="./update/{{item.id}}" class="btn btn-primary me-2">Update</button>
-                </div>
-            </td>
-        </tr>
+        @for (item of data.items; track item?.id; let i = $index) {
+            <tr>
+                <td>{{ i+1 }}</td>
+                <td>{{ item.nameEN }}</td>
+                <td>{{ item.nameVN }}</td>
+                <td>
+                    <div class="d-flex justify-content-end">
+                        <button routerLink="./update/{{item.id}}" class="btn btn-primary me-2">Update</button>
+                    </div>
+                </td>
+            </tr>
+        }
     </tbody>
 </app-data-table>

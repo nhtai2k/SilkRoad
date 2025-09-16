@@ -13,7 +13,7 @@ import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, B
 import { NgFor, NgIf } from '@angular/common';
 @Component({
   selector: 'app-update',
-  imports: [ModalBodyComponent, NgFor, NgIf, FormControlDirective, FormLabelDirective,
+  imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective,
     ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule,
     ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, CardComponent, 
     FormSelectDirective, CardBodyComponent, AccordionButtonDirective,

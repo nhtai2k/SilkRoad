@@ -142,8 +142,8 @@ export const routes: Routes = [
         loadChildren: () => import('./views/surveys/survey-results/details/routes').then((m) => m.routes)
       },
       {
-        path: 'surveys/extend-survey',
-        loadChildren: () => import('./views/surveys/extend-survey/routes').then((m) => m.routes)
+        path: 'surveys/extension',
+        loadChildren: () => import('./views/surveys/extension/routes').then((m) => m.routes)
       },
       //#endregion
       //#region System Management

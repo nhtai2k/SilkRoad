@@ -27,8 +27,12 @@
         <td>{{ item.isActive }}</td>
         <td>
           <div class="d-flex justify-content-end">
-            <button (click)="updateData(item.id)" class="btn btn-primary me-2"><svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg> </button>
-            <button (click)="softDeleteData(item.id)" class="btn btn-danger"><svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg> </button>
+            <button (click)="updateData(item.id)" class="btn btn-primary me-2">
+              <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
+             </button>
+            <button (click)="softDeleteData(item.id)" class="btn btn-danger">
+              <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg> 
+            </button>
           </div>
         </td>
     </tr>

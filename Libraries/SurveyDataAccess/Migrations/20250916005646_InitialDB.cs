@@ -225,10 +225,10 @@ namespace SurveyDataAccess.Migrations
                 columns: new[] { "Id", "CreatedOn", "Description", "IsActive", "Name" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2025, 4, 18, 16, 11, 21, 7, DateTimeKind.Local).AddTicks(6120), "Câu hỏi đóng (Closed-ended question) – Chỉ có các câu trả lời sẵn.", true, "Câu hỏi đóng" },
-                    { 2, new DateTime(2025, 4, 18, 16, 11, 21, 8, DateTimeKind.Local).AddTicks(4392), "Câu hỏi mở (Open-ended question) – Người dùng nhập câu trả lời.", true, "Câu hỏi mở" },
-                    { 3, new DateTime(2025, 4, 18, 16, 11, 21, 8, DateTimeKind.Local).AddTicks(4406), "Câu hỏi kết hợp (Hybrid question) hoặc Câu hỏi mở rộng (Extended question) – Vừa có câu trả lời sẵn, vừa cho phép người dùng nhập câu trả lời riêng.", true, "Câu hỏi kết hợp" },
-                    { 4, new DateTime(2025, 4, 18, 16, 11, 21, 8, DateTimeKind.Local).AddTicks(4407), "Cẩu hỏi đáng giá (rating question) - Cho người dùng đánh giá mức độ trên 5 sao.", true, "Câu hỏi đánh giá" }
+                    { 1, new DateTime(2025, 9, 16, 7, 56, 46, 46, DateTimeKind.Local).AddTicks(4546), "Câu hỏi đóng (Closed-ended question) – Chỉ có các câu trả lời sẵn.", true, "Câu hỏi đóng" },
+                    { 2, new DateTime(2025, 9, 16, 7, 56, 46, 46, DateTimeKind.Local).AddTicks(5788), "Câu hỏi mở (Open-ended question) – Người dùng nhập câu trả lời.", true, "Câu hỏi mở" },
+                    { 3, new DateTime(2025, 9, 16, 7, 56, 46, 46, DateTimeKind.Local).AddTicks(5793), "Câu hỏi kết hợp (Hybrid question) hoặc Câu hỏi mở rộng (Extended question) – Vừa có câu trả lời sẵn, vừa cho phép người dùng nhập câu trả lời riêng.", true, "Câu hỏi kết hợp" },
+                    { 4, new DateTime(2025, 9, 16, 7, 56, 46, 46, DateTimeKind.Local).AddTicks(5794), "Cẩu hỏi đáng giá (rating question) - Cho người dùng đánh giá mức độ trên 5 sao.", true, "Câu hỏi đánh giá" }
                 });
 
             migrationBuilder.CreateIndex(

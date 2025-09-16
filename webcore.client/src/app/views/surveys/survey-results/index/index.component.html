@@ -3,8 +3,9 @@
     <div>
         <select cFormControl cSelect (change)="onChangeSurveyForm($event)">
             <option [value]="-1">Select survey form</option>
-            <option *ngFor="let item of surveyFormList" [value]="item.id">{{ item.nameEN }}
-            </option>
+            @for (item of surveyFormList; track item?.id) {
+                <option [value]="item.id">{{ item.nameEN }}</option>
+            }
         </select>
     </div>
     <!-- <button routerLink="./create" class="btn btn-success">Create</button> -->
@@ -21,16 +22,18 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let item of data.items; index as i ">
-            <td>{{ i+1 }}</td>
-            <td>{{ item.createdOn | date : "dd/MM/yyy hh:mm:ss" }}</td>
-            <td>{{ item.fullName }}</td>
-            <td>{{ item.phoneNumber }}</td>
-            <td>
-                <div class="d-flex justify-content-end">
-                    <button routerLink="./update/{{item.id}}" class="btn btn-primary me-2">Details</button>
-                </div>
-            </td>
-        </tr>
+        @for (item of data.items; track item?.id; let i = $index) {
+            <tr>
+                <td>{{ i+1 }}</td>
+                <td>{{ item.createdOn | date : "dd/MM/yyy hh:mm:ss" }}</td>
+                <td>{{ item.fullName }}</td>
+                <td>{{ item.phoneNumber }}</td>
+                <td>
+                    <div class="d-flex justify-content-end">
+                        <button routerLink="./update/{{item.id}}" class="btn btn-primary me-2">Details</button>
+                    </div>
+                </td>
+            </tr>
+        }
     </tbody>
 </app-data-table>

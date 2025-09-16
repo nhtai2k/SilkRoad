@@ -210,27 +210,27 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Extend',
-    url: '/surveys/extend-survey',
+    url: '/surveys/extension',
     iconComponent: { name: 'cil-puzzle' },
     children: [
       {
         name: 'Question Groups',
-        url: '/surveys/extend-survey/question-groups',
+        url: '/surveys/extension/question-groups',
         icon: 'nav-icon-bullet'
       },
       {
         name: 'Question Types',
-        url: '/surveys/extend-survey/question-types',
+        url: '/surveys/extension/question-types',
         icon: 'nav-icon-bullet'
       },
       {
         name: 'Questions',
-        url: '/surveys/extend-survey/questions',
+        url: '/surveys/extension/questions',
         icon: 'nav-icon-bullet'
       },
       {
         name: 'Survey Forms',
-        url: '/surveys/extend-survey/survey-forms',
+        url: '/surveys/extension/survey-forms',
         icon: 'nav-icon-bullet'
       }
     ]

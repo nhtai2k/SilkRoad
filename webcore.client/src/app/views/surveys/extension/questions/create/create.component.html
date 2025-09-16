@@ -1,4 +1,4 @@
-<h1>Update Question</h1>
+<h1>Create Question</h1>
 <c-card>
     <c-card-body>
         <form cForm [formGroup]="questionForm" (ngSubmit)="onSubmit()">
@@ -6,11 +6,13 @@
                 <div class="col-6">
                     <label cLabel for="chartLabel">ChartLabel: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="chartLabel" type="text" />
-                    <div *ngIf="chartLabel?.invalid && (chartLabel?.dirty || chartLabel?.touched)" class="text-danger">
-                        <div *ngIf="chartLabel?.hasError('required')">
-                            Enter chart label, please!
+                    @if (chartLabel?.invalid && (chartLabel?.dirty || chartLabel?.touched)) {
+                        <div class="text-danger">
+                            @if (chartLabel?.hasError('required')) {
+                                <div>Enter chart label, please!</div>
+                            }
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
             <div class="mb-2 row">
@@ -19,49 +21,57 @@
                             class="text-danger">(*)</span></label>
                     <select cFormControl formControlName="questionTypeId" cSelect>
                         <option [value]="-1">Select a question type</option>
-                        <option *ngFor="let item of questionTypeList" [value]="item.id">{{ item.name }}
-                        </option>
+                        @for (item of questionTypeList; track item?.id) {
+                            <option [value]="item.id">{{ item.name }}</option>
+                        }
                     </select>
-                    <div *ngIf="questionTypeId?.invalid && (questionTypeId?.dirty || questionTypeId?.touched)"
-                        class="text-danger">
-                        <div *ngIf="questionTypeId?.hasError('min')">
-                            Select question type, please!
+                    @if (questionTypeId?.invalid && (questionTypeId?.dirty || questionTypeId?.touched)) {
+                        <div class="text-danger">
+                            @if (questionTypeId?.hasError('min')) {
+                                <div>Select question type, please!</div>
+                            }
                         </div>
-                    </div>
+                    }
                 </div>
                 <div class="col-6">
                     <label cLabel for="questionGroupId">Select Question group: </label>
                     <select cFormControl formControlName="questionGroupId" cSelect>
                         <option [value]="-1">Select question group</option>
-                        <option *ngFor="let item of questionGroupList" [value]="item.id">{{ item.nameEN }}
-                        </option>
+                        @for (item of questionGroupList; track item?.id) {
+                            <option [value]="item.id">{{ item.nameEN }}</option>
+                        }
                     </select>
-                    <div *ngIf="questionGroupId?.invalid && (questionGroupId?.dirty || questionGroupId?.touched)"
-                        class="text-danger">
-                        <div *ngIf="questionGroupId?.hasError('min')">
-                            Select question group, please!
+                    @if (questionGroupId?.invalid && (questionGroupId?.dirty || questionGroupId?.touched)) {
+                        <div class="text-danger">
+                            @if (questionGroupId?.hasError('min')) {
+                                <div>Select question group, please!</div>
+                            }
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
             <div class="mb-2 row">
                 <div class="col-6">
                     <label cLabel for="nameEN">NameEN: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="nameEN" type="text" />
-                    <div *ngIf="nameEN?.invalid && (nameEN?.dirty || nameEN?.touched)" class="text-danger">
-                        <div *ngIf="nameEN?.hasError('required')">
-                            Enter NameEN, please!
+                    @if (nameEN?.invalid && (nameEN?.dirty || nameEN?.touched)) {
+                        <div class="text-danger">
+                            @if (nameEN?.hasError('required')) {
+                                <div>Enter NameEN, please!</div>
+                            }
                         </div>
-                    </div>
+                    }
                 </div>
                 <div class="col-6">
                     <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="nameVN" type="text" />
-                    <div *ngIf="nameVN?.invalid && (nameVN?.dirty || nameVN?.touched)" class="text-danger">
-                        <div *ngIf="nameVN?.hasError('required')">
-                            Enter NameVN, please!
+                    @if (nameVN?.invalid && (nameVN?.dirty || nameVN?.touched)) {
+                        <div class="text-danger">
+                            @if (nameVN?.hasError('required')) {
+                                <div>Enter NameVN, please!</div>
+                            }
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
             <div class="mb-2 row">
@@ -93,18 +103,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let item of predefinedAnswerList; let i = index">
-                                    <td>{{ i + 1 }}</td>
-                                    <td>{{ item.nameEN }}</td>
-                                    <td>{{ item.nameVN }}</td>
-                                    <td>{{ item.point }}</td>
-                                    <td class="d-flex justify-content-center">
-                                        <button cButton type="button" (click)="updateData(i)"
-                                            class="btn btn-warning me-2">Update</button>
-                                        <button cButton type="button" (click)="deleteData(i)"
-                                            class="btn btn-danger">Delete</button>
-                                    </td>
-                                </tr>
+                                @for (item of predefinedAnswerList; track $index; let i = $index) {
+                                    <tr>
+                                        <td>{{ i + 1 }}</td>
+                                        <td>{{ item.nameEN }}</td>
+                                        <td>{{ item.nameVN }}</td>
+                                        <td>{{ item.point }}</td>
+                                        <td class="d-flex justify-content-center">
+                                            <button cButton type="button" (click)="updateData(i)"
+                                                class="btn btn-warning me-2">Update</button>
+                                            <button cButton type="button" (click)="deleteData(i)"
+                                                class="btn btn-danger">Delete</button>
+                                        </td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </ng-template>
@@ -131,35 +143,38 @@
             <div class="mb-2 row">
                 <div class="col-6">
                     <label for="point" class="me-2">Point: <span class="text-danger">(*)</span> </label>
-                    <input formControlName="point" type="number" class="me-2 number-control">
-                    <div *ngIf="pointCreateForm?.invalid && (pointCreateForm?.dirty || pointCreateForm?.touched)"
-                        class="text-danger">
-                        <div *ngIf="pointCreateForm?.hasError('min') || pointCreateForm?.hasError('max')">
-                            Point must be between 1 and 9999.
+                    <input formControlName="point" type="number" class="me-2 priorityInput">
+                    @if (pointCreateForm?.invalid && (pointCreateForm?.dirty || pointCreateForm?.touched)) {
+                        <div class="text-danger">
+                            @if (pointCreateForm?.hasError('min') || pointCreateForm?.hasError('max')) {
+                                <div>Point must be between 1 and 9999.</div>
+                            }
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
             <div class="mb-2 row">
                 <div class="col-6">
                     <label cLabel for="nameEN" class="me-2">NameEN: <span class="text-danger">(*)</span> </label>
                     <input cFormControl formControlName="nameEN">
-                    <div *ngIf="nameENCreateForm?.invalid && (nameENCreateForm?.dirty || nameENCreateForm?.touched)"
-                        class="text-danger">
-                        <div *ngIf="nameENCreateForm?.hasError('required')">
-                            NameEN is required.
+                    @if (nameENCreateForm?.invalid && (nameENCreateForm?.dirty || nameENCreateForm?.touched)) {
+                        <div class="text-danger">
+                            @if (nameENCreateForm?.hasError('required')) {
+                                <div>NameEN is required.</div>
+                            }
                         </div>
-                    </div>
+                    }
                 </div>
                 <div class="col-6">
                     <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="nameVN">
-                    <div *ngIf="nameVNCreateForm?.invalid && (nameVNCreateForm?.dirty || nameVNCreateForm?.touched)"
-                        class="text-danger">
-                        <div *ngIf="nameVNCreateForm?.hasError('required')">
-                            NameVN is required.
+                    @if (nameVNCreateForm?.invalid && (nameVNCreateForm?.dirty || nameVNCreateForm?.touched)) {
+                        <div class="text-danger">
+                            @if (nameVNCreateForm?.hasError('required')) {
+                                <div>NameVN is required.</div>
+                            }
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
             <div class="mb-2 row">
@@ -189,35 +204,38 @@
             <div class="mb-2 d-flex flex-row">
                 <div>
                     <label for="point" class="me-2">Point: <span class="text-danger">(*)</span> </label>
-                    <input formControlName="point" type="number" class="me-2 number-control">
-                    <div *ngIf="pointUpdateForm?.invalid && (pointUpdateForm?.dirty || pointUpdateForm?.touched)"
-                        class="text-danger">
-                        <div *ngIf="pointUpdateForm?.hasError('min') || pointUpdateForm?.hasError('max')">
-                            point must be between 1 and 9999.
+                    <input formControlName="point" type="number" class="me-2 priorityInput">
+                    @if (pointUpdateForm?.invalid && (pointUpdateForm?.dirty || pointUpdateForm?.touched)) {
+                        <div class="text-danger">
+                            @if (pointUpdateForm?.hasError('min') || pointUpdateForm?.hasError('max')) {
+                                <div>point must be between 1 and 9999.</div>
+                            }
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
             <div class="mb-2 row">
                 <div class="col-6">
                     <label cLabel for="nameEN" class="me-2">NameEN: <span class="text-danger">(*)</span> </label>
                     <input cFormControl formControlName="nameEN">
-                    <div *ngIf="nameENUpdateForm?.invalid && (nameENUpdateForm?.dirty || nameENUpdateForm?.touched)"
-                        class="text-danger">
-                        <div *ngIf="nameENUpdateForm?.hasError('required')">
-                            NameEN is required.
+                    @if (nameENUpdateForm?.invalid && (nameENUpdateForm?.dirty || nameENUpdateForm?.touched)) {
+                        <div class="text-danger">
+                            @if (nameENUpdateForm?.hasError('required')) {
+                                <div>NameEN is required.</div>
+                            }
                         </div>
-                    </div>
+                    }
                 </div>
                 <div class="col-6">
                     <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="nameVN">
-                    <div *ngIf="nameVNUpdateForm?.invalid && (nameVNUpdateForm?.dirty || nameVNUpdateForm?.touched)"
-                        class="text-danger">
-                        <div *ngIf="nameVNUpdateForm?.hasError('required')">
-                            NameVN is required.
+                    @if (nameVNUpdateForm?.invalid && (nameVNUpdateForm?.dirty || nameVNUpdateForm?.touched)) {
+                        <div class="text-danger">
+                            @if (nameVNUpdateForm?.hasError('required')) {
+                                <div>NameVN is required.</div>
+                            }
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
             <div class="mb-2 row">

@@ -10,7 +10,7 @@ import { SurveyFormService } from '@services/survey-services/survey-form.service
 
 @Component({
   selector: 'app-update',
-  imports: [NgFor, NgIf, FormControlDirective, FormLabelDirective, CardComponent, 
+  imports: [FormControlDirective, FormLabelDirective, CardComponent, 
     FormCheckComponent, CardBodyComponent, ReactiveFormsModule, FormDirective,
     ButtonDirective, AccordionButtonDirective,
     AccordionComponent, AccordionItemComponent, TemplateIdDirective, RouterLink],

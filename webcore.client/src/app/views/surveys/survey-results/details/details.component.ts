@@ -10,10 +10,9 @@ import { ParticipantService } from '@services/survey-services/participant.servic
 
 @Component({
   selector: 'app-details',
-  imports: [NgFor, NgIf, FormControlDirective, FormLabelDirective,
+  imports: [FormControlDirective, FormLabelDirective,
     ButtonDirective, FormDirective, ReactiveFormsModule,
-    CardComponent, 
-    CardBodyComponent, RouterLink, RatingComponent],
+    CardComponent, CardBodyComponent, RouterLink, RatingComponent],
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss'
 })

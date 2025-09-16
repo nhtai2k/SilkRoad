@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, FormCheckComponent, FormCheckInputDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, TableDirective } from '@coreui/angular';
@@ -9,10 +9,13 @@ import { QuestionGroupService } from '@services/survey-services/question-group.s
 import { ToastService } from '@services/helper-services/toast.service';
 import { EColors } from '@common/global';
 import { DataTableComponent } from '@components/generals/data-table/data-table.component';
+import { IconDirective } from '@coreui/icons-angular';
+import { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular } from '@coreui/icons';
+
 
 @Component({
   selector: 'app-question-groups',
-  imports: [ModalBodyComponent, NgFor, NgIf, FormControlDirective, FormLabelDirective,
+  imports: [ModalBodyComponent , FormControlDirective, FormLabelDirective, IconDirective,
     ModalComponent, ButtonDirective, FormCheckComponent, FormDirective, ReactiveFormsModule,
     ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, DataTableComponent],
   templateUrl: './question-groups.component.html',
@@ -25,6 +28,8 @@ export class QuestionGroupsComponent {
   visibleDelete: boolean = false;
   deleteById: number = 0;
   data: Pagination<QuestionGroupModel> = new Pagination<QuestionGroupModel>();
+  icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular };
+
   createForm: FormGroup = new FormGroup({
     nameEN: new FormControl('', Validators.required),
     nameVN: new FormControl('', Validators.required),

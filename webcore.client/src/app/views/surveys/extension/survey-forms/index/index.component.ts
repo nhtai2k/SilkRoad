@@ -9,7 +9,7 @@ import { SurveyFormService } from '@services/survey-services/survey-form.service
 
 @Component({
   selector: 'app-index',
-  imports: [NgFor, ReactiveFormsModule, DataTableComponent, RouterLink],
+  imports: [ReactiveFormsModule, DataTableComponent, RouterLink],
   templateUrl: './index.component.html',
   styleUrl: './index.component.scss'
 })

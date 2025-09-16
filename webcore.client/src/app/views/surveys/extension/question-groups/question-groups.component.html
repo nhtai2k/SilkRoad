@@ -1,6 +1,11 @@
-<h1>Question group List</h1>
+<h1>Question Group List</h1>
 <div class="d-flex justify-content-end mb-2">
-    <button (click)="toggleLiveCreateModel()" class="btn btn-success">Create</button>
+    <button class="btn btn-warning me-2">
+        <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Trash Icon"></svg>
+    </button>
+    <button (click)="toggleLiveCreateModel()" class="btn btn-success">
+        <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+    </button>
 </div>
 <app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
     (changePageSize)="onPageSizeChange($event)">
@@ -15,26 +20,32 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let item of data.items; index as i ">
-            <td>{{ i+1 }}</td>
-            <td>{{ item.nameEN }}</td>
-            <td>{{ item.nameVN }}</td>
-            <td>{{ item.priority }}</td>
-            <td>{{ item.isActive }}</td>
-            <td>
-                <div class="d-flex justify-content-end">
-                    <button (click)="updateData(item.id)" class="btn btn-primary me-2">Update</button>
-                    <button (click)="deleteData(item.id)" class="btn btn-danger">Delete</button>
-                </div>
-            </td>
-        </tr>
+        @for (item of data.items; track item?.id; let i = $index) {
+            <tr>
+                <td>{{ i+1 }}</td>
+                <td>{{ item.nameEN }}</td>
+                <td>{{ item.nameVN }}</td>
+                <td>{{ item.priority }}</td>
+                <td>{{ item.isActive }}</td>
+                <td>
+                    <div class="d-flex justify-content-end">
+                        <button (click)="updateData(item.id)" class="btn btn-primary me-2">
+                            <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
+                        </button>
+                        <button (click)="deleteData(item.id)" class="btn btn-danger">
+                            <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        }
     </tbody>
 </app-data-table>
 <!-- Create Modal -->
 <c-modal backdrop="static" [visible]="visibleCreateModal" (visibleChange)="handleLiveCreateModelChange($event)"
     id="verticallyCenteredCreateModal" size="lg">
     <c-modal-header>
-        <h5 cModalTitle>Create Unit</h5>
+        <h5 cModalTitle>Create question group</h5>
         <button (click)="toggleLiveCreateModel()" cButtonClose></button>
     </c-modal-header>
     <form cForm [formGroup]="createForm" (ngSubmit)="onSubmitCreateForm()">
@@ -46,43 +57,52 @@
                 </c-form-check>
                 <div>
                     <label for="priority" class="me-2">Priority: </label>
-                    <input formControlName="priority" type="number" class="me-2 number-control">
-                    <div *ngIf="priorityCreateForm?.invalid && (priorityCreateForm?.dirty || priorityCreateForm?.touched)"
-                        class="text-danger">
-                        <div *ngIf="priorityCreateForm?.hasError('min') || priorityCreateForm?.hasError('max')">
+                    <input formControlName="priority" type="number" class="me-2 priorityInput">
+                    @if (priorityCreateForm?.invalid && (priorityCreateForm?.dirty || priorityCreateForm?.touched)) {
+                    <div class="text-danger">
+                        @if (priorityCreateForm?.hasError('min') || priorityCreateForm?.hasError('max')) {
+                        <div>
                             Priority must be between 1 and 9999.
                         </div>
+                        }
                     </div>
+                    }
                 </div>
             </div>
             <div class="mb-2 row">
                 <div class="col-6">
                     <label cLabel for="nameEN" class="me-2">NameEN: <span class="text-danger">(*)</span> </label>
                     <input cFormControl formControlName="nameEN">
-                    <div *ngIf="nameENCreateForm?.invalid && (nameENCreateForm?.dirty || nameENCreateForm?.touched)"
-                        class="text-danger">
-                        <div *ngIf="nameENCreateForm?.hasError('required')">
+                    @if (nameENCreateForm?.invalid && (nameENCreateForm?.dirty || nameENCreateForm?.touched)) {
+                    <div class="text-danger">
+                        @if (nameENCreateForm?.hasError('required')) {
+                        <div>
                             NameEN is required.
                         </div>
+                        }
                     </div>
+                    }
                 </div>
                 <div class="col-6">
                     <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="nameVN">
-                    <div *ngIf="nameVNCreateForm?.invalid && (nameVNCreateForm?.dirty || nameVNCreateForm?.touched)"
-                        class="text-danger">
-                        <div *ngIf="nameVNCreateForm?.hasError('required')">
+                    @if (nameVNCreateForm?.invalid && (nameVNCreateForm?.dirty || nameVNCreateForm?.touched)) {
+                    <div class="text-danger">
+                        @if (nameVNCreateForm?.hasError('required')) {
+                        <div>
                             NameVN is required.
                         </div>
+                        }
                     </div>
+                    }
                 </div>
             </div>
-            <div class="mb-2 row">
-                <div class="col-12">
-                    <label cLabel for="description" class="me-2">Description:</label>
-                    <textarea cFormControl formControlName="description" [rows]="3"
-                        class="form-control form-control-color" id="description"></textarea>
-                </div>
+            <div class="mb-2">
+
+                <label cLabel for="description" class="me-2">Description:</label>
+                <textarea cFormControl formControlName="description" [rows]="3" class="form-control form-control-color"
+                    id="description"></textarea>
+
             </div>
         </c-modal-body>
         <c-modal-footer>
@@ -97,7 +117,7 @@
 <c-modal backdrop="static" [visible]="visibleUpdateModal" (visibleChange)="handleLiveUpdateModelChange($event)"
     id="verticallyCenteredUpdateModal" size="lg">
     <c-modal-header>
-        <h5 cModalTitle>Update Unit</h5>
+        <h5 cModalTitle>Update question group</h5>
         <button (click)="toggleLiveUpdateModel()" cButtonClose></button>
     </c-modal-header>
     <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmitUpdateForm()">
@@ -109,43 +129,52 @@
                 </c-form-check>
                 <div>
                     <label for="priority" class="me-2">Priority: </label>
-                    <input formControlName="priority" type="number" class="me-2 number-control">
-                    <div *ngIf="priorityUpdateForm?.invalid && (priorityUpdateForm?.dirty || priorityUpdateForm?.touched)"
-                        class="text-danger">
-                        <div *ngIf="priorityUpdateForm?.hasError('min') || priorityUpdateForm?.hasError('max')">
+                    <input formControlName="priority" type="number" class="me-2 priorityInput">
+                    @if (priorityUpdateForm?.invalid && (priorityUpdateForm?.dirty || priorityUpdateForm?.touched)) {
+                    <div class="text-danger">
+                        @if (priorityUpdateForm?.hasError('min') || priorityUpdateForm?.hasError('max')) {
+                        <div>
                             Priority must be between 1 and 9999.
                         </div>
+                        }
                     </div>
+                    }
                 </div>
             </div>
             <div class="mb-2 row">
                 <div class="col-6">
                     <label cLabel for="nameEN" class="me-2">NameEN: <span class="text-danger">(*)</span> </label>
                     <input cFormControl formControlName="nameEN">
-                    <div *ngIf="nameENUpdateForm?.invalid && (nameENUpdateForm?.dirty || nameENUpdateForm?.touched)"
-                        class="text-danger">
-                        <div *ngIf="nameENUpdateForm?.hasError('required')">
+                    @if (nameENUpdateForm?.invalid && (nameENUpdateForm?.dirty || nameENUpdateForm?.touched)) {
+                    <div class="text-danger">
+                        @if (nameENUpdateForm?.hasError('required')) {
+                        <div>
                             NameEN is required.
                         </div>
+                        }
                     </div>
+                    }
                 </div>
                 <div class="col-6">
                     <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="nameVN">
-                    <div *ngIf="nameVNUpdateForm?.invalid && (nameVNUpdateForm?.dirty || nameVNUpdateForm?.touched)"
-                        class="text-danger">
-                        <div *ngIf="nameVNUpdateForm?.hasError('required')">
+                    @if (nameVNUpdateForm?.invalid && (nameVNUpdateForm?.dirty || nameVNUpdateForm?.touched)) {
+                    <div class="text-danger">
+                        @if (nameVNUpdateForm?.hasError('required')) {
+                        <div>
                             NameVN is required.
                         </div>
+                        }
                     </div>
+                    }
                 </div>
             </div>
-            <div class="mb-2 row">
-                <div class="col-12">
+            <div class="mb-2">
+              
                     <label cLabel for="description" class="me-2">Description:</label>
                     <textarea cFormControl formControlName="description" [rows]="3"
                         class="form-control form-control-color" id="description"></textarea>
-                </div>
+              
             </div>
         </c-modal-body>
         <c-modal-footer>

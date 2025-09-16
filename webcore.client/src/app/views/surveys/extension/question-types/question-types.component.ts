@@ -7,7 +7,7 @@ import { QuestionTypeService } from '@services/survey-services/question-type.ser
 
 @Component({
   selector: 'app-question-types',
-  imports: [CardComponent, CardBodyComponent, NgFor, TableDirective],
+  imports: [CardComponent, CardBodyComponent, TableDirective],
   templateUrl: './question-types.component.html',
   styleUrl: './question-types.component.scss'
 })

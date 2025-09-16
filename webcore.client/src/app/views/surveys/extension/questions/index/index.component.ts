@@ -12,7 +12,7 @@ import { DataTableComponent } from '@components/generals/data-table/data-table.c
 
 @Component({
   selector: 'app-index',
-  imports: [NgFor, ReactiveFormsModule, DataTableComponent, RouterLink, FormSelectDirective],
+  imports: [ReactiveFormsModule, DataTableComponent, RouterLink, FormSelectDirective],
   templateUrl: './index.component.html',
   styleUrl: './index.component.scss'
 })
