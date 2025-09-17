@@ -6,7 +6,6 @@ using LipstickBusinessLogic.ILipstickHelpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using WebCore.Server;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.LipstickControllers
@@ -66,7 +65,7 @@ namespace WebCore.Server.Controllers.LipstickControllers
             string controllerName = ControllerContext.ActionDescriptor.ControllerName;
             if (!ModelState.IsValid)
             {
-                _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Failed,model);
+                _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Failed, model);
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             }
             var result = await _productHelper.CreateAsync(model);
@@ -87,16 +86,16 @@ namespace WebCore.Server.Controllers.LipstickControllers
             string controllerName = ControllerContext.ActionDescriptor.ControllerName;
             if (!ModelState.IsValid)
             {
-                _actionLog.CreateAsync(token, controllerName, EUserAction.Update, EUserActionStatus.Failed,model);
+                _actionLog.CreateAsync(token, controllerName, EUserAction.Update, EUserActionStatus.Failed, model);
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             }
             var result = await _productHelper.UpdateAsync(model);
             if (!result)
             {
-                _actionLog.CreateAsync(token, controllerName, EUserAction.Update, EUserActionStatus.Failed,model);
+                _actionLog.CreateAsync(token, controllerName, EUserAction.Update, EUserActionStatus.Failed, model);
                 return Failed(EStatusCodes.BadRequest, _localizer["dataUpdateFailed"]);
             }
-            _actionLog.CreateAsync(token, controllerName, EUserAction.Update, EUserActionStatus.Successful,model);
+            _actionLog.CreateAsync(token, controllerName, EUserAction.Update, EUserActionStatus.Successful, model);
             return Succeeded(_localizer["dataUpdatedSuccessfully"]);
         }
         [HttpDelete]

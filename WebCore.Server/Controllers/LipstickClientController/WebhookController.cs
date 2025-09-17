@@ -1,7 +1,5 @@
-﻿using Common.Custom.ApiKey;
-using Common.Models;
+﻿using Common.Models;
 using LipstickBusinessLogic.ILipstickClientHelpers;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebCore.Server.Controllers.LipstickClientController
@@ -19,7 +17,7 @@ namespace WebCore.Server.Controllers.LipstickClientController
         [HttpPost("ReceiveNotification")]
         public async Task<IActionResult> ReceiveNotification([FromBody] SepayModel model)
         {
-            if(model == null)
+            if (model == null)
             {
                 return BadRequest("Invalid model");
             }

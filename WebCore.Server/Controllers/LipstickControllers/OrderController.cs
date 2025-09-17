@@ -1,12 +1,10 @@
-﻿using System.Threading.Tasks;
-using Common;
+﻿using Common;
 using Common.Models;
 using Common.Services.ActionLoggingServices;
 using Common.ViewModels.LipstickViewModels;
 using LipstickBusinessLogic.ILipstickHelpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using WebCore.Server;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.LipstickControllers
@@ -54,7 +52,7 @@ namespace WebCore.Server.Controllers.LipstickControllers
             await _actionLog.CreateAsync(token, controllerName, EUserAction.ViewDetails, EUserActionStatus.Successful);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
-        
+
         [HttpPost]
         [Route("create")]
         [AuthorizeEnumPolicy(ERoles.Admin)]
@@ -76,7 +74,7 @@ namespace WebCore.Server.Controllers.LipstickControllers
             await _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Successful, model);
             return Succeeded(_localizer["dataCreatedSuccessfully"]);
         }
-        
+
         [HttpPut]
         [Route("update")]
         [AuthorizeEnumPolicy(ERoles.Admin)]

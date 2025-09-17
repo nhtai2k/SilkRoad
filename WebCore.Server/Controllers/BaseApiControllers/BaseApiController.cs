@@ -20,7 +20,7 @@ namespace WebCore.Server.Controllers.BaseApiControllers
         {
             return StatusCode((int)statusCode, new ApiResponse(false, message));
         }
-    
-    
+
+
     }
 }

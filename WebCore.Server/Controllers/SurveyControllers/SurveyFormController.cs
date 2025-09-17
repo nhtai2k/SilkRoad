@@ -1,14 +1,4 @@
-﻿using Common;
-using Common.Models;
-using Common.Services.ActionLoggingServices;
-using Common.Services.JwtServices;
-using Common.ViewModels.SurveyViewModels;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization;
-using Newtonsoft.Json;
-using SurveyBusinessLogic.IHelpers;
-using WebCore.Server;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.SurveyControllers

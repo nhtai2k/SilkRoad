@@ -1,4 +1,5 @@
-﻿using SurveyBusinessLogic.IHelpers;
+﻿using Common.Models;
+using SurveyBusinessLogic.IHelpers;
 using SurveyDataAccess.DTOs;
 
 namespace SurveyBusinessLogic.Helpers
@@ -207,12 +208,27 @@ namespace SurveyBusinessLogic.Helpers
             throw new NotImplementedException();
         }
 
+        public Task<bool> CreateAsync(SurveyFormDTO model, string? userName = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<bool> DeleteAsync(int id)
         {
             throw new NotImplementedException();
         }
 
         public Task<IEnumerable<SurveyFormDTO>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Pagination<SurveyFormDTO>> GetAllAsync(int pageIndex, int pageSize)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Pagination<SurveyFormDTO>> GetAllDeletedAsync(int pageIndex, int pageSize)
         {
             throw new NotImplementedException();
         }
@@ -227,12 +243,27 @@ namespace SurveyBusinessLogic.Helpers
             throw new NotImplementedException();
         }
 
+        public Task<bool> RestoreAsync(int id, string? userName = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<bool> SoftDeleteAsync(int id)
         {
             throw new NotImplementedException();
         }
 
+        public Task<bool> SoftDeleteAsync(int id, string? userName = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<bool> UpdateAsync(SurveyFormDTO model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> UpdateAsync(SurveyFormDTO model, string? userName = null)
         {
             throw new NotImplementedException();
         }

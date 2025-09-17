@@ -24,7 +24,7 @@ namespace WebCore.Server._Convergence.Services
                 model.Context = initial.Context;
             }
 
-            var enumerable = ollama.Completions.GenerateCompletionAsync(model.Model, model.Request,context: model.Context);
+            var enumerable = ollama.Completions.GenerateCompletionAsync(model.Model, model.Request, context: model.Context);
 
             await foreach (var response in enumerable)
             {

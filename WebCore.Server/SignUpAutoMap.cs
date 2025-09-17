@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using Common.ViewModels.LipstickViewModels;
-using Common.ViewModels.SurveyViewModels;
 using Common.ViewModels.SystemViewModels;
 using DataAccess.DTOs;
 using LipstickDataAccess.DTOs;
 using LipstickDataAccess.MemberContext;
-using SurveyDataAccess.DTOs;
 
 namespace WebCore.Server
 {

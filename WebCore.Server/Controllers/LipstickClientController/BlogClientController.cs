@@ -26,7 +26,7 @@ namespace WebCore.Server.Controllers.LipstickClientController
         public IActionResult GetLatestBlogs(int numberOfBlog)
         {
             string language = Request.Headers[Constants.Language].ToString();
-            var data = _blogHelper.GetLatestBlogs(language,numberOfBlog);
+            var data = _blogHelper.GetLatestBlogs(language, numberOfBlog);
             return Ok(data);
         }
         [HttpGet("getById/{id}")]

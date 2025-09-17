@@ -4,7 +4,6 @@ using Common.Models;
 using Common.ViewModels.LipstickClientViewModels;
 using LipstickBusinessLogic.ILipstickClientHelpers;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace WebCore.Server.Controllers.LipstickClientController
 {
@@ -18,7 +17,7 @@ namespace WebCore.Server.Controllers.LipstickClientController
         {
             _orderHistoryClientHelper = orderHistoryClientHelper;
         }
-        
+
         [HttpGet("GetAllByUserId/{userId}/{pageIndex}/{pageSize}")]
         public IActionResult GetAllByUserId(int userId, int pageIndex, int pageSize)
         {
@@ -31,7 +30,7 @@ namespace WebCore.Server.Controllers.LipstickClientController
             }
             return Ok(data);
         }
-        
+
         [HttpGet("GetAllByPhoneNumber/{phoneNumber}/{pageIndex}/{pageSize}")]
         public IActionResult GetAllByPhoneNumber(string phoneNumber, int pageIndex, int pageSize)
         {
@@ -44,7 +43,7 @@ namespace WebCore.Server.Controllers.LipstickClientController
             }
             return Ok(data);
         }
-        
+
         [HttpGet("GetEagerOrderById/{id}")]
         public IActionResult GetEagerOrderById(int id)
         {
@@ -57,7 +56,7 @@ namespace WebCore.Server.Controllers.LipstickClientController
             }
             return Ok(data);
         }
-        
+
         [HttpPost]
         [Route("create")]
         public async Task<IActionResult> Create([FromBody] OrderClientViewModel model)
@@ -76,7 +75,7 @@ namespace WebCore.Server.Controllers.LipstickClientController
 
             return Ok(result);
         }
-        
+
         [HttpPut]
         [Route("updateStatus/{id}/{statusId}")]
         public async Task<IActionResult> UpdateStatus(int id, int statusId)
@@ -92,7 +91,7 @@ namespace WebCore.Server.Controllers.LipstickClientController
             }
             return Ok();
         }
-        
+
         [HttpPut]
         [Route("updateReceiveDate/{id}")]
         public async Task<IActionResult> UpdateReceiveDate(int id)
@@ -108,7 +107,7 @@ namespace WebCore.Server.Controllers.LipstickClientController
             }
             return Ok();
         }
-        
+
         //[HttpPost("getOrderHistoryItemList")]
         //public async Task<IActionResult> GetOrderHistoryItemList([FromBody] List<CartItemModel> items)
         //{

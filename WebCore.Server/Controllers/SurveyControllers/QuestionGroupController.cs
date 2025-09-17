@@ -4,6 +4,7 @@ using Common.Services.ActionLoggingServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using SurveyBusinessLogic.IHelpers;
+using SurveyDataAccess.DTOs;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.SurveyControllers
@@ -12,131 +13,235 @@ namespace WebCore.Server.Controllers.SurveyControllers
     [ApiController]
     public class QuestionGroupController : BaseApiController
     {
-        private readonly IQuestionGroupLibraryHelper _questionGroupHelper;
+        private readonly IQuestionGroupLibraryHelper _helper;
         private readonly IActionloggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
         public QuestionGroupController(IQuestionGroupLibraryHelper questionGroupHelper, IActionloggingService actionLog, IStringLocalizer<SharedResource> localizer)
         {
-            _questionGroupHelper = questionGroupHelper;
+            _helper = questionGroupHelper;
             _actionLog = actionLog;
             _localizer = localizer;
         }
-        [HttpGet("GetAll")]
-        //[AuthorizeEnumPolicy(ERoleClaimGroup.QuestionGroup, ERoleClaim.View, EModule.Survey)]
-        public async Task<IActionResult> GetAll(int pageIndex = 1, int pageSize = 10, bool getActive = false)
+        [HttpGet("getAll/{pageIndex}/{pageSize}")]
+        public async Task<IActionResult> GetAll(int pageIndex, int pageSize)
         {
-            string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-            var controllerName = ControllerContext.ActionDescriptor.ControllerName;
-            if (pageIndex < 1)
+            if (pageIndex < 1 || pageSize < 1)
             {
-                _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Failed);
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             }
-            Pagination<QuestionGroupViewModel> data = await _questionGroupHelper.GetAllAsync(pageIndex, pageSize, getActive);
-            _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Successful);
-            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+            Pagination<QuestionGroupLibraryDTO> data = await _helper.GetAllAsync(pageIndex, pageSize);
+            return Succeeded<Pagination<QuestionGroupLibraryDTO>>(data, _localizer["dataFetchedSuccessfully"]);
         }
-        [HttpGet("GetAllActive")]
-        //[AuthorizeEnumPolicy(ERoleClaimGroup.QuestionGroup, ERoleClaim.View, EModule.Survey)]
-        public async Task<IActionResult> GetAllActive()
+
+        // [HttpGet("getAllActive/{pageIndex}/{pageSize}")]
+        // public async Task<IActionResult> GetAllActive(int pageIndex, int pageSize)
+        // {
+        //     if (pageIndex < 1 || pageSize < 1)
+        //         return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
+        //     var data = await _helper.GetAllActiveAsync(pageIndex, pageSize);
+        //     return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        // }
+
+        [HttpGet("GetOptionList")]
+        public async Task<IActionResult> GetOptionList()
         {
-            string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-            IEnumerable<QuestionGroupViewModel> data = await _questionGroupHelper.GetAllByActiveAsync(true);
-            _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.View, EUserActionStatus.Successful);
+            var data = await _helper.GetOptionListAsync();
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
-        [HttpGet("GetById/{id}")]
-        //[AuthorizeEnumPolicy(ERoleClaimGroup.QuestionGroup, ERoleClaim.View, EModule.Survey)]
+        [HttpGet("getAllDeleted/{pageIndex}/{pageSize}")]
+        public async Task<IActionResult> GetAllDeleted(int pageIndex, int pageSize)
+        {
+            if (pageIndex < 1 || pageSize < 1)
+                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
+            var data = await _helper.GetAllDeletedAsync(pageIndex, pageSize);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        }
+        [HttpGet("getById/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            string tokin = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-            var data = await _questionGroupHelper.GetByIdAsync(id);
+            var data = await _helper.GetByIdAsync(id);
             if (data == null)
-            {
-                _actionLog.CreateAsync(tokin, ControllerContext.ActionDescriptor.ControllerName, EUserAction.ViewDetails, EUserActionStatus.Failed);
-                return Failed(EStatusCodes.NotFound, _localizer["dataNotFound"]);
-            }
-            _actionLog.CreateAsync(tokin, ControllerContext.ActionDescriptor.ControllerName, EUserAction.ViewDetails, EUserActionStatus.Successful);
-            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
+            return Succeeded<QuestionGroupLibraryDTO>(data, _localizer["dataFetchedSuccessfully"]);
         }
+        //[HttpGet("getEargerById/{id}")]
+        //public async Task<IActionResult> GetEargerById(int id)
+        //{
+        //    var data = await _helper.GetEagerByIdAsync(id);
+        //    if (data == null)
+        //        return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
+        //    return Succeeded<QuestionGroupLibraryDTO>(data, _localizer["dataFetchedSuccessfully"]);
+        //}
 
-        [HttpGet("GetEagerById/{id}")]
-        //[AuthorizeEnumPolicy(ERoleClaimGroup.QuestionGroup, ERoleClaim.View, EModule.Survey)]
-        public async Task<IActionResult> GetEagerById(int id)
+        [HttpPost("create")]
+        public async Task<IActionResult> Create([FromForm] QuestionGroupLibraryDTO model)
         {
-            string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-            var data = _questionGroupHelper.GetEagerQuestionGroupByID(id);
-            if (data == null)
-            {
-                _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.ViewDetails, EUserActionStatus.Failed);
-                return Failed(EStatusCodes.NotFound, _localizer["dataNotFound"]);
-            }
-            _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.ViewDetails, EUserActionStatus.Successful);
-            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
-        }
-
-        [HttpGet("GetEagerAllElements")]
-        //[AuthorizeEnumPolicy(ERoleClaimGroup.QuestionGroup, ERoleClaim.View, EModule.Survey)]
-        public IActionResult GetEagerAllElements(bool getActive = true)
-        {
-            IEnumerable<QuestionGroupViewModel> data = _questionGroupHelper.GetEagerAllElements(getActive);
-            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
-        }
-
-        [HttpPost("Create")]
-        //[AuthorizeEnumPolicy(ERoleClaimGroup.QuestionGroup, ERoleClaim.Create, EModule.Survey)]
-        public async Task<IActionResult> Create([FromBody] QuestionGroupViewModel model)
-        {
-            string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-            if (!ModelState.IsValid)
-            {
-                _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Create, EUserActionStatus.Failed, model);
+            if (model == null || !ModelState.IsValid)
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
-            }
-            bool result = await _questionGroupHelper.CreateAsync(model);
+            var userName = User.Identity?.Name;
+            var result = await _helper.CreateAsync(model, userName);
             if (!result)
-            {
-                _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Create, EUserActionStatus.Failed, model);
-                return Failed(EStatusCodes.BadRequest, _localizer["dataCreationFailed"]);
-            }
-            _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Create, EUserActionStatus.Successful, model);
-            return Succeeded(_localizer["dataCreatedSuccessfully"]);
+                return Failed(EStatusCodes.InternalServerError, _localizer["createFailed"]);
+            return Succeeded(_localizer["createSuccess"]);
         }
 
-        [HttpPut("Update")]
-        //[AuthorizeEnumPolicy(ERoleClaimGroup.QuestionGroup, ERoleClaim.Update, EModule.Survey)]
-        public async Task<IActionResult> Update([FromBody] QuestionGroupViewModel model)
+        [HttpPut("update")]
+        public async Task<IActionResult> Update([FromForm] QuestionGroupLibraryDTO model)
         {
-            string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-            if (!ModelState.IsValid)
-            {
-                _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Update, EUserActionStatus.Failed, model);
+            if (model == null || !ModelState.IsValid)
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
-            }
-            bool result = await _questionGroupHelper.UpdateAsync(model);
+            var userName = User.Identity?.Name;
+            var result = await _helper.UpdateAsync(model, userName);
             if (!result)
-            {
-                _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Update, EUserActionStatus.Failed, model);
-                return Failed(EStatusCodes.BadRequest, _localizer["dataUpdateFailed"]);
-            }
-            _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Update, EUserActionStatus.Successful, model);
-            return Succeeded(_localizer["dataUpdatedSuccessfully"]);
+                return Failed(EStatusCodes.InternalServerError, _localizer["updateFailed"]);
+            return Succeeded(_localizer["updateSuccess"]);
         }
 
-        [HttpPatch("SoftDelete/{id}")]
-        //[AuthorizeEnumPolicy(ERoleClaimGroup.QuestionGroup, ERoleClaim.SoftDelete, EModule.Survey)]
+        [HttpPut("softDelete/{id}")]
+        public async Task<IActionResult> SoftDelete(int id)
+        {
+            var userName = User.Identity?.Name;
+            var result = await _helper.SoftDeleteAsync(id, userName);
+            if (!result)
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
+            return Succeeded(_localizer["softDeleteSuccess"]);
+        }
+
+        [HttpPut("restore/{id}")]
+        public async Task<IActionResult> Restore(int id)
+        {
+            var userName = User.Identity?.Name;
+            var result = await _helper.RestoreAsync(id, userName);
+            if (!result)
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
+            return Succeeded(_localizer["restoreSuccess"]);
+        }
+
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-            bool result = await _questionGroupHelper.SoftDeleteAsync(id);
+            var result = await _helper.DeleteAsync(id);
             if (!result)
-            {
-                _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Delete, EUserActionStatus.Failed, id);
-                return Failed(EStatusCodes.BadRequest, _localizer["dataDeletionFailed"]);
-            }
-            _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Delete, EUserActionStatus.Successful, id);
-            return Succeeded(_localizer["dataDeletedSuccessfully"]);
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
+            return Succeeded(_localizer["deleteSuccess"]);
         }
+        //[HttpGet("GetAll")]
+        ////[AuthorizeEnumPolicy(ERoleClaimGroup.QuestionGroup, ERoleClaim.View, EModule.Survey)]
+        //public async Task<IActionResult> GetAll(int pageIndex = 1, int pageSize = 10, bool getActive = false)
+        //{
+        //    string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+        //    var controllerName = ControllerContext.ActionDescriptor.ControllerName;
+        //    if (pageIndex < 1)
+        //    {
+        //        _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Failed);
+        //        return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
+        //    }
+        //    Pagination<QuestionGroupViewModel> data = await _questionGroupHelper.GetAllAsync(pageIndex, pageSize, getActive);
+        //    _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Successful);
+        //    return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        //}
+        //[HttpGet("GetAllActive")]
+        ////[AuthorizeEnumPolicy(ERoleClaimGroup.QuestionGroup, ERoleClaim.View, EModule.Survey)]
+        //public async Task<IActionResult> GetAllActive()
+        //{
+        //    string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+        //    IEnumerable<QuestionGroupViewModel> data = await _questionGroupHelper.GetAllByActiveAsync(true);
+        //    _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.View, EUserActionStatus.Successful);
+        //    return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        //}
+
+        //[HttpGet("GetById/{id}")]
+        ////[AuthorizeEnumPolicy(ERoleClaimGroup.QuestionGroup, ERoleClaim.View, EModule.Survey)]
+        //public async Task<IActionResult> GetById(int id)
+        //{
+        //    string tokin = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+        //    var data = await _questionGroupHelper.GetByIdAsync(id);
+        //    if (data == null)
+        //    {
+        //        _actionLog.CreateAsync(tokin, ControllerContext.ActionDescriptor.ControllerName, EUserAction.ViewDetails, EUserActionStatus.Failed);
+        //        return Failed(EStatusCodes.NotFound, _localizer["dataNotFound"]);
+        //    }
+        //    _actionLog.CreateAsync(tokin, ControllerContext.ActionDescriptor.ControllerName, EUserAction.ViewDetails, EUserActionStatus.Successful);
+        //    return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        //}
+
+        //[HttpGet("GetEagerById/{id}")]
+        ////[AuthorizeEnumPolicy(ERoleClaimGroup.QuestionGroup, ERoleClaim.View, EModule.Survey)]
+        //public async Task<IActionResult> GetEagerById(int id)
+        //{
+        //    string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+        //    var data = _questionGroupHelper.GetEagerQuestionGroupByID(id);
+        //    if (data == null)
+        //    {
+        //        _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.ViewDetails, EUserActionStatus.Failed);
+        //        return Failed(EStatusCodes.NotFound, _localizer["dataNotFound"]);
+        //    }
+        //    _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.ViewDetails, EUserActionStatus.Successful);
+        //    return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        //}
+
+        //[HttpGet("GetEagerAllElements")]
+        ////[AuthorizeEnumPolicy(ERoleClaimGroup.QuestionGroup, ERoleClaim.View, EModule.Survey)]
+        //public IActionResult GetEagerAllElements(bool getActive = true)
+        //{
+        //    IEnumerable<QuestionGroupViewModel> data = _questionGroupHelper.GetEagerAllElements(getActive);
+        //    return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        //}
+
+        //[HttpPost("Create")]
+        ////[AuthorizeEnumPolicy(ERoleClaimGroup.QuestionGroup, ERoleClaim.Create, EModule.Survey)]
+        //public async Task<IActionResult> Create([FromBody] QuestionGroupViewModel model)
+        //{
+        //    string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+        //    if (!ModelState.IsValid)
+        //    {
+        //        _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Create, EUserActionStatus.Failed, model);
+        //        return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
+        //    }
+        //    bool result = await _questionGroupHelper.CreateAsync(model);
+        //    if (!result)
+        //    {
+        //        _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Create, EUserActionStatus.Failed, model);
+        //        return Failed(EStatusCodes.BadRequest, _localizer["dataCreationFailed"]);
+        //    }
+        //    _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Create, EUserActionStatus.Successful, model);
+        //    return Succeeded(_localizer["dataCreatedSuccessfully"]);
+        //}
+
+        //[HttpPut("Update")]
+        ////[AuthorizeEnumPolicy(ERoleClaimGroup.QuestionGroup, ERoleClaim.Update, EModule.Survey)]
+        //public async Task<IActionResult> Update([FromBody] QuestionGroupViewModel model)
+        //{
+        //    string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+        //    if (!ModelState.IsValid)
+        //    {
+        //        _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Update, EUserActionStatus.Failed, model);
+        //        return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
+        //    }
+        //    bool result = await _questionGroupHelper.UpdateAsync(model);
+        //    if (!result)
+        //    {
+        //        _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Update, EUserActionStatus.Failed, model);
+        //        return Failed(EStatusCodes.BadRequest, _localizer["dataUpdateFailed"]);
+        //    }
+        //    _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Update, EUserActionStatus.Successful, model);
+        //    return Succeeded(_localizer["dataUpdatedSuccessfully"]);
+        //}
+
+        //[HttpPatch("SoftDelete/{id}")]
+        ////[AuthorizeEnumPolicy(ERoleClaimGroup.QuestionGroup, ERoleClaim.SoftDelete, EModule.Survey)]
+        //public async Task<IActionResult> Delete(int id)
+        //{
+        //    string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+        //    bool result = await _questionGroupHelper.SoftDeleteAsync(id);
+        //    if (!result)
+        //    {
+        //        _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Delete, EUserActionStatus.Failed, id);
+        //        return Failed(EStatusCodes.BadRequest, _localizer["dataDeletionFailed"]);
+        //    }
+        //    _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Delete, EUserActionStatus.Successful, id);
+        //    return Succeeded(_localizer["dataDeletedSuccessfully"]);
+        //}
     }
 }

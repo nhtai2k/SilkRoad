@@ -1,10 +1,7 @@
-﻿using Common;
-using Common.Services.ActionLoggingServices;
-using Common.ViewModels.SurveyViewModels;
+﻿using Common.Services.ActionLoggingServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using SurveyBusinessLogic.IHelpers;
-using WebCore.Server;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.SurveyControllers
@@ -26,7 +23,7 @@ namespace WebCore.Server.Controllers.SurveyControllers
         //[AuthorizeEnumPolicy(ERoleClaimGroup.QuestionType, ERoleClaim.View, EModule.Survey)]
         public async Task<IActionResult> GetAll()
         {
-            IEnumerable<QuestionTypeViewModel> data = await _questionTypeHelper.GetAllAsync();
+            var data = await _questionTypeHelper.GetAllAsync();
             string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
             //_actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.View, EUserActionStatus.Successful);
 

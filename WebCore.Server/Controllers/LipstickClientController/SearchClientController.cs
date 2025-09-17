@@ -21,9 +21,9 @@ namespace WebCore.Server.Controllers.LipstickClientController
         }
         //get product search result
         [HttpGet("getProductSearchResult/{searchText}/{pageIndex}/{pageSize}")]
-        public async Task<IActionResult> GetProductSearchResult(string searchText,int pageIndex, int pageSize)
+        public async Task<IActionResult> GetProductSearchResult(string searchText, int pageIndex, int pageSize)
         {
-            if(pageIndex< 1)
+            if (pageIndex < 1)
                 return BadRequest("Page index must be greater than 0");
             string language = Request.Headers["Language"].ToString();
             var data = await _searchClientHelper.GetProductSearchResultAsync(language, searchText, pageIndex, pageSize);
