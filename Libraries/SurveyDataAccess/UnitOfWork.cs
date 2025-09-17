@@ -11,13 +11,14 @@ namespace SurveyDataAccess
         public IParticipantRepository ParticipantRepository { get; private set; }
 
         public IPredefinedAnswerRepository PredefinedAnswerRepository { get; private set; }
+        public IPredefinedAnswerLibraryRepository PredefinedAnswerLibraryRepository { get; private set; }
 
         public IQuestionGroupRepository QuestionGroupRepository { get; private set; }
+        public IQuestionGroupLibraryRepository QuestionGroupLibraryRepository { get; private set; }
         public IQuestionTypeRepository QuestionTypeRepository { get; private set; }
 
         public IQuestionRepository QuestionRepository { get; private set; }
-
-        public ISurveyQuestionRepository SurveyQuestionRepository { get; private set; }
+        public IQuestionLibraryRepository QuestionLibraryRepository { get; private set; }
 
         public ISurveyFormRepository SurveyFormRepository { get; private set; }
 
@@ -27,10 +28,12 @@ namespace SurveyDataAccess
             context = databaseContext;
             ParticipantRepository = new ParticipantRepository(context);
             PredefinedAnswerRepository = new PredefinedAnswerRepository(context);
+            PredefinedAnswerLibraryRepository = new PredefinedAnswerLibraryRepository(context);
             QuestionGroupRepository = new QuestionGroupRepository(context);
+            QuestionGroupLibraryRepository = new QuestionGroupLibraryRepository(context);
             QuestionTypeRepository = new QuestionTypeRepository(context);
             QuestionRepository = new QuestionRepository(context);
-            SurveyQuestionRepository = new SurveyQuestionRepository(context);
+            QuestionLibraryRepository = new QuestionLibraryRepository(context);
             SurveyFormRepository = new SurveyFormRepository(context);
             AnswerRepository = new AnswerRepository(context);
         }

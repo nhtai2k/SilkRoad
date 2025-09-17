@@ -2,7 +2,7 @@
 
 namespace SurveyDataAccess.IRepositories
 {
-    public interface ISurveyFormRepository : IGenericRepository<SurveyFormDTO, ApplicationContext>
+    public interface ISurveyFormRepository : IGenericRepository<SurveyFormDTO>
     {
         public SurveyFormDTO GetEagerActiveSurverFormByID(int ID);
         public SurveyFormDTO? GetEagerSurveyFormByID(int ID);

@@ -112,8 +112,6 @@ namespace SurveyBusinessLogic.Helpers
             SurveyFormDTO surveyForm = await _unitOfWork.SurveyFormRepository.GetByIdAsync(model.Id);
             if (surveyForm == null)
                 return false;
-            surveyForm.NameEN = model.NameEN;
-            surveyForm.NameVN = model.NameVN;
             surveyForm.TitleEN = model.TitleEN;
             surveyForm.TitleVN = model.TitleVN;
             surveyForm.DescriptionEN = model.DescriptionEN;
@@ -126,15 +124,15 @@ namespace SurveyBusinessLogic.Helpers
             //surveyForm.ModifiedBy = _userInformation.GetUserName();
             _unitOfWork.SurveyFormRepository.RemoveSelectQuestionBySurveyFormID(surveyForm.Id);
             //var selectedQuestionList = model.SelectQuestions.Where(s => s.Checked);
-            foreach (var item in model.SurveyQuestions)
-            {
-                SelectedQuestionDTO selectedQuestion = new SelectedQuestionDTO();
-                selectedQuestion.SurveyFormId = surveyForm.Id;
-                selectedQuestion.QuestionId = item.QuestionID;
-                selectedQuestion.QuestionGroupId = item.QuestionGroupID;
-                selectedQuestion.Priority = item.Priority;
-                _unitOfWork.SurveyQuestionRepository.Create(selectedQuestion);
-            }
+            //foreach (var item in model.SurveyQuestions)
+            //{
+            //    SelectedQuestionDTO selectedQuestion = new SelectedQuestionDTO();
+            //    selectedQuestion.SurveyFormId = surveyForm.Id;
+            //    selectedQuestion.QuestionId = item.QuestionID;
+            //    selectedQuestion.QuestionGroupId = item.QuestionGroupID;
+            //    selectedQuestion.Priority = item.Priority;
+            //    _unitOfWork.SurveyQuestionRepository.Create(selectedQuestion);
+            //}
             _unitOfWork.SaveChanges();
             return true;
         }

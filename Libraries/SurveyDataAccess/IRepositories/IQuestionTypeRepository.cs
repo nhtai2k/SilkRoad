@@ -2,7 +2,7 @@
 
 namespace SurveyDataAccess.IRepositories
 {
-    public interface IQuestionTypeRepository : IGenericRepository<QuestionTypeDTO, ApplicationContext>
+    public interface IQuestionTypeRepository : IGenericRepository<QuestionTypeDTO>
     {
     }
 }

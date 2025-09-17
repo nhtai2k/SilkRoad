@@ -3,9 +3,7 @@ using System.Linq.Expressions;
 
 namespace SurveyDataAccess.IRepositories
 {
-    public interface IGenericRepository<TEntity, TDBContext>
-          where TEntity : class
-          where TDBContext : DbContext
+    public interface IGenericRepository<TEntity> where TEntity : class
     {
         /// <summary>
         /// The code Expression<Func<TEntity, bool>> filter means the caller will provide a lambda expression based on the TEntity type, and this expression will return a Boolean value. For example, if the repository is instantiated for the Student entity type, the code in the calling method might specify student => student.LastName == "Smith" for the filter parameter.
@@ -20,17 +18,26 @@ namespace SurveyDataAccess.IRepositories
            Expression<Func<TEntity, bool>> filter = null,
            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
            string includeProperties = "");
-        TEntity GetById(object id);
+        IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> filter = null,
+                  Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                  string includeProperties = "");
+        TEntity? GetById(object id);
         void Create(TEntity entity);
         void Delete(object id);
         void Update(TEntity entity);
         void Delete(TEntity entityToDelete);
+
         Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "");
-        Task<TEntity> GetByIdAsync(int ID);
+        //Task<IQueryable<TEntity>> QueryAsync(
+        //    Expression<Func<TEntity, bool>> filter = null,
+        //    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+        //    string includeProperties = ""
+        //);
+        Task<TEntity?> GetByIdAsync(object Id);
         Task CreateAsync(TEntity entity);
-        Task UpdateAsync(TEntity entity);
-        Task DeleteAsync(int ID);
+        Task<bool> UpdateAsync(TEntity entity, object Id);
+        Task<bool> DeleteAsync(object Id);
     }
 }

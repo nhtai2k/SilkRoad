@@ -4,24 +4,26 @@ using SurveyDataAccess.IRepositories;
 
 namespace SurveyDataAccess.Repositories
 {
-    public class QuestionGroupRepository : GenericRepository<QuestionGroupLibraryDTO, ApplicationContext>, IQuestionGroupRepository
+    public class QuestionGroupRepository : GenericRepository<QuestionGroupDTO>, IQuestionGroupRepository
     {
-        private readonly DbSet<QuestionGroupLibraryDTO> _questionGroups;
-        private readonly DbSet<QuestionLibraryDTO> _questions;
+
         public QuestionGroupRepository(ApplicationContext dbContext) : base(dbContext)
         {
-            _questionGroups = dbContext.Set<QuestionGroupLibraryDTO>();
-            _questions = dbContext.Set<QuestionLibraryDTO>();
+            
         }
         public IEnumerable<QuestionGroupLibraryDTO> GetEagerAllElements()
         {
-            var data = _questionGroups.Include(s => s.QuestionLibraries.Where(p => !p.IsDeleted)).ToList();
-            return data;
+            //var data = _questionGroups.Include(s => s.QuestionLibraries.Where(p => !p.IsDeleted)).ToList();
+            //return data;
+            throw new NotImplementedException();
+
         }
         public QuestionGroupLibraryDTO? GetEagerQuestionGroupById(int id)
         {
-            var data = _questionGroups.Where(s => s.Id == id).Include(s => s.QuestionLibraries).ThenInclude(s => s.PredefinedAnswerLibraries).FirstOrDefault();
-            return data;
+            //var data = _questionGroups.Where(s => s.Id == id).Include(s => s.QuestionLibraries).ThenInclude(s => s.PredefinedAnswerLibraries).FirstOrDefault();
+            //return data;
+            throw new NotImplementedException();
+
         }
     }
 }

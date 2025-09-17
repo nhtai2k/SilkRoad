@@ -4,7 +4,7 @@ using SurveyDataAccess.IRepositories;
 
 namespace SurveyDataAccess.Repositories
 {
-    public class ParticipantRepository : GenericRepository<ParticipantDTO, ApplicationContext>, IParticipantRepository
+    public class ParticipantRepository : GenericRepository<ParticipantDTO>, IParticipantRepository
     {
         private readonly DbSet<ParticipantDTO> _participant;
         public ParticipantRepository(ApplicationContext dbContext) : base(dbContext)
@@ -13,8 +13,9 @@ namespace SurveyDataAccess.Repositories
         }
         public ParticipantDTO? GetEagerParticipantById(int id)
         {
-            var data = _participant.Where(s => s.Id == id).Include(s => s.Answers).FirstOrDefault();
-            return data;
+            //var data = _participant.Where(s => s.Id == id).Include(s => s.Answers).FirstOrDefault();
+            //return data;
+            throw new NotImplementedException();
         }
         //public bool CheckExistenceBySurveyFormID(int surveyFormID)
         //{

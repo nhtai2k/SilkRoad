@@ -4,14 +4,12 @@ using System.Linq.Expressions;
 
 namespace SurveyDataAccess.Repositories
 {
-    public abstract class GenericRepository<TEntity, TDBContext> : IGenericRepository<TEntity, TDBContext>
-            where TEntity : class
-            where TDBContext : DbContext
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
-        internal TDBContext _context;
+        internal ApplicationContext _context;
         internal DbSet<TEntity> _dbSet;
 
-        public GenericRepository(TDBContext context)
+        public GenericRepository(ApplicationContext context)
         {
             _context = context;
             _dbSet = context.Set<TEntity>();
@@ -50,8 +48,31 @@ namespace SurveyDataAccess.Repositories
                 return query.ToList();
             }
         }
+        public virtual IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> filter = null,
+                                         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                                         string includeProperties = "")
+        {
+            IQueryable<TEntity> query = _dbSet;
 
-        public virtual TEntity GetById(object id)
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            if (orderBy != null)
+            {
+                return orderBy(query);
+            }
+
+            return query;
+        }
+
+        public virtual TEntity? GetById(object id)
         {
             return _dbSet.Find(id);
         }
@@ -63,8 +84,9 @@ namespace SurveyDataAccess.Repositories
 
         public virtual void Delete(object id)
         {
-            TEntity entityToDelete = _dbSet.Find(id);
-            Delete(entityToDelete);
+            TEntity? entityToDelete = _dbSet.Find(id);
+            if (entityToDelete != null)
+                Delete(entityToDelete);
         }
 
         public virtual void Delete(TEntity entityToDelete)
@@ -78,15 +100,13 @@ namespace SurveyDataAccess.Repositories
 
         public virtual void Update(TEntity entityToUpdate)
         {
-            var existingEntity = _dbSet.Find(entityToUpdate);
-            if (existingEntity != null)
-            {
-                _dbSet.Attach(entityToUpdate);
-                _context.Entry(entityToUpdate).State = EntityState.Modified;
-            }
+
+            _dbSet.Attach(entityToUpdate);
+            _context.Entry(entityToUpdate).State = EntityState.Modified;
+
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null,
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null,
            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
            string includeProperties = "")
         {
@@ -112,10 +132,34 @@ namespace SurveyDataAccess.Repositories
                 return await query.ToListAsync();
             }
         }
+        //public virtual async Task<IQueryable<TEntity>> QueryAsync(
+        //    Expression<Func<TEntity, bool>> filter = null,
+        //    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+        //    string includeProperties = "")
+        //{
+        //    IQueryable<TEntity> query = _dbSet;
 
-        public async Task<TEntity> GetByIdAsync(int ID)
+        //    if (filter != null)
+        //    {
+        //        query = query.Where(filter);
+        //    }
+
+        //    foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+        //    {
+        //        query = query.Include(includeProperty);
+        //    }
+
+        //    if (orderBy != null)
+        //    {
+        //        query = orderBy(query);
+        //    }
+
+        //    return await Task.FromResult(query);
+        //}
+
+        public virtual async Task<TEntity?> GetByIdAsync(object Id)
         {
-            var entity = await _dbSet.FindAsync(ID);
+            var entity = await _dbSet.FindAsync(Id);
             if (entity != null)
             {
                 return entity;
@@ -123,29 +167,31 @@ namespace SurveyDataAccess.Repositories
             return null;
         }
 
-        public async Task CreateAsync(TEntity entity)
+        public virtual async Task CreateAsync(TEntity entity)
         {
             await _dbSet.AddAsync(entity);
         }
 
-        public async Task UpdateAsync(TEntity entity)
+        public virtual async Task<bool> DeleteAsync(object Id)
         {
-            // Example async operation before updating
-            var existingEntity = await _dbSet.FindAsync(entity);
-            if (existingEntity != null)
-            {
-                _dbSet.Attach(entity);
-                _context.Entry(entity).State = EntityState.Modified;
-            }
-        }
-
-        public async Task DeleteAsync(int ID)
-        {
-            var entity = await _dbSet.FindAsync(ID);
+            var entity = await _dbSet.FindAsync(Id);
             if (entity != null)
             {
                 _dbSet.Remove(entity);
+                return true;
             }
+            return false;
+        }
+
+        public async Task<bool> UpdateAsync(TEntity entity, object Id)
+        {
+            var existingEntity = await _dbSet.FindAsync(Id);
+            if (existingEntity != null)
+            {
+                _context.Entry(existingEntity).CurrentValues.SetValues(entity);
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -39,7 +39,6 @@ namespace WebCore.Server
             CreateMap<QuestionGroupLibraryDTO, QuestionGroupViewModel>().ReverseMap();
             CreateMap<QuestionLibraryDTO, QuestionViewModel>().ReverseMap();
             CreateMap<PredefinedAnswerLibraryDTO, PredefinedAnswerViewModel>().ReverseMap();
-            CreateMap<SelectedQuestionDTO, SelectedQuestionViewModel>().ReverseMap();
             CreateMap<ParticipantDTO, ParticipantViewModel>().ReverseMap();
             CreateMap<SurveyFormDTO, SurveyFormViewModel>().ReverseMap();
             CreateMap<QuestionTypeDTO, QuestionTypeViewModel>().ReverseMap();

@@ -7,10 +7,12 @@ namespace SurveyDataAccess
 
         IParticipantRepository ParticipantRepository { get; }
         IPredefinedAnswerRepository PredefinedAnswerRepository { get; }
+        IPredefinedAnswerLibraryRepository PredefinedAnswerLibraryRepository { get; }
         IQuestionGroupRepository QuestionGroupRepository { get; }
+        IQuestionGroupLibraryRepository QuestionGroupLibraryRepository { get; }
         IQuestionTypeRepository QuestionTypeRepository { get; }
         IQuestionRepository QuestionRepository { get; }
-        ISurveyQuestionRepository SurveyQuestionRepository { get; }
+        IQuestionLibraryRepository QuestionLibraryRepository { get; }
         ISurveyFormRepository SurveyFormRepository { get; }
         IAnswerRepository AnswerRepository { get; }
         void BeginTransaction();
