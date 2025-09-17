@@ -16,11 +16,11 @@ namespace WebCore.Server.Controllers.SurveyControllers
     [ApiController]
     public class QuestionController : BaseApiController
     {
-        private readonly IQuestionHelper _questionHelper;
+        private readonly IQuestionLibraryHelper _questionHelper;
         private readonly IJwtService _jwtService;
         private readonly IActionloggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public QuestionController(IQuestionHelper questionHelper, IJwtService jwtService, IActionloggingService actionLog, IStringLocalizer<SharedResource> localizer)
+        public QuestionController(IQuestionLibraryHelper questionHelper, IJwtService jwtService, IActionloggingService actionLog, IStringLocalizer<SharedResource> localizer)
         {
             _questionHelper = questionHelper;
             _jwtService = jwtService;

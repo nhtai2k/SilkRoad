@@ -64,8 +64,8 @@ namespace WebCore.Server
             #region Survey
             services.AddScoped<SurveyDataAccess.IUnitOfWork, SurveyDataAccess.UnitOfWork>();
             services.AddScoped<IParticipantHelper, ParticipantHelper>();
-            services.AddScoped<IQuestionGroupHelper, QuestionGroupHelper>();
-            services.AddScoped<IQuestionHelper, QuestionHelper>();
+            services.AddScoped<IQuestionGroupLibraryHelper, QuestionGroupLibraryHelper>();
+            services.AddScoped<IQuestionLibraryHelper, QuestionLibraryHelper>();
             services.AddScoped<ISurveyFormHelper, SurveyFormHelper>();
             services.AddScoped<ISurveyReportHelper, SurveyReportHelper>();
             services.AddScoped<IQuestionTypeHelper, QuestionTypeHelper>();

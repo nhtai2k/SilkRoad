@@ -1,17 +1,13 @@
-﻿using AutoMapper;
-using Common.Models;
-using Common.ViewModels.SurveyViewModels;
-using SurveyBusinessLogic.IHelpers;
+﻿using SurveyBusinessLogic.IHelpers;
 using SurveyDataAccess;
-using SurveyDataAccess.DTOs;
 
 namespace SurveyBusinessLogic.Helpers
 {
-    public class QuestionGroupHelper : IQuestionGroupHelper
+    public class QuestionGroupLibraryHelper : IQuestionGroupLibraryHelper
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public QuestionGroupHelper(IUnitOfWork unitOfWork,
+        public QuestionGroupLibraryHelper(IUnitOfWork unitOfWork,
             IMapper mapper)
         {
             _unitOfWork = unitOfWork;

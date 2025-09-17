@@ -1,13 +1,9 @@
 ﻿using Common;
 using Common.Models;
 using Common.Services.ActionLoggingServices;
-using Common.Services.JwtServices;
-using Common.ViewModels.SurveyViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using Newtonsoft.Json;
 using SurveyBusinessLogic.IHelpers;
-using WebCore.Server;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.SurveyControllers
@@ -16,10 +12,10 @@ namespace WebCore.Server.Controllers.SurveyControllers
     [ApiController]
     public class QuestionGroupController : BaseApiController
     {
-        private readonly IQuestionGroupHelper _questionGroupHelper;
+        private readonly IQuestionGroupLibraryHelper _questionGroupHelper;
         private readonly IActionloggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public QuestionGroupController(IQuestionGroupHelper questionGroupHelper, IActionloggingService actionLog, IStringLocalizer<SharedResource> localizer)
+        public QuestionGroupController(IQuestionGroupLibraryHelper questionGroupHelper, IActionloggingService actionLog, IStringLocalizer<SharedResource> localizer)
         {
             _questionGroupHelper = questionGroupHelper;
             _actionLog = actionLog;

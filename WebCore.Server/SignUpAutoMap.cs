@@ -35,13 +35,13 @@ namespace WebCore.Server
             CreateMap<PaymentDTO, PaymentViewModel>().ReverseMap();
             #endregion
             #region Survey
-            CreateMap<SurveyFormDTO, SurveyFormViewModel>().ReverseMap();
-            CreateMap<QuestionGroupLibraryDTO, QuestionGroupViewModel>().ReverseMap();
-            CreateMap<QuestionLibraryDTO, QuestionViewModel>().ReverseMap();
-            CreateMap<PredefinedAnswerLibraryDTO, PredefinedAnswerViewModel>().ReverseMap();
-            CreateMap<ParticipantDTO, ParticipantViewModel>().ReverseMap();
-            CreateMap<SurveyFormDTO, SurveyFormViewModel>().ReverseMap();
-            CreateMap<QuestionTypeDTO, QuestionTypeViewModel>().ReverseMap();
+            //CreateMap<SurveyFormDTO, SurveyFormViewModel>().ReverseMap();
+            //CreateMap<QuestionGroupLibraryDTO, QuestionGroupViewModel>().ReverseMap();
+            //CreateMap<QuestionLibraryDTO, QuestionViewModel>().ReverseMap();
+            //CreateMap<PredefinedAnswerLibraryDTO, PredefinedAnswerViewModel>().ReverseMap();
+            //CreateMap<ParticipantDTO, ParticipantViewModel>().ReverseMap();
+            //CreateMap<SurveyFormDTO, SurveyFormViewModel>().ReverseMap();
+            //CreateMap<QuestionTypeDTO, QuestionTypeViewModel>().ReverseMap();
             #endregion
             #region System
             CreateMap<RoleDTO, RoleViewModel>().ReverseMap();

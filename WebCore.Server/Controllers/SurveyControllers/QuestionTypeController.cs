@@ -28,7 +28,7 @@ namespace WebCore.Server.Controllers.SurveyControllers
         {
             IEnumerable<QuestionTypeViewModel> data = await _questionTypeHelper.GetAllAsync();
             string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-            _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.View, EUserActionStatus.Successful);
+            //_actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.View, EUserActionStatus.Successful);
 
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
