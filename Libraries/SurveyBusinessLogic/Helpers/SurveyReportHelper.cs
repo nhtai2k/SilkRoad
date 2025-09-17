@@ -1,6 +1,4 @@
 ﻿using SurveyBusinessLogic.IHelpers;
-using SurveyDataAccess;
-using SurveyDataAccess.DTOs;
 
 namespace SurveyBusinessLogic.Helpers
 {

@@ -1,6 +1,4 @@
 ﻿using SurveyBusinessLogic.IHelpers;
-using SurveyDataAccess;
-using SurveyDataAccess.DTOs;
 namespace SurveyBusinessLogic.Helpers
 {
     public class ParticipantHelper : IParticipantHelper
@@ -309,6 +307,6 @@ namespace SurveyBusinessLogic.Helpers
         //        return string.Empty;
         //    }
         //}
-    
+
     }
 }

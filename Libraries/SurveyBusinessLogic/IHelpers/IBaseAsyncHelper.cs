@@ -1,13 +1,16 @@
-﻿namespace SurveyBusinessLogic.IHelpers
+﻿using Common.Models;
+
+namespace SurveyBusinessLogic.IHelpers
 {
     public interface IBaseAsyncHelper<T> where T : class
     {
-        public Task<IEnumerable<T>> GetAllAsync();
-        public Task<T> GetByIdAsync(int id);
-        public Task<bool> CreateAsync(T model);
-        public Task<bool> UpdateAsync(T model);
-        public Task<bool> SoftDeleteAsync(int id);
-        public Task<bool> RestoreAsync(int id);
+        public Task<Pagination<T>> GetAllAsync(int pageIndex, int pageSize);
+        public Task<Pagination<T>> GetAllDeletedAsync(int pageIndex, int pageSize);
+        public Task<T?> GetByIdAsync(int id);
+        public Task<bool> CreateAsync(T model, string? userName = null);
+        public Task<bool> UpdateAsync(T model, string? userName = null);
+        public Task<bool> SoftDeleteAsync(int id, string? userName = null);
+        public Task<bool> RestoreAsync(int id, string? userName = null);
         public Task<bool> DeleteAsync(int id);
     }
 }
