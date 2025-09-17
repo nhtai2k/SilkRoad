@@ -1,12 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SurveyDataAccess.DTOs;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SurveyDataAccess.Configurations
 {
-    public class PredefinedAnswerConfiguration : IEntityTypeConfiguration<PredefinedAnswerDTO>
+    public class PredefinedAnswerLibraryConfiguration : IEntityTypeConfiguration<PredefinedAnswerLibraryDTO>
     {
-        public void Configure(EntityTypeBuilder<PredefinedAnswerDTO> builder)
+        public void Configure(EntityTypeBuilder<PredefinedAnswerLibraryDTO> builder)
         {
             builder.ToTable("Table_PredefinedAnswers");
             builder.HasKey(s => s.Id);
@@ -15,7 +20,7 @@ namespace SurveyDataAccess.Configurations
                 .ValueGeneratedOnAdd();
             builder.Property(s => s.NameEN).HasColumnType("nvarchar(255)");
             builder.Property(s => s.NameVN).HasColumnType("nvarchar(255)");
-            builder.HasOne<QuestionDTO>(s => s.Question).WithMany(g => g.PredefinedAnswers).HasForeignKey(s => s.QuestionId);
+            builder.HasOne<QuestionLibraryDTO>(s => s.Question).WithMany(g => g.PredefinedAnswerLibraries).HasForeignKey(s => s.QuestionId);
         }
     }
 }

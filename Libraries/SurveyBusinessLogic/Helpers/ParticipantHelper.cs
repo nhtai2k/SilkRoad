@@ -29,10 +29,10 @@ namespace SurveyBusinessLogic.Helpers
 
             IEnumerable<ParticipantDTO> data = await _unitOfWork.ParticipantRepository.GetAllAsync(filter: s =>
                 (surveyFormId == -1? true : s.SurveyFormId == surveyFormId) &&
-                (startDate == null ? true : s.CreatedOn.Date >= startDate.Value.Date) &&
-                (endDate == null ? true : s.CreatedOn.Date <= endDate.Value.Date) &&
+                (startDate == null ? true : s.CreatedAt.Date >= startDate.Value.Date) &&
+                (endDate == null ? true : s.CreatedAt.Date <= endDate.Value.Date) &&
                 !s.IsDeleted,
-                orderBy: p => p.OrderByDescending(s => s.CreatedOn));
+                orderBy: p => p.OrderByDescending(s => s.CreatedAt));
             model.TotalItems = data.Count();
             model.CurrentPage = pageIndex;
             model.TotalPages = (int)Math.Ceiling(model.TotalItems / (double)model.PageSize);
@@ -55,8 +55,8 @@ namespace SurveyBusinessLogic.Helpers
                 customerSurvey.Email = model.Email;
             }
             customerSurvey.FullName = model.FullName;
-            customerSurvey.CreatedOn = DateTime.Now;
-            customerSurvey.ModifiedOn = DateTime.Now;
+            customerSurvey.CreatedAt = DateTime.Now;
+            customerSurvey.ModifiedAt = DateTime.Now;
             await _unitOfWork.ParticipantRepository.CreateAsync(customerSurvey);
             _unitOfWork.SaveChanges();
             foreach (var item in model.QuestionGroupUIs)
@@ -222,13 +222,13 @@ namespace SurveyBusinessLogic.Helpers
             {
                 IEnumerable<ParticipantDTO> participants = await _unitOfWork.ParticipantRepository.GetAllAsync(filter: s =>
                     s.SurveyFormId == surveyFormId &&
-                    (startDate == null ? true : s.CreatedOn.Date >= startDate.Value.Date) &&
-                    (endDate == null ? true : s.CreatedOn.Date <= endDate.Value.Date) &&
+                    (startDate == null ? true : s.CreatedAt.Date >= startDate.Value.Date) &&
+                    (endDate == null ? true : s.CreatedAt.Date <= endDate.Value.Date) &&
                     !s.IsDeleted,
-                    orderBy: p => p.OrderByDescending(s => s.CreatedOn));
+                    orderBy: p => p.OrderByDescending(s => s.CreatedAt));
 
                 var formSurvey = _unitOfWork.SurveyFormRepository.GetEagerSurveyFormByID(surveyFormId);
-                List<QuestionDTO> questions = new List<QuestionDTO>();
+                List<QuestionLibraryDTO> questions = new List<QuestionLibraryDTO>();
                 //ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 using (var package = new ExcelPackage())
                 {
@@ -242,7 +242,7 @@ namespace SurveyBusinessLogic.Helpers
                     int temp = 1;
                     foreach (var item in formSurvey.SurveyQuestions)
                     {
-                        QuestionDTO question = _unitOfWork.QuestionRepository.GetEagerQuestionById(item.QuestionId);
+                        QuestionLibraryDTO question = _unitOfWork.QuestionRepository.GetEagerQuestionById(item.QuestionId);
                         worksheet.Cells[1, temp + 5].Value = question.NameVN;
                         questions.Add(question);
                         temp++;
@@ -257,7 +257,7 @@ namespace SurveyBusinessLogic.Helpers
                         //List<QuestionGroupUIViewModel> questionGroupUIs = QuestionGroupUI(language, data.SurveyResults);
 
                         worksheet.Cells[index + 1, 1].Value = index;
-                        worksheet.Cells[index + 1, 2].Value = data.CreatedOn.ToString("dd/MM/yyyy HH:mm");
+                        worksheet.Cells[index + 1, 2].Value = data.CreatedAt.ToString("dd/MM/yyyy HH:mm");
                         worksheet.Cells[index + 1, 3].Value = data.FullName;
                         worksheet.Cells[index + 1, 4].Value = data.Email;
                         worksheet.Cells[index + 1, 5].Value = data.PhoneNumber;
@@ -268,11 +268,11 @@ namespace SurveyBusinessLogic.Helpers
                             var question = questions.Where(s => s.Id == result.QuestionId).First();
                             if (question.QuestionTypeId == (int)EQuestionType.Option)
                             {
-                                worksheet.Cells[index + 1, tempIndex + 5].Value = question.PredefinedAnswers.Where(s => s.Id == result.AnswerId).First().Point;
+                                worksheet.Cells[index + 1, tempIndex + 5].Value = question.PredefinedAnswerLibraries.Where(s => s.Id == result.AnswerId).First().Point;
                             }
                             else if (question.QuestionTypeId == (int)EQuestionType.OptionOpen)
                             {
-                                worksheet.Cells[index + 1, tempIndex + 5].Value = question.PredefinedAnswers.Where(s => s.Id == result.AnswerId).First().Point + " || " + result.Answer;
+                                worksheet.Cells[index + 1, tempIndex + 5].Value = question.PredefinedAnswerLibraries.Where(s => s.Id == result.AnswerId).First().Point + " || " + result.Answer;
                             }
                             else if (question.QuestionTypeId == (int)EQuestionType.Open)
                             {

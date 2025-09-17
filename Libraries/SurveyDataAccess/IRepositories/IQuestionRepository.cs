@@ -2,9 +2,9 @@
 
 namespace SurveyDataAccess.IRepositories
 {
-    public interface IQuestionRepository : IGenericRepository<QuestionDTO, ApplicationContext>
+    public interface IQuestionRepository : IGenericRepository<QuestionLibraryDTO, ApplicationContext>
     {
-        public QuestionDTO? GetEagerQuestionById(int id);
+        public QuestionLibraryDTO? GetEagerQuestionById(int id);
         public bool CheckExistenceByQuestionGroupId(int questionGroupId);
     }
 }

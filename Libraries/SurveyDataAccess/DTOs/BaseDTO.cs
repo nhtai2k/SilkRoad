@@ -2,8 +2,8 @@
 {
     public abstract class BaseDTO
     {
-        public DateTime CreatedOn { get; set; }
-        public DateTime ModifiedOn { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime ModifiedAt { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsActive { get; set; }
         public string? CreatedBy { get; set; }
@@ -12,8 +12,8 @@
         {
             IsDeleted = false;
             IsActive = true;
-            CreatedOn = DateTime.Now;
-            ModifiedOn = DateTime.Now;
+            CreatedAt = DateTime.Now;
+            ModifiedAt = DateTime.Now;
         }
     }
 }

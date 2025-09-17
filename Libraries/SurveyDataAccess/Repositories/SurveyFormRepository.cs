@@ -7,16 +7,16 @@ namespace SurveyDataAccess.Repositories
     public class SurveyFormRepository : GenericRepository<SurveyFormDTO, ApplicationContext>, ISurveyFormRepository
     {
         private readonly DbSet<SurveyFormDTO> _surveyForms;
-        private readonly DbSet<SurveyQuestionDTO> _surveyQuestion;
+        private readonly DbSet<SelectedQuestionDTO> _surveyQuestion;
 
         public SurveyFormRepository(ApplicationContext dbContext) : base(dbContext)
         {
             _surveyForms = dbContext.Set<SurveyFormDTO>();
-            _surveyQuestion = dbContext.Set<SurveyQuestionDTO>();
+            _surveyQuestion = dbContext.Set<SelectedQuestionDTO>();
         }
         public void RemoveSelectQuestionBySurveyFormID(int surveyFormID)
         {
-            List<SurveyQuestionDTO> selectQuestions = _surveyQuestion.Where(s => s.SurveyFormId == surveyFormID).ToList();
+            List<SelectedQuestionDTO> selectQuestions = _surveyQuestion.Where(s => s.SurveyFormId == surveyFormID).ToList();
             selectQuestions.ForEach(s =>
             {
                 _surveyQuestion.Remove(s);

@@ -39,11 +39,11 @@ namespace SurveyBusinessLogic.Helpers
             //    clusteredBarChartViewModel.Labels.Add(date.ToString("MM-yyyy"));
             //}
             // Lay danh sach cau hoi cua khao sat
-            IEnumerable<SurveyQuestionDTO> selectedQuestions = await _unitOfWork.SurveyQuestionRepository.GetBySurveyFormID(surveyId);
+            IEnumerable<SelectedQuestionDTO> selectedQuestions = await _unitOfWork.SurveyQuestionRepository.GetBySurveyFormID(surveyId);
 
             foreach (var item in selectedQuestions)
             {
-                QuestionDTO question = _unitOfWork.QuestionRepository.GetEagerQuestionById(item.QuestionId);
+                QuestionLibraryDTO question = _unitOfWork.QuestionRepository.GetEagerQuestionById(item.QuestionId);
                 if (question.QuestionTypeId == (int)EQuestionType.Option)
                 {
                     clusteredBarChartViewModel.Labels.Add(question.ChartLabel);
@@ -68,7 +68,7 @@ namespace SurveyBusinessLogic.Helpers
             {
                 var formSurvey = _unitOfWork.SurveyFormRepository.GetEagerSurveyFormByID(surveyId);
                 var customerSurveys = await _unitOfWork.ParticipantRepository.GetAllAsync(filter: s => s.SurveyFormId == surveyId);
-                List<QuestionDTO> questions = new List<QuestionDTO>();
+                List<QuestionLibraryDTO> questions = new List<QuestionLibraryDTO>();
 
                 //ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 using (var package = new ExcelPackage())
@@ -83,7 +83,7 @@ namespace SurveyBusinessLogic.Helpers
                     int temp = 1;
                     foreach (var item in formSurvey.SurveyQuestions)
                     {
-                        QuestionDTO question = _unitOfWork.QuestionRepository.GetEagerQuestionById(item.QuestionId);
+                        QuestionLibraryDTO question = _unitOfWork.QuestionRepository.GetEagerQuestionById(item.QuestionId);
                         worksheet.Cells[1, temp + 5].Value = question.NameVN;
                         questions.Add(question);
                         temp++;
@@ -99,7 +99,7 @@ namespace SurveyBusinessLogic.Helpers
                         //List<QuestionGroupUIViewModel> questionGroupUIs = QuestionGroupUI(language, data.SurveyResults);
 
                         worksheet.Cells[index + 1, 1].Value = index;
-                        worksheet.Cells[index + 1, 2].Value = data.CreatedOn.ToString("dd/MM/yyyy HH:mm");
+                        worksheet.Cells[index + 1, 2].Value = data.CreatedAt.ToString("dd/MM/yyyy HH:mm");
                         worksheet.Cells[index + 1, 3].Value = data.FullName;
                         worksheet.Cells[index + 1, 4].Value = data.Email;
                         worksheet.Cells[index + 1, 5].Value = data.PhoneNumber;
@@ -110,11 +110,11 @@ namespace SurveyBusinessLogic.Helpers
                             var question = questions.Where(s => s.Id == result.QuestionId).First();
                             if (question.QuestionTypeId == (int)EQuestionType.Option)
                             {
-                                worksheet.Cells[index + 1, tempIndex + 5].Value = question.PredefinedAnswers.Where(s => s.Id == result.AnswerId).First().Point;
+                                worksheet.Cells[index + 1, tempIndex + 5].Value = question.PredefinedAnswerLibraries.Where(s => s.Id == result.AnswerId).First().Point;
                             }
                             else if (question.QuestionTypeId == (int)EQuestionType.OptionOpen)
                             {
-                                worksheet.Cells[index + 1, tempIndex + 5].Value = question.PredefinedAnswers.Where(s => s.Id == result.AnswerId).First().Point + " || " + result.Answer;
+                                worksheet.Cells[index + 1, tempIndex + 5].Value = question.PredefinedAnswerLibraries.Where(s => s.Id == result.AnswerId).First().Point + " || " + result.Answer;
                             }
                             else if (question.QuestionTypeId == (int)EQuestionType.Open)
                             {
@@ -184,7 +184,7 @@ namespace SurveyBusinessLogic.Helpers
                 foreach (var item in data)
                 {
                     ColumnViewModel coloumnViewModel = new ColumnViewModel();
-                    QuestionDTO question = _unitOfWork.QuestionRepository.GetById(item.QuestionId);
+                    QuestionLibraryDTO question = _unitOfWork.QuestionRepository.GetById(item.QuestionId);
                     coloumnViewModel.Label = question.ChartLabel;
                     coloumnViewModel.Value = item.AverageScore;
                     barChartViewModel.Columns.Add(coloumnViewModel);
@@ -246,14 +246,14 @@ namespace SurveyBusinessLogic.Helpers
         {
             startTime = startTime.Date;
             finishTime = finishTime.AddDays(1).Date;
-            IEnumerable<ParticipantDTO> customerSurveys = _unitOfWork.ParticipantRepository.GetAll(filter: s => s.SurveyFormId == surveyId && s.CreatedOn.Date >= startTime.Date && s.CreatedOn.Date < finishTime.Date);
+            IEnumerable<ParticipantDTO> customerSurveys = _unitOfWork.ParticipantRepository.GetAll(filter: s => s.SurveyFormId == surveyId && s.CreatedAt.Date >= startTime.Date && s.CreatedAt.Date < finishTime.Date);
             BarChartViewModel barChartViewModel = new BarChartViewModel();
             barChartViewModel.Title = "Số lượng khảo sát";
             barChartViewModel.Unit = "Khảo sát";
             List<ColumnViewModel> coloumnViewModels = new List<ColumnViewModel>();
             for (DateTime date = startTime; date < finishTime; date = date.AddDays(1))
             {
-                int count = customerSurveys.Where(s => s.CreatedOn.Date == date.Date).Count();
+                int count = customerSurveys.Where(s => s.CreatedAt.Date == date.Date).Count();
                 ColumnViewModel coloumnViewModel = new ColumnViewModel();
                 coloumnViewModel.Label = date.ToString("dd-MM-yyyy");
                 coloumnViewModel.Value = count;

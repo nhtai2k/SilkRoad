@@ -10,7 +10,7 @@ import { ToastService } from '@services/helper-services/toast.service';
 import { EColors } from '@common/global';
 import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 import { IconDirective } from '@coreui/icons-angular';
-import { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular } from '@coreui/icons';
+import { cilPlus, cilTrash, cilPen, cilSave } from '@coreui/icons';
 
 
 @Component({
@@ -28,7 +28,7 @@ export class QuestionGroupsComponent {
   visibleDelete: boolean = false;
   deleteById: number = 0;
   data: Pagination<QuestionGroupModel> = new Pagination<QuestionGroupModel>();
-  icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular };
+  icons: any = { cilPlus, cilTrash, cilPen, cilSave };
 
   createForm: FormGroup = new FormGroup({
     nameEN: new FormControl('', Validators.required),

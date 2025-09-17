@@ -4,19 +4,19 @@ using SurveyDataAccess.IRepositories;
 
 namespace SurveyDataAccess.Repositories
 {
-    public class QuestionRepository : GenericRepository<QuestionDTO, ApplicationContext>, IQuestionRepository
+    public class QuestionRepository : GenericRepository<QuestionLibraryDTO, ApplicationContext>, IQuestionRepository
     {
-        private readonly DbSet<QuestionDTO> _questions;
+        private readonly DbSet<QuestionLibraryDTO> _questions;
         public QuestionRepository(ApplicationContext dbContext) : base(dbContext)
         {
-            _questions = dbContext.Set<QuestionDTO>();
+            _questions = dbContext.Set<QuestionLibraryDTO>();
         }
 
 
 
-        public QuestionDTO? GetEagerQuestionById(int id)
+        public QuestionLibraryDTO? GetEagerQuestionById(int id)
         {
-            var question = _questions.Where(s => s.Id == id).Include(s => s.PredefinedAnswers).FirstOrDefault();
+            var question = _questions.Where(s => s.Id == id).Include(s => s.PredefinedAnswerLibraries).FirstOrDefault();
             return question;
         }
         public bool CheckExistenceByQuestionGroupId(int questionGroupId)

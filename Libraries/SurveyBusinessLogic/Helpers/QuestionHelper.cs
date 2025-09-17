@@ -20,7 +20,7 @@ namespace SurveyBusinessLogic.Helpers
 
         public async Task<IEnumerable<QuestionViewModel>> GetAllAsync()
         {
-            IEnumerable<QuestionDTO> data = await _unitOfWork.QuestionRepository.GetAllAsync(filter: s => !s.IsDeleted);
+            IEnumerable<QuestionLibraryDTO> data = await _unitOfWork.QuestionRepository.GetAllAsync(filter: s => !s.IsDeleted);
             return _mapper.Map<IEnumerable<QuestionViewModel>>(data);
         }
         public async Task<Pagination<QuestionViewModel>> GetAllAsync(int questionGroupID, int pageIndex, int pageSize)
@@ -30,9 +30,9 @@ namespace SurveyBusinessLogic.Helpers
             {
                 page.PageSize = pageSize;
             }
-            IEnumerable <QuestionDTO> data = await _unitOfWork.QuestionRepository
+            IEnumerable <QuestionLibraryDTO> data = await _unitOfWork.QuestionRepository
                 .GetAllAsync(filter: s => questionGroupID == -1 ? !s.IsDeleted : s.QuestionGroupId == questionGroupID && !s.IsDeleted,
-                orderBy: p => p.OrderByDescending(s => s.ModifiedOn));
+                orderBy: p => p.OrderByDescending(s => s.ModifiedAt));
             page.TotalItems = data.Count();
             page.CurrentPage = pageIndex;
             page.TotalPages = (int)Math.Ceiling((double)page.TotalItems / pageSize);
@@ -53,10 +53,10 @@ namespace SurveyBusinessLogic.Helpers
         }
         public async Task<bool> CreateAsync(QuestionViewModel model)
         {
-            QuestionDTO question = _mapper.Map<QuestionDTO>(model);
+            QuestionLibraryDTO question = _mapper.Map<QuestionLibraryDTO>(model);
             await _unitOfWork.QuestionRepository.CreateAsync(question);
             _unitOfWork.SaveChanges();
-            question.PredefinedAnswers.ToList().ForEach(s =>
+            question.PredefinedAnswerLibraries.ToList().ForEach(s =>
             {
                 s.QuestionId = question.Id;
                 _unitOfWork.PredefinedAnswerRepository.Create(s);
@@ -66,26 +66,26 @@ namespace SurveyBusinessLogic.Helpers
         }
         public async Task<bool> UpdateAsync(QuestionViewModel model)
         {
-            QuestionDTO question = _unitOfWork.QuestionRepository.GetEagerQuestionById(model.Id);
+            QuestionLibraryDTO question = _unitOfWork.QuestionRepository.GetEagerQuestionById(model.Id);
             if (question == null)
                 return false;
 
             question.NameVN = model.NameVN;
             question.NameEN = model.NameEN;
             question.ChartLabel = model.ChartLabel;
-            question.Description = model.Description;
-            question.ModifiedOn = DateTime.Now;
+            question.Note = model.Description;
+            question.ModifiedAt = DateTime.Now;
             question.QuestionGroupId = model.QuestionGroupId;
             question.QuestionTypeId = model.QuestionTypeId;
 
-            var optionAnswers = question.PredefinedAnswers.ToList();
+            var optionAnswers = question.PredefinedAnswerLibraries.ToList();
             optionAnswers.ForEach(s =>
             {
                 _unitOfWork.PredefinedAnswerRepository.Delete(s);
             });
             foreach (var item in model.PredefinedAnswers)
             {
-                PredefinedAnswerDTO predefinedAnswer = _mapper.Map<PredefinedAnswerDTO>(item);
+                PredefinedAnswerLibraryDTO predefinedAnswer = _mapper.Map<PredefinedAnswerLibraryDTO>(item);
                 predefinedAnswer.QuestionId = model.Id;
                 _unitOfWork.PredefinedAnswerRepository.Create(predefinedAnswer);
 
@@ -108,7 +108,7 @@ namespace SurveyBusinessLogic.Helpers
             if (employee != null)
             {
                 employee.IsDeleted = true;
-                employee.ModifiedOn = DateTime.Now;
+                employee.ModifiedAt = DateTime.Now;
                 //employee.ModifiedBy = _userInformation.GetUserName();
                 _unitOfWork.SaveChanges();
             }

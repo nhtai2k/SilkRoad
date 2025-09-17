@@ -1,15 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SurveyDataAccess.DTOs;
 using SurveyDataAccess.IRepositories;
 
 namespace SurveyDataAccess.Repositories
 {
-    public class SurveyQuestionRepository : GenericRepository<SurveyQuestionDTO, ApplicationContext>, ISurveyQuestionRepository
+    public class SurveyQuestionRepository : GenericRepository<SelectedQuestionDTO, ApplicationContext>, ISurveyQuestionRepository
     {
-        private readonly DbSet<SurveyQuestionDTO> _surveyQuestion;
+        private readonly DbSet<SelectedQuestionDTO> _surveyQuestion;
         public SurveyQuestionRepository(ApplicationContext dbContext) : base(dbContext)
         {
-            _surveyQuestion = dbContext.Set<SurveyQuestionDTO>();
+            _surveyQuestion = dbContext.Set<SelectedQuestionDTO>();
         }
         public bool CheckExistenceByQuestionID(int questionID)
         {
@@ -21,7 +20,7 @@ namespace SurveyDataAccess.Repositories
 
         }
 
-        public async Task<IEnumerable<SurveyQuestionDTO>> GetBySurveyFormID(int surveyFormId)
+        public async Task<IEnumerable<SelectedQuestionDTO>> GetBySurveyFormID(int surveyFormId)
         {
             return await _surveyQuestion.Where(s => s.SurveyFormId == surveyFormId).ToListAsync();
         }

@@ -14,7 +14,6 @@ namespace SurveyDataAccess.Configurations
             builder.Property(s => s.QuestionGroupId).IsRequired();
             builder.Property(s => s.QuestionId).IsRequired();
             builder.Property(s => s.Rating).HasColumnType("tinyint");
-            builder.Property(s => s.Point).HasColumnType("tinyint");
             builder.HasOne<ParticipantDTO>(s => s.Participant).WithMany(g => g.Answers).HasForeignKey(s => s.ParticipantId);
         }
     }

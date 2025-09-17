@@ -5,14 +5,15 @@ import { QuestionGroupModel } from '@models/survey-models/question-group.model';
 import { QuestionModel } from '@models/survey-models/question.model';
 import { QuestionGroupService } from '@services/survey-services/question-group.service';
 import { QuestionService } from '@services/survey-services/question.service';
-import { NgFor } from '@angular/common';
+import { cilPlus, cilTrash, cilPen, cilSave } from '@coreui/icons';
 import { RouterLink } from '@angular/router';
 import { FormSelectDirective } from '@coreui/angular';
 import { DataTableComponent } from '@components/generals/data-table/data-table.component';
+import { IconDirective } from '@coreui/icons-angular';
 
 @Component({
   selector: 'app-index',
-  imports: [ReactiveFormsModule, DataTableComponent, RouterLink, FormSelectDirective],
+  imports: [ReactiveFormsModule, DataTableComponent, RouterLink, FormSelectDirective, IconDirective],
   templateUrl: './index.component.html',
   styleUrl: './index.component.scss'
 })
@@ -20,6 +21,7 @@ export class IndexComponent {
   data: Pagination<QuestionModel> = new Pagination<QuestionModel>();
   questionGroupList: QuestionGroupModel[] = [];
   pageInformation: PageInformation = new PageInformation();
+  icons: any = { cilPlus, cilTrash, cilPen, cilSave };
   filterForm: FormGroup = new FormGroup({
     questionGroupId: new FormControl(-1)
   });

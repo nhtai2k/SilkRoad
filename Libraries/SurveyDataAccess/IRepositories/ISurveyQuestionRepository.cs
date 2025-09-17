@@ -1,11 +1,10 @@
-﻿using SurveyDataAccess.DTOs;
-namespace SurveyDataAccess.IRepositories
+﻿namespace SurveyDataAccess.IRepositories
 {
-    public interface ISurveyQuestionRepository : IGenericRepository<SurveyQuestionDTO, ApplicationContext>
+    public interface ISurveyQuestionRepository : IGenericRepository<SelectedQuestionDTO, ApplicationContext>
     {
         public bool CheckExistenceByQuestionID(int questionID);
         public bool CheckExistenceByQuestionGroupID(int questionGroupID);
-        public Task<IEnumerable<SurveyQuestionDTO>> GetBySurveyFormID(int surveyFormId);
+        public Task<IEnumerable<SelectedQuestionDTO>> GetBySurveyFormID(int surveyFormId);
 
     }
 }

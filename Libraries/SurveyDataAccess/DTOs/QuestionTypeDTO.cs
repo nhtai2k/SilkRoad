@@ -4,15 +4,15 @@
     {
         public int Id { get; set; }
         public required string Name { get; set; }
-        public string? Description { get; set; }
-        public DateTime CreatedOn { get; set; }
+        public string? Note { get; set; }
+        public DateTime CreatedAt { get; set; }
         public bool IsActive { get; set; }
-        public ICollection<QuestionDTO> Questions { get; set; }
+        public ICollection<QuestionLibraryDTO> Questions { get; set; }
         public QuestionTypeDTO()
         {
             IsActive = true;
-            CreatedOn = DateTime.Now;
-            Questions = new List<QuestionDTO>();
+            CreatedAt = DateTime.Now;
+            Questions = new List<QuestionLibraryDTO>();
         }
     }
 }

@@ -112,7 +112,6 @@ namespace SurveyBusinessLogic.Helpers
             SurveyFormDTO surveyForm = await _unitOfWork.SurveyFormRepository.GetByIdAsync(model.Id);
             if (surveyForm == null)
                 return false;
-            surveyForm.IsPeriodic = model.IsPeriodic;
             surveyForm.NameEN = model.NameEN;
             surveyForm.NameVN = model.NameVN;
             surveyForm.TitleEN = model.TitleEN;
@@ -122,14 +121,14 @@ namespace SurveyBusinessLogic.Helpers
             surveyForm.IsActive = model.IsActive;
             surveyForm.StartDate = model.StartDate;
             surveyForm.EndDate = model.EndDate;
-            surveyForm.ModifiedOn = DateTime.Now;
+            surveyForm.ModifiedAt = DateTime.Now;
             _unitOfWork.SaveChanges();
             //surveyForm.ModifiedBy = _userInformation.GetUserName();
             _unitOfWork.SurveyFormRepository.RemoveSelectQuestionBySurveyFormID(surveyForm.Id);
             //var selectedQuestionList = model.SelectQuestions.Where(s => s.Checked);
             foreach (var item in model.SurveyQuestions)
             {
-                SurveyQuestionDTO selectedQuestion = new SurveyQuestionDTO();
+                SelectedQuestionDTO selectedQuestion = new SelectedQuestionDTO();
                 selectedQuestion.SurveyFormId = surveyForm.Id;
                 selectedQuestion.QuestionId = item.QuestionID;
                 selectedQuestion.QuestionGroupId = item.QuestionGroupID;
@@ -145,7 +144,7 @@ namespace SurveyBusinessLogic.Helpers
             if (surveyForm != null)
             {
                 surveyForm.IsDeleted = true;
-                surveyForm.ModifiedOn = DateTime.Now;
+                surveyForm.ModifiedAt = DateTime.Now;
                 //surveyForm.ModifiedBy = _userInformation.GetUserName();
                 _unitOfWork.SaveChanges();
             }

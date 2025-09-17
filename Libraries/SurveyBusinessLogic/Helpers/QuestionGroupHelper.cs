@@ -20,21 +20,21 @@ namespace SurveyBusinessLogic.Helpers
 
         public async Task<IEnumerable<QuestionGroupViewModel>> GetAllAsync()
         {
-            IEnumerable<QuestionGroupDTO> data = await _unitOfWork.QuestionGroupRepository.
-                GetAllAsync(filter: s => !s.IsDeleted, orderBy: p => p.OrderBy(s => s.ModifiedOn));
+            IEnumerable<QuestionGroupLibraryDTO> data = await _unitOfWork.QuestionGroupRepository.
+                GetAllAsync(filter: s => !s.IsDeleted, orderBy: p => p.OrderBy(s => s.ModifiedAt));
             return _mapper.Map<IEnumerable<QuestionGroupViewModel>>(data);
         }
 
         public async Task<IEnumerable<QuestionGroupViewModel>> GetAllByActiveAsync(bool getActive = false)
         {
-            IEnumerable<QuestionGroupDTO> data = await _unitOfWork.QuestionGroupRepository.
-                GetAllAsync(filter: s => !s.IsDeleted && (getActive ? s.IsActive : true), orderBy: p => p.OrderBy(s => s.ModifiedOn));
+            IEnumerable<QuestionGroupLibraryDTO> data = await _unitOfWork.QuestionGroupRepository.
+                GetAllAsync(filter: s => !s.IsDeleted && (getActive ? s.IsActive : true), orderBy: p => p.OrderBy(s => s.ModifiedAt));
             return _mapper.Map<IEnumerable<QuestionGroupViewModel>>(data);
         }
         public IEnumerable<QuestionGroupViewModel> GetEagerAllElements(bool getActive = false)
         {
-            IEnumerable<QuestionGroupDTO> data = _unitOfWork.QuestionGroupRepository.GetEagerAllElements();
-            data = data.Where(s => s.Questions.Count > 0 && (getActive ? s.IsActive : true));
+            IEnumerable<QuestionGroupLibraryDTO> data = _unitOfWork.QuestionGroupRepository.GetEagerAllElements();
+            data = data.Where(s => s.QuestionLibraries.Count > 0 && (getActive ? s.IsActive : true));
             return _mapper.Map<IEnumerable<QuestionGroupViewModel>>(data);
         }
         public async Task<QuestionGroupViewModel> GetByIdAsync(int id)
@@ -49,19 +49,19 @@ namespace SurveyBusinessLogic.Helpers
         }
         public async Task<bool> CreateAsync(QuestionGroupViewModel model)
         {
-            QuestionGroupDTO questionGroup = _mapper.Map<QuestionGroupDTO>(model);
+            QuestionGroupLibraryDTO questionGroup = _mapper.Map<QuestionGroupLibraryDTO>(model);
             await _unitOfWork.QuestionGroupRepository.CreateAsync(questionGroup);
             _unitOfWork.SaveChanges();
             return true;
         }
         public async Task<bool> UpdateAsync(QuestionGroupViewModel model)
         {
-            QuestionGroupDTO questionGroup = await _unitOfWork.QuestionGroupRepository.GetByIdAsync(model.Id);
+            QuestionGroupLibraryDTO questionGroup = await _unitOfWork.QuestionGroupRepository.GetByIdAsync(model.Id);
             questionGroup.NameEN = model.NameEN;
             questionGroup.NameVN = model.NameVN;
-            questionGroup.Description = model.Description;
+            questionGroup.Note = model.Description;
             questionGroup.Priority = model.Priority;
-            questionGroup.ModifiedOn = DateTime.Now;
+            questionGroup.ModifiedAt = DateTime.Now;
             questionGroup.IsActive = model.IsActive;
 
             _unitOfWork.SaveChanges();
@@ -85,7 +85,7 @@ namespace SurveyBusinessLogic.Helpers
             if (questionGroup != null)
             {
                 questionGroup.IsDeleted = true;
-                questionGroup.ModifiedOn = DateTime.Now;
+                questionGroup.ModifiedAt = DateTime.Now;
                 //questionGroup.ModifiedBy = _userInformation.GetUserName();
                 _unitOfWork.SaveChanges();
             }
@@ -109,10 +109,10 @@ namespace SurveyBusinessLogic.Helpers
             {
                 page.PageSize = pageSize;
             }
-            IEnumerable<QuestionGroupDTO> data = await _unitOfWork.QuestionGroupRepository.GetAllAsync(filter: s =>
+            IEnumerable<QuestionGroupLibraryDTO> data = await _unitOfWork.QuestionGroupRepository.GetAllAsync(filter: s =>
                 !s.IsDeleted &&
                 (getActive ? s.IsActive : true),
-                orderBy: p => p.OrderBy(s => s.ModifiedOn));
+                orderBy: p => p.OrderBy(s => s.ModifiedAt));
             page.TotalItems = data.Count();
             page.PageSize = pageSize;
             page.CurrentPage = pageIndex;
