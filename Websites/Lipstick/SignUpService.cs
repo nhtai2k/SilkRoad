@@ -28,8 +28,8 @@ namespace Lipstick
             services.AddScoped<TopicService>();
             services.AddScoped<BannerService>();
             services.AddScoped<ProductService>();
-            services.AddScoped<SurveyFormService>();
-            services.AddScoped<ParticipantService>();
+            //services.AddScoped<SurveyFormService>();
+            //services.AddScoped<ParticipantService>();
             services.AddScoped<SearchService>();
             services.AddScoped<PageIntroService>();
             services.AddScoped<OrderService>();

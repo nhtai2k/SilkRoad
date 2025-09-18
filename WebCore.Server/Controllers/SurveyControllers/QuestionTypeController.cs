@@ -20,13 +20,10 @@ namespace WebCore.Server.Controllers.SurveyControllers
             _localizer = localizer;
         }
         [HttpGet("GetAll")]
-        //[AuthorizeEnumPolicy(ERoleClaimGroup.QuestionType, ERoleClaim.View, EModule.Survey)]
         public async Task<IActionResult> GetAll()
         {
             var data = await _questionTypeHelper.GetAllAsync();
-            string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-            //_actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.View, EUserActionStatus.Successful);
-
+            //string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
     }

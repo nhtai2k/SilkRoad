@@ -1,0 +1,148 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
+import { Pagination } from '@models/pagination.model';
+import { EUrl } from '@common/url-api';
+import { catchError, switchMap } from 'rxjs';
+import { AuthenticationService } from '../system-services/authentication.service';
+import { OptionModel } from '@models/option.model';
+import { QuestionGroupLibraryModel } from '@models/survey-models/question-group-library.model';
+
+@Injectable({ providedIn: 'root' })
+export class QuestionGroupLibraryService {
+  constructor(private http: HttpClient, private authenticationService: AuthenticationService) {}
+
+  getAll(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<QuestionGroupLibraryModel>>> {
+    const url = EUrl.getAllUrlQuestionGroupLibrary.concat(`/${pageIndex}/${pageSize}`);
+    return this.http.get<APIResponse<Pagination<QuestionGroupLibraryModel>>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.ReNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<QuestionGroupLibraryModel>>>(url, { headers: this.authenticationService.GetHeaders() }))
+          );
+        } else {
+          return throwError(() =>error);
+        }
+      })
+    );
+  }
+
+  getOptionList(): Observable<APIResponse<OptionModel[]>> {
+    const url = EUrl.getOptionListUrlQuestionGroupLibrary;
+    return this.http.get<APIResponse<OptionModel[]>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.ReNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<OptionModel[]>>(url, { headers: this.authenticationService.GetHeaders() }))
+          );
+        } else {
+          return throwError(() =>error);
+        }
+      })
+    );
+  }
+
+  getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<QuestionGroupLibraryModel>>> {
+    const url = EUrl.getAllDeletedUrlQuestionGroupLibrary.concat(`/${pageIndex}/${pageSize}`);
+    return this.http.get<APIResponse<Pagination<QuestionGroupLibraryModel>>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.ReNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<QuestionGroupLibraryModel>>>(url, { headers: this.authenticationService.GetHeaders() }))
+          );
+        } else {
+          return throwError(() =>error);
+        }
+      })
+    );
+  }
+
+  getById(id: number): Observable<APIResponse<QuestionGroupLibraryModel>> {
+    const url = EUrl.getByIdUrlQuestionGroupLibrary.concat('/',id.toString());
+    return this.http.get<APIResponse<QuestionGroupLibraryModel>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.ReNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<QuestionGroupLibraryModel>>(url, { headers: this.authenticationService.GetHeaders() }))
+          );
+        } else {
+          return throwError(() =>error);
+        }
+      })
+    );
+  }
+
+  create(model: FormData): Observable<BaseAPIResponse> {
+    return this.http.post<BaseAPIResponse>(EUrl.createUrlQuestionGroupLibrary, model, { headers: this.authenticationService.GetHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.ReNewToken().pipe(
+            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlQuestionGroupLibrary, model, { headers: this.authenticationService.GetHeaders() }))
+          );
+        } else {
+          return throwError(() =>error);
+        }
+      })
+    );
+  }
+
+  update(model: FormData): Observable<BaseAPIResponse> {
+    return this.http.put<BaseAPIResponse>(EUrl.updateUrlQuestionGroupLibrary, model, { headers: this.authenticationService.GetHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.ReNewToken().pipe(
+            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlQuestionGroupLibrary, model, { headers: this.authenticationService.GetHeaders() }))
+          );
+        } else {
+          return throwError(() =>error);
+        }
+      })
+    );
+  }
+
+  softDelete(id: number): Observable<BaseAPIResponse> {
+    const url = EUrl.softDeleteUrlQuestionGroupLibrary.concat('/',id.toString());
+    return this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.ReNewToken().pipe(
+            switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }))
+          );
+        } else {
+          return throwError(() =>error);
+        }
+      })
+    );
+  }
+
+  restore(id: number): Observable<BaseAPIResponse> {
+    const url = EUrl.restoreUrlQuestionGroupLibrary.concat('/',id.toString());
+    return this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.ReNewToken().pipe(
+            switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }))
+          );
+        } else {
+          return throwError(() =>error);
+        }
+      })
+    );
+  }
+
+  delete(id: number): Observable<BaseAPIResponse> {
+    const url = EUrl.deleteUrlQuestionGroupLibrary.concat('/',id.toString());
+    return this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.ReNewToken().pipe(
+            switchMap(() => this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.GetHeaders() }))
+          );
+        } else {
+          return throwError(() =>error);
+        }
+      })
+    );
+  }
+}

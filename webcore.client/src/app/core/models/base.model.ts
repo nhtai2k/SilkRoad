@@ -3,6 +3,6 @@ export interface BaseModel {
     isDeleted: boolean;
     createdBy: string;
     modifiedBy: string;
-    createdOn: Date;
-    modifiedOn: Date;
+    createdAt: Date;
+    modifiedAt: Date;
     }

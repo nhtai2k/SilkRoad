@@ -3,7 +3,7 @@
     public class QuestionLibraryDTO : BaseDTO
     {
         public int Id { get; set; }
-        public int? QuestionGroupId { get; set; }
+        public int? QuestionGroupLibraryId { get; set; }
         public int QuestionTypeId { get; set; }
         public required string NameEN { get; set; }
         public required string NameVN { get; set; }

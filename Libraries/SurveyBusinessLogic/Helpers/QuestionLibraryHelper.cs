@@ -86,7 +86,7 @@ namespace SurveyBusinessLogic.Helpers
                 data.NameEN = model.NameEN.Trim();
                 data.NameVN = model.NameVN.Trim();
                 data.Note = model.Note?.Trim();
-                data.QuestionGroupId = model.QuestionGroupId;
+                data.QuestionGroupLibraryId = model.QuestionGroupLibraryId;
                 data.QuestionTypeId = model.QuestionTypeId;
                 await _unitOfWork.SaveChangesAsync();
                 return true;

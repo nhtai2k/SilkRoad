@@ -213,26 +213,31 @@ export const navItems: INavData[] = [
     url: '/surveys/extension',
     iconComponent: { name: 'cil-puzzle' },
     children: [
-      {
-        name: 'Question Groups',
-        url: '/surveys/extension/question-groups',
-        icon: 'nav-icon-bullet'
-      },
+      // {
+      //   name: 'Question Groups',
+      //   url: '/surveys/extension/question-groups',
+      //   icon: 'nav-icon-bullet'
+      // },
       {
         name: 'Question Types',
         url: '/surveys/extension/question-types',
         icon: 'nav-icon-bullet'
       },
       {
-        name: 'Questions',
-        url: '/surveys/extension/questions',
-        icon: 'nav-icon-bullet'
-      },
-      {
-        name: 'Survey Forms',
-        url: '/surveys/extension/survey-forms',
+        name: 'QG Libraries',
+        url: '/surveys/extension/question-group-libraries',
         icon: 'nav-icon-bullet'
       }
+      // {
+      //   name: 'Questions',
+      //   url: '/surveys/extension/questions',
+      //   icon: 'nav-icon-bullet'
+      // },
+      // {
+      //   name: 'Survey Forms',
+      //   url: '/surveys/extension/survey-forms',
+      //   icon: 'nav-icon-bullet'
+      // }
     ]
   },
   //#endregion

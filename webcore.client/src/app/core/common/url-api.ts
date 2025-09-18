@@ -241,22 +241,18 @@ export enum EUrl {
     getAllUrlParticipant = "/api/participant/getAll",
     getEagerByIdUrlParticipant = "/api/participant/getEagerById",
     exportExcelUrlParticipant = "/api/participant/exportExcel",
-    //question
-    getAllUrlQuestion = "/api/question/getAll",
-    getAllByQuestiongroupIdUrlQuestion = "/api/question/getAllByQuestionGroupId",
-    getByIdUrlQuestion = "/api/question/getById",
-    createUrlQuestion = "/api/question/create",
-    updateUrlQuestion = "/api/question/update",
-    softDeleteUrlQuestion = "/api/question/softDelete",
-    //questionGroup
-    getAllUrlQuestionGroup = "/api/questionGroup/getAll",
-    getAllActiveUrlQuestionGroup = "/api/questionGroup/getAllActive",
-    getByIdUrlQuestionGroup = "/api/questionGroup/getById",
-    getEagerByIdUrlQuestionGroup = "/api/questionGroup/getEagerById",
-    getEagerAllElementsUrlQuestionGroup = "/api/questionGroup/getEagerAllElements",
-    createUrlQuestionGroup = "/api/questionGroup/create",
-    updateUrlQuestionGroup = "/api/questionGroup/update",
-    softDeleteUrlQuestionGroup = "/api/questionGroup/softDelete",
+    //questionGroupLibrary
+    getAllUrlQuestionGroupLibrary = "/api/questionGroupLibrary/getAll",
+    getAllActiveUrlQuestionGroupLibrary = "/api/questionGroupLibrary/getAllActive",
+    getOptionListUrlQuestionGroupLibrary = "/api/questionGroupLibrary/getOptionList",
+    getAllDeletedUrlQuestionGroupLibrary = "/api/questionGroupLibrary/getAllDeleted",
+    getByIdUrlQuestionGroupLibrary = "/api/questionGroupLibrary/getById",
+    createUrlQuestionGroupLibrary = "/api/questionGroupLibrary/create",
+    updateUrlQuestionGroupLibrary = "/api/questionGroupLibrary/update",
+    softDeleteUrlQuestionGroupLibrary = "/api/questionGroupLibrary/softDelete",
+    restoreUrlQuestionGroupLibrary = "/api/questionGroupLibrary/restore",
+    deleteUrlQuestionGroupLibrary = "/api/questionGroupLibrary/delete",
+
     //questionType
     getAllUrlQuestionType = "/api/questionType/getAll",
     //surveyForm

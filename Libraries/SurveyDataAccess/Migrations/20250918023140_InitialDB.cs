@@ -83,7 +83,7 @@ namespace SurveyDataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    QuestionGroupId = table.Column<int>(type: "int", nullable: false),
+                    QuestionGroupLibraryId = table.Column<int>(type: "int", nullable: false),
                     QuestionTypeId = table.Column<int>(type: "int", nullable: false),
                     NameEN = table.Column<string>(type: "nvarchar(255)", nullable: false),
                     NameVN = table.Column<string>(type: "nvarchar(255)", nullable: false),
@@ -99,8 +99,8 @@ namespace SurveyDataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Table_QuestionLibraries", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Table_QuestionLibraries_Table_QuestionGroupLibraries_QuestionGroupId",
-                        column: x => x.QuestionGroupId,
+                        name: "FK_Table_QuestionLibraries_Table_QuestionGroupLibraries_QuestionGroupLibraryId",
+                        column: x => x.QuestionGroupLibraryId,
                         principalTable: "Table_QuestionGroupLibraries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -162,7 +162,7 @@ namespace SurveyDataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWID()"),
-                    QuestionId = table.Column<int>(type: "int", nullable: false),
+                    QuestionLibraryId = table.Column<int>(type: "int", nullable: false),
                     NameVN = table.Column<string>(type: "nvarchar(255)", nullable: false),
                     NameEN = table.Column<string>(type: "nvarchar(255)", nullable: false)
                 },
@@ -170,8 +170,8 @@ namespace SurveyDataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Table_PredefinedAnswerLibraries", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Table_PredefinedAnswerLibraries_Table_QuestionLibraries_QuestionId",
-                        column: x => x.QuestionId,
+                        name: "FK_Table_PredefinedAnswerLibraries_Table_QuestionLibraries_QuestionLibraryId",
+                        column: x => x.QuestionLibraryId,
                         principalTable: "Table_QuestionLibraries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -259,11 +259,11 @@ namespace SurveyDataAccess.Migrations
                 columns: new[] { "Id", "CreatedAt", "IsActive", "Name", "Note" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2025, 9, 17, 16, 11, 0, 263, DateTimeKind.Local).AddTicks(754), true, "Câu hỏi đóng", "Câu hỏi đóng (Closed-ended question) – Chỉ có các câu trả lời sẵn." },
-                    { 2, new DateTime(2025, 9, 17, 16, 11, 0, 263, DateTimeKind.Local).AddTicks(2676), true, "Câu hỏi mở", "Câu hỏi mở (Open-ended question) – Người dùng nhập câu trả lời." },
-                    { 3, new DateTime(2025, 9, 17, 16, 11, 0, 263, DateTimeKind.Local).AddTicks(2680), true, "Câu hỏi kết hợp", "Câu hỏi kết hợp (Hybrid question) hoặc Câu hỏi mở rộng (Extended question) – Vừa có câu trả lời sẵn, vừa cho phép người dùng nhập câu trả lời riêng." },
-                    { 4, new DateTime(2025, 9, 17, 16, 11, 0, 263, DateTimeKind.Local).AddTicks(2681), true, "Câu hỏi nhiều lựa chọn", "Cho phép chọn nhiều đáp án cùng lúc." },
-                    { 5, new DateTime(2025, 9, 17, 16, 11, 0, 263, DateTimeKind.Local).AddTicks(2682), true, "Câu hỏi đánh giá", "Cẩu hỏi đáng giá (rating question) - Cho người dùng đánh giá mức độ trên 5 sao." }
+                    { 1, new DateTime(2025, 9, 18, 9, 31, 40, 79, DateTimeKind.Local).AddTicks(9496), true, "Câu hỏi đóng", "Câu hỏi đóng (Closed-ended question) – Chỉ có các câu trả lời sẵn." },
+                    { 2, new DateTime(2025, 9, 18, 9, 31, 40, 80, DateTimeKind.Local).AddTicks(641), true, "Câu hỏi mở", "Câu hỏi mở (Open-ended question) – Người dùng nhập câu trả lời." },
+                    { 3, new DateTime(2025, 9, 18, 9, 31, 40, 80, DateTimeKind.Local).AddTicks(645), true, "Câu hỏi kết hợp", "Câu hỏi kết hợp (Hybrid question) hoặc Câu hỏi mở rộng (Extended question) – Vừa có câu trả lời sẵn, vừa cho phép người dùng nhập câu trả lời riêng." },
+                    { 4, new DateTime(2025, 9, 18, 9, 31, 40, 80, DateTimeKind.Local).AddTicks(646), true, "Câu hỏi nhiều lựa chọn", "Cho phép chọn nhiều đáp án cùng lúc." },
+                    { 5, new DateTime(2025, 9, 18, 9, 31, 40, 80, DateTimeKind.Local).AddTicks(647), true, "Câu hỏi đánh giá", "Cẩu hỏi đáng giá (rating question) - Cho người dùng đánh giá mức độ trên 5 sao." }
                 });
 
             migrationBuilder.CreateIndex(
@@ -277,9 +277,9 @@ namespace SurveyDataAccess.Migrations
                 column: "SurveyFormId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Table_PredefinedAnswerLibraries_QuestionId",
+                name: "IX_Table_PredefinedAnswerLibraries_QuestionLibraryId",
                 table: "Table_PredefinedAnswerLibraries",
-                column: "QuestionId");
+                column: "QuestionLibraryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Table_PredefinedAnswers_QuestionId",
@@ -292,9 +292,9 @@ namespace SurveyDataAccess.Migrations
                 column: "SurveyFormId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Table_QuestionLibraries_QuestionGroupId",
+                name: "IX_Table_QuestionLibraries_QuestionGroupLibraryId",
                 table: "Table_QuestionLibraries",
-                column: "QuestionGroupId");
+                column: "QuestionGroupLibraryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Table_QuestionLibraries_QuestionTypeId",

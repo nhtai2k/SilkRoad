@@ -133,12 +133,12 @@ namespace SurveyDataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int>("QuestionId")
+                    b.Property<int>("QuestionLibraryId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QuestionId");
+                    b.HasIndex("QuestionLibraryId");
 
                     b.ToTable("Table_PredefinedAnswerLibraries", (string)null);
                 });
@@ -288,7 +288,7 @@ namespace SurveyDataAccess.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int>("QuestionGroupId")
+                    b.Property<int>("QuestionGroupLibraryId")
                         .HasColumnType("int");
 
                     b.Property<int>("QuestionTypeId")
@@ -296,7 +296,7 @@ namespace SurveyDataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QuestionGroupId");
+                    b.HasIndex("QuestionGroupLibraryId");
 
                     b.HasIndex("QuestionTypeId");
 
@@ -332,7 +332,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 9, 17, 16, 11, 0, 263, DateTimeKind.Local).AddTicks(754),
+                            CreatedAt = new DateTime(2025, 9, 18, 9, 31, 40, 79, DateTimeKind.Local).AddTicks(9496),
                             IsActive = true,
                             Name = "Câu hỏi đóng",
                             Note = "Câu hỏi đóng (Closed-ended question) – Chỉ có các câu trả lời sẵn."
@@ -340,7 +340,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 9, 17, 16, 11, 0, 263, DateTimeKind.Local).AddTicks(2676),
+                            CreatedAt = new DateTime(2025, 9, 18, 9, 31, 40, 80, DateTimeKind.Local).AddTicks(641),
                             IsActive = true,
                             Name = "Câu hỏi mở",
                             Note = "Câu hỏi mở (Open-ended question) – Người dùng nhập câu trả lời."
@@ -348,7 +348,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 9, 17, 16, 11, 0, 263, DateTimeKind.Local).AddTicks(2680),
+                            CreatedAt = new DateTime(2025, 9, 18, 9, 31, 40, 80, DateTimeKind.Local).AddTicks(645),
                             IsActive = true,
                             Name = "Câu hỏi kết hợp",
                             Note = "Câu hỏi kết hợp (Hybrid question) hoặc Câu hỏi mở rộng (Extended question) – Vừa có câu trả lời sẵn, vừa cho phép người dùng nhập câu trả lời riêng."
@@ -356,7 +356,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 9, 17, 16, 11, 0, 263, DateTimeKind.Local).AddTicks(2681),
+                            CreatedAt = new DateTime(2025, 9, 18, 9, 31, 40, 80, DateTimeKind.Local).AddTicks(646),
                             IsActive = true,
                             Name = "Câu hỏi nhiều lựa chọn",
                             Note = "Cho phép chọn nhiều đáp án cùng lúc."
@@ -364,7 +364,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2025, 9, 17, 16, 11, 0, 263, DateTimeKind.Local).AddTicks(2682),
+                            CreatedAt = new DateTime(2025, 9, 18, 9, 31, 40, 80, DateTimeKind.Local).AddTicks(647),
                             IsActive = true,
                             Name = "Câu hỏi đánh giá",
                             Note = "Cẩu hỏi đáng giá (rating question) - Cho người dùng đánh giá mức độ trên 5 sao."
@@ -468,7 +468,7 @@ namespace SurveyDataAccess.Migrations
                 {
                     b.HasOne("SurveyDataAccess.DTOs.QuestionLibraryDTO", "Question")
                         .WithMany("PredefinedAnswerLibraries")
-                        .HasForeignKey("QuestionId")
+                        .HasForeignKey("QuestionLibraryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -515,7 +515,7 @@ namespace SurveyDataAccess.Migrations
                 {
                     b.HasOne("SurveyDataAccess.DTOs.QuestionGroupLibraryDTO", "QuestionGroupLibrary")
                         .WithMany("QuestionLibraries")
-                        .HasForeignKey("QuestionGroupId")
+                        .HasForeignKey("QuestionGroupLibraryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
