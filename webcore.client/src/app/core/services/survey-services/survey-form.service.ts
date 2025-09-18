@@ -20,7 +20,7 @@ export class SurveyFormService {
             switchMap(() => this.http.get<APIResponse<Pagination<SurveyFormModel>>>(EUrl.getAllUrlSurveyForm, { headers: this.authenticationService.GetHeaders(), params: query }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -33,7 +33,7 @@ export class SurveyFormService {
             switchMap(() => this.http.get<APIResponse<SurveyFormModel[]>>(EUrl.getAllActiveUrlSurveyForm, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -46,7 +46,7 @@ export class SurveyFormService {
             switchMap(() => this.http.get<APIResponse<SurveyFormModel>>(EUrl.getByIdUrlSurveyForm + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -59,7 +59,7 @@ export class SurveyFormService {
             switchMap(() => this.http.get<APIResponse<SurveyFormModel>>(EUrl.getEagerByIdUrlSurveyForm + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -72,7 +72,7 @@ export class SurveyFormService {
             switchMap(() => this.http.get<APIResponse<SurveyFormModel>>(EUrl.getEagerUIByIdUrlSurveyForm + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -85,7 +85,7 @@ export class SurveyFormService {
             switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlSurveyForm, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -98,7 +98,7 @@ export class SurveyFormService {
             switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlSurveyForm, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -111,7 +111,7 @@ export class SurveyFormService {
             switchMap(() => this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlSurveyForm + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );

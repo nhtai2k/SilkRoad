@@ -20,7 +20,7 @@ export class QuestionGroupService {
             switchMap(() => this.http.get<APIResponse<Pagination<QuestionGroupModel>>>(EUrl.getAllUrlQuestionGroup, { headers: this.authenticationService.GetHeaders(), params: query }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -34,7 +34,7 @@ export class QuestionGroupService {
             switchMap(() => this.http.get<APIResponse<QuestionGroupModel[]>>(EUrl.getAllActiveUrlQuestionGroup, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -48,7 +48,7 @@ export class QuestionGroupService {
             switchMap(() => this.http.get<APIResponse<QuestionGroupModel>>(EUrl.getByIdUrlQuestionGroup + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -62,7 +62,7 @@ export class QuestionGroupService {
             switchMap(() => this.http.get<APIResponse<QuestionGroupModel>>(EUrl.getEagerByIdUrlQuestionGroup + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -76,7 +76,7 @@ export class QuestionGroupService {
             switchMap(() => this.http.get<APIResponse<QuestionGroupModel[]>>(EUrl.getEagerAllElementsUrlQuestionGroup, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -90,7 +90,7 @@ export class QuestionGroupService {
             switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlQuestionGroup, questiongroup, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -104,7 +104,7 @@ export class QuestionGroupService {
             switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlQuestionGroup, questiongroup, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -118,7 +118,7 @@ export class QuestionGroupService {
             switchMap(() => this.http.put<BaseAPIResponse>(EUrl.softDeleteUrlQuestionGroup + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );

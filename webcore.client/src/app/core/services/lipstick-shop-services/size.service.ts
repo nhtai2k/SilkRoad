@@ -21,7 +21,7 @@ export class SizeService {
             switchMap(() => this.http.get<APIResponse<Pagination<SizeViewModel>>>(EUrl.getAllUrlSize + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -34,7 +34,7 @@ export class SizeService {
             switchMap(() => this.http.get<APIResponse<SizeViewModel[]>>(EUrl.getAllActiveUrlSize, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -48,7 +48,7 @@ export class SizeService {
             switchMap(() => this.http.get<APIResponse<SizeViewModel>>(EUrl.getByIdUrlSize + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -62,7 +62,7 @@ export class SizeService {
             switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlSize, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -76,7 +76,7 @@ export class SizeService {
             switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlSize, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -104,7 +104,7 @@ export class SizeService {
           switchMap(()=>this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlSize+`/${id}`,{headers:this.authenticationService.GetHeaders()}))
         );
       }else{
-        return throwError(error);
+        return throwError(() => error);
       }
     })
   );

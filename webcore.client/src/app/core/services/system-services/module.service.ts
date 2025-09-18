@@ -20,7 +20,7 @@ export class ModuleService {
             switchMap(() => this.http.get<ModuleModel[]>(EUrl.getAllUrlModule, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+           return throwError(() => error);
         }
       })
     );

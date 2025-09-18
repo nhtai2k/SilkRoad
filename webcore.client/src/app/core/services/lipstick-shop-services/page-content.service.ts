@@ -21,7 +21,7 @@ export class PageContentService {
             switchMap(() => this.http.get<APIResponse<Pagination<PageContentViewModel>>>(EUrl.getAllUrlPageContent + `/${pageIndex}/${pagePageContent}/${pageTypeId}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -34,7 +34,7 @@ export class PageContentService {
             switchMap(() => this.http.get<APIResponse<PageContentViewModel[]>>(EUrl.getAllActiveUrlPageContent, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -48,7 +48,7 @@ export class PageContentService {
             switchMap(() => this.http.get<APIResponse<PageContentViewModel>>(EUrl.getByIdUrlPageContent + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -62,7 +62,7 @@ export class PageContentService {
             switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlPageContent, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -76,7 +76,7 @@ export class PageContentService {
             switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlPageContent, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -104,7 +104,7 @@ export class PageContentService {
           switchMap(()=>this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlPageContent+`/${id}`,{headers:this.authenticationService.GetHeaders()}))
         );
       }else{
-        return throwError(error);
+        return throwError(() => error);
       }
     })
   );

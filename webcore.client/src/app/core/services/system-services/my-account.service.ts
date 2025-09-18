@@ -26,7 +26,7 @@ export class MyAccountService {
           return this.authenticationService.ReNewToken().pipe(
             switchMap(() => this.http.post<ChangePasswordModel>(EUrl.changePasswordUrlMyAccount, changePasswordModel, { headers: this.authenticationService.GetHeaders() }).pipe()));
         } else {
-          return throwError(error);
+           return throwError(() => error);
         }
       })
     );

@@ -20,7 +20,7 @@ export class SettingService {
             switchMap(() => this.http.get<SettingModel[]>(EUrl.getAllUrlSetting, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+           return throwError(() => error);
         }
       })
     );
@@ -34,7 +34,7 @@ export class SettingService {
             switchMap(() => this.http.get<SettingModel>(EUrl.getByKeyUrlSetting + `/${key}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+           return throwError(() => error);
         }
       })
     );
@@ -48,7 +48,7 @@ export class SettingService {
             switchMap(() => this.http.put<SettingModel>(EUrl.updateUrlSetting, setting, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+           return throwError(() => error);
         }
       })
     );

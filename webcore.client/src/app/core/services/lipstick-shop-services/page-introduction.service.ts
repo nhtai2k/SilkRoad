@@ -21,7 +21,7 @@ export class PageIntroductionService {
             switchMap(() => this.http.get<APIResponse<Pagination<PageIntroductionViewModel>>>(EUrl.getAllUrlPageIntroduction + `/${pageTypeId}/${pageIndex}/${pageSize}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -34,7 +34,7 @@ export class PageIntroductionService {
             switchMap(() => this.http.get<APIResponse<PageIntroductionViewModel[]>>(EUrl.getAllActiveUrlPageIntroduction, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -48,7 +48,7 @@ export class PageIntroductionService {
             switchMap(() => this.http.get<APIResponse<PageIntroductionViewModel>>(EUrl.getByIdUrlPageIntroduction + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -62,7 +62,7 @@ export class PageIntroductionService {
             switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlPageIntroduction, formData, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -76,7 +76,7 @@ export class PageIntroductionService {
             switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlPageIntroduction, formData, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -104,7 +104,7 @@ export class PageIntroductionService {
           switchMap(()=>this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlPageIntroduction+`/${id}`,{headers:this.authenticationService.GetHeaders()}))
         );
       }else{
-        return throwError(error);
+        return throwError(() => error);
       }
     })
   );

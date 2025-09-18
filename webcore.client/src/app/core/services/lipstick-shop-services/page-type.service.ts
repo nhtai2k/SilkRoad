@@ -21,7 +21,7 @@ export class PageTypeService {
             switchMap(() => this.http.get<APIResponse<Pagination<PageTypeViewModel>>>(EUrl.getAllUrlPageType + `/${pageIndex}/${pagePageType}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -34,7 +34,7 @@ export class PageTypeService {
             switchMap(() => this.http.get<APIResponse<PageTypeViewModel[]>>(EUrl.getAllActiveUrlPageType, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -47,7 +47,7 @@ export class PageTypeService {
             switchMap(() => this.http.get<APIResponse<string[]>>(EUrl.getEPageTypeUrlPageType, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -61,7 +61,7 @@ export class PageTypeService {
             switchMap(() => this.http.get<APIResponse<PageTypeViewModel>>(EUrl.getByIdUrlPageType + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -75,7 +75,7 @@ export class PageTypeService {
             switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlPageType, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -89,7 +89,7 @@ export class PageTypeService {
             switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlPageType, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -117,7 +117,7 @@ export class PageTypeService {
           switchMap(()=>this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlPageType+`/${id}`,{headers:this.authenticationService.GetHeaders()}))
         );
       }else{
-        return throwError(error);
+        return throwError(() => error);
       }
     })
   );

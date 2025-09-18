@@ -21,7 +21,7 @@ export class ColorService {
             switchMap(() => this.http.get<APIResponse<Pagination<ColorViewModel>>>(EUrl.getAllUrlColor + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -34,7 +34,7 @@ export class ColorService {
             switchMap(() => this.http.get<APIResponse<ColorViewModel[]>>(EUrl.getAllActiveUrlColor, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -48,7 +48,7 @@ export class ColorService {
             switchMap(() => this.http.get<APIResponse<ColorViewModel>>(EUrl.getByIdUrlColor + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -62,7 +62,7 @@ export class ColorService {
             switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlColor, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -76,7 +76,7 @@ export class ColorService {
             switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlColor, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -104,7 +104,7 @@ export class ColorService {
           switchMap(()=>this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlColor+`/${id}`,{headers:this.authenticationService.GetHeaders()}))
         );
       }else{
-        return throwError(error);
+        return throwError(() => error);
       }
     })
   );

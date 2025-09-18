@@ -21,7 +21,7 @@ export class CompanyService {
             switchMap(() => this.http.get<APIResponse<Pagination<CompanyModel>>>(url, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -36,7 +36,7 @@ export class CompanyService {
             switchMap(() => this.http.get<APIResponse<CompanyModel[]>>(url, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -51,7 +51,7 @@ export class CompanyService {
             switchMap(() => this.http.get<APIResponse<string[]>>(url, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -66,7 +66,7 @@ export class CompanyService {
             switchMap(() => this.http.get<APIResponse<Pagination<CompanyModel>>>(url, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -81,7 +81,7 @@ export class CompanyService {
             switchMap(() => this.http.get<APIResponse<CompanyModel>>(url, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -95,7 +95,7 @@ export class CompanyService {
             switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlCompany, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -109,7 +109,7 @@ export class CompanyService {
             switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlCompany, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -124,7 +124,7 @@ export class CompanyService {
             switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -139,7 +139,7 @@ export class CompanyService {
             switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -154,7 +154,7 @@ export class CompanyService {
             switchMap(() => this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );

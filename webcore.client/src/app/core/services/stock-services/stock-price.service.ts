@@ -22,7 +22,7 @@ export class StockPriceService {
             switchMap(() => this.http.get<StockPriceModel[]>(EUrl.getAllUrlStockPrice + `/${symbol}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -35,7 +35,7 @@ export class StockPriceService {
               switchMap(() => this.http.post<BaseAPIResponse>(EUrl.getNewDataUrlStockPrice + `/${symbol}`,  { headers: this.authenticationService.GetHeaders() }))
             );
           } else {
-            return throwError(error);
+            return throwError(() => error);
           }
         })
       );

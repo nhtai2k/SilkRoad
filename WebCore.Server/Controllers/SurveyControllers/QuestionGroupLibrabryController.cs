@@ -11,12 +11,12 @@ namespace WebCore.Server.Controllers.SurveyControllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class QuestionGroupController : BaseApiController
+    public class QuestionGroupLibrabryController : BaseApiController
     {
         private readonly IQuestionGroupLibraryHelper _helper;
         private readonly IActionloggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public QuestionGroupController(IQuestionGroupLibraryHelper questionGroupHelper, IActionloggingService actionLog, IStringLocalizer<SharedResource> localizer)
+        public QuestionGroupLibrabryController(IQuestionGroupLibraryHelper questionGroupHelper, IActionloggingService actionLog, IStringLocalizer<SharedResource> localizer)
         {
             _helper = questionGroupHelper;
             _actionLog = actionLog;

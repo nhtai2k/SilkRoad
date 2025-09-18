@@ -21,7 +21,7 @@ export class BlogService {
             switchMap(() => this.http.get<APIResponse<Pagination<BlogViewModel>>>(EUrl.getAllUrlBlog + `/${pageIndex}/${pageSize}/${topicId}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -34,7 +34,7 @@ export class BlogService {
             switchMap(() => this.http.get<APIResponse<BlogViewModel[]>>(EUrl.getAllActiveUrlBlog, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -48,7 +48,7 @@ export class BlogService {
             switchMap(() => this.http.get<APIResponse<BlogViewModel>>(EUrl.getByIdUrlBlog + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -61,7 +61,7 @@ export class BlogService {
             switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlBlog, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -75,7 +75,7 @@ export class BlogService {
             switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlBlog, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -103,7 +103,7 @@ export class BlogService {
           switchMap(()=>this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlBlog+`/${id}`,{headers:this.authenticationService.GetHeaders()}))
         );
       }else{
-        return throwError(error);
+        return throwError(() => error);
       }
     })
   );

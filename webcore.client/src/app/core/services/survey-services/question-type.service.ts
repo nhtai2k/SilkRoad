@@ -21,7 +21,7 @@ export class QuestionTypeService {
             switchMap(() => this.http.get<APIResponse<QuestionTypeModel[]>>(EUrl.getAllUrlQuestionType, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );

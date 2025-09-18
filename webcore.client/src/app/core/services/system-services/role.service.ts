@@ -22,7 +22,7 @@ export class RoleService {
             switchMap(() => this.http.get<APIResponse<Pagination<RoleModel>>>(EUrl.getAllUrlRole+ `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+           return throwError(() => error);
         }
       })
     );
@@ -35,7 +35,7 @@ export class RoleService {
             switchMap(() => this.http.get<APIResponse<RoleModel[]>>(EUrl.getAllActiveUrlRole, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+           return throwError(() => error);
         }
       })
     );
@@ -48,7 +48,7 @@ export class RoleService {
             switchMap(() => this.http.get<APIResponse<RoleModel>>(EUrl.getByIdUrlRole +`/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+           return throwError(() => error);
         }
       })
     );
@@ -61,7 +61,7 @@ export class RoleService {
             switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlRole, role, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+           return throwError(() => error);
         }
       })
     );
@@ -75,7 +75,7 @@ export class RoleService {
             switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlRole, role, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+           return throwError(() => error);
         }
       })
     );

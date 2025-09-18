@@ -19,7 +19,7 @@ export class ActionService {
               switchMap(() => this.http.get<APIResponse<Pagination<ActionModel>>>(EUrl.getAllUrlAction + `/${pageIndex}/${pageSize}` , { headers: this.authenticationService.GetHeaders() }))
             );
           } else {
-            return throwError(error);
+             return throwError(() => error);
           }
         })
       );
@@ -33,7 +33,7 @@ export class ActionService {
               switchMap(() => this.http.get<APIResponse<ActionModel[]>>(EUrl.getAllActiveUrlAction  , { headers: this.authenticationService.GetHeaders() }))
             );
           } else {
-            return throwError(error);
+             return throwError(() => error);
           }
         })
       );
@@ -47,7 +47,7 @@ export class ActionService {
               switchMap(() => this.http.get<APIResponse<any[]>>(EUrl.getEActionUrlAction , { headers: this.authenticationService.GetHeaders() }))
             );
           } else {
-            return throwError(error);
+             return throwError(() => error);
           }
         })
       );
@@ -60,7 +60,7 @@ export class ActionService {
               switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlAction, data, { headers: this.authenticationService.GetHeaders() }))
             );
           } else {
-            return throwError(error);
+             return throwError(() => error);
           }
         })
       );
@@ -73,7 +73,7 @@ export class ActionService {
               switchMap(() => this.http.get<APIResponse<ActionModel>>(EUrl.getByIdUrlAction +  `/${id}`, { headers: this.authenticationService.GetHeaders() }))
             );
           } else {
-            return throwError(error);
+             return throwError(() => error);
           }
         })
       );
@@ -87,7 +87,7 @@ export class ActionService {
               switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlAction, data, { headers: this.authenticationService.GetHeaders() }))
             );
           } else {
-            return throwError(error);
+             return throwError(() => error);
           }
         })
       );

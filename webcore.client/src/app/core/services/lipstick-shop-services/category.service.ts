@@ -21,7 +21,7 @@ export class CategoryService {
             switchMap(() => this.http.get<APIResponse<Pagination<CategoryViewModel>>>(EUrl.getAllUrlCategory + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -34,7 +34,7 @@ export class CategoryService {
             switchMap(() => this.http.get<APIResponse<CategoryViewModel[]>>(EUrl.getAllActiveUrlCategory, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -48,7 +48,7 @@ export class CategoryService {
             switchMap(() => this.http.get<APIResponse<CategoryViewModel>>(EUrl.getByIdUrlCategory + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -62,7 +62,7 @@ export class CategoryService {
             switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlCategory, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -76,7 +76,7 @@ export class CategoryService {
             switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlCategory, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -104,7 +104,7 @@ export class CategoryService {
           switchMap(()=>this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlCategory+`/${id}`,{headers:this.authenticationService.GetHeaders()}))
         );
       }else{
-        return throwError(error);
+        return throwError(() => error);
       }
     })
   );

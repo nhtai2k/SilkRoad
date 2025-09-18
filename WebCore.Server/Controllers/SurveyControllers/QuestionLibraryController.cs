@@ -5,7 +5,7 @@ namespace WebCore.Server.Controllers.SurveyControllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class QuestionController : BaseApiController
+    public class QuestionLibraryController : BaseApiController
     {
         //private readonly IQuestionLibraryHelper _questionHelper;
         //private readonly IJwtService _jwtService;

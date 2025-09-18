@@ -22,7 +22,7 @@ export class AccountService {
             switchMap(() => this.http.get<APIResponse<Pagination<AccountModel>>>(EUrl.getAllUrlAccount + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+           return throwError(() => error);
         }
       })
     );
@@ -36,7 +36,7 @@ export class AccountService {
             switchMap(() => this.http.get<APIResponse<AccountModel>>(`${EUrl.getByIdUrlAccount}${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+           return throwError(() => error);
         }
       })
     );
@@ -50,7 +50,7 @@ export class AccountService {
             switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlAccount, account, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+           return throwError(() => error);
         }
       })
     );
@@ -64,7 +64,7 @@ export class AccountService {
             switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlAccount, account, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+           return throwError(() => error);
         }
       })
     );

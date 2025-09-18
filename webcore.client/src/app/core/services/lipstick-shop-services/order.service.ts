@@ -21,7 +21,7 @@ export class OrderService {
             switchMap(() => this.http.get<APIResponse<Pagination<OrderModel>>>(EUrl.getAllUrlOrder, { headers: this.authenticationService.GetHeaders(), params: query }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -35,7 +35,7 @@ export class OrderService {
             switchMap(() => this.http.get<APIResponse<OrderModel>>(EUrl.getByIdUrlOrder + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -49,7 +49,7 @@ export class OrderService {
             switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlOrder, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -78,7 +78,7 @@ export class OrderService {
             switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlOrder, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );

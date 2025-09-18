@@ -20,7 +20,7 @@ export class SubCategoryService {
             switchMap(() => this.http.get<APIResponse<Pagination<SubCategoryViewModel>>>(EUrl.getAllUrlSubCategory + `/${pageIndex}/${pageSize}/${categoryId}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -33,7 +33,7 @@ export class SubCategoryService {
             switchMap(() => this.http.get<APIResponse<SubCategoryViewModel[]>>(EUrl.getAllActiveUrlSubCategory, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -46,7 +46,7 @@ export class SubCategoryService {
             switchMap(() => this.http.get<APIResponse<SubCategoryViewModel[]>>(EUrl.getByCategoryIdUrlSubCategory + `/${categoryId}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -60,7 +60,7 @@ export class SubCategoryService {
             switchMap(() => this.http.get<APIResponse<SubCategoryViewModel>>(EUrl.getByIdUrlSubCategory + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -74,7 +74,7 @@ export class SubCategoryService {
             switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlSubCategory, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -88,7 +88,7 @@ export class SubCategoryService {
             switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlSubCategory, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -116,7 +116,7 @@ export class SubCategoryService {
             switchMap(() => this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlSubCategory + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );

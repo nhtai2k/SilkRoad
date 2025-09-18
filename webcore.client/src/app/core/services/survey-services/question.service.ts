@@ -21,7 +21,7 @@ export class QuestionService {
             switchMap(() => this.http.get<APIResponse<Pagination<QuestionModel>>>(EUrl.getAllUrlQuestion, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -34,7 +34,7 @@ export class QuestionService {
             switchMap(() => this.http.get<APIResponse<Pagination<QuestionModel>>>(EUrl.getAllByQuestiongroupIdUrlQuestion + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -47,7 +47,7 @@ export class QuestionService {
             switchMap(() => this.http.get<APIResponse<QuestionModel>>(EUrl.getByIdUrlQuestion + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -60,7 +60,7 @@ export class QuestionService {
             switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlQuestion, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -73,7 +73,7 @@ export class QuestionService {
             switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlQuestion, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -86,7 +86,7 @@ export class QuestionService {
             switchMap(() => this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlQuestion + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );

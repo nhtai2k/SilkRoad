@@ -22,7 +22,7 @@ export class BrandService {
             switchMap(() => this.http.get<APIResponse<Pagination<BrandViewModel>>>(EUrl.getAllUrlBrand + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -35,7 +35,7 @@ export class BrandService {
             switchMap(() => this.http.get<APIResponse<BrandViewModel[]>>(EUrl.getAllActiveUrlBrand, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -49,7 +49,7 @@ export class BrandService {
             switchMap(() => this.http.get<APIResponse<BrandViewModel>>(EUrl.getByIdUrlBrand + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -63,7 +63,7 @@ export class BrandService {
             switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlBrand, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -77,7 +77,7 @@ export class BrandService {
             switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlBrand, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -105,7 +105,7 @@ export class BrandService {
           switchMap(()=>this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlBrand+`/${id}`,{headers:this.authenticationService.GetHeaders()}))
         );
       }else{
-        return throwError(error);
+        return throwError(() => error);
       }
     })
   );

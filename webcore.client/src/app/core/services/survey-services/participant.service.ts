@@ -22,7 +22,7 @@ export class ParticipantService {
             switchMap(() => this.http.get<APIResponse<Pagination<ParticipantModel>>>(EUrl.getAllUrlParticipant, { headers: this.authenticationService.GetHeaders(), params: query }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -36,7 +36,7 @@ export class ParticipantService {
             switchMap(() => this.http.get<APIResponse<SurveyUIModel>>(EUrl.getEagerByIdUrlParticipant + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );

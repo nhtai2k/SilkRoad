@@ -23,7 +23,7 @@ export class ActionLoggingService {
             switchMap(() => this.http.get<APIResponse<Pagination<ActionLoggingModel>>>(EUrl.getAllUrlActionLogging, { headers: this.authenticationService.GetHeaders(), params: query }))
           );
         } else {
-          return throwError(error);
+           return throwError(() => error);
         }
       })
     );
@@ -37,7 +37,7 @@ export class ActionLoggingService {
             switchMap(() => this.http.get<APIResponse<ActionLoggingModel>>(EUrl.getByIdUrlActionLogging + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+           return throwError(() => error);
         }
       })
     );

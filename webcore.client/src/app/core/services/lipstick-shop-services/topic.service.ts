@@ -20,7 +20,7 @@ constructor(private http: HttpClient,private authenticationService: Authenticati
             switchMap(() => this.http.get<APIResponse<Pagination<TopicViewModel>>>(EUrl.getAllUrlTopic + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -33,7 +33,7 @@ constructor(private http: HttpClient,private authenticationService: Authenticati
             switchMap(() => this.http.get<APIResponse<TopicViewModel[]>>(EUrl.getAllActiveUrlTopic, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -47,7 +47,7 @@ constructor(private http: HttpClient,private authenticationService: Authenticati
             switchMap(() => this.http.get<APIResponse<TopicViewModel>>(EUrl.getByIdUrlTopic + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -61,7 +61,7 @@ constructor(private http: HttpClient,private authenticationService: Authenticati
             switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlTopic, unit, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -75,7 +75,7 @@ constructor(private http: HttpClient,private authenticationService: Authenticati
             switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlTopic, unit, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -103,7 +103,7 @@ constructor(private http: HttpClient,private authenticationService: Authenticati
             switchMap(() => this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlTopic + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );

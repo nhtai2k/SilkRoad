@@ -21,7 +21,7 @@ export class IndustryService {
             switchMap(() => this.http.get<APIResponse<Pagination<IndustryModel>>>(url, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -37,7 +37,7 @@ export class IndustryService {
             switchMap(() => this.http.get<APIResponse<Pagination<IndustryModel>>>(url, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -52,7 +52,7 @@ export class IndustryService {
             switchMap(() => this.http.get<APIResponse<Pagination<IndustryModel>>>(url, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -67,7 +67,7 @@ export class IndustryService {
             switchMap(() => this.http.get<APIResponse<IndustryModel>>(url, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -81,7 +81,7 @@ export class IndustryService {
             switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlIndustry, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -95,7 +95,7 @@ export class IndustryService {
             switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlIndustry, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -110,7 +110,7 @@ export class IndustryService {
             switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -125,7 +125,7 @@ export class IndustryService {
             switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -140,7 +140,7 @@ export class IndustryService {
             switchMap(() => this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
