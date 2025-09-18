@@ -1185,7 +1185,7 @@ fadeInDown animation {
   color: #fff;
 }
 .footerContainer .footerBox {
-  max-width: 1200px;
+  /*max-width: 1200px;*/
   margin: auto;
   color: #b2b2b2;
 }
