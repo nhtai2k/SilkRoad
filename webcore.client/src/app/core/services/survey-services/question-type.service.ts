@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EUrl } from '@common/url-api';
 import { APIResponse } from '@models/api-response.model';
+import { OptionModel } from '@models/option.model';
 import { Pagination } from '@models/pagination.model';
 import { QuestionTypeModel } from '@models/survey-models/question-type.model';
 import { AuthenticationService } from '@services/system-services/authentication.service';
@@ -26,4 +27,18 @@ export class QuestionTypeService {
       })
     );
   }
+    getOptionList(): Observable<APIResponse<OptionModel[]>> {
+      const url = EUrl.getOptionListUrlQuestionType;
+      return this.http.get<APIResponse<OptionModel[]>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+        catchError(error => {
+          if (error.status === 401) {
+            return this.authenticationService.ReNewToken().pipe(
+              switchMap(() => this.http.get<APIResponse<OptionModel[]>>(url, { headers: this.authenticationService.GetHeaders() }))
+            );
+          } else {
+            return throwError(() =>error);
+          }
+        })
+      );
+    }
 }

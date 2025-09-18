@@ -26,27 +26,27 @@ export const routes: Routes = [
           title: 'Question Group Libraries'
         }
       },
+      {
+        path: 'question-libraries',
+        loadComponent: () => import('./question-libraries/index/index.component').then(m => m.IndexComponent),
+        data: {
+          title: 'Question Libraries'
+        }
+      },
       // {
-      //   path: 'questions',
-      //   loadComponent: () => import('./questions/index/index.component').then(m => m.IndexComponent),
+      //   path: 'question-libraries/create',
+      //   loadComponent: () => import('./question-libraries/create/create.component').then(m => m.CreateComponent),
       //   data: {
-      //     title: 'Questions'
+      //     title: 'Create Question Library'
       //   }
       // },
       // {
-      //   path: 'questions/create',
-      //   loadComponent: () => import('./questions/create/create.component').then(m => m.CreateComponent),
+      //   path: 'question-libraries/update/:id',
+      //   loadComponent: () => import('./question-libraries/update/update.component').then(m => m.UpdateComponent),
       //   data: {
-      //     title: 'Create Question'
+      //     title: 'Update Question Library'
       //   }
-      // },
-      // {
-      //   path: 'questions/update/:id',
-      //   loadComponent: () => import('./questions/update/update.component').then(m => m.UpdateComponent),
-      //   data: {
-      //     title: 'Update Question'
-      //   }
-      // },
+      // }
       // {
       //   path: 'survey-forms',
       //   loadComponent: () => import('./survey-forms/index/index.component').then(m => m.IndexComponent),

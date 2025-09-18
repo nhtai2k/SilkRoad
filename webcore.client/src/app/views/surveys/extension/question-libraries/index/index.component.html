@@ -1,1 +1,80 @@
-<p>index works!</p>
+<h3>Question Libraries</h3>
+<c-accordion class="mb-4">
+    <c-accordion-item #item0="cAccordionItem" [visible]="true">
+        <ng-template cTemplateId="accordionHeaderTemplate">
+            <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
+                Filter:
+            </button>
+        </ng-template>
+        <ng-template cTemplateId="accordionBodyTemplate">
+            <div class="accordion-body">
+                <div class="row">
+                    <div class="col-8">
+                        <form cForm [formGroup]="filterForm" (ngSubmit)="filter()">
+                            <div class="row mb-3">
+                                <div class="col-4">
+                                    <app-select-search [options]="questionGroupLibraries"
+                                        placeholder="Select question group"></app-select-search>
+                                </div>
+                                <div class="col-4">
+                                    <app-select-search [options]="questionTypes"
+                                        placeholder="Select question type"></app-select-search>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <input formControlName="searchText" type="text" class="form-control"
+                                        placeholder="Search by name...">
+                                </div>
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-primary w-100">Filter</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-4">
+                        <div class="justify-content-end d-flex">
+                            <button class="btn btn-warning me-2">
+                                <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Trash Icon"></svg>
+                            </button>
+                            <button routerLink="./create" class="btn btn-success">
+                                <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </c-accordion-item>
+</c-accordion>
+
+<app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
+    (changePageSize)="onPageSizeChange($event)">
+    <thead class="text-nowrap text-truncate">
+        <tr>
+            <th scope="col">STT</th>
+            <th scope="col">NameEn</th>
+            <th scope="col">NameVN</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (item of data.items; track item?.id; let i = $index) {
+        <tr>
+            <td>{{ i+1 }}</td>
+            <td>{{ item.nameEN }}</td>
+            <td>{{ item.nameVN }}</td>
+            <td>
+                <div class="d-flex justify-content-end">
+                    <button routerLink="./update/{{item.id}}" class="btn btn-primary me-2">
+                        <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
+                    </button>
+                    <button class="btn btn-danger">
+                        <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+                    </button>
+                </div>
+            </td>
+        </tr>
+        }
+    </tbody>
+</app-data-table>

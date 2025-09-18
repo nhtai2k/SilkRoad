@@ -12,20 +12,26 @@ namespace WebCore.Server.Controllers.SurveyControllers
     [Authorize]
     public class QuestionTypeController : BaseApiController
     {
-        private readonly IQuestionTypeHelper _questionTypeHelper;
+        private readonly IQuestionTypeHelper _helper;
         private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public QuestionTypeController(IQuestionTypeHelper questionTypeHelper, IActionLoggingService actionLog, IStringLocalizer<SharedResource> localizer)
+        public QuestionTypeController(IQuestionTypeHelper helper, IActionLoggingService actionLog, IStringLocalizer<SharedResource> localizer)
         {
-            _questionTypeHelper = questionTypeHelper;
+            _helper = helper;
             _actionLog = actionLog;
             _localizer = localizer;
         }
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            var data = await _questionTypeHelper.GetAllAsync();
+            var data = await _helper.GetAllAsync();
             //string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        }
+            [HttpGet("GetOptionList")]
+        public async Task<IActionResult> GetOptionList()
+        {
+            var data = await _helper.GetOptionListAsync();
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
     }

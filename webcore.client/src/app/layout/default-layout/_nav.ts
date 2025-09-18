@@ -227,12 +227,12 @@ export const navItems: INavData[] = [
         name: 'QG Libraries',
         url: '/surveys/extension/question-group-libraries',
         icon: 'nav-icon-bullet'
+      },
+      {
+        name: 'Question Libraries',
+        url: '/surveys/extension/question-libraries',
+        icon: 'nav-icon-bullet'
       }
-      // {
-      //   name: 'Questions',
-      //   url: '/surveys/extension/questions',
-      //   icon: 'nav-icon-bullet'
-      // },
       // {
       //   name: 'Survey Forms',
       //   url: '/surveys/extension/survey-forms',

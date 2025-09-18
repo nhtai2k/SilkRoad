@@ -252,9 +252,19 @@ export enum EUrl {
     softDeleteUrlQuestionGroupLibrary = "/api/questionGroupLibrary/softDelete",
     restoreUrlQuestionGroupLibrary = "/api/questionGroupLibrary/restore",
     deleteUrlQuestionGroupLibrary = "/api/questionGroupLibrary/delete",
-
+    //questionLibrary
+    getAllUrlQuestionLibrary = "/api/questionLibrary/getAll",
+    getAllDeletedUrlQuestionLibrary = "/api/questionLibrary/getAllDeleted",
+    getByIdUrlQuestionLibrary = "/api/questionLibrary/getById",
+    createUrlQuestionLibrary = "/api/questionLibrary/create",
+    updateUrlQuestionLibrary = "/api/questionLibrary/update",
+    softDeleteUrlQuestionLibrary = "/api/questionLibrary/softDelete",
+    restoreUrlQuestionLibrary = "/api/questionLibrary/restore",
+    deleteUrlQuestionLibrary = "/api/questionLibrary/delete",
+    
     //questionType
     getAllUrlQuestionType = "/api/questionType/getAll",
+    getOptionListUrlQuestionType = "/api/questionType/getOptionList",
     //surveyForm
     getAllUrlSurveyForm = "/api/surveyForm/getAll",
     getAllActiveUrlSurveyForm = "/api/surveyForm/getAllActive",
