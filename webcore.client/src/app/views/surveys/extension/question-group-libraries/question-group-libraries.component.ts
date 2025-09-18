@@ -175,9 +175,10 @@ export class QuestionGroupLibrariesComponent implements OnInit {
     this.visibleUpdateModal = event;
   }
 
-  get nameUpdateForm() { return this.updateForm.get('name'); }
-  get codeUpdateForm() { return this.updateForm.get('code'); }
+  get nameENUpdateForm() { return this.updateForm.get('nameEN'); }
+  get nameVNUpdateForm() { return this.updateForm.get('nameVN'); }
   get noteUpdateForm() { return this.updateForm.get('note'); }
+  get priorityUpdateForm() { return this.updateForm.get('priority'); }
   //#endregion
 
   //#region Delete

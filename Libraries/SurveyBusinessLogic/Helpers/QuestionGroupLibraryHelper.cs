@@ -56,9 +56,9 @@ namespace SurveyBusinessLogic.Helpers
             try
             {
                 model.Create(userName);
-                //model.Code = model.Code.Trim();
-                //model.Name = model.Name.Trim();
-                //model.Note = model.Note?.Trim();
+                model.NameEN = model.NameEN.Trim();
+                model.NameVN = model.NameVN.Trim();
+                model.Note = model.Note?.Trim();
                 await _unitOfWork.QuestionGroupLibraryRepository.CreateAsync(model);
                 await _unitOfWork.SaveChangesAsync();
                 return true;
@@ -75,10 +75,12 @@ namespace SurveyBusinessLogic.Helpers
             {
                 var data = await _unitOfWork.QuestionGroupLibraryRepository.GetByIdAsync(model.Id);
                 if (data == null) return false;
-                //data.Update(userName);
-                //data.IsActive = model.IsActive;
-                //data.Name = model.Name.Trim();
-                //data.Note = model.Note?.Trim();
+                data.Update(userName);
+                data.NameEN = model.NameEN.Trim();
+                data.NameVN = model.NameVN.Trim();
+                data.Note = model.Note?.Trim();
+                data.IsActive = model.IsActive;
+                data.Priority = model.Priority;
                 await _unitOfWork.SaveChangesAsync();
                 return true;
             }
@@ -92,7 +94,7 @@ namespace SurveyBusinessLogic.Helpers
         {
             var entity = await _unitOfWork.QuestionGroupLibraryRepository.GetByIdAsync(id);
             if (entity == null) return false;
-            //entity.SoftDelete(userName);
+            entity.SoftDelete(userName);
             await _unitOfWork.SaveChangesAsync();
             return true;
         }
@@ -101,7 +103,7 @@ namespace SurveyBusinessLogic.Helpers
         {
             var entity = await _unitOfWork.QuestionGroupLibraryRepository.GetByIdAsync(id);
             if (entity == null) return false;
-            //entity.Restore(userName);
+            entity.Restore(userName);
             await _unitOfWork.SaveChangesAsync();
             return true;
         }
