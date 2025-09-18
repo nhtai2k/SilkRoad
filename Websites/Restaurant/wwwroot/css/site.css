@@ -1601,20 +1601,68 @@ html {
   margin: 2rem auto;
   display: flex;
   flex-direction: row;
+  /* Swiper wrapper settings */
+  /* Slide layout as you wrote */
+  /* Border effect */
+  /* Slide text section */
+}
+.homePage .slideShowContainer .swiper {
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  /*.swiper-pagination-bullet {
+      color: inherit;
+      padding: 1em 1em;
+      position: relative;
+      overflow: hidden;
+      transition: all 250ms ease-out;
+      transition-timing-function: cubic-bezier(.56, .12, .12, .98);
+      border-radius: unset;
+      background: unset;
+  }
+
+  .swiper-pagination-bullet:after {
+      content: '';
+      display: block;
+      background: #333;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      transform: translateY(100%) translateY(-0.25em);
+      transition: inherit;
+  }
+
+  .swiper-pagination-bullet:hover:after {
+      transform: translateY(0);
+  }*/
+}
+.homePage .slideShowContainer .swiper .swiper-pagination-bullet.swiper-pagination-bullet-active {
+  background: #333;
+}
+.homePage .slideShowContainer .swiper-slide {
+  width: 570px; /* match .slide max-width */
+  height: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .homePage .slideShowContainer .slide {
-  max-width: 570px;
-  margin: auto;
+  width: 100%;
+  height: 100%;
   background-color: #181818;
   position: relative;
   color: #fff;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
-.homePage .slideShowContainer .slide .slideInfor {
-  padding: 2rem 3rem;
-  text-align: center;
-}
-.homePage .slideShowContainer .slide .slideInfor .heading {
-  margin-bottom: 1.25rem;
+.homePage .slideShowContainer .slide img.img-fluid {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 .homePage .slideShowContainer .slide::before {
   content: "";
@@ -1624,6 +1672,34 @@ html {
   right: 20px;
   bottom: 20px;
   border: 1px solid rgba(205, 170, 124, 0.5);
+  pointer-events: none;
+  z-index: 1;
+}
+.homePage .slideShowContainer .slideInfor {
+  padding: 2rem 3rem;
+  text-align: center;
+  z-index: 2;
+  position: relative;
+  /*background-color: rgba(0, 0, 0, 0.6);*/
+  margin-top: -5px;
+}
+.homePage .slideShowContainer .swiper-slide.swiper-slide-active .slide {
+  background-color: #181818;
+}
+.homePage .slideShowContainer .swiper-slide .slide {
+  background-color: #333;
+}
+@media (max-width: 767px) {
+  .homePage .slideShowContainer .swiper-slide {
+    width: 100% !important;
+  }
+  .homePage .slideShowContainer .slide {
+    max-width: 100%;
+    margin: 0 15px;
+  }
+  .homePage .slideShowContainer .slideInfor {
+    padding: 1.5rem;
+  }
 }
 .homePage .ourServiceContainer {
   width: 100%;

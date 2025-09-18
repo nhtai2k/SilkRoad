@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<link rel="stylesheet" href="~/lib/swiper/swiper-bundle.min.css" />
 <div class="homePage">
     <!--Home Banner-->
     @* @await Html.PartialAsync("~/Views/Shared/PartialViews/_HomeBannerV1PartialView.cshtml") *@
@@ -19,60 +20,76 @@
     </section>
     <!--Slide Show-->
     <section class="slideShowContainer">
-        <div class="slide">
-            <img src="~/assets/images/home/flipster-1.jpg" alt="about" class="w-100" />
-            <div class="slideInfor">
-                <div class="heading">
-                    <h3 class="m-0 font-satisfy-regular text-color-yellow">Our Story</h3>
-                    <img src="~/assets/images/home/border-1.png" alt="heading" />
-                </div>
-                <div class="body">
-                    <p class="text-center">
-                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt .
-                    </p>
-                    <div class="d-flex justify-content-center">
-                        <img src="~/assets/images/home/signature-1.png" alt="signature" />
-                        <div>
-                            <h5 class="subTittle">John Doe</h5>
-                            <p>Founder & Chef</p>
+        <div class="container">
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="slide">
+                            <img src="~/assets/images/home/flipster-1.jpg" alt="about" class="w-100" />
+                            <div class="slideInfor">
+                                <div class="heading">
+                                    <h3 class="m-0 font-satisfy-regular text-color-yellow">Our Story</h3>
+                                    <img src="~/assets/images/home/border-1.png" alt="heading" />
+                                </div>
+                                <div class="body">
+                                    <p class="text-center">
+                                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt .
+                                    </p>
+                                    <div class="d-flex justify-content-center">
+                                        <img src="~/assets/images/home/signature-1.png" alt="signature" />
+                                        <div>
+                                            <h5 class="subTittle">John Doe</h5>
+                                            <p>Founder & Chef</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="slide">
+                            <img src="~/assets/images/home/flipster-2.jpg" alt="about" class="w-100" />
+                            <div class="slideInfor">
+                                <div class="heading">
+                                    <h3 class="m-0 font-satisfy-regular text-color-yellow">Opening Time</h3>
+                                    <img src="~/assets/images/home/border-1.png" alt="heading" />
+
+                                </div>
+                                <div class="body">
+                                    <h5 class="font-satisfy-regular text-color-yellow">Monday-Friday</h5>
+                                    <p>7am-11am (Breakfastt)</p>
+                                    <p>11am-10pm (Lunch/Dinner)</p>
+                                    <h5 class="font-satisfy-regular text-color-yellow">Saturday-Sunday</h5>
+                                    <p>8am-11am (Breakfastt)</p>
+                                    <p>1am-10pm (Lunch/Dinner)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="slide">
+                            <img src="~/assets/images/home/flipster-3.jpg" alt="about" class="w-100" />
+                            <div class="slideInfor">
+                                <div class="heading">
+                                    <h3 class="m-0 font-satisfy-regular text-color-yellow">Reservation</h3>
+                                    <img src="~/assets/images/home/border-1.png" alt="heading" />
+
+                                </div>
+                                <div class="body">
+                                    <p class="text-center">Make your reservation online any time, day or night! Royate Restaurant looks forward to serving you the best food experience.</p>
+                                    <p class="text-center">Or you can also call us + (156) 1800-366-6666 from 7 a.m until before the closing time 1 hour</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <!-- Navigation -->
+                @* <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div> *@
+                <!-- Pagination -->
+                <div class="swiper-pagination"></div>
             </div>
         </div>
-        <div class="slide">
-            <img src="~/assets/images/home/flipster-2.jpg" alt="about" class="w-100" />
-            <div class="slideInfor">
-                <div class="heading">
-                    <h3 class="m-0 font-satisfy-regular text-color-yellow">Opening Time</h3>
-                    <img src="~/assets/images/home/border-1.png" alt="heading" />
-
-                </div>
-                <div class="body">
-                    <h5 class="font-satisfy-regular text-color-yellow">Monday-Friday</h5>
-                    <p>7am-11am (Breakfastt)</p>
-                    <p>11am-10pm (Lunch/Dinner)</p>
-                    <h5 class="font-satisfy-regular text-color-yellow">Saturday-Sunday</h5>
-                    <p>8am-11am (Breakfastt)</p>
-                    <p>1am-10pm (Lunch/Dinner)</p>
-                </div>
-            </div>
-        </div>
-        <div class="slide">
-            <img src="~/assets/images/home/flipster-3.jpg" alt="about" class="w-100" />
-            <div class="slideInfor">
-                <div class="heading">
-                    <h3 class="m-0 font-satisfy-regular text-color-yellow">Reservation</h3>
-                    <img src="~/assets/images/home/border-1.png" alt="heading" />
-
-                </div>
-                <div class="body">
-                    <p class="text-center">Make your reservation online any time, day or night! Royate Restaurant looks forward to serving you the best food experience.</p>
-                    <p class="text-center">Or you can also call us + (156) 1800-366-6666 from 7 a.m until before the closing time 1 hour</p>
-                </div>
-            </div>
-        </div>
-
     </section>
     <!--Our Best Service-->
     <section class="ourServiceContainer">
@@ -223,7 +240,7 @@
         </div>
     </section>
 </div>
-
+<script src="~/lib/swiper/swiper-bundle.min.js"></script>
 <script>
     const rows = 6;
     const cols = 6;
@@ -292,6 +309,43 @@
     window.addEventListener('load', createBannerTiles);
     window.addEventListener('resize', () => {
         createBannerTiles();
+    });
+    // Swiper Initialization
+    var swiper = new Swiper(".mySwiper", {
+        grabCursor: true,
+        centeredSlides: true,
+        loop: false,
+        slidesPerView: 2,
+        centeredSlides: true,
+        initialSlide: 1,
+        effect: "coverflow",
+        coverflowEffect: {
+            rotate: 0,
+            stretch: 0,
+            depth: 250,
+            modifier: 1,
+            slideShadows: false,
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+        // navigation: {
+        //     nextEl: ".swiper-button-next",
+        //     prevEl: ".swiper-button-prev",
+        // },
+        // Responsive behavior
+        breakpoints: {
+            0: {
+                slidesPerView: 1,
+                // effect: "coverflow",
+                
+            },
+            768: {
+                slidesPerView: 2,
+                // effect: "coverflow",
+            }
+        }
     });
 </script>
 
