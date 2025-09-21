@@ -209,6 +209,11 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cil-notes' }
   },
   {
+    name: 'Survey Forms',
+    url: '/surveys/survey-forms',
+    iconComponent: { name: 'cil-file' }
+  },
+  {
     name: 'Extend',
     url: '/surveys/extension',
     iconComponent: { name: 'cil-puzzle' },
@@ -233,11 +238,6 @@ export const navItems: INavData[] = [
         url: '/surveys/extension/question-libraries',
         icon: 'nav-icon-bullet'
       }
-      // {
-      //   name: 'Survey Forms',
-      //   url: '/surveys/extension/survey-forms',
-      //   icon: 'nav-icon-bullet'
-      // }
     ]
   },
   //#endregion

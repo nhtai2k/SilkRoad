@@ -5,7 +5,6 @@ import { Router, RouterLink } from '@angular/router';
 import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonDirective, CardBodyComponent, CardComponent, FormCheckComponent, FormControlDirective, FormDirective, FormLabelDirective, TemplateIdDirective } from '@coreui/angular';
 import { QuestionGroupModel } from '@models/survey-models/question-group.model';
 import { SelectedQuestionModel } from '@models/survey-models/survey-form.model';
-import { QuestionGroupService } from '@services/survey-services/question-group.service';
 import { SurveyFormService } from '@services/survey-services/survey-form.service';
 
 @Component({
@@ -33,14 +32,14 @@ export class CreateComponent {
     isActive: new FormControl(true)
   });
   constructor(
-    private questionGroupService: QuestionGroupService,
+    // private questionGroupService: QuestionGroupService,
     private surveyFormService: SurveyFormService,
     private router: Router
   ) { }
   ngOnInit() {
-    this.questionGroupService.getEagerAllElements().subscribe((response) => {
-      this.intitQuestionGroupData(response.data);
-    });
+    // this.questionGroupService.getEagerAllElements().subscribe((response) => {
+    //   this.intitQuestionGroupData(response.data);
+    // });
   }
   intitQuestionGroupData(questionGroupList: QuestionGroupModel[]) {
     questionGroupList.forEach((questionGroup) => {

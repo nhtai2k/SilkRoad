@@ -33,13 +33,13 @@ export const routes: Routes = [
           title: 'Question Libraries'
         }
       },
-      // {
-      //   path: 'question-libraries/create',
-      //   loadComponent: () => import('./question-libraries/create/create.component').then(m => m.CreateComponent),
-      //   data: {
-      //     title: 'Create Question Library'
-      //   }
-      // },
+      {
+        path: 'question-libraries/create',
+        loadComponent: () => import('./question-libraries/create/create.component').then(m => m.CreateComponent),
+        data: {
+          title: 'Create Question Library'
+        }
+      },
       // {
       //   path: 'question-libraries/update/:id',
       //   loadComponent: () => import('./question-libraries/update/update.component').then(m => m.UpdateComponent),

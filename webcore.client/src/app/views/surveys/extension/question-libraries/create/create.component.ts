@@ -6,10 +6,11 @@ import { PredefinedAnswerModel } from '@models/survey-models/predefined-answer.m
 import { QuestionGroupModel } from '@models/survey-models/question-group.model';
 import { QuestionTypeModel } from '@models/survey-models/question-type.model';
 import { ToastService } from '@services/helper-services/toast.service';
-import { QuestionGroupService } from '@services/survey-services/question-group.service';
 import { QuestionTypeService } from '@services/survey-services/question-type.service';
-import { QuestionService } from '@services/survey-services/question.service';
 import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, FormCheckComponent, FormCheckInputDirective, FormControlDirective, FormDirective, FormLabelDirective, FormSelectDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, TableDirective, TemplateIdDirective } from '@coreui/angular';
+import { QuestionGroupLibraryService } from '@services/survey-services/question-group-library.service';
+import { QuestionLibraryService } from '@services/survey-services/question-library.service';
+import { OptionModel } from '@models/option.model';
 
 @Component({
   selector: 'app-create',
@@ -23,52 +24,61 @@ import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, B
   styleUrl: './create.component.scss'
 })
 export class CreateComponent {
-  questionGroupList: QuestionGroupModel[] = [];
-  questionTypeList: QuestionTypeModel[] = [];
+  //#region Variables
+  questionGroupList: OptionModel[] = [];
+  questionTypeList: OptionModel[] = [];
   predefinedAnswerList: PredefinedAnswerModel[] = [];
   visibleCreateModal: boolean = false;
   visibleUpdateModal: boolean = false;
   visibleDelete: boolean = false;
   updateByIndex: number = 0;
   deleteByIndex: number = 0;
+
   questionForm: FormGroup = new FormGroup({
     questionTypeId: new FormControl(-1, Validators.min(1)),
-    questionGroupId: new FormControl(-1, Validators.min(1)),
-    chartLabel: new FormControl('', Validators.required),
-    nameEN: new FormControl('', Validators.required),
-    nameVN: new FormControl('', Validators.required),
-    description: new FormControl(''),
+    QuestionGroupLibraryId: new FormControl(-1, Validators.min(1)),
+    nameEN: new FormControl(null, Validators.required),
+    nameVN: new FormControl(null, Validators.required),
+    note: new FormControl(null, Validators.maxLength(500)),
   });
+
   createForm: FormGroup = new FormGroup({
     nameEN: new FormControl(''),
     nameVN: new FormControl(''),
     point: new FormControl(1, Validators.min(1)),
     description: new FormControl(''),
   });
+
   updateForm: FormGroup = new FormGroup({
     nameEN: new FormControl(''),
     nameVN: new FormControl(''),
     point: new FormControl(1, Validators.min(1)),
     description: new FormControl(''),
   });
+  //#endregion
+
+  //#region Lifecycle Hooks
   constructor(
-    private questionGroupService: QuestionGroupService,
+    private questionGroupLibraryService: QuestionGroupLibraryService,
     private questionTypeService: QuestionTypeService,
-    private questionService: QuestionService,
+    private questionLibraryService: QuestionLibraryService,
     private toastService: ToastService,
     private router: Router) { }
   ngOnInit() {
-    this.questionGroupService.getAllActive().subscribe((res) => {
+    this.questionGroupLibraryService.getOptionList().subscribe((res) => {
       this.questionGroupList = res.data;
     });
     this.questionTypeService.getAll().subscribe((res) => {
       this.questionTypeList = res.data;
     });
   }
+  //#endregion
+  
+  //#region Form Submit
   onSubmit() {
     const question = this.questionForm.value;
     question.predefinedAnswers = this.predefinedAnswerList;
-    this.questionService.create(question).subscribe((res) => {
+    this.questionLibraryService.create(question).subscribe((res) => {
       this.toastService.showToast(EColors.success, res.message);
       this.router.navigate(['/surveys/extend-survey/questions']);
     }, (failure) => {
@@ -77,11 +87,13 @@ export class CreateComponent {
   }
 
   get questionTypeId() { return this.questionForm.get('questionTypeId'); }
-  get questionGroupId() { return this.questionForm.get('questionGroupId'); }
+  get QuestionGroupLibraryId() { return this.questionForm.get('QuestionGroupLibraryId'); }
   get chartLabel() { return this.questionForm.get('chartLabel'); }
   get nameEN() { return this.questionForm.get('nameEN'); }
   get nameVN() { return this.questionForm.get('nameVN'); }
-  get description() { return this.questionForm.get('description'); }
+  get note() { return this.questionForm.get('note'); }
+  //#endregion
+
   //#region  Create Form
   onSubmitCreateForm() {
     this.predefinedAnswerList.push(this.createForm.value);
@@ -105,6 +117,7 @@ export class CreateComponent {
   get descriptionCreateForm() { return this.createForm.get('description'); }
 
   //#endregion
+  
   //#region  Update Form
   updateData(index: number) {
     this.updateByIndex = index;
@@ -133,6 +146,7 @@ export class CreateComponent {
   get descriptionUpdateForm() { return this.updateForm.get('description'); }
 
   //#endregion
+  
   //#region Delete
   deleteData(index: number) {
     this.deleteByIndex = index;
