@@ -1,4 +1,4 @@
-import { DatePipe, NgFor, NgIf } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonCloseDirective, ButtonDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, FormControlDirective, FormLabelDirective, FormDirective, FormCheckComponent, FormSelectDirective } from '@coreui/angular';
@@ -7,16 +7,16 @@ import { IconDirective } from '@coreui/icons-angular';
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { ToastService } from '@services/helper-services/toast.service';
 import { EColors } from '@common/global';
-import { DataTableComponent } from '@components/data-table/data-table.component';
 import { CompanyModel } from '@models/stock-models/company.model';
 import { CompanyService } from '@services/stock-services/company.service';
 import { IndustryService } from '@services/stock-services/industry.service';
 import { IndustryModel } from '@models/stock-models/industry.model';
 import { StockPriceService } from '@services/stock-services/stock-price.service';
+import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 
 @Component({
   selector: 'app-company',
-  imports: [ModalBodyComponent, NgFor, NgIf, FormControlDirective, FormLabelDirective,
+  imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective,
     FormSelectDirective,
     ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule,FormCheckComponent,
     ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, DataTableComponent, IconDirective],

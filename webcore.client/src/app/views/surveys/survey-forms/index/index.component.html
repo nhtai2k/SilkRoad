@@ -1,7 +1,52 @@
-<h1>Survey Form List</h1>
-<div class="d-flex justify-content-end mb-4">
-    <button routerLink="./create" class="btn btn-success">Create</button>
-</div>
+<h3>Survey Form List</h3>
+<c-accordion class="mb-4">
+    <c-accordion-item #item0="cAccordionItem" [visible]="true">
+        <ng-template cTemplateId="accordionHeaderTemplate">
+            <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
+                Filter:
+            </button>
+        </ng-template>
+        <ng-template cTemplateId="accordionBodyTemplate">
+            <div class="accordion-body">
+                <div class="row">
+                    <div class="col-8">
+                        <form cForm [formGroup]="filterForm" (ngSubmit)="filter()">
+                            <div class="row mb-3">
+                                <div class="col-4">
+                                    <!-- <app-select-search [options]="questionGroupLibraries"
+                                        placeholder="Select question group"></app-select-search> -->
+                                </div>
+                                <div class="col-4">
+                                    <!-- <app-select-search [options]="questionTypes"
+                                        placeholder="Select question type"></app-select-search> -->
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <input formControlName="searchText" type="text" class="form-control"
+                                        placeholder="Search by name...">
+                                </div>
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-primary w-100">Filter</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-4">
+                        <div class="justify-content-end d-flex">
+                            <button class="btn btn-warning me-2">
+                                <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Trash Icon"></svg>
+                            </button>
+                            <a routerLink="./create" class="btn btn-success">
+                                <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </c-accordion-item>
+</c-accordion>
 <app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
     (changePageSize)="onPageSizeChange($event)">
     <thead class="text-nowrap text-truncate">

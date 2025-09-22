@@ -1,39 +1,21 @@
-<h1>Create Survey form</h1>
+<h3>Create Survey form</h3>
 <c-card>
     <c-card-body>
         <form cForm [formGroup]="createForm" (ngSubmit)="onSubmit()">
-            <div class="mb-2 d-flex">
-                <c-form-check class="me-2 d-flex align-items-center">
-                  <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
-                  <label cFormCheckLabel for="isActive" class="me-2">Active </label>
-                </c-form-check>
-                <c-form-check class="me-2 d-flex align-items-center">
-                  <input cFormCheckInput formControlName="isPeriodic" id="isPeriodic" class="me-2" type="checkbox" />
-                  <label cFormCheckLabel for="isPeriodic" class="me-2">IsPeriodic </label>
-                </c-form-check>
-            </div>
             <div class="mb-2 row">
                 <div class="col-6">
-                    <label cLabel for="nameEN">NameEN: <span class="text-danger">(*)</span></label>
-                    <input cFormControl formControlName="nameEN" type="text" />
-                    @if (nameEN?.invalid && (nameEN?.dirty || nameEN?.touched)) {
+                    <label cLabel for="name">Name: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="name" type="text" />
+                    @if (name?.invalid && (name?.dirty || name?.touched)) {
                         <div class="text-danger">
-                            @if (nameEN?.hasError('required')) {
-                                <div>Enter NameEN, please!</div>
+                            @if (name?.hasError('required')) {
+                                <div>Enter Name, please!</div>
                             }
                         </div>
                     }
                 </div>
                 <div class="col-6">
-                    <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
-                    <input cFormControl formControlName="nameVN" type="text" />
-                    @if (nameVN?.invalid && (nameVN?.dirty || nameVN?.touched)) {
-                        <div class="text-danger">
-                            @if (nameVN?.hasError('required')) {
-                                <div>Enter NameVN, please!</div>
-                            }
-                        </div>
-                    }
+                <app-range-datetime-picker></app-range-datetime-picker>
                 </div>
             </div>
             <div class="mb-2 row">

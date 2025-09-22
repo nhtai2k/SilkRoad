@@ -3,7 +3,6 @@ import { IconDirective } from '@coreui/icons-angular';
 import { InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective } from '@coreui/angular';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators  } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { NgIf } from '@angular/common';
 import { MyAccountService } from '@services/system-services/my-account.service';
 import { ToastService } from '@services/helper-services/toast.service';
 import { EColors } from '@common/global';
@@ -14,7 +13,7 @@ import { ParticleCanvasComponent } from '@components/generals/particle-canvas/pa
   selector: 'app-recover-password',
   standalone: true,
   imports: [
-    InputGroupComponent,NgIf,
+    InputGroupComponent,
     InputGroupTextDirective, IconDirective,
     FormControlDirective, ButtonDirective, ParticleCanvasComponent,
     ReactiveFormsModule, RouterLink ],

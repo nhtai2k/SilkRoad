@@ -2,10 +2,8 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { IconDirective } from '@coreui/icons-angular';
 import { InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective } from '@coreui/angular';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators  } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MyAccountService } from '@services/system-services/my-account.service';
-import { NgIf } from '@angular/common';
 import { ToastService } from '@services/helper-services/toast.service';
 import { EyeIconComponent } from '@components/icons/eye-icon.component';
 import { EyeCloseIconComponent } from '@components/icons/eye-close-icon.component';
@@ -16,7 +14,7 @@ import { ParticleCanvasComponent } from '@components/generals/particle-canvas/pa
 @Component({
   selector: 'app-reset-password',
   standalone: true,
-  imports:[InputGroupComponent, NgIf,
+  imports:[InputGroupComponent,
     InputGroupTextDirective, IconDirective,EyeIconComponent, EyeCloseIconComponent,
     FormControlDirective, ButtonDirective, ParticleCanvasComponent,
     ReactiveFormsModule],

@@ -1,26 +1,25 @@
-import { NgFor, NgIf } from '@angular/common';
-import { Component, EventEmitter, Input, Output, computed, signal } from '@angular/core';
+import { Component, computed, signal, input, output } from '@angular/core';
 
 @Component({
   selector: 'app-custom-pagination',
   templateUrl: './custom-pagination.component.html',
   styleUrl: './custom-pagination.component.scss',
-  imports: [NgFor, NgIf]
+  imports: []
 })
 export class CustomPaginationComponent {
-  @Input() totalPages = 0;
-  @Output() pageChanged = new EventEmitter<number>();
+  totalPages = input<number>(0);
+  pageChanged = output<number>();
   pages: (number | string)[] = [];
   currentPage = signal(1);
 
   ngOnChanges() {
-    if(this.totalPages > 1) 
+    if(this.totalPages() > 1) 
       this.computed();
   }
 
   computed() {
     this.pages = [];
-    const total = this.totalPages;
+    const total = this.totalPages();
     const current = this.currentPage();
     if (total <= 1) {
       this.pages = [];
@@ -60,7 +59,7 @@ export class CustomPaginationComponent {
   }
 
   nextPage() {
-    if (this.currentPage() < this.totalPages) {
+    if (this.currentPage() < this.totalPages()) {
       this.selectPage(this.currentPage() + 1);
     }
   }

@@ -6,23 +6,24 @@ import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, B
 import { QuestionGroupModel } from '@models/survey-models/question-group.model';
 import { SelectedQuestionModel } from '@models/survey-models/survey-form.model';
 import { SurveyFormService } from '@services/survey-services/survey-form.service';
+import { RangeDatetimePickerComponent } from "@components/generals/range-datetime-picker/range-datetime-picker.component";
 
 @Component({
   selector: 'app-create',
-  imports: [FormControlDirective, FormLabelDirective, CardComponent, 
+  imports: [FormControlDirective, FormLabelDirective, CardComponent,
     FormCheckComponent, CardBodyComponent, ReactiveFormsModule, FormDirective,
     ButtonDirective, AccordionButtonDirective,
-    AccordionComponent, AccordionItemComponent, TemplateIdDirective, RouterLink],
+    AccordionComponent, AccordionItemComponent, TemplateIdDirective, RouterLink, RangeDatetimePickerComponent],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })
 export class CreateComponent {
+  //#region Variables
   questionGroupList: QuestionGroupModel[] = [];
   selectedQuestions: SelectedQuestionModel[] = [];
   createForm: FormGroup = new FormGroup({
     isPeriodic: new FormControl(false),
-    nameVN: new FormControl('', Validators.required),
-    nameEN: new FormControl('', Validators.required),
+    name: new FormControl('', Validators.required),
     titleEN: new FormControl('', Validators.required),
     titleVN: new FormControl('', Validators.required),
     descriptionEN: new FormControl(''),
@@ -31,6 +32,8 @@ export class CreateComponent {
     endDate: new FormControl(''),
     isActive: new FormControl(true)
   });
+  //#endregion
+  //#region Constructor and Hooks
   constructor(
     // private questionGroupService: QuestionGroupService,
     private surveyFormService: SurveyFormService,
@@ -41,7 +44,7 @@ export class CreateComponent {
     //   this.intitQuestionGroupData(response.data);
     // });
   }
-  intitQuestionGroupData(questionGroupList: QuestionGroupModel[]) {
+  initQuestionGroupData(questionGroupList: QuestionGroupModel[]) {
     questionGroupList.forEach((questionGroup) => {
       questionGroup.questions.forEach((question) => {
         question.checked = false;
@@ -50,6 +53,8 @@ export class CreateComponent {
     });
     this.questionGroupList = questionGroupList;
   }
+  //#endregion
+  //#region Methods
   getSelectedQuestionData() {
     this.selectedQuestions = [];
     this.questionGroupList.forEach((questionGroup) => {
@@ -81,10 +86,10 @@ export class CreateComponent {
     });
   }
 
-  get nameEN() { return this.createForm.get('nameEN'); }
-  get nameVN() { return this.createForm.get('nameVN'); }
+  get name() { return this.createForm.get('name'); }
   get titleEN() { return this.createForm.get('titleEN'); }
   get titleVN() { return this.createForm.get('titleVN'); }
   get startDate() { return this.createForm.get('startDate'); }
   get endDate() { return this.createForm.get('endDate'); }
+  //#endregion
 }

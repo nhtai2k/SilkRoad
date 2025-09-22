@@ -7,12 +7,11 @@ import { CardBodyComponent, CardComponent } from '@coreui/angular';
 import { StockPriceModel } from '@models/stock-models/stock-history.model';
 import { StockPriceService } from '@services/stock-services/stock-price.service';
 import { CompanyService } from '@services/stock-services/company.service';
-import { NgFor, NgIf } from '@angular/common';
 
 
 @Component({
   selector: 'app-chart',
-  imports:  [CardBodyComponent,CardComponent, NgIf, NgFor],
+  imports:  [CardBodyComponent,CardComponent],
   templateUrl: './chart.component.html',
   styleUrl: './chart.component.scss'
 })
