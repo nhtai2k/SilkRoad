@@ -52,30 +52,6 @@
                     <textarea cFormControl formControlName="descriptionVN" rows="3"></textarea>
                 </div>
             </div>
-            <div class="mb-2 row">
-                <div class="col-6">
-                    <label cLabel for="startDate">StartDate:</label>
-                    <input cFormControl formControlName="startDate" type="datetime-local"/>
-                    @if (startDate?.invalid && (startDate?.dirty || startDate?.touched)) {
-                        <div class="text-danger">
-                            @if (startDate?.hasError('required')) {
-                                <div>Enter StartDate, please!</div>
-                            }
-                        </div>
-                    }
-                </div>
-                <div class="col-6">
-                    <label cLabel for="endDate">EndDate:</label>
-                    <input cFormControl formControlName="endDate" type="datetime-local"/>
-                    @if (endDate?.invalid && (endDate?.dirty || endDate?.touched)) {
-                        <div class="text-danger">
-                            @if (endDate?.hasError('required')) {
-                                <div>Enter EndDate, please!</div>
-                            }
-                        </div>
-                    }
-                </div>
-            </div>
             @for (questiongroup of questionGroupList; track $index; let i = $index) {
             <c-accordion class="mb-2">
                 <c-accordion-item #item0="cAccordionItem" [visible]="false">

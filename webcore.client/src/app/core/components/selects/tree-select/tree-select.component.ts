@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, signal, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { OptionModel } from '@models/option.model';
 import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
@@ -12,12 +12,12 @@ import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
   imports: [FormsModule, NzTreeSelectModule]
 })
 export class TreeSelectComponent {
-  @Input() placeholder = 'Please select';
-  @Input() expandKeys: any[] = [];
-  @Input() options: OptionModel[] = [];
-  @Input() selectedValue: any = null;
-  @Input() isDisabled = false;
-  @Output() onChangeValue = new EventEmitter<any>();
+  placeholder = input<string>('Please select');
+  expandKeys = input<any[]>([]);
+  options = input<OptionModel[]>([]);
+  selectedValue = input<any>(null);
+  isDisabled = input<boolean>(false);
+  onChangeValue = output<any>();
   nodes: NzTreeNodeOptions[] = [];
 
 
@@ -34,8 +34,8 @@ export class TreeSelectComponent {
 
 
   ngOnChanges(): void {
-    console.log('ngOnChanges', this.expandKeys);
-   this.nodes = this.handleData(this.options);
+    console.log('ngOnChanges', this.expandKeys());
+   this.nodes = this.handleData(this.options());
    console.log('nodes', this.nodes);
   }
   // ngOnInit(): void {

@@ -6,9 +6,9 @@ import { IconDirective } from '@coreui/icons-angular';
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { ToastService } from '@services/helper-services/toast.service';
 import { EColors } from '@common/global';
-import { DataTableComponent } from '@components/data-table/data-table.component';
 import { IndustryModel } from '@models/stock-models/industry.model';
 import { IndustryService } from '@services/stock-services/industry.service';
+import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 
 @Component({
   selector: 'app-industry',

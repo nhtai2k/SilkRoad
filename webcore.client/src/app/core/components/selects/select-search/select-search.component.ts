@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { OptionModel } from '@models/option.model';
 import { NzSelectModule } from 'ng-zorro-antd/select';
@@ -11,11 +11,11 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
   styleUrl: './select-search.component.scss'
 })
 export class SelectSearchComponent {
-  @Input() placeholder: string = 'Search...';
-  @Input() selectedValue: any = null;
-  @Input() disabled: boolean = false;
-  @Input() options: OptionModel[] = [];
-  @Output() onChangeValue = new EventEmitter<any>();
+  placeholder = input<string>('Search...');
+  selectedValue = input<any>(null);
+  disabled = input<boolean>(false);
+  options = input<OptionModel[]>([]);
+  onChangeValue = output<any>();
  
   onChangeInput(event: any) {
       if (event) {
