@@ -43,4 +43,11 @@ html {
 
 body {
     font-family: "Raleway Regular",sans-serif;
+    color: #666;
+    font-size: 15px;
+    font-weight: 400;
+
+    @media (max-width: 1200px) {
+        font-size: 14px;
+    }
 }

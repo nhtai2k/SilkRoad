@@ -16,7 +16,12 @@
 .text-color-yellow {
     color: $color_yellow_CDAA7C;
 }
-
+.text-color-dark-grey {
+    color: $color_dark_grey_333333;
+}
+.text-color-grey {
+    color: $color_grey_999999;
+}
 /*#endregion*/
 
 /*#region text-style*/
@@ -64,6 +69,9 @@
 .font-raleway-semibold {
     font-family: "Raleway SemiBold";
 }
+.font-raleway-bold {
+    font-family: "Raleway Bold";
+}
 
 .font-satisfy-regular {
     font-family: "Satisfy Regular";
@@ -85,18 +93,29 @@
 .text-40 {
     font-size: 40px;
 }
-.text-34{
-        font-size: 34px;
+.text-35 {
+    font-size: 35px;
 }
 .text-30{
     font-size: 30px;
 }
+.text-25 {
+    font-size: 25px;
+}
+.text-20 {
+    font-size: 20px;
+}
 .text-18 {
     font-size: 18px;
 }
-
 .text-16 {
     font-size: 16px;
+}
+.text-15 {
+    font-size: 15px;
+}
+.text-14 {
+    font-size: 14px;
 }
 
 
@@ -111,6 +130,27 @@
     border: 2px solid;
     background-color: transparent;
     padding: 4px 6px;
+}
+.au-btn.medium {
+    width: 174px;
+}
+
+.au-btn {
+    display: inline-flex;
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    width: 152px;
+    height: 42px;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    color: $color_white_fff;
+    border: none;
+    overflow: hidden;
+    cursor: pointer;
+    background: none;
+    background: $color_dark_grey_333333;
+    border-radius: 21px;
 }
 /*#endregion*/
 
@@ -226,6 +266,105 @@
 @media only screen and (width >= 576px) {
     .w-sm-100 {
         width: 100% !important;
+    }
+}
+/*#endregion*/
+
+/*#region Banner*/
+.banner-background {
+    background-attachment: fixed;
+    background-position: top;
+    height: 550px;
+    position: relative;
+    text-align: center;
+    background-repeat: no-repeat;
+
+    @include respond(map-get($breakPoint,"lg")) {
+        height: 450px;
+    }
+
+    @include respond(map-get($breakPoint,"md")) {
+        height: 350px;
+    }
+}
+
+.banner-background .section-header {
+    position: absolute;
+    padding: 0 15px;
+    position: absolute;
+    left: 50%;
+    margin-bottom: 0;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    bottom: 35%;
+    width: 100%;
+
+    @include respond(map-get($breakPoint,"md")) {
+        bottom: 50%;
+        transform: translate(-50%, 50%);
+    }
+
+    @include respond(map-get($breakPoint,"sm")) {
+        width: 100%;
+    }
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 70px;
+
+    @include respond(map-get($breakPoint,"md")) {
+        margin-bottom: 50px;
+    }
+}
+
+.section-header h1, .section-header h2 {
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-family: $fontRalewayBold;
+}
+
+.section-header span {
+    display: block;
+    color: #cdaa7c;
+    font-family: $fontSatisfyRegular;
+    font-size: 30px;
+}
+
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1200px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+}
+/*#endregion */
+
+/*#region custom-section*/
+.section-primary {
+    padding-top: 139px;
+    padding-bottom: 116px;
+
+    @include respond(map-get($breakPoint,"lg")) {
+        padding-top: 110px;
+        padding-bottom: 90px;
+    }
+
+    @include respond(map-get($breakPoint,"md")) {
+        padding-top: 90px;
+        padding-bottom: 80px;
+    }
+
+    @include respond(map-get($breakPoint,"sm")) {
+        padding-top: 50px;
+        padding-bottom: 50px;
     }
 }
 /*#endregion*/

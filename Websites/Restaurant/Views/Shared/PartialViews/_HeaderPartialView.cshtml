@@ -11,14 +11,14 @@
                 <a  asp-controller="Category" asp-action="Index">Menu</a>
             </li>
             <li class="navItem">
-                <a asp-controller="Promotion" asp-action="Index">Promotion</a>
-            </li>
-            <li class="navItem">
                 <a asp-controller="Reservation" asp-action="Index">Reservation</a>
             </li>
             <li class="navItem">
                 <a asp-controller="Blog" asp-action="Index">Blog</a>
-            </li>
+			</li>
+			<li class="navItem">
+				<a asp-controller="Contact" asp-action="Index">Contact</a>
+			</li>
             <li class="navItem">
                 <a asp-controller="AboutUs" asp-action="Index">About Us</a>
             </li>
@@ -26,5 +26,57 @@
         <a class="language" asp-controller="Home" asp-action="Index">
             VN
         </a>
+    </section>
+    <section class="headerMobile">
+        <div class="container">
+            <div class="heading">
+                <div class="toggleHeader" id="toggleHeader">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <a class="logoImage" asp-controller="Home" asp-action="Index">
+                    <img class="w-100" src="~/assets/images/logo.png" alt="logo" />
+                </a>
+                <a class="language" asp-controller="Home" asp-action="Index">
+                    VN
+                </a>
+            </div>
+        </div>
+        <div class="overlayBackground" id="overlayBackground"></div>
+        <div class="mobileNav" id="mobileNav">
+            <div class="navContainer">
+                <div class="navWrapper">
+                    <h2 class="font-raleway-bold">Menu</h2>
+                    <ul>
+                        <li class="mobileNavItem navClose" id="closeNav">
+                            <a href="#">
+                                Close
+                                <span></span>
+                                <span></span>
+                            </a>
+                        </li>
+                        <li class="mobileNavItem">
+                            <a asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="mobileNavItem">
+                            <a asp-controller="Category" asp-action="Index">Menu</a>
+                        </li>
+                        <li class="mobileNavItem">
+                            <a asp-controller="Reservation" asp-action="Index">Reservation</a>
+                        </li>
+                        <li class="mobileNavItem">
+                            <a asp-controller="Blog" asp-action="Index">Blog</a>
+                        </li>
+                        <li class="mobileNavItem">
+                            <a asp-controller="Contact" asp-action="Index">Contact</a>
+                        </li>
+                        <li class="mobileNavItem">
+                            <a asp-controller="AboutUs" asp-action="Index">About Us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </section>
 </header>

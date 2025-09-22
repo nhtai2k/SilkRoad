@@ -49,6 +49,10 @@ $color_white_fff: #fff;
 $color_gray_b2b2b2: #b2b2b2;
 $color_yellow_CDAA7C: #CDAA7C;
 $color_yellow_80694D: #80694D;
+$color_light_grey_CCCCCC: #CCCCCC;
+$color_grey_999999: #999999;
+$color_dark_grey_333333: #333333;
+$color_dark_grey_666666: #666666;
 /*#endregion*/
 /*#region font-size*/
 $text-level-1: 60px;
@@ -64,6 +68,7 @@ $text-level-10: 20px;
 $text-level-11: 15px;
 $text-level-12: 14px;
 $text-level-13: 13px;
+$text-level-14: 12px;
 // text mobile
 $text-mb-level-1: 60px;
 $text-mb-level-2: 40px;
@@ -78,8 +83,13 @@ $text-mb-level-10: 20px;
 $text-mb-level-11: 15px;
 $text-mb-level-12: 14px;
 $text-mb-level-13: 13px;
-/*#region*/
-
+/*#endregion*/
+/*#region font family*/
+$fontRalewayBold: 'Raleway Bold';
+$fontRalewaySemiBold: 'Raleway SemiBold';
+$fontRalewayRegular: 'Raleway Regular';
+$fontSatisfyRegular: 'Satisfy Regular';
+/*#endregion*/
 /*#region responsive*/
 $breakPoint: ("xs":576px,"sm":768px, "md":992px,"lg":1200px,"xl":1400px);
 //trong boostrap theo tang dan

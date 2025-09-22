@@ -1,4 +1,153 @@
 ﻿@{
 	ViewData["Title"] = "Blog";
 }
-blog
+<section class="banner-background blogBanner">
+	<div class="section-header">
+		<h1 class="text-white">Blog Standard</h1>
+		<span>~ The things you want to find ~</span>
+	</div>
+</section>
+
+<section class="blogStandard">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-9">
+				<div class="blogPost">
+					@for (int i = 0; i < 6; i++)
+					{
+						<div class="post">
+							<div class="postThumb">
+								<a href=""><img src="~/assets/images/blog/blog-standard-1.jpg" alt="" /></a>
+								<div class="postDate">
+									<div class="inner">
+										<span class="date font-raleway-semibold">15</span>
+										<span class="month">Aug</span>
+									</div>
+								</div>
+							</div>
+							<div class="postBody">
+								<h4 class="font-raleway-semibold font-weight-600 text-25 text-color-dark-grey">
+									<a href="#" class="text-color-dark-grey">
+										Various versions have
+									</a>
+								</h4>
+								<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+								<div class="end">
+									<div class="postMeta">
+										<div class="postAuthor text-14 text-color-dark-grey">
+											<a href="#" class="thumb text-color-dark-grey"><img src="~/assets/images/blog/author-avatar-1.png" /></a>
+											&nbsp;By&nbsp;
+											<a href="#" class="name">Andrea Silva</a>
+										</div>
+										<div class="tagCloud text-14">
+											<span><i class="ti-tag"></i></span>
+											<a href="#">Dresserts</a>
+											<a href="#">Cooking</a>
+											<a href="#">Food</a>
+										</div>
+									</div>
+									<a href="#" class="readMore text-color-dark-grey">Read More</a>
+								</div>
+							</div>
+						</div>
+					}
+				</div>
+				<div class="pagination">
+					<ul>
+						<li><span class="pageNumber prevPage">Prev</span></li>
+						<li><span class="pageNumber current">1</span></li>
+						<li><span class="pageNumber inactive">2</span></li>
+						<li><span class="pageNumber inactive">3</span></li>
+						<li><span class="pageNumber nextPage">Next</span></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="sidebar">
+					<div class="widgets widgetPerson">
+						<div class="inner">
+							<img src="~/assets/images/blog/widget-person.png" alt="" class="personImage"/>
+							<div class="widgetTitle">
+								<h6 class="font-raleway-semibold">Bryan Bennett</h6>
+								<span>Master Chef</span>
+							</div>
+							<img src="~/assets/images/blog/signature.png" alt="" class="signature" />
+						</div>
+					</div>
+					<div class="widgets widgetCategories">
+						<div class="widgetTitle">
+							<h5 class="font-raleway-bold">Categories</h5>
+						</div>
+						<ul>
+							<li>
+								<a href="#">Seafood (<span>12</span>)</a>
+							</li>
+							<li>
+								<a href="#">Coffee (<span>8</span>)</a>
+							</li>
+							<li>
+								<a href="#">Restaurant (<span>10</span>)</a>
+							</li>
+							<li>
+								<a href="#">Cupcake (<span>5</span>)</a>
+							</li>
+							<li>
+								<a href="#">Lunch (<span>7</span>)</a>
+							</li>
+						</ul>
+					</div>
+					<div class="widgets widgetRecentEntries">
+						<div class="widgetTitle">
+							<h5 class="font-raleway-bold">Latest post</h5>
+						</div>
+						<div class="latestPost">
+							@for (int i = 0; i < 4; i++)
+							{
+								<div class="latestPostItem">
+									<a href="#" class="thumb">
+										<img src="~/assets/images/blog/latest-post-thum.png" alt="" />
+									</a>
+									<div class="heading">
+										<h6><a href="#" class="font-raleway-semibold">The first line of Lorem</a></h6>
+										<span>July 23, 2018</span>
+									</div>
+								</div>
+							}
+						</div>
+					</div>
+					<div class="widgets widgetRecentInstagram">
+						<div class="widgetTitle">
+							<h5 class="font-raleway-bold">Follow instagram</h5>
+						</div>
+						<div class="row">
+							@for (int i = 0; i < 6; i++)
+							{
+								<div class="col-4 col-md-6 col-lg-4 colHolder">
+									<a href="#">
+										<img src="~/assets/images/blog/instagram-small.jpg" alt="" />
+									</a>
+								</div>
+							}
+						</div>
+					</div>
+					<div class="widgets widgetRecentTagCloud">
+						<div class="widgetTitle">
+							<h5 class="font-raleway-bold">Tag Cloud</h5>
+						</div>
+						<div class="tagCloud">
+							<a href="#">Natural</a>
+							<a href="#">Fruits</a>
+							<a href="#">Dried</a>
+							<a href="#">Food fresh</a>
+							<a href="#">Natural</a>
+							<a href="#">Heathy</a>
+						</div>
+					</div>
+					<div class="widgets widgetRecentBanner">
+						<a href="#"><img src="~/assets/images/blog/widget-banner.jpg" alt="" /></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

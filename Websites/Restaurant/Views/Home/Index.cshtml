@@ -1,12 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<link rel="stylesheet" href="~/lib/swiper/swiper-bundle.min.css" />
 <div class="homePage">
     <!--Home Banner-->
     @* @await Html.PartialAsync("~/Views/Shared/PartialViews/_HomeBannerV1PartialView.cshtml") *@
     <section class="homeBannerV1">
         <div class="banner">
-            <img src="~/assets/images/home/slideshow-1.jpg" alt="banner" class="w-100" />
+            <div id="bannerEffect"></div>
+            @* <img src="~/assets/images/home/slideshow-1.jpg" alt="banner" class="w-100 d-none" id="bannerImage" /> *@
             <div class="intro text-uppercase">
                 <h6 class="subTitle text-uppercase">
                     Because you deserve to enjoy the best
@@ -18,195 +20,334 @@
     </section>
     <!--Slide Show-->
     <section class="slideShowContainer">
-        <div class="slide">
-            <img src="~/assets/images/home/flipster-1.jpg" alt="about" class="w-100" />
-            <div class="slideInfor">
-                <div class="heading">
-                    <h3 class="m-0 font-satisfy-regular text-color-yellow">Our Story</h3>
-                    <img src="~/assets/images/home/border-1.png" alt="heading" />
-                </div>
-                <div class="body">
-                    <p class="text-center">
-                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt .
-                    </p>
-                    <div class="d-flex justify-content-center">
-                        <img src="~/assets/images/home/signature-1.png" alt="signature" />
-                        <div>
-                            <h5 class="subTittle">John Doe</h5>
-                            <p>Founder & Chef</p>
+        <div class="container">
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="slide">
+                            <img src="~/assets/images/home/flipster-1.jpg" alt="about" class="w-100" />
+                            <div class="slideInfor">
+                                <div class="heading">
+                                    <h3 class="m-0 font-satisfy-regular text-color-yellow">Our Story</h3>
+                                    <img src="~/assets/images/home/border-1.png" alt="heading" />
+                                </div>
+                                <div class="body">
+                                    <p class="text-center">
+                                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt .
+                                    </p>
+                                    <div class="d-flex justify-content-center">
+                                        <img src="~/assets/images/home/signature-1.png" alt="signature" />
+                                        <div>
+                                            <h5 class="subTittle">John Doe</h5>
+                                            <p>Founder & Chef</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="slide">
+                            <img src="~/assets/images/home/flipster-2.jpg" alt="about" class="w-100" />
+                            <div class="slideInfor">
+                                <div class="heading">
+                                    <h3 class="m-0 font-satisfy-regular text-color-yellow">Opening Time</h3>
+                                    <img src="~/assets/images/home/border-1.png" alt="heading" />
+
+                                </div>
+                                <div class="body">
+                                    <h5 class="font-satisfy-regular text-color-yellow">Monday-Friday</h5>
+                                    <p>7am-11am (Breakfastt)</p>
+                                    <p>11am-10pm (Lunch/Dinner)</p>
+                                    <h5 class="font-satisfy-regular text-color-yellow">Saturday-Sunday</h5>
+                                    <p>8am-11am (Breakfastt)</p>
+                                    <p>1am-10pm (Lunch/Dinner)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="slide">
+                            <img src="~/assets/images/home/flipster-3.jpg" alt="about" class="w-100" />
+                            <div class="slideInfor">
+                                <div class="heading">
+                                    <h3 class="m-0 font-satisfy-regular text-color-yellow">Reservation</h3>
+                                    <img src="~/assets/images/home/border-1.png" alt="heading" />
+
+                                </div>
+                                <div class="body">
+                                    <p class="text-center">Make your reservation online any time, day or night! Royate Restaurant looks forward to serving you the best food experience.</p>
+                                    <p class="text-center">Or you can also call us + (156) 1800-366-6666 from 7 a.m until before the closing time 1 hour</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <!-- Navigation -->
+                @* <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div> *@
+                <!-- Pagination -->
+                <div class="swiper-pagination"></div>
             </div>
         </div>
-        <div class="slide">
-            <img src="~/assets/images/home/flipster-2.jpg" alt="about" class="w-100" />
-            <div class="slideInfor">
-                <div class="heading">
-                    <h3 class="m-0 font-satisfy-regular text-color-yellow">Opening Time</h3>
-                    <img src="~/assets/images/home/border-1.png" alt="heading" />
-
-                </div>
-                <div class="body">
-                    <h5 class="font-satisfy-regular text-color-yellow">Monday-Friday</h5>
-                    <p>7am-11am (Breakfastt)</p>
-                    <p>11am-10pm (Lunch/Dinner)</p>
-                    <h5 class="font-satisfy-regular text-color-yellow">Saturday-Sunday</h5>
-                    <p>8am-11am (Breakfastt)</p>
-                    <p>1am-10pm (Lunch/Dinner)</p>
-                </div>
-            </div>
-        </div>
-        <div class="slide">
-            <img src="~/assets/images/home/flipster-3.jpg" alt="about" class="w-100" />
-            <div class="slideInfor">
-                <div class="heading">
-                    <h3 class="m-0 font-satisfy-regular text-color-yellow">Reservation</h3>
-                    <img src="~/assets/images/home/border-1.png" alt="heading" />
-
-                </div>
-                <div class="body">
-                    <p class="text-center">Make your reservation online any time, day or night! Royate Restaurant looks forward to serving you the best food experience.</p>
-                    <p class="text-center">Or you can also call us + (156) 1800-366-6666 from 7 a.m until before the closing time 1 hour</p>
-                </div>
-            </div>
-        </div>
-
     </section>
     <!--Our Best Service-->
     <section class="ourServiceContainer">
-        <h1 class="text-40 fw-bold text-color-white font-weight-700">Our Best Service</h1>
-        <h5 class="font-satisfy-regular text-30 text-color-yellow mb-4">~ Experiences on food ~</h5>
-        <div class="ourServices">
-            <div class="serviceBox">
-                <h3 class="font-satisfy-regular text-30">~ Serve ~</h3>
-                <img src="~/assets/images/home/serve-white-icon.png" alt="service" class="icon" />
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            </div>
-            <div class="serviceBox">
-                <h3 class="font-satisfy-regular text-30">~ Fresh Food ~</h3>
-                <img src="~/assets/images/home/fresh-food-white-icon.png" alt="service" class="icon" />
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            </div>
-            <div class="serviceBox">
-                <h3 class="font-satisfy-regular text-30">~ Hot Food ~</h3>
-                <img src="~/assets/images/home/hot-food-white-icon.png" alt="service" class="icon" />
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            </div>
-            <div class="serviceBox">
-                <h3 class="font-satisfy-regular text-30">~ Coffee ~</h3>
-                <img src="~/assets/images/home/coffee-white-icon.png" alt="service" class="icon" />
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <div class="container">
+            <h1 class="text-40 fw-bold text-color-white font-weight-700">Our Best Service</h1>
+            <h5 class="font-satisfy-regular text-30 text-color-yellow mb-4">~ Experiences on food ~</h5>
+            <div class="ourServices row">
+                <div class="col-md-6 col-lg-3">
+                    <div class="serviceBox">
+                        <h3 class="font-satisfy-regular text-30">~ Serve ~</h3>
+                        <img src="~/assets/images/home/serve-white-icon.png" alt="service" class="icon" />
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="serviceBox">
+                        <h3 class="font-satisfy-regular text-30">~ Fresh Food ~</h3>
+                        <img src="~/assets/images/home/fresh-food-white-icon.png" alt="service" class="icon" />
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="serviceBox">
+                        <h3 class="font-satisfy-regular text-30">~ Hot Food ~</h3>
+                        <img src="~/assets/images/home/hot-food-white-icon.png" alt="service" class="icon" />
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="serviceBox">
+                        <h3 class="font-satisfy-regular text-30">~ Coffee ~</h3>
+                        <img src="~/assets/images/home/coffee-white-icon.png" alt="service" class="icon" />
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
     <!--Our Menu-->
     <section class="ourMenuContainer">
-        <h1 class="text-40 fw-bold font-weight-700">Our Food Menu</h1>
-        <h5 class="font-satisfy-regular text-30 text-color-yellow mb-4">~ See what we offer ~</h5>
-        <div class="ourMenu">
-            <div class="menuBox mb-4">
-                <div class="menuInfor">
-                    <div class="heading">
-                        <h3 class="font-satisfy-regular text-start text-34">Main Course</h3>
-                        <img src="~/assets/images/home/main-course.png" alt="border" class="menuIcon" />
-                    </div>
-                    @for (int i = 0; i < 3; i++)
-                    {
-                        <div class="menuItem">
-                            <h5 class="d-flex">
-                                <span>Ice cream tarte apple @i</span>
-                                <span class="dots"></span>
-                                <span class="price">$25</span>
-                            </h5>
-                            <ul class="d-flex flex-wrap list-unstyled">
-                                <li>
-                                    <span>Chicken</span>
-                                </li>
-                                <li>
-                                    <span>Italian</span>
-                                </li>
-                                <li>
-                                    <span>Sausage</span>
-                                </li>
-                                <li>
-                                    <span>Spinach</span>
-                                </li>
-                            </ul>
+        <div class="container">
+            <h1 class="text-40 fw-bold font-weight-700 text-center">Our Food Menu</h1>
+            <h5 class="font-satisfy-regular text-30 text-color-yellow mb-4 text-center">~ See what we offer ~</h5>
+            <div class="ourMenu">
+                <div class="menuBox mb-4">
+                    <div class="menuInfor">
+                        <div class="heading text-color-dark-grey">
+                            <h3 class="font-satisfy-regular text-start text-34">Main Course</h3>
+                            <img src="~/assets/images/home/main-course.png" alt="border" class="menuIcon" />
                         </div>
-                    }
-                    <a href="#" class="text-color-black text-uppercase">View More</a>
-                </div>
-                <img src="~/assets/images/home/main-course-menu.jpg" alt="menu" class="menuImage" />
-            </div>
-            <div class="menuBox mb-4">
-                <div class="menuInfor">
-                    <div class="heading">
-                        <h3 class="font-satisfy-regular text-start text-34">Main Course</h3>
-                        <img src="~/assets/images/home/main-course.png" alt="border" class="menuIcon" />
+                        @for (int i = 0; i < 3; i++)
+                        {
+                            <div class="menuItem">
+                                <h5 class="d-flex  text-color-dark-grey">
+                                    <span>Ice cream tarte apple @i</span>
+                                    <span class="dots"></span>
+                                    <span class="price">$25</span>
+                                </h5>
+                                <ul class="d-flex flex-wrap list-unstyled">
+                                    <li>
+                                        <span>Chicken</span>
+                                    </li>
+                                    <li>
+                                        <span>Italian</span>
+                                    </li>
+                                    <li>
+                                        <span>Sausage</span>
+                                    </li>
+                                    <li>
+                                        <span>Spinach</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                        <a href="#" class="text-color-black text-uppercase">View More</a>
                     </div>
-                    @for (int i = 0; i < 3; i++)
-                    {
-                        <div class="menuItem">
-                            <h5 class="d-flex">
-                                <span>Ice cream tarte apple @i</span>
-                                <span class="dots"></span>
-                                <span class="price">$25</span>
-                            </h5>
-                            <ul class="d-flex flex-wrap list-unstyled">
-                                <li>
-                                    <span>Chicken</span>
-                                </li>
-                                <li>
-                                    <span>Italian</span>
-                                </li>
-                                <li>
-                                    <span>Sausage</span>
-                                </li>
-                                <li>
-                                    <span>Spinach</span>
-                                </li>
-                            </ul>
-                        </div>
-                    }
-                    <a href="#" class="text-color-black text-uppercase">View More</a>
+                    <img src="~/assets/images/home/main-course-menu.jpg" alt="menu" class="menuImage" />
                 </div>
-                <img src="~/assets/images/home/main-course-menu.jpg" alt="menu" class="menuImage" />
-            </div>
-            <div class="menuBox">
-                <div class="menuInfor">
-                    <div class="heading">
-                        <h3 class="font-satisfy-regular text-start text-34">Main Course</h3>
-                        <img src="~/assets/images/home/main-course.png" alt="border" class="menuIcon" />
+                <div class="menuBox mb-4">
+                    <div class="menuInfor">
+                        <div class="heading text-color-dark-grey">
+                            <h3 class="font-satisfy-regular text-start text-34">Main Course</h3>
+                            <img src="~/assets/images/home/main-course.png" alt="border" class="menuIcon" />
+                        </div>
+                        @for (int i = 0; i < 3; i++)
+                        {
+                            <div class="menuItem">
+                                <h5 class="d-flex text-color-dark-grey">
+                                    <span>Ice cream tarte apple @i</span>
+                                    <span class="dots"></span>
+                                    <span class="price">$25</span>
+                                </h5>
+                                <ul class="d-flex flex-wrap list-unstyled">
+                                    <li>
+                                        <span>Chicken</span>
+                                    </li>
+                                    <li>
+                                        <span>Italian</span>
+                                    </li>
+                                    <li>
+                                        <span>Sausage</span>
+                                    </li>
+                                    <li>
+                                        <span>Spinach</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                        <a href="#" class="text-color-black text-uppercase">View More</a>
                     </div>
-                    @for (int i = 0; i < 3; i++)
-                    {
-                        <div class="menuItem">
-                            <h5 class="d-flex">
-                                <span>Ice cream tarte apple @i</span>
-                                <span class="dots"></span>
-                                <span class="price">$25</span>
-                            </h5>
-                            <ul class="d-flex flex-wrap list-unstyled">
-                                <li>
-                                    <span>Chicken</span>
-                                </li>
-                                <li>
-                                    <span>Italian</span>
-                                </li>
-                                <li>
-                                    <span>Sausage</span>
-                                </li>
-                                <li>
-                                    <span>Spinach</span>
-                                </li>
-                            </ul>
-                        </div>
-                    }
-                    <a href="#" class="text-color-black text-uppercase">View More</a>
+                    <img src="~/assets/images/home/main-course-menu.jpg" alt="menu" class="menuImage" />
                 </div>
-                <img src="~/assets/images/home/main-course-menu.jpg" alt="menu" class="menuImage" />
+                <div class="menuBox">
+                    <div class="menuInfor">
+                        <div class="heading text-color-dark-grey">
+                            <h3 class="font-satisfy-regular text-start text-34">Main Course</h3>
+                            <img src="~/assets/images/home/main-course.png" alt="border" class="menuIcon" />
+                        </div>
+                        @for (int i = 0; i < 3; i++)
+                        {
+                            <div class="menuItem">
+                                <h5 class="d-flex text-color-dark-grey">
+                                    <span>Ice cream tarte apple @i</span>
+                                    <span class="dots"></span>
+                                    <span class="price">$25</span>
+                                </h5>
+                                <ul class="d-flex flex-wrap list-unstyled">
+                                    <li>
+                                        <span>Chicken</span>
+                                    </li>
+                                    <li>
+                                        <span>Italian</span>
+                                    </li>
+                                    <li>
+                                        <span>Sausage</span>
+                                    </li>
+                                    <li>
+                                        <span>Spinach</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                        <a href="#" class="text-color-black text-uppercase">View More</a>
+                    </div>
+                    <img src="~/assets/images/home/main-course-menu.jpg" alt="menu" class="menuImage" />
+                </div>
             </div>
         </div>
     </section>
 </div>
+<script src="~/lib/swiper/swiper-bundle.min.js"></script>
+<script>
+    const rows = 6;
+    const cols = 6;
+    const container = document.getElementById('bannerEffect');
+    const imageUrl = '@Url.Content("~/assets/images/home/slideshow-1.jpg")';
+    const intro = document.querySelector('.intro');
+
+    function createBannerTiles() {
+        container.innerHTML = ''; // Clear old tiles
+
+        const containerWidth = container.offsetWidth;
+        const containerHeight = container.offsetHeight;
+
+        const baseTileWidth = Math.floor(containerWidth / cols);
+        const baseTileHeight = Math.floor(containerHeight / rows);
+
+        let tilesLoaded = 0;
+        const totalTiles = rows * cols;
+
+        function checkAllTilesLoaded() {
+            tilesLoaded++;
+            if (tilesLoaded === totalTiles) {
+                intro.classList.add('animate');
+            }
+        }
+
+        for (let row = 0; row < rows; row++) {
+            for (let col = 0; col < cols; col++) {
+                const tile = document.createElement('div');
+                tile.classList.add('bannerTile');
+
+                // Tính vị trí và kích thước
+                const left = baseTileWidth * col;
+                const top = baseTileHeight * row;
+
+                // Nếu là tile cuối hàng → gánh phần dư còn lại
+                const width = (col === cols - 1)
+                    ? containerWidth - baseTileWidth * (cols - 1)
+                    : baseTileWidth;
+
+                const height = (row === rows - 1)
+                    ? containerHeight - baseTileHeight * (rows - 1)
+                    : baseTileHeight;
+
+                tile.style.width = `${width + 0.5}px`;
+                tile.style.height = `${height + 0.5}px`;
+                tile.style.left = `${left}px`;
+                tile.style.top = `${top}px`;
+
+                tile.style.backgroundImage = `url('${imageUrl}')`;
+                tile.style.backgroundSize = `${containerWidth}px ${containerHeight}px`;
+                tile.style.backgroundPosition = `-${left}px -${top}px`;
+
+                const delay = (row + col) * 100;
+
+                setTimeout(() => {
+                    tile.classList.add('show');
+                    checkAllTilesLoaded();
+                }, delay);
+
+                container.appendChild(tile);
+            }
+        }
+    }
+
+    window.addEventListener('load', createBannerTiles);
+    window.addEventListener('resize', () => {
+        createBannerTiles();
+    });
+    // Swiper Initialization
+    var swiper = new Swiper(".mySwiper", {
+        grabCursor: true,
+        centeredSlides: true,
+        loop: false,
+        slidesPerView: 2,
+        centeredSlides: true,
+        initialSlide: 1,
+        effect: "coverflow",
+        coverflowEffect: {
+            rotate: 0,
+            stretch: 0,
+            depth: 250,
+            modifier: 1,
+            slideShadows: false,
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+        // navigation: {
+        //     nextEl: ".swiper-button-next",
+        //     prevEl: ".swiper-button-prev",
+        // },
+        // Responsive behavior
+        breakpoints: {
+            0: {
+                slidesPerView: 1,
+                // effect: "coverflow",
+                
+            },
+            768: {
+                slidesPerView: 2,
+                // effect: "coverflow",
+            }
+        }
+    });
+</script>
+
+
+

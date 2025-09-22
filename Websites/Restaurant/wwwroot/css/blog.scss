@@ -1,0 +1,404 @@
+﻿@import "VariableGlobal.scss";
+/*#region banner*/
+.blogBanner {
+    background-image: url('../assets/images/blog/banner.jpg');
+}
+/*#endregion*/
+
+/*#region blog standard*/
+.blogStandard {
+    padding-top: 150px;
+    padding-bottom: 113px;
+
+    @include respond(map-get($breakPoint,"lg")) {
+        padding-top: 110px;
+        padding-bottom: 90px;
+    }
+
+    @include respond(map-get($breakPoint,"md")) {
+        padding-top: 90px;
+        padding-bottom: 80px;
+    }
+
+    @include respond(map-get($breakPoint,"sm")) {
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+
+    img {
+        width: 100%;
+    }
+
+    a {
+        text-decoration: none;
+        background-color: transparent;
+        color: $color_dark_grey_333333;
+    }
+
+    ul {
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style-type: none;
+    }
+
+    .blogPost, .blogSingle {
+        padding-right: 10px;
+
+        @include respond(map-get($breakPoint,"sm")) {
+            padding-right: 0;
+        }
+    }
+
+    .blogPost .post {
+        margin-bottom: 69px;
+
+        @include respond(map-get($breakPoint,"md")) {
+            margin-bottom: 30px;
+        }
+
+        @include respond(map-get($breakPoint,"sm")) {
+            margin-bottom: 49px;
+        }
+
+        .postThumb {
+            overflow: hidden;
+            position: relative;
+
+            img {
+                transition: transform 0.5s ease;
+            }
+        }
+
+        .postDate {
+            position: absolute;
+            display: inline-block;
+            background: $color_yellow_CDAA7C;
+            width: 92px;
+            height: 92px;
+            padding: 4px;
+            right: 30px;
+            top: 27px;
+
+            @include respond(map-get($breakPoint,"lg")) {
+                top: 10px;
+                right: 10px;
+                width: 57px;
+                height: 57px;
+                padding: 3px;
+            }
+
+            @include respond(map-get($breakPoint,"md")) {
+                width: 72px;
+                height: 72px;
+                right: 20px;
+                top: 17px;
+            }
+
+            @include respond(map-get($breakPoint,"sm")) {
+                width: 62px;
+                height: 62px;
+                right: 10px;
+                top: 10px;
+            }
+
+            .inner {
+                border: 1px solid rgba(255, 255, 255, 0.5);
+                height: 100%;
+                color: #fff;
+                display: -webkit-inline-flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+
+                .date {
+                    font-size: 35px;
+                    line-height: 1.05;
+
+                    @include respond(map-get($breakPoint,"md")) {
+                        font-size: 35px;
+                    }
+
+                    @include respond(map-get($breakPoint,"sm")) {
+                        font-size: 27px;
+                    }
+                }
+
+                .month {
+                    font-size: 16px;
+                    text-transform: uppercase;
+
+                    @include respond(map-get($breakPoint,"md")) {
+                        font-size: 15px;
+                    }
+
+                    @include respond(map-get($breakPoint,"sm")) {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+
+        .postBody {
+            padding-top: 37px;
+
+            @include respond(map-get($breakPoint,"md")) {
+                padding-bottom: 10px;
+            }
+
+            h4 {
+                /*font-weight: 600;*/
+                text-transform: uppercase;
+                margin-bottom: 16px;
+                line-height: 1.3;
+                /*color: $color_dark_grey_333333;*/
+                /*font-size: 25px;*/
+
+                a {
+                    /*color: $color_dark_grey_333333;*/
+                }
+            }
+
+            p {
+                line-height: 1.8;
+                margin-bottom: 26px;
+            }
+
+            .end {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                @include respond(map-get($breakPoint,"sm")) {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+
+                .postMeta {
+                    @include respond(map-get($breakPoint,"sm")) {
+                        order: 2;
+                    }
+
+                    .postAuthor {
+                        /*font-size: 14px;*/
+                        /*color: $color_dark_grey_333333;*/
+                        display: inline-block;
+                        margin-right: 22px;
+
+                        @include respond(map-get($breakPoint,"sm")) {
+                            margin-bottom: 10px;
+                        }
+
+                        .thumb {
+                            /*color: $color_dark_grey_333333;*/
+                            margin-right: 5px;
+
+                            img {
+                                width: 32px;
+                            }
+                        }
+                    }
+
+                    .tagCloud {
+                        /*font-size: 14px;*/
+                        display: inline-block;
+
+                        span {
+                            margin-right: 3px;
+                            display: inline-block;
+                        }
+
+                        a:last-child:after {
+                            content: '';
+                        }
+
+                        a:after {
+                            content: '/';
+                            margin-left: 4px;
+                        }
+                    }
+                }
+
+                .readMore {
+                    text-transform: uppercase;
+                    /*color: $color_dark_grey_333333;*/
+                    text-decoration: underline;
+                    display: inline-block;
+
+                    @include respond(map-get($breakPoint,"sm")) {
+                        order: 1;
+                        margin-bottom: 20px;
+                    }
+                }
+            }
+        }
+    }
+
+    .pagination {
+        ul {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        a {
+            color: #999;
+        }
+
+        .pageNumber {
+            font-size: 20px;
+            padding: 0 13px;
+            cursor: pointer;
+        }
+
+        .pageNumber.prevPage, .pageNumber.nextPage {
+            font-size: 15px;
+            display: inline-block;
+            margin-top: 6px;
+        }
+
+        .pageNumber.current, .pageNumber:hover {
+            color: $color_dark_grey_333333;
+        }
+    }
+
+    .sidebar {
+        @include respond(map-get($breakPoint,"sm")) {
+            margin-top: 50px;
+        }
+
+        .widgets {
+            margin-bottom: 39px;
+        }
+
+        .widgetTitle {
+            text-transform: uppercase;
+            margin-bottom: 19px;
+
+            h5 {
+                font-weight: 700;
+                line-height: 1.3;
+                color: $color_dark_grey_333333;
+            }
+        }
+
+        .widgetPerson {
+            background: #181818;
+            padding: 15px;
+            margin-bottom: 45px;
+
+            .inner {
+                border: 1px solid rgba(205, 170, 124, 0.5);
+                text-align: center;
+                padding: 30px 10px 26px;
+
+                .personImage {
+                    width: 150px;
+                    height: 150px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+
+                .widgetTitle {
+                    margin-bottom: 14px;
+                    margin-top: 24px;
+
+                    h6 {
+                        color: $color_white_fff;
+                        font-weight: 600;
+                        font-size: 18px;
+                        text-transform: uppercase;
+                        margin-bottom: 3px;
+                    }
+
+                    span {
+                        text-transform: capitalize;
+                        color: $color_yellow_CDAA7C;
+                    }
+                }
+
+                .signature {
+                    width: 90px;
+                    object-fit: contain;
+                }
+            }
+        }
+
+        .widgetCategories {
+            ul li {
+                margin-bottom: 13px;
+
+                a {
+                    color: $color_dark_grey_666666;
+                }
+            }
+
+            ul li:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        .widgetRecentEntries {
+
+            .widgetTitle {
+                margin-bottom: 22px;
+            }
+
+            .latestPostItem {
+                display: flex;
+                align-items: center;
+                margin-bottom: 17px;
+
+                .thumb {
+                    margin-right: 14px;
+
+                    img {
+                        width: 80px;
+                        height: 80px;
+                        object-fit: cover;
+                        border-radius: 50%;
+                    }
+                }
+
+                .heading h6 a {
+                    font-weight: 600;
+                    margin-bottom: 6px;
+                }
+            }
+        }
+
+        .widgetRecentInstagram {
+            .row {
+                margin-left: -5px;
+                margin-right: -5px;
+            }
+
+            .colHolder {
+                padding-right: 5px;
+                padding-left: 5px;
+            }
+
+            a {
+                display: block;
+                margin-bottom: 10px;
+            }
+
+            img {
+                max-width: 100%;
+            }
+        }
+
+        .widgetRecentTagCloud {
+            .tagCloud a {
+                display: inline-block;
+                border-radius: 3px;
+                border: 1px solid $color_light_grey_CCCCCC;
+                padding: 8px 14px;
+                color: $color_dark_grey_666666;
+                margin-right: 15px;
+                margin-bottom: 15px;
+            }
+        }
+    }
+}
+/*#endregion*/
