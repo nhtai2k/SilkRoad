@@ -26,17 +26,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj" />
-    <ProjectReference Include="..\Common\Common.csproj" />
-    <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
-    <ProjectReference Include="..\LipstickBusinessLogic\LipstickBusinessLogic.csproj" />
-    <ProjectReference Include="..\LipstickDataAccess\LipstickDataAccess.csproj" />
-    <ProjectReference Include="..\SlideshowBusinessLogic\SlideshowBusinessLogic.csproj" />
-    <ProjectReference Include="..\SlideshowDataAccess\SlideshowDataAccess.csproj" />
-    <ProjectReference Include="..\StockBusinessLogic\StockBusinessLogic.csproj" />
-    <ProjectReference Include="..\StockDataAccess\StockDataAccess.csproj" />
-    <ProjectReference Include="..\SurveyBusinessLogic\SurveyBusinessLogic.csproj" />
-    <ProjectReference Include="..\SurveyDataAccess\SurveyDataAccess.csproj" />
+    <ProjectReference Include="..\Libraries\BusinessLogic\BusinessLogic.csproj" />
+    <ProjectReference Include="..\Libraries\Common\Common.csproj" />
+    <ProjectReference Include="..\Libraries\DataAccess\DataAccess.csproj" />
+    <ProjectReference Include="..\Libraries\LipstickBusinessLogic\LipstickBusinessLogic.csproj" />
+    <ProjectReference Include="..\Libraries\LipstickDataAccess\LipstickDataAccess.csproj" />
+    <ProjectReference Include="..\Libraries\MemberBusinessLogic\MemberBusinessLogic.csproj" />
+    <ProjectReference Include="..\Libraries\MemberDataAccess\MemberDataAccess.csproj" />
+    <ProjectReference Include="..\Libraries\RestaurantBusinessLogic\RestaurantBusinessLogic.csproj" />
+    <ProjectReference Include="..\Libraries\RestaurantDataAccess\RestaurantDataAccess.csproj" />
+    <ProjectReference Include="..\Libraries\SlideshowBusinessLogic\SlideshowBusinessLogic.csproj" />
+    <ProjectReference Include="..\Libraries\SlideshowDataAccess\SlideshowDataAccess.csproj" />
+    <ProjectReference Include="..\Libraries\StockBusinessLogic\StockBusinessLogic.csproj" />
+    <ProjectReference Include="..\Libraries\StockDataAccess\StockDataAccess.csproj" />
+    <ProjectReference Include="..\Libraries\SurveyBusinessLogic\SurveyBusinessLogic.csproj" />
+    <ProjectReference Include="..\Libraries\SurveyDataAccess\SurveyDataAccess.csproj" />
+    <ProjectReference Include="..\Libraries\VOCBusinessLogic\VOCBusinessLogic.csproj" />
     <ProjectReference Include="..\webcore.client\webcore.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
