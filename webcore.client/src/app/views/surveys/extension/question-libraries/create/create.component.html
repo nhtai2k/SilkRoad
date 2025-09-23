@@ -58,10 +58,9 @@
                             <table [hover]="true" [responsive]="true" [striped]="true" align="middle" cTable class="mb-0">
                                 <thead>
                                     <tr>
-                                        <th>STT</th>
+                                        <th>No.</th>
                                         <th>NameEN</th>
                                         <th>NameVN</th>
-                                        <th>Point</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -71,7 +70,6 @@
                                         <td>{{ i + 1 }}</td>
                                         <td>{{ item.nameEN }}</td>
                                         <td>{{ item.nameVN }}</td>
-                                        <td>{{ item.point }}</td>
                                         <td class="d-flex justify-content-center">
                                             <button cButton type="button" (click)="updateData(i)"
                                                 class="btn btn-warning me-2">Update</button>
