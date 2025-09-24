@@ -259,11 +259,11 @@ namespace SurveyDataAccess.Migrations
                 columns: new[] { "Id", "CreatedAt", "IsActive", "Name", "Note" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2025, 9, 18, 9, 31, 40, 79, DateTimeKind.Local).AddTicks(9496), true, "Câu hỏi đóng", "Câu hỏi đóng (Closed-ended question) – Chỉ có các câu trả lời sẵn." },
-                    { 2, new DateTime(2025, 9, 18, 9, 31, 40, 80, DateTimeKind.Local).AddTicks(641), true, "Câu hỏi mở", "Câu hỏi mở (Open-ended question) – Người dùng nhập câu trả lời." },
-                    { 3, new DateTime(2025, 9, 18, 9, 31, 40, 80, DateTimeKind.Local).AddTicks(645), true, "Câu hỏi kết hợp", "Câu hỏi kết hợp (Hybrid question) hoặc Câu hỏi mở rộng (Extended question) – Vừa có câu trả lời sẵn, vừa cho phép người dùng nhập câu trả lời riêng." },
-                    { 4, new DateTime(2025, 9, 18, 9, 31, 40, 80, DateTimeKind.Local).AddTicks(646), true, "Câu hỏi nhiều lựa chọn", "Cho phép chọn nhiều đáp án cùng lúc." },
-                    { 5, new DateTime(2025, 9, 18, 9, 31, 40, 80, DateTimeKind.Local).AddTicks(647), true, "Câu hỏi đánh giá", "Cẩu hỏi đáng giá (rating question) - Cho người dùng đánh giá mức độ trên 5 sao." }
+                    { 1, new DateTime(2025, 9, 23, 9, 14, 57, 963, DateTimeKind.Local).AddTicks(7644), true, "Câu hỏi đóng", "Câu hỏi đóng (Closed-ended question) – Chỉ có các câu trả lời sẵn." },
+                    { 2, new DateTime(2025, 9, 23, 9, 14, 57, 963, DateTimeKind.Local).AddTicks(9027), true, "Câu hỏi mở", "Câu hỏi mở (Open-ended question) – Người dùng nhập câu trả lời." },
+                    { 3, new DateTime(2025, 9, 23, 9, 14, 57, 963, DateTimeKind.Local).AddTicks(9034), true, "Câu hỏi kết hợp", "Câu hỏi kết hợp (Hybrid question) hoặc Câu hỏi mở rộng (Extended question) – Vừa có câu trả lời sẵn, vừa cho phép người dùng nhập câu trả lời riêng." },
+                    { 4, new DateTime(2025, 9, 23, 9, 14, 57, 963, DateTimeKind.Local).AddTicks(9035), true, "Câu hỏi nhiều lựa chọn", "Cho phép chọn nhiều đáp án cùng lúc. (MultipleChoiceQuestion)" },
+                    { 5, new DateTime(2025, 9, 23, 9, 14, 57, 963, DateTimeKind.Local).AddTicks(9036), true, "Câu hỏi đánh giá", "Cẩu hỏi đáng giá (RatingQuestion) - Cho người dùng đánh giá mức độ trên 5 sao." }
                 });
 
             migrationBuilder.CreateIndex(

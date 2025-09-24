@@ -1,4 +1,5 @@
-﻿using SurveyDataAccess.IRepositories;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using SurveyDataAccess.IRepositories;
 
 namespace SurveyDataAccess
 {
@@ -15,7 +16,7 @@ namespace SurveyDataAccess
         IQuestionLibraryRepository QuestionLibraryRepository { get; }
         ISurveyFormRepository SurveyFormRepository { get; }
         IAnswerRepository AnswerRepository { get; }
-        void BeginTransaction();
+        IDbContextTransaction BeginTransaction();
         void Commit();
         void Rollback();
         void SaveChanges();

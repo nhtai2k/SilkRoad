@@ -40,13 +40,13 @@ export const routes: Routes = [
           title: 'Create Question Library'
         }
       },
-      // {
-      //   path: 'question-libraries/update/:id',
-      //   loadComponent: () => import('./question-libraries/update/update.component').then(m => m.UpdateComponent),
-      //   data: {
-      //     title: 'Update Question Library'
-      //   }
-      // }
+      {
+        path: 'question-libraries/update/:id',
+        loadComponent: () => import('./question-libraries/update/update.component').then(m => m.UpdateComponent),
+        data: {
+          title: 'Update Question Library'
+        }
+      }
       // {
       //   path: 'survey-forms',
       //   loadComponent: () => import('./survey-forms/index/index.component').then(m => m.IndexComponent),

@@ -48,7 +48,7 @@
     </c-accordion-item>
 </c-accordion>
 
-<app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
+<app-data-table [data]="data" (changePageIndex)="onPageIndexChange($event)"
     (changePageSize)="onPageSizeChange($event)">
     <thead class="text-nowrap text-truncate">
         <tr>
@@ -66,9 +66,9 @@
             <td>{{ item.nameVN }}</td>
             <td>
                 <div class="d-flex justify-content-end">
-                    <button routerLink="./update/{{item.id}}" class="btn btn-primary me-2">
+                    <a routerLink="./update/{{item.id}}" class="btn btn-primary me-2">
                         <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
-                    </button>
+                    </a>
                     <button class="btn btn-danger">
                         <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
                     </button>

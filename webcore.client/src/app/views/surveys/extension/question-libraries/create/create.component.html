@@ -9,7 +9,8 @@
                     <app-select-search [options]="questionTypeList" (onChangeValue)="onchangeQuestionType($event)"></app-select-search>
                 </div>
                 <div class="col-6">
-                    <label cLabel for="QuestionGroupLibraryId">Select Question group: </label>
+                    <label cLabel for="QuestionGroupLibraryId">Select Question group: <span
+                            class="text-danger">(*)</span></label>
                     <app-select-search [options]="questionGroupList" (onChangeValue)="questionForm.patchValue({QuestionGroupLibraryId: $event})"></app-select-search>
                 </div>
             </div>
@@ -85,9 +86,9 @@
                 </c-accordion>
             }
             <div class="d-flex justify-content-end mt-4">
-                <button cButton type="submit" type="submit" [disabled]="!createForm.valid">Submit</button>
-                <button cButton type="button" routerLink="/surveys/extend-survey/questions" class="ms-2 btn-info">Back
-                    to list</button>
+                <button cButton type="submit" type="submit" [disabled]="!questionForm.valid">Submit</button>
+                <a cButton type="button" routerLink="/surveys/extension/question-libraries" class="ms-2 btn-info">Back
+                    to list</a>
             </div>
         </form>
     </c-card-body>
@@ -99,7 +100,7 @@
         <h5 cModalTitle>Create Answer</h5>
         <button (click)="toggleLiveCreateModel()" cButtonClose></button>
     </c-modal-header>
-    <form cForm [formGroup]="createForm" (ngSubmit)="onSubmitCreateForm()">
+    <form cForm [formGroup]="createPredefinedAnswerForm" (ngSubmit)="onSubmitCreateForm()">
         <c-modal-body>
             <!-- <div class="mb-2 row">
                 <div class="col-6">
@@ -114,29 +115,30 @@
                     }
                 </div>
             </div> -->
-          
-                <div class="mb-2">
-                    <label cLabel for="nameEN" class="me-2">NameEN: <span class="text-danger">(*)</span> </label>
-                    <input cFormControl formControlName="nameEN">
-                    @if (nameENCreateForm?.invalid && (nameENCreateForm?.dirty || nameENCreateForm?.touched)) {
-                    <div class="text-danger">
-                        @if (nameENCreateForm?.hasError('required')) {
-                        <div>NameEN is required.</div>
-                        }
-                    </div>
-                    }
-                </div>
-                <div class="mb-2">
-                    <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
-                    <input cFormControl formControlName="nameVN">
-                    @if (nameVNCreateForm?.invalid && (nameVNCreateForm?.dirty || nameVNCreateForm?.touched)) {
-                    <div class="text-danger">
-                        @if (nameVNCreateForm?.hasError('required')) {
-                        <div>NameVN is required.</div>
-                        }
-                    </div>
-                    }
-                </div>
+          <div class="mb-2 row">
+              <div class="col-12 col-md-6">
+                  <label cLabel for="nameEN" class="me-2">NameEN: <span class="text-danger">(*)</span> </label>
+                  <input cFormControl formControlName="nameEN">
+                  @if (nameENCreateForm?.invalid && (nameENCreateForm?.dirty || nameENCreateForm?.touched)) {
+                  <div class="text-danger">
+                      @if (nameENCreateForm?.hasError('required')) {
+                      <div>NameEN is required.</div>
+                      }
+                  </div>
+                  }
+              </div>
+              <div class="col-12 col-md-6">
+                  <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
+                  <input cFormControl formControlName="nameVN">
+                  @if (nameVNCreateForm?.invalid && (nameVNCreateForm?.dirty || nameVNCreateForm?.touched)) {
+                  <div class="text-danger">
+                      @if (nameVNCreateForm?.hasError('required')) {
+                      <div>NameVN is required.</div>
+                      }
+                  </div>
+                  }
+              </div>
+          </div>
           
             <!-- <div class="mb-2 row">
                 <div class="col-12">
@@ -149,7 +151,7 @@
             <button (click)="toggleLiveCreateModel()" cButton color="secondary">
                 Close
             </button>
-            <button cButton type="submit" [disabled]="!createForm.valid" color="primary">Save</button>
+            <button cButton type="submit" [disabled]="!createPredefinedAnswerForm.valid" color="primary">Save</button>
         </c-modal-footer>
     </form>
 </c-modal>
@@ -160,7 +162,7 @@
         <h5 cModalTitle>Update Answer</h5>
         <button (click)="toggleLiveUpdateModel()" cButtonClose></button>
     </c-modal-header>
-    <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmitUpdateForm()">
+    <form cForm [formGroup]="updatePredefinedAnswerForm" (ngSubmit)="onSubmitUpdateForm()">
         <c-modal-body>
             <!-- <div class="mb-2 d-flex flex-row">
                 <div>
@@ -175,8 +177,9 @@
                     }
                 </div>
             </div> -->
-         
-                <div class="mb-2">
+            <div class="row mb-2">
+
+                <div class="col-12 col-md-6">
                     <label cLabel for="nameEN" class="me-2">NameEN: <span class="text-danger">(*)</span> </label>
                     <input cFormControl formControlName="nameEN">
                     @if (nameENUpdateForm?.invalid && (nameENUpdateForm?.dirty || nameENUpdateForm?.touched)) {
@@ -187,7 +190,7 @@
                     </div>
                     }
                 </div>
-                <div class="mb-2">
+                <div class="col-12 col-md-6">
                     <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="nameVN">
                     @if (nameVNUpdateForm?.invalid && (nameVNUpdateForm?.dirty || nameVNUpdateForm?.touched)) {
@@ -198,7 +201,7 @@
                     </div>
                     }
                 </div>
-        
+            </div>
             <!-- <div class="mb-2 row">
                 <div class="col-12">
                     <label cLabel for="note" class="me-2">Note: </label>
@@ -210,7 +213,7 @@
             <button (click)="toggleLiveUpdateModel()" cButton color="secondary">
                 Close
             </button>
-            <button cButton type="submit" [disabled]="!updateForm.valid" color="primary">Save</button>
+            <button cButton type="submit" [disabled]="!updatePredefinedAnswerForm.valid" color="primary">Save</button>
         </c-modal-footer>
     </form>
 </c-modal>

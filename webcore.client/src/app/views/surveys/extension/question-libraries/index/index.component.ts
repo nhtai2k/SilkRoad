@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PageInformation, Pagination } from '@models/pagination.model';
-import { QuestionGroupModel } from '@models/survey-models/question-group.model';
-import { QuestionModel } from '@models/survey-models/question.model';
 import { cilPlus, cilTrash, cilPen, cilSave } from '@coreui/icons';
 import { RouterLink } from '@angular/router';
 import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, TemplateIdDirective } from '@coreui/angular';
@@ -13,6 +11,7 @@ import { QuestionLibraryService } from '@services/survey-services/question-libra
 import { QuestionTypeService } from '@services/survey-services/question-type.service';
 import { OptionModel } from '@models/option.model';
 import { SelectSearchComponent } from "@components/selects/select-search/select-search.component";
+import { QuestionLibraryModel } from '@models/survey-models/question-library.model';
 
 @Component({
   selector: 'app-index',
@@ -26,7 +25,7 @@ import { SelectSearchComponent } from "@components/selects/select-search/select-
 })
 export class IndexComponent {
   //#region Variables
-  data: Pagination<QuestionModel> = new Pagination<QuestionModel>();
+  data: Pagination<QuestionLibraryModel> = new Pagination<QuestionLibraryModel>();
   questionGroupLibraries: OptionModel[] = [];
   questionTypes: OptionModel[] = [];
   pageInformation: PageInformation = new PageInformation();
@@ -52,7 +51,9 @@ export class IndexComponent {
     this.getData();
   }
   getData() {
-
+    this.questionLibraryService.getAll(1,10).subscribe((res) => {
+      this.data = res.data;
+    });
   }
   onPageIndexChange(index: any) {
     this.pageInformation.pageIndex = index;

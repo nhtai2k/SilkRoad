@@ -1,4 +1,5 @@
-﻿using SurveyDataAccess.IRepositories;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using SurveyDataAccess.IRepositories;
 using SurveyDataAccess.Repositories;
 
 namespace SurveyDataAccess
@@ -6,6 +7,7 @@ namespace SurveyDataAccess
     public class UnitOfWork : IUnitOfWork
     {
         private ApplicationContext context;
+        private IDbContextTransaction? _transaction;
         private bool disposed = false;
 
         public IParticipantRepository ParticipantRepository { get; private set; }
@@ -41,6 +43,7 @@ namespace SurveyDataAccess
         {
             context.SaveChanges();
         }
+
         protected virtual void Dispose(bool disposing)
         {
             if (!disposed)
@@ -57,17 +60,39 @@ namespace SurveyDataAccess
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-        public void BeginTransaction()
+        public IDbContextTransaction BeginTransaction()
         {
-            throw new NotImplementedException();
+            _transaction = context.Database.BeginTransaction();
+            return _transaction;
         }
         public void Commit()
         {
-            throw new NotImplementedException();
+            try
+            {
+                _transaction?.Commit();
+            }
+            catch
+            {
+                Rollback();
+                throw;
+            }
+            finally
+            {
+                _transaction?.Dispose();
+                _transaction = null;
+            }
         }
         public void Rollback()
         {
-            throw new NotImplementedException();
+            try
+            {
+                _transaction?.Rollback();
+            }
+            finally
+            {
+                _transaction?.Dispose();
+                _transaction = null;
+            }
         }
         public async Task SaveChangesAsync()
         {

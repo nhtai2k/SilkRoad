@@ -58,20 +58,38 @@ namespace SurveyBusinessLogic.Helpers
 
         public async Task<bool> CreateAsync(QuestionLibraryDTO model, string? userName = null)
         {
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                model.CreatedBy = userName;
-                model.ModifiedBy = userName;
-                model.NameEN = model.NameEN.Trim();
-                model.NameVN = model.NameVN.Trim();
-                model.Note = model.Note?.Trim();
-                await _unitOfWork.QuestionLibraryRepository.CreateAsync(model);
-                await _unitOfWork.SaveChangesAsync();
-                return true;
-            }
-            catch
-            {
-                return false;
+                try
+                {
+                    model.CreatedBy = userName;
+                    model.ModifiedBy = userName;
+                    model.NameEN = model.NameEN.Trim();
+                    model.NameVN = model.NameVN.Trim();
+                    model.Note = model.Note?.Trim();
+                    await _unitOfWork.QuestionLibraryRepository.CreateAsync(model);
+                    await _unitOfWork.SaveChangesAsync();
+
+                    if (model.PredefinedAnswerLibraries != null)
+                    {
+                        foreach (var item in model.PredefinedAnswerLibraries)
+                        {
+                            item.Id = Guid.NewGuid();
+                            item.QuestionLibraryId = model.Id;
+                            item.NameEN = item.NameEN.Trim();
+                            item.NameVN = item.NameVN.Trim();
+                            _unitOfWork.PredefinedAnswerLibraryRepository.Create(item);
+                        }
+                    }
+                    await _unitOfWork.SaveChangesAsync();
+                    _unitOfWork.Commit();
+                    return true;
+                }
+                catch
+                {
+                    _unitOfWork.Rollback();
+                    return false;
+                }
             }
         }
 

@@ -57,7 +57,7 @@ export class QuestionLibraryService {
     );
   }
 
-  getById(id: number): Observable<APIResponse<QuestionLibraryModel>> {
+  getById(id: any): Observable<APIResponse<QuestionLibraryModel>> {
     const url = EUrl.getByIdUrlQuestionLibrary.concat('/',id.toString());
     return this.http.get<APIResponse<QuestionLibraryModel>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
       catchError(error => {

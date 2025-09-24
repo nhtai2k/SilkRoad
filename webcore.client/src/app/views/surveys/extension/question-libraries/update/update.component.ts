@@ -1,101 +1,121 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { EColors } from '@common/global';
+import { EColors, EQuestionTypes } from '@common/global';
 import { PredefinedAnswerModel } from '@models/survey-models/predefined-answer.model';
-import { QuestionGroupModel } from '@models/survey-models/question-group.model';
-import { QuestionTypeModel } from '@models/survey-models/question-type.model';
 import { ToastService } from '@services/helper-services/toast.service';
 import { QuestionTypeService } from '@services/survey-services/question-type.service';
 import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, FormCheckComponent, FormCheckInputDirective, FormControlDirective, FormDirective, FormLabelDirective, FormSelectDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, TableDirective, TemplateIdDirective } from '@coreui/angular';
-import { NgFor, NgIf } from '@angular/common';
+import { QuestionGroupLibraryService } from '@services/survey-services/question-group-library.service';
+import { QuestionLibraryService } from '@services/survey-services/question-library.service';
+import { OptionModel } from '@models/option.model';
+import { SelectSearchComponent } from "@components/selects/select-search/select-search.component";
+import { PredefinedAnswerLibraryModel } from '@models/survey-models/predefined-answer-library.model';
 @Component({
   selector: 'app-update',
-  imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective,
-    ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule,
-    ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, CardComponent, 
-    FormSelectDirective, CardBodyComponent, AccordionButtonDirective,
-      AccordionComponent, AccordionItemComponent, TemplateIdDirective,
-      TableDirective, RouterLink],
+  imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective, ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule,
+     ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, CardComponent, CardBodyComponent, AccordionButtonDirective, AccordionComponent,
+      AccordionItemComponent, TemplateIdDirective, TableDirective, RouterLink, SelectSearchComponent],
   templateUrl: './update.component.html',
   styleUrl: './update.component.scss'
 })
-export class UpdateComponent {
-  questionGroupList: QuestionGroupModel[] = [];
-  questionTypeList: QuestionTypeModel[] = [];
-  predefinedAnswerList: PredefinedAnswerModel[] = [];
+export class UpdateComponent implements OnInit {
+  //#region Variables
+  questionGroupList: OptionModel[] = [];
+  questionTypeList: OptionModel[] = [];
+  predefinedAnswerList: PredefinedAnswerLibraryModel[] = [];
+  eQuestionTypes = EQuestionTypes;
+
   visibleCreateModal: boolean = false;
   visibleUpdateModal: boolean = false;
   visibleDelete: boolean = false;
-  updateByIndex: number = 0;
-  deleteByIndex: number = 0;
+
+  updateByIndex = signal<number>(0);
+  deleteByIndex = signal<number>(0);
+
+  showPredefinedAnswerTable = signal<boolean>(false);
+
   questionForm: FormGroup = new FormGroup({
-    id: new FormControl(-1),
     questionTypeId: new FormControl(-1, Validators.min(1)),
-    questionGroupId: new FormControl(-1, Validators.min(1)),
-    chartLabel: new FormControl('', Validators.required),
-    nameEN: new FormControl('', Validators.required),
-    nameVN: new FormControl('', Validators.required),
-    description: new FormControl(''),
+    QuestionGroupLibraryId: new FormControl(-1, Validators.min(1)),
+    nameEN: new FormControl(null, Validators.required),
+    nameVN: new FormControl(null, Validators.required),
+    note: new FormControl(null, Validators.maxLength(500)),
+    predefinedAnswerLibraries: new FormControl([]),
   });
-  createForm: FormGroup = new FormGroup({
+
+  createPredefinedAnswerForm: FormGroup = new FormGroup({
+    // id: new FormControl(''),
+    // questionLibraryId: new FormControl(0),
     nameEN: new FormControl(''),
     nameVN: new FormControl(''),
-    point: new FormControl(1, Validators.min(1)),
-    description: new FormControl(''),
   });
-  updateForm: FormGroup = new FormGroup({
-    id: new FormControl(-1),
+
+  updatePredefinedAnswerForm: FormGroup = new FormGroup({
+    // id: new FormControl(''),
+    // questionLibraryId: new FormControl(0),
     nameEN: new FormControl(''),
     nameVN: new FormControl(''),
-    point: new FormControl(1, Validators.min(1)),
-    description: new FormControl(''),
   });
+  //#endregion
+
+  //#region Lifecycle Hooks
   constructor(
-      private route: ActivatedRoute,
-    private questionGroupService: QuestionGroupService,
+    private questionGroupLibraryService: QuestionGroupLibraryService,
     private questionTypeService: QuestionTypeService,
-    private questionService: QuestionService,
+    private questionLibraryService: QuestionLibraryService,
     private toastService: ToastService,
+     private route: ActivatedRoute,
     private router: Router) { }
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    this.questionService.getById(id).subscribe((res) => {
-      this.questionForm.patchValue(res.data);
-      this.predefinedAnswerList = res.data.predefinedAnswers;
-    });
-
-    this.questionGroupService.getAllActive().subscribe((res) => {
+    this.questionGroupLibraryService.getOptionList().subscribe((res) => {
       this.questionGroupList = res.data;
     });
     this.questionTypeService.getAll().subscribe((res) => {
       this.questionTypeList = res.data;
     });
+    this.questionLibraryService.getById(id).subscribe(res => {
+      this.questionForm.patchValue(res.data);
+      if (res.data.predefinedAnswerLibraries) {
+        this.predefinedAnswerList = res.data.predefinedAnswerLibraries;
+      }
+    });
   }
+  //#endregion
+  
+  //#region Form Submit
+
   onSubmit() {
-    const question = this.questionForm.value;
-    question.predefinedAnswers = this.predefinedAnswerList;
-    this.questionService.update(question).subscribe((res) => {
-      this.toastService.showToast(EColors.success, res.message);
-      this.router.navigate(['/surveys/extend-survey/questions']);
-    }, (failure) => {
-      this.toastService.showToast(EColors.danger, failure.error.message);
+    if (!this.questionForm.valid) {
+      this.questionForm.markAllAsTouched();
+      this.toastService.showToast(EColors.warning, "Please fill in all required fields!");
+      return;
+    }  
+    this.questionForm.patchValue({predefinedAnswerLibraries: this.predefinedAnswerList});
+    console.log(this.questionForm.value);
+    this.questionLibraryService.create(this.questionForm.value).subscribe({
+      next: (res) => {
+        this.toastService.showToast(EColors.success, res.message);
+        this.router.navigate(['/surveys/extension/question-libraries']);
+      },
+      error: (failure) => {
+        this.toastService.showToast(EColors.danger, failure.error.message);
+      }
     });
   }
 
-  get questionTypeId() { return this.questionForm.get('questionTypeId'); }
-  get questionGroupId() { return this.questionForm.get('questionGroupId'); }
-  get chartLabel() { return this.questionForm.get('chartLabel'); }
   get nameEN() { return this.questionForm.get('nameEN'); }
   get nameVN() { return this.questionForm.get('nameVN'); }
-  get description() { return this.questionForm.get('description'); }
-  //#region  Create Form
+  get note() { return this.questionForm.get('note'); }
+  //#endregion
+
+  //#region  Create Predefined Answer Form
   onSubmitCreateForm() {
-    this.predefinedAnswerList.push(this.createForm.value);
+    this.predefinedAnswerList.push(this.createPredefinedAnswerForm.value);
     this.toastService.showToast(EColors.success, "Create Predefined Answer Success!");
     this.toggleLiveCreateModel();
-    this.createForm.reset();
-    this.createForm.patchValue({"point": 1});
+    this.createPredefinedAnswerForm.reset();
   }
 
   toggleLiveCreateModel() {
@@ -106,24 +126,22 @@ export class UpdateComponent {
     this.visibleCreateModal = event;
   }
 
-  get nameENCreateForm() { return this.createForm.get('nameEN'); }
-  get nameVNCreateForm() { return this.createForm.get('nameVN'); }
-  get pointCreateForm() { return this.createForm.get('point'); }
-  get descriptionCreateForm() { return this.createForm.get('description'); }
+  get nameENCreateForm() { return this.createPredefinedAnswerForm.get('nameEN'); }
+  get nameVNCreateForm() { return this.createPredefinedAnswerForm.get('nameVN'); }
 
   //#endregion
-  //#region  Update Form
+
+  //#region  Update Predefined Answer Form
   updateData(index: number) {
-    this.updateByIndex = index;
-    this.updateForm.patchValue(this.predefinedAnswerList[index]);
+    this.updateByIndex.set(index);
+    this.updatePredefinedAnswerForm.patchValue(this.predefinedAnswerList[index]);
     this.toggleLiveUpdateModel();
   }
   onSubmitUpdateForm() {
-    this.predefinedAnswerList[this.updateByIndex] = this.updateForm.value;
+    this.predefinedAnswerList[this.updateByIndex()] = this.updatePredefinedAnswerForm.value;
     this.toastService.showToast(EColors.success, "Update Predefined Answer Success!");
     this.toggleLiveUpdateModel();
-    this.updateForm.reset();
-    this.updateForm.patchValue({"point": 1});
+    this.updatePredefinedAnswerForm.reset();
   }
 
   toggleLiveUpdateModel() {
@@ -134,19 +152,18 @@ export class UpdateComponent {
     this.visibleUpdateModal = event;
   }
 
-  get nameENUpdateForm() { return this.updateForm.get('nameEN'); }
-  get nameVNUpdateForm() { return this.updateForm.get('nameVN'); }
-  get pointUpdateForm() { return this.updateForm.get('point'); }
-  get descriptionUpdateForm() { return this.updateForm.get('description'); }
+  get nameENUpdateForm() { return this.updatePredefinedAnswerForm.get('nameEN'); }
+  get nameVNUpdateForm() { return this.updatePredefinedAnswerForm.get('nameVN'); }
 
   //#endregion
+  
   //#region Delete
   deleteData(index: number) {
-    this.deleteByIndex = index;
+    this.deleteByIndex.set(index);
     this.toggleLiveDelete();
   }
   deleteDataConfirm() {
-    this.predefinedAnswerList.splice(this.deleteByIndex, 1);
+    this.predefinedAnswerList.splice(this.deleteByIndex(), 1);
     this.toastService.showToast(EColors.success, "Delete Predefined Answer Success!");
     this.toggleLiveDelete();
   }
@@ -159,4 +176,14 @@ export class UpdateComponent {
   }
   //#endregion
 
+  onchangeQuestionType(event: any) {
+    this.questionForm.patchValue({questionTypeId: event});
+    if (event == EQuestionTypes.ClosedEndedQuestion ||
+       event == EQuestionTypes.HybridQuestion ||
+       event == EQuestionTypes.MultipleChoiceQuestion) {
+        this.showPredefinedAnswerTable.set(true);
+    }else{
+      this.showPredefinedAnswerTable.set(false);
+    }
+  }
 }
