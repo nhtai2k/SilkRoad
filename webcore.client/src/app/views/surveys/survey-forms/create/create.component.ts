@@ -9,10 +9,9 @@ import { SurveyFormService } from '@services/survey-services/survey-form.service
 import { RangeDatetimePickerComponent } from "@components/generals/range-datetime-picker/range-datetime-picker.component";
 import { IconDirective } from '@coreui/icons-angular';
 import { cilPlus } from '@coreui/icons';
-
 @Component({
   selector: 'app-create',
-  imports: [FormControlDirective, FormLabelDirective, CardComponent, CardBodyComponent, ReactiveFormsModule, 
+  imports: [FormControlDirective, FormLabelDirective, CardComponent, CardBodyComponent, ReactiveFormsModule,
     FormDirective, ButtonDirective,
     // AccordionButtonDirective, AccordionComponent, AccordionItemComponent, TemplateIdDirective,FormCheckComponent, 
     RouterLink, RangeDatetimePickerComponent, TableDirective, IconDirective],

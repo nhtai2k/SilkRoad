@@ -1,0 +1,9 @@
+.title{
+    background-color: #212631;
+    padding: 0.25rem 0.5rem;
+    color: #fff;
+    & > span{
+        font-weight: 600;
+        font-size: 1.25rem;
+    }
+}
