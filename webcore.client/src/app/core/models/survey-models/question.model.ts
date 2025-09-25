@@ -1,15 +1,12 @@
 import { PredefinedAnswerModel } from "./predefined-answer.model";
 
 export interface QuestionModel {
-    id: number;
+    id: string;
+    questionGroupId?: string;
+    surveyFormId?: string;
     questionTypeId: number;
-    questionGroupId: number;
-    chartLabel: string;
+    priority: number;
     nameEN: string;
     nameVN: string;
-    description: string;
-    // isEdited: boolean;
-    predefinedAnswers: PredefinedAnswerModel[];
-    checked: boolean;
-    priority: number;
+    predefinedAnswers?: PredefinedAnswerModel[];
 }
