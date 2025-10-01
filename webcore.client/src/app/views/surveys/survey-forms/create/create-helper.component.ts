@@ -21,6 +21,7 @@ import { QuestionTypeService } from '@services/survey-services/question-type.ser
 import { TreeSelectComponent } from "@components/selects/tree-select/tree-select.component";
 import { PredefinedAnswerLibraryModel } from '@models/survey-models/predefined-answer-library.model';
 import { EQuestionTypes } from '@common/global';
+import { QuestionLibraryService } from '@services/survey-services/question-library.service';
 
 
 const predefinedAnswerList: PredefinedAnswerModel[] = [
@@ -76,6 +77,8 @@ export class CreateHelperComponent implements OnInit {
   visibleCreatePredefinedAnswerModal = signal(false);
   visibleUpdatePredefinedAnswerModal = signal(false);
 
+  initQuestionTypeId = signal<number>(-1);
+
   createQuestionGroupForm = new FormGroup({
     nameEN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
     nameVN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
@@ -102,7 +105,9 @@ export class CreateHelperComponent implements OnInit {
   //#endregion
 
   //#region table tree
-  constructor(private questionGroupLibraryService: QuestionGroupLibraryService, private questionTypeService: QuestionTypeService) { }
+  constructor(private questionGroupLibraryService: QuestionGroupLibraryService,
+    private questionLibraryService: QuestionLibraryService,
+     private questionTypeService: QuestionTypeService) { }
   ngOnInit(): void {
     this.questionGroupLibraryService.getOptionList().subscribe({
       next: (res) => {
@@ -227,7 +232,7 @@ export class CreateHelperComponent implements OnInit {
   //#endregion
 
   //#region form control
-  handleQuestionLibraryChange(event: any): void {
+  handleQuestionGroupLibraryChange(event: any): void {
     if (event != -1) {
       this.questionGroupLibraryService.getById(event).subscribe({
         next: (res) => {
@@ -244,6 +249,32 @@ export class CreateHelperComponent implements OnInit {
       });
     }
   }
+
+  handleQuestionLibraryChange(event: any): void {
+    if (event != -1) {
+      this.questionLibraryService.getEagerLoadingById(event).subscribe({
+        next: (res) => {
+          if (res.success && res.data) {
+            const newQuestion = res.data;
+            this.initQuestionTypeId.set(newQuestion.questionTypeId);
+            this.createQuestionForm.patchValue({
+              questionTypeId: newQuestion.questionTypeId,
+              nameEN: newQuestion.nameEN,
+              nameVN: newQuestion.nameVN,
+              priority: newQuestion.priority
+            });
+            if (newQuestion.predefinedAnswerLibraries && newQuestion.predefinedAnswerLibraries.length > 0) {
+              this.predefinedAnswerList = [...newQuestion.predefinedAnswerLibraries];
+            } else {
+              this.predefinedAnswerList = [];
+            }
+            this.onchangeQuestionType(newQuestion.questionTypeId);
+          }
+        }
+      });
+    }
+  }
+
   onchangeQuestionType(event: any) {
     // this.questionForm.patchValue({questionTypeId: event});
     if (event == EQuestionTypes.ClosedEndedQuestion ||

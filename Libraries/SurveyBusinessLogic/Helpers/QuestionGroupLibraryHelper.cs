@@ -154,6 +154,7 @@ namespace SurveyBusinessLogic.Helpers
                         .Select(q => new OptionModel
                         {
                             Id = q.Id,
+                            ParentId = q.QuestionGroupLibraryId,
                             Name = q.NameVN
                         }).ToList()
                 });

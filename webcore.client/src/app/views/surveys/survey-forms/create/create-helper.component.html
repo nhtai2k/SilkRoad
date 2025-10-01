@@ -149,7 +149,7 @@
         <form cForm [formGroup]="createQuestionGroupForm" (ngSubmit)="onSubmitCreateQuestionGroup()">
             <div class="mb-3">
                 <label cLabel class="me-2">Search Question Library: </label>
-                <app-select-search [options]="optionList" (onChangeValue)="handleQuestionLibraryChange($event)"
+                <app-select-search [options]="optionList" (onChangeValue)="handleQuestionGroupLibraryChange($event)"
                     placeholder="Select question group library..."></app-select-search>
             </div>
             <div class="mb-2">
@@ -202,7 +202,7 @@
         <form cForm [formGroup]="createQuestionForm" (ngSubmit)="onSubmitCreateQuestion()">
             <div class="mb-3">
                 <label cLabel class="me-2">Search Question Library: </label>
-                <app-tree-select [options]="treeOptionList"
+                <app-tree-select [options]="treeOptionList" (onChangeValue)="handleQuestionLibraryChange($event)"
                     placeholder="Select question group library..."></app-tree-select>
             </div>
             <div class="mb-2">
@@ -211,7 +211,7 @@
             </div>
             <div class="mb-2">
                 <label cLabel class="me-2">Question type: <span class="text-danger">(*)</span></label>
-                <app-select-search [options]="questionTypeList" (onChangeValue)="onchangeQuestionType($event)"
+                <app-select-search [options]="questionTypeList" [selectedValue]="initQuestionTypeId()"  (onChangeValue)="onchangeQuestionType($event)"
                     placeholder="Select question type..."></app-select-search>
             </div>
             <div class="mb-2">
