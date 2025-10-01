@@ -42,6 +42,20 @@ export class QuestionGroupLibraryService {
       })
     );
   }
+    getTreeOptionList(): Observable<APIResponse<OptionModel[]>> {
+    const url = EUrl.getTreeOptionListUrlQuestionGroupLibrary;
+    return this.http.get<APIResponse<OptionModel[]>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.ReNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<OptionModel[]>>(url, { headers: this.authenticationService.GetHeaders() }))
+          );
+        } else {
+          return throwError(() =>error);
+        }
+      })
+    );
+  }
 
   getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<QuestionGroupLibraryModel>>> {
     const url = EUrl.getAllDeletedUrlQuestionGroupLibrary.concat(`/${pageIndex}/${pageSize}`);

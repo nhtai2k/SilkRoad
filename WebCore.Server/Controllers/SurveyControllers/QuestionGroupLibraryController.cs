@@ -37,19 +37,17 @@ namespace WebCore.Server.Controllers.SurveyControllers
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
-        // [HttpGet("getAllActive/{pageIndex}/{pageSize}")]
-        // public async Task<IActionResult> GetAllActive(int pageIndex, int pageSize)
-        // {
-        //     if (pageIndex < 1 || pageSize < 1)
-        //         return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
-        //     var data = await _helper.GetAllActiveAsync(pageIndex, pageSize);
-        //     return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
-        // }
-
         [HttpGet("GetOptionList")]
         public async Task<IActionResult> GetOptionList()
         {
             var data = await _helper.GetOptionListAsync();
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        }
+
+        [HttpGet("GetTreeOptionList")]
+        public async Task<IActionResult> GetTreeOptionList()
+        {
+            var data = await _helper.GetTreeOptionListAsync();
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 

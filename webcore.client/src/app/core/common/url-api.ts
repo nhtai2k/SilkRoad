@@ -245,6 +245,7 @@ export enum EUrl {
     getAllUrlQuestionGroupLibrary = "/api/questionGroupLibrary/getAll",
     getAllActiveUrlQuestionGroupLibrary = "/api/questionGroupLibrary/getAllActive",
     getOptionListUrlQuestionGroupLibrary = "/api/questionGroupLibrary/getOptionList",
+    getTreeOptionListUrlQuestionGroupLibrary = "/api/questionGroupLibrary/getTreeOptionList",
     getAllDeletedUrlQuestionGroupLibrary = "/api/questionGroupLibrary/getAllDeleted",
     getByIdUrlQuestionGroupLibrary = "/api/questionGroupLibrary/getById",
     createUrlQuestionGroupLibrary = "/api/questionGroupLibrary/create",

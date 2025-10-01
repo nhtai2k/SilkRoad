@@ -1,20 +1,26 @@
-import { Component, signal, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
 import {
-  AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent,
-  FormCheckComponent, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, TableDirective, TemplateIdDirective
+  AccordionButtonDirective,
+  AccordionComponent,
+  AccordionItemComponent,
+  ButtonCloseDirective, ButtonDirective, FormControlDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, TableDirective,
+  TemplateIdDirective
 } from '@coreui/angular';
 import { QuestionGroupModel } from '@models/survey-models/question-group.model';
-import { SelectedQuestionModel } from '@models/survey-models/survey-form.model';
-import { SurveyFormService } from '@services/survey-services/survey-form.service';
-import { RangeDatetimePickerComponent } from "@components/generals/range-datetime-picker/range-datetime-picker.component";
 import { IconDirective } from '@coreui/icons-angular';
 import { cilPen, cilPlus, cilTrash } from '@coreui/icons';
 import { QuestionModel } from '@models/survey-models/question.model';
 import { PredefinedAnswerModel } from '@models/survey-models/predefined-answer.model';
 import { BookIconComponent } from "@components/icons/book-icon.component";
 import { CommonModule } from '@angular/common';
+import { QuestionGroupLibraryService } from '@services/survey-services/question-group-library.service';
+import { OptionModel } from '@models/option.model';
+import { SelectSearchComponent } from "@components/selects/select-search/select-search.component";
+import { QuestionTypeService } from '@services/survey-services/question-type.service';
+import { TreeSelectComponent } from "@components/selects/tree-select/tree-select.component";
+import { PredefinedAnswerLibraryModel } from '@models/survey-models/predefined-answer-library.model';
+import { EQuestionTypes } from '@common/global';
 
 
 const predefinedAnswerList: PredefinedAnswerModel[] = [
@@ -37,31 +43,38 @@ const questionGroupList: QuestionGroupModel[] = [
 
 @Component({
   selector: 'app-create-helper',
-  imports: [ReactiveFormsModule, ButtonDirective, CommonModule, TableDirective, IconDirective, BookIconComponent,
-    ModalComponent,
-    ModalHeaderComponent,
-    ModalTitleDirective,
-    ButtonCloseDirective,
-    ModalBodyComponent,
-    ModalFooterComponent],
+  imports: [ReactiveFormsModule, ButtonDirective, CommonModule, TableDirective, IconDirective, BookIconComponent, ModalComponent, ModalHeaderComponent,
+    ModalTitleDirective, ButtonCloseDirective, ModalBodyComponent, ModalFooterComponent, SelectSearchComponent, FormControlDirective, TreeSelectComponent,
+    AccordionButtonDirective, AccordionComponent,
+    AccordionItemComponent, TemplateIdDirective],
   templateUrl: './create-helper.component.html',
   styleUrl: './create.component.scss'
 })
 
-export class CreateHelperComponent {
+export class CreateHelperComponent implements OnInit {
   //#region Variables
   icons: any = { cilPlus, cilTrash, cilPen };
 
   questionGroups: QuestionGroupModel[] = [...questionGroupList];
   questions: QuestionModel[] = [...questionList];
+  predefinedAnswerList: PredefinedAnswerLibraryModel[] = [];
+
+  questionTypeList: OptionModel[] = [];
+  optionList: OptionModel[] = [];
+  treeOptionList: OptionModel[] = [];
+
+  eQuestionTypes = EQuestionTypes;
 
   showQuestionChildrenByParentId = signal<string | null>(null);
   showPredefinedAnswerChildrenByParentId = signal<string | null>(null);
+  showPredefinedAnswerTable = signal<boolean>(false);
 
   visibleCreateQuestionModal = signal(false);
   visibleDeleteQuestionModal = signal(false);
   visibleCreateQuestionGroupModal = signal(false);
   visibleDeleteQuestionGroupModal = signal(false);
+  visibleCreatePredefinedAnswerModal = signal(false);
+  visibleUpdatePredefinedAnswerModal = signal(false);
 
   createQuestionGroupForm = new FormGroup({
     nameEN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
@@ -75,9 +88,45 @@ export class CreateHelperComponent {
     nameVN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
     priority: new FormControl(1, [Validators.required, Validators.min(1)])
   });
+
+  createPredefinedAnswerForm: FormGroup = new FormGroup({
+    nameEN: new FormControl(''),
+    nameVN: new FormControl(''),
+    priority: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(255)])
+  });
+    updatePredefinedAnswerForm: FormGroup = new FormGroup({
+    nameEN: new FormControl(''),
+    nameVN: new FormControl(''),
+    priority: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(255)])
+  });
   //#endregion
-  
+
   //#region table tree
+  constructor(private questionGroupLibraryService: QuestionGroupLibraryService, private questionTypeService: QuestionTypeService) { }
+  ngOnInit(): void {
+    this.questionGroupLibraryService.getOptionList().subscribe({
+      next: (res) => {
+        if (res.success && res.data) {
+          this.optionList = res.data;
+        }
+      }
+    });
+    this.questionGroupLibraryService.getTreeOptionList().subscribe({
+      next: (res) => {
+        if (res.success && res.data) {
+          this.treeOptionList = res.data;
+        }
+      }
+    });
+    this.questionTypeService.getOptionList().subscribe({
+      next: (res) => {
+        if (res.success && res.data) {
+          this.questionTypeList = res.data;
+        }
+      }
+    });
+  }
+
   toggleQuestionNode(node: QuestionGroupModel): void {
     node.expanded = !node.expanded;
     if (node.expanded) {
@@ -86,6 +135,7 @@ export class CreateHelperComponent {
       this.showQuestionChildrenByParentId.set(null);
     }
   }
+
   togglePredefinedAnswerNode(node: QuestionModel): void {
     node.expanded = !node.expanded;
     if (node.expanded) {
@@ -95,8 +145,8 @@ export class CreateHelperComponent {
     }
   }
   //#endregion
-  
-  //#endregion form submit
+
+  //#region form submit
   onSubmitCreateQuestionGroup(): void {
     if (this.createQuestionGroupForm.valid) {
       const newQuestionGroup: QuestionGroupModel = {
@@ -133,7 +183,6 @@ export class CreateHelperComponent {
   }
   //#endregion
 
-
   //#region modal
   toggleCreateQuestionModal(): void {
     this.visibleCreateQuestionModal.set(!this.visibleCreateQuestionModal());
@@ -161,6 +210,72 @@ export class CreateHelperComponent {
   }
   handleDeleteQuestionGroupModalChange(event: any) {
     this.visibleDeleteQuestionGroupModal.set(event);
+  }
+
+  toggleCreatePredefinedAnswerModal(): void {
+    this.visibleCreatePredefinedAnswerModal.set(!this.visibleCreatePredefinedAnswerModal());
+  }
+  handleCreatePredefinedAnswerModalChange(event: any) {
+    this.visibleCreatePredefinedAnswerModal.set(event);
+  }
+  toggleUpdatePredefinedAnswerModal(): void {
+    this.visibleUpdatePredefinedAnswerModal.set(!this.visibleUpdatePredefinedAnswerModal());
+  }
+  handleUpdatePredefinedAnswerModalChange(event: any) {
+    this.visibleUpdatePredefinedAnswerModal.set(event);
+  }
+  //#endregion
+
+  //#region form control
+  handleQuestionLibraryChange(event: any): void {
+    if (event != -1) {
+      this.questionGroupLibraryService.getById(event).subscribe({
+        next: (res) => {
+          if (res.success && res.data) {
+            console.log(res.data);
+            const newQuestionGroup = res.data;
+            this.createQuestionGroupForm.patchValue({
+              nameEN: newQuestionGroup.nameEN,
+              nameVN: newQuestionGroup.nameVN,
+              priority: newQuestionGroup.priority
+            });
+          }
+        }
+      });
+    }
+  }
+  onchangeQuestionType(event: any) {
+    // this.questionForm.patchValue({questionTypeId: event});
+    if (event == EQuestionTypes.ClosedEndedQuestion ||
+      event == EQuestionTypes.HybridQuestion ||
+      event == EQuestionTypes.MultipleChoiceQuestion) {
+      this.showPredefinedAnswerTable.set(true);
+    } else {
+      this.showPredefinedAnswerTable.set(false);
+    }
+  }
+  //#endregion
+
+  //#region predefined answer form
+  onSubmitCreatePredefinedAnswer(): void {
+this.predefinedAnswerList.push(this.createPredefinedAnswerForm.value);
+    this.toggleCreatePredefinedAnswerModal();
+    this.createPredefinedAnswerForm.reset();
+    this.createPredefinedAnswerForm.patchValue({priority: 1});
+  }
+  updatePredefinedAnswer(index: number): void {
+    const updatedAnswer = this.updatePredefinedAnswerForm.value;
+    this.predefinedAnswerList[index] = updatedAnswer;
+  }
+  onSubmitUpdatePredefinedAnswer(): void {
+    // if (this.updatePredefinedAnswerForm.valid) {
+    //   const updatedAnswer = this.updatePredefinedAnswerForm.value;
+    //   this.updatePredefinedAnswer(this.selectedPredefinedAnswerIndex, updatedAnswer);
+    //   this.updatePredefinedAnswerForm.reset({ nameEN: '', nameVN: '', priority: 1 });
+    //   this.toggleUpdatePredefinedAnswerModal();
+    // } else {
+    //   this.updatePredefinedAnswerForm.markAllAsTouched();
+    // }
   }
   //#endregion
 }

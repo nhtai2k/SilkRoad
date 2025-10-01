@@ -141,12 +141,22 @@ namespace SurveyBusinessLogic.Helpers
 
         public async Task<IEnumerable<OptionModel>> GetTreeOptionListAsync()
         {
-            // Placeholder: implement tree structure if needed, otherwise return flat list
-            return (await _unitOfWork.QuestionGroupLibraryRepository.GetAllAsync(x => !x.IsDeleted && x.IsActive)).Select(x => new OptionModel
-            {
-                Id = x.Id,
-                Name = x.NameVN
-            });
+            var data = await _unitOfWork.QuestionGroupLibraryRepository.GetEagerLoadingAsync();
+            
+            return data
+                .Where(x => x.QuestionLibraries != null && x.QuestionLibraries.Any()) // Safe null check
+                .Select(x => new OptionModel
+                {
+                    Id = x.Id,
+                    Name = x.NameVN,
+                    Children = x.QuestionLibraries!
+                        .Where(q => !q.IsDeleted && q.IsActive) // Filter active question libraries
+                        .Select(q => new OptionModel
+                        {
+                            Id = q.Id,
+                            Name = q.NameVN
+                        }).ToList()
+                });
         }
     }
 }
