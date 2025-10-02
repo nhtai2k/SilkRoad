@@ -9,7 +9,7 @@ import {
 } from '@coreui/angular';
 import { QuestionGroupModel } from '@models/survey-models/question-group.model';
 import { IconDirective } from '@coreui/icons-angular';
-import { cilPen, cilPlus, cilTrash } from '@coreui/icons';
+import { cilExitToApp, cilPen, cilPlus, cilSave, cilTrash, cilX } from '@coreui/icons';
 import { QuestionModel } from '@models/survey-models/question.model';
 import { PredefinedAnswerModel } from '@models/survey-models/predefined-answer.model';
 import { BookIconComponent } from "@components/icons/book-icon.component";
@@ -36,7 +36,7 @@ import { QuestionLibraryService } from '@services/survey-services/question-libra
 
 export class CreateHelperComponent implements OnInit {
   //#region Variables
-  icons: any = { cilPlus, cilTrash, cilPen };
+  icons: any = { cilPlus, cilTrash, cilPen, cilX, cilSave, cilExitToApp };
 
   questionGroups: QuestionGroupModel[] = [];
   questions: QuestionModel[] = [];

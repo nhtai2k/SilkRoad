@@ -60,7 +60,6 @@
 </div>
 }
 <!-- Table of Questions -->
-
 <div class="d-flex justify-content-between align-items-center title mt-4">
     <span>3. Questions</span>
     <div class="d-flex justify-content-end">
@@ -130,8 +129,6 @@
     }
     }
 </ng-template>
-
-
 <ng-template #predefinedAnswerTemplate let-node="node" let-level="level" let-index="index">
     <tr class="tree-row" [class.expanded]="node.expanded" [class.children]="level > 0">
         <th>
@@ -149,16 +146,19 @@
 <!-- Create Question Group Modal -->
 <c-modal id="visibleCreateQuestionGroupModal" [visible]="visibleCreateQuestionGroupModal()" size="lg" backdrop="static"
     (visibleChange)="handleCreateQuestionGroupModalChange($event)">
-    <c-modal-header>
-        <h5 cModalTitle>Create Question Group</h5>
+    <c-modal-header class="bg-success d-flex justify-content-between align-items-center">
+        <h5 cModalTitle class="fw-bold text-white">Create Question Group</h5>
+        <button (click)="toggleCreateQuestionGroupModal()" class="btn btn-sm btnClose">
+            <svg [cIcon]="icons.cilX" width="22" class="text-white" title="Close Icon"></svg>
+        </button>
     </c-modal-header>
     <c-modal-body>
+        <div class="mb-4">
+            <span cLabel class="fw-bold">Search Question Library: </span>
+            <app-select-search [options]="optionList" (onChangeValue)="handleQuestionGroupLibraryChange($event)"
+                placeholder="Select question group library..."></app-select-search>
+        </div>
         <form cForm [formGroup]="createQuestionGroupForm" (ngSubmit)="onSubmitCreateQuestionGroup()">
-            <div class="mb-3">
-                <label cLabel class="me-2">Search Question Library: </label>
-                <app-select-search [options]="optionList" (onChangeValue)="handleQuestionGroupLibraryChange($event)"
-                    placeholder="Select question group library..."></app-select-search>
-            </div>
             <div class="mb-2">
                 <label for="priority" cLabel class="me-2">Priority: <span class="text-danger">(*)</span></label>
                 <input formControlName="priority" type="number" class="me-2 number-control" min="1" max="255">
@@ -201,16 +201,24 @@
         </form>
     </c-modal-body>
     <c-modal-footer>
-        <button (click)="toggleCreateQuestionGroupModal()" cButton color="secondary">Close</button>
+        <button (click)="toggleCreateQuestionGroupModal()" cButton color="secondary">
+            <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Exit to app Icon"></svg>
+        </button>
         <button cButton color="primary" (click)="onSubmitCreateQuestionGroup()"
-            [disabled]="createQuestionGroupForm.invalid">Add</button>
+            [disabled]="createQuestionGroupForm.invalid">
+            <svg [cIcon]="icons.cilSave" width="22" class="text-white" title="save Icon"></svg>
+        </button>
     </c-modal-footer>
 </c-modal>
+
 <!-- Update Question Group Modal -->
 <c-modal id="visibleUpdateQuestionGroupModal" [visible]="visibleUpdateQuestionGroupModal()" size="lg" backdrop="static"
     (visibleChange)="handleUpdateQuestionGroupModalChange($event)">
-    <c-modal-header>
-        <h5 cModalTitle>Update Question Group</h5>
+    <c-modal-header class="bg-primary d-flex justify-content-between align-items-center">
+        <Question cModalTitle class="text-white fw-bold">Update Question Group</Question>
+        <button (click)="toggleUpdateQuestionGroupModal()" class="btn btn-sm btnClose">
+            <svg [cIcon]="icons.cilX" width="22" class="text-white" title="Close Icon"></svg>
+        </button>
     </c-modal-header>
     <c-modal-body>
         <form cForm [formGroup]="updateQuestionGroupForm" (ngSubmit)="onSubmitUpdateQuestionGroup()">
@@ -256,17 +264,24 @@
         </form>
     </c-modal-body>
     <c-modal-footer>
-        <button (click)="toggleUpdateQuestionGroupModal()" cButton color="secondary">Close</button>
+        <button (click)="toggleUpdateQuestionGroupModal()" cButton color="secondary">
+            <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Close Icon"></svg>
+        </button>
         <button cButton color="primary" (click)="onSubmitUpdateQuestionGroup()"
-            [disabled]="updateQuestionGroupForm.invalid">Save</button>
+            [disabled]="updateQuestionGroupForm.invalid">
+            <svg [cIcon]="icons.cilSave" width="22" class="text-white" title="Save Icon"></svg>
+        </button>
     </c-modal-footer>
 </c-modal>
 
 <!-- Delete Question Group Modal -->
 <c-modal id="visibleDeleteQuestionGroupModal" [visible]="visibleDeleteQuestionGroupModal()"
     (visibleChange)="handleDeleteQuestionGroupModalChange($event)">
-    <c-modal-header>
-        <h5 cModalTitle>Delete Question Group</h5>
+    <c-modal-header class="bg-danger d-flex justify-content-between align-items-center">
+        <h5 cModalTitle class="text-white fw-bold">Delete Question Group</h5>
+        <button (click)="toggleDeleteQuestionGroupModal()" class="btn btn-sm btnClose">
+            <svg [cIcon]="icons.cilX" width="22" class="text-white" title="Close Icon"></svg>
+        </button>
     </c-modal-header>
     <c-modal-body>
         <p>Are you sure you want to delete this question group?</p>
@@ -275,21 +290,25 @@
             <strong>Question Group:</strong> {{ questionGroups[deleteQuestionGroupIndex()].nameEN }} / {{ questionGroups[deleteQuestionGroupIndex()].nameVN }}
         </div>
         }
-        <p class="text-muted">This action cannot be undone. All questions within this group will also be removed.</p>
     </c-modal-body>
     <c-modal-footer>
         <button (click)="toggleDeleteQuestionGroupModal()" cButton color="secondary">
-            Cancel
+            <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Exit to app Icon"></svg>
         </button>
-        <button cButton (click)="confirmDeleteQuestionGroup()" color="danger">Delete</button>
+        <button cButton (click)="confirmDeleteQuestionGroup()" color="danger">
+            <svg [cIcon]="icons.cilTrash" width="22" class="text-white" title="Trash Icon"></svg>
+        </button>
     </c-modal-footer>
 </c-modal>
 
 <!-- Create Question Modal -->
 <c-modal id="visibleCreateQuestionModal" [visible]="visibleCreateQuestionModal()" size="lg" backdrop="static"
     (visibleChange)="handleCreateQuestionModalChange($event)">
-    <c-modal-header>
-        <h5 cModalTitle>Create Question</h5>
+    <c-modal-header class="bg-success d-flex justify-content-between align-items-center">
+        <h5 cModalTitle class="text-white fw-bold">Create Question</h5>
+        <button (click)="toggleCreateQuestionModal()" class="btn btn-sm btnClose">
+            <svg [cIcon]="icons.cilX" width="22" class="text-white" title="Close Icon"></svg>
+        </button>
     </c-modal-header>
     <c-modal-body>
         <form cForm [formGroup]="createQuestionForm" (ngSubmit)="onSubmitCreateQuestion()">
@@ -392,17 +411,22 @@
     </c-modal-body>
     <c-modal-footer>
         <button (click)="toggleCreateQuestionModal()" cButton color="secondary">
-            Close
+            <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Exit to app Icon"></svg>
         </button>
-        <button cButton color="primary" [disabled]="createQuestionForm.invalid" (click)="onSubmitCreateQuestion()">Save
-            changes</button>
+        <button cButton color="primary" [disabled]="createQuestionForm.invalid" (click)="onSubmitCreateQuestion()">
+            <svg [cIcon]="icons.cilSave" width="22" class="text-white" title="Save Icon"></svg>
+        </button>
     </c-modal-footer>
 </c-modal>
+
 <!-- Update Question Modal -->
 <c-modal id="visibleUpdateQuestionModal" [visible]="visibleUpdateQuestionModal()" size="lg" backdrop="static"
     (visibleChange)="handleUpdateQuestionModalChange($event)">
-    <c-modal-header>
-        <h5 cModalTitle>Update Question</h5>
+    <c-modal-header class="bg-primary d-flex justify-content-between align-items-center">
+        <h5 cModalTitle class="text-white fw-bold">Update Question</h5>
+        <button (click)="toggleUpdateQuestionModal()" class="btn btn-sm btnClose">
+            <svg [cIcon]="icons.cilX" width="22" class="text-white" title="Close Icon"></svg>
+        </button>
     </c-modal-header>
     <c-modal-body>
         <form cForm [formGroup]="updateQuestionForm" (ngSubmit)="onSubmitUpdateQuestion()">
@@ -500,18 +524,22 @@
     </c-modal-body>
     <c-modal-footer>
         <button (click)="toggleUpdateQuestionModal()" cButton color="secondary">
-            Close
+            <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Close Icon"></svg>
         </button>
-        <button cButton color="primary" [disabled]="updateQuestionForm.invalid" (click)="onSubmitUpdateQuestion()">Save
-            changes</button>
+        <button cButton color="primary" [disabled]="updateQuestionForm.invalid" (click)="onSubmitUpdateQuestion()">
+            <svg [cIcon]="icons.cilSave" width="22" class="text-white" title="Save Icon"></svg>
+        </button>
     </c-modal-footer>
 </c-modal>
 
 <!-- Delete Question Modal -->
 <c-modal id="visibleDeleteQuestionModal" [visible]="visibleDeleteQuestionModal()"
     (visibleChange)="handleDeleteQuestionModalChange($event)">
-    <c-modal-header>
-        <h5 cModalTitle>Delete Question</h5>
+    <c-modal-header class="bg-danger d-flex justify-content-between align-items-center">
+        <h5 cModalTitle class="text-white fw-bold">Delete Question</h5>
+        <button (click)="toggleDeleteQuestionModal()" class="btn btn-sm btnClose">
+            <svg [cIcon]="icons.cilX" width="22" class="text-white" title="Close Icon"></svg>
+        </button>
     </c-modal-header>
     <c-modal-body>
         <p>Are you sure you want to delete this question?</p>
@@ -524,18 +552,19 @@
     </c-modal-body>
     <c-modal-footer>
         <button (click)="toggleDeleteQuestionModal()" cButton color="secondary">
-            Cancel
+            <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Exit to app Icon"></svg>
         </button>
-        <button cButton (click)="confirmDeleteQuestion()" color="danger">Delete</button>
+        <button cButton (click)="confirmDeleteQuestion()" color="danger">
+            <svg [cIcon]="icons.cilTrash" width="22" class="text-white" title="Trash Icon"></svg>
+        </button>
     </c-modal-footer>
 </c-modal>
 
 <!-- Create Predefined Answer Modal -->
-<c-modal id="visibleCreatePredefinedAnswerModal" [visible]="visibleCreatePredefinedAnswerModal()" backdrop="static"
+<!-- <c-modal id="visibleCreatePredefinedAnswerModal" [visible]="visibleCreatePredefinedAnswerModal()" backdrop="static"
     size="lg" (visibleChange)="handleCreatePredefinedAnswerModalChange($event)">
     <c-modal-header>
         <h5 cModalTitle>Create Answer</h5>
-        <!-- <button (click)="toggleCreatePredefinedAnswerModal()" cButtonClose></button> -->
     </c-modal-header>
     <form cForm [formGroup]="createPredefinedAnswerForm" (ngSubmit)="onSubmitCreatePredefinedAnswer()">
         <c-modal-body>
@@ -543,15 +572,6 @@
                 <div>
                     <label for="priority" class="me-2">Priority: </label>
                     <input formControlName="priority" type="number" class="me-2 number-control" min="1" max="255">
-                    <!-- @if (priorityCreateForm?.invalid && (priorityCreateForm?.dirty || priorityCreateForm?.touched)) {
-                    <div class="text-danger">
-                        @if (priorityCreateForm?.hasError('min') || priorityCreateForm?.hasError('max')) {
-                        <div>
-                            Priority must be between 1 and 255.
-                        </div>
-                        }
-                    </div>
-                    } -->
                 </div>
             </div>
             <div class="mb-2 row">
@@ -572,9 +592,9 @@
             <button cButton type="submit" [disabled]="!createPredefinedAnswerForm.valid" color="primary">Save</button>
         </c-modal-footer>
     </form>
-</c-modal>
+</c-modal> -->
 <!-- Update Predefined Answer Modal -->
-<c-modal id="visibleUpdatePredefinedAnswerModal" [visible]="visibleUpdatePredefinedAnswerModal()" backdrop="static"
+<!-- <c-modal id="visibleUpdatePredefinedAnswerModal" [visible]="visibleUpdatePredefinedAnswerModal()" backdrop="static"
     size="lg" (visibleChange)="handleUpdatePredefinedAnswerModalChange($event)">
     <c-modal-header>
         <h5 cModalTitle>Update Predefined Answer</h5>
@@ -605,4 +625,4 @@
             <button cButton type="submit" [disabled]="!updatePredefinedAnswerForm.valid" color="primary">Save</button>
         </c-modal-footer>
     </form>
-</c-modal>
+</c-modal> -->
