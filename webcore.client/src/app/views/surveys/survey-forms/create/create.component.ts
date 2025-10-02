@@ -1,32 +1,24 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import {
-  AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent,
-  FormCheckComponent, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, TableDirective, TemplateIdDirective
-} from '@coreui/angular';
-import { QuestionGroupModel } from '@models/survey-models/question-group.model';
-import { SelectedQuestionModel } from '@models/survey-models/survey-form.model';
+import { ButtonDirective, CardBodyComponent, CardComponent, FormControlDirective, FormDirective, FormLabelDirective} from '@coreui/angular';
 import { SurveyFormService } from '@services/survey-services/survey-form.service';
-import { RangeDatetimePickerComponent } from "@components/generals/range-datetime-picker/range-datetime-picker.component";
 import { IconDirective } from '@coreui/icons-angular';
-import { cilPen, cilPlus, cilTrash } from '@coreui/icons';
-import { QuestionModel } from '@models/survey-models/question.model';
-import { PredefinedAnswerModel } from '@models/survey-models/predefined-answer.model';
-import { BookIconComponent } from "@components/icons/book-icon.component";
+import { cilExitToApp, cilPen, cilPlus, cilSave, cilTrash } from '@coreui/icons';
 import { CommonModule } from '@angular/common';
 import { CreateHelperComponent } from "./create-helper.component";
+import { RangeDatetimePickerComponent } from "@components/generals/range-datetime-picker/range-datetime-picker.component";
 @Component({
   selector: 'app-create',
   imports: [FormControlDirective, FormLabelDirective, CardComponent, CardBodyComponent, ReactiveFormsModule, FormDirective, ButtonDirective, CommonModule,
-    RouterLink, CreateHelperComponent],
+    IconDirective, RouterLink, CreateHelperComponent, RangeDatetimePickerComponent],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })
 
 export class CreateComponent {
   //#region Variables
-  icons: any = { cilPlus, cilTrash, cilPen };
+  icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp };
 
   // questionGroups: QuestionGroupModel[] = [...questionGroupList];
   // questions: QuestionModel[] = [...questionList];

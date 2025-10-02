@@ -114,3 +114,43 @@
 .children td {
     background-color: #d4d4d4 !important;
 }
+// model
+.title {
+    background-color: #212631;
+    padding: 0.25rem 0.5rem;
+    color: #fff;
+
+    &>span {
+        font-weight: 600;
+        font-size: 1.25rem;
+    }
+}
+
+
+.btnClose {
+    background-color: rgb(255, 255, 255, 0.2);
+    font-weight: 900;
+}
+//table row
+.editing {
+    td {
+
+        background-color: #fff3cd !important;
+    }
+
+    border-left: 4px solid #ffc107;
+}
+
+.adding {
+    td {
+        background-color: #d1ecf1 !important;
+    }
+
+    border-left: 4px solid #17a2b8;
+
+    .new-id {
+        font-weight: 600;
+        color: #17a2b8;
+        font-style: italic;
+    }
+}

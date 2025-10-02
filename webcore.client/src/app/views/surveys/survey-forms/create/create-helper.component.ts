@@ -1,12 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import {
-  AccordionButtonDirective,
-  AccordionComponent,
-  AccordionItemComponent,
-  ButtonCloseDirective, ButtonDirective, FormControlDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, TableDirective,
-  TemplateIdDirective
-} from '@coreui/angular';
+import { ButtonDirective, FormControlDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, TableDirective} from '@coreui/angular';
 import { QuestionGroupModel } from '@models/survey-models/question-group.model';
 import { IconDirective } from '@coreui/icons-angular';
 import { cilExitToApp, cilPen, cilPlus, cilSave, cilTrash, cilX } from '@coreui/icons';
@@ -19,18 +13,14 @@ import { OptionModel } from '@models/option.model';
 import { SelectSearchComponent } from "@components/selects/select-search/select-search.component";
 import { QuestionTypeService } from '@services/survey-services/question-type.service';
 import { TreeSelectComponent } from "@components/selects/tree-select/tree-select.component";
-import { PredefinedAnswerLibraryModel } from '@models/survey-models/predefined-answer-library.model';
 import { EQuestionTypes } from '@common/global';
 import { QuestionLibraryService } from '@services/survey-services/question-library.service';
-import { sin } from '@amcharts/amcharts5/.internal/core/util/Math';
 
 
 @Component({
   selector: 'app-create-helper',
   imports: [ReactiveFormsModule, ButtonDirective, CommonModule, TableDirective, IconDirective, BookIconComponent, ModalComponent, ModalHeaderComponent,
-    ModalTitleDirective, ModalBodyComponent, ModalFooterComponent, SelectSearchComponent, FormControlDirective, TreeSelectComponent,
-    AccordionButtonDirective, AccordionComponent,
-    AccordionItemComponent, TemplateIdDirective],
+    ModalTitleDirective, ModalBodyComponent, ModalFooterComponent, SelectSearchComponent, FormControlDirective, TreeSelectComponent],
   templateUrl: './create-helper.component.html',
   styleUrl: './create.component.scss'
 })
@@ -213,7 +203,7 @@ export class CreateHelperComponent implements OnInit {
       this.questionGroupLibraryService.getById(event).subscribe({
         next: (res) => {
           if (res.success && res.data) {
-            console.log(res.data);
+            // console.log(res.data);
             const newQuestionGroup = res.data;
             this.createQuestionGroupForm.patchValue({
               nameEN: newQuestionGroup.nameEN,

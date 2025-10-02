@@ -1,4 +1,4 @@
-<h3>Create Survey form</h3>
+<h3 class="fw-bold">Create Survey form</h3>
 <c-card>
     <c-card-body>
         <!-- Survey Form Creation Form -->
@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-6">
                     <label cLabel>Start - End Date: <span class="text-danger">(*)</span></label>
-                    <!-- <app-range-datetime-picker></app-range-datetime-picker> -->
+                    <app-range-datetime-picker></app-range-datetime-picker>
                 </div>
             </div>
             <div class="mb-2 row">
@@ -61,9 +61,13 @@
         <app-create-helper></app-create-helper>
         <!-- Button Submit Creation Form -->
         <div class="d-flex justify-content-end mt-4">
-            <button cButton type="submit" (click)="onSubmit()" [disabled]="!createForm.valid">Submit</button>
-            <button cButton type="button" routerLink="/surveys/extend-survey/survey-forms" class="ms-2 btn-info">Back to
-                list</button>
+            <button cButton type="submit" (click)="onSubmit()" [disabled]="!createForm.valid">
+            <svg [cIcon]="icons.cilSave" width="25" class="text-white" title="Save Icon"></svg>
+
+            </button>
+            <button cButton type="button" routerLink="/surveys/extend-survey/survey-forms" class="ms-2 btn-info">
+            <svg [cIcon]="icons.cilExitToApp" width="25" class="text-white" title="Close Icon"></svg>
+            </button>
         </div>
     </c-card-body>
 </c-card>

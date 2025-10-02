@@ -34,9 +34,9 @@ export class TreeSelectComponent {
 
 
   ngOnChanges(): void {
-    console.log('ngOnChanges', this.expandKeys());
+    // console.log('ngOnChanges', this.expandKeys());
    this.nodes = this.handleData(this.options());
-   console.log('nodes', this.nodes);
+  //  console.log('nodes', this.nodes);
   }
   // ngOnInit(): void {
   //   this.nodes = this.handleData(this.options);

@@ -1,4 +1,4 @@
-<h3>Question Libraries</h3>
+<h3 class="fw-bold">Question Libraries</h3>
 <c-accordion class="mb-4">
     <c-accordion-item #item0="cAccordionItem" [visible]="true">
         <ng-template cTemplateId="accordionHeaderTemplate">
@@ -63,7 +63,7 @@
     </thead>
     <tbody>
         @for (item of data.items; track item?.id; let i = $index) {
-        <tr>
+        <tr class="tree-row" [class.expanded]="item.expanded">
             <td>{{ i+1 }}</td>
             <td>{{ item.nameEN }}</td>
             <td>{{ item.nameVN }}</td>
@@ -101,7 +101,7 @@
 
 
 <ng-template #nodeTemplate let-node="node" let-level="level" let-index="index">
-  <tr class="tree-row" [class.expanded]="node.expanded" [class.children]="level > 0">
+  <tr class="tree-row" [class.children]="level > 0">
     <td>
       <span [ngStyle]="{'margin-left.px': level * 15}">
         {{ index + 1 }}
@@ -113,6 +113,6 @@
     <td>###</td>
     <td>###</td>
     <td>###</td>
-    <td>###</td>
+    <td></td>
   </tr>
 </ng-template>

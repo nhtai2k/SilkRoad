@@ -1,7 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonCloseDirective, ButtonDirective, FormCheckComponent, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective } from '@coreui/angular';
-import { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular, cilCloudUpload, cilCloudDownload } from '@coreui/icons';
+import { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular, cilCloudUpload, cilCloudDownload, cilX } from '@coreui/icons';
 import { IconDirective } from '@coreui/icons-angular';
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { ToastService } from '@services/helper-services/toast.service';
@@ -17,7 +17,7 @@ import { QuestionGroupLibraryService } from '@services/survey-services/question-
   styleUrl: './question-group-libraries.component.scss',
   imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective, IconDirective,
     ModalComponent, ButtonDirective, FormCheckComponent, FormDirective, ReactiveFormsModule,
-    ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, DataTableComponent]
+    ModalFooterComponent, ModalHeaderComponent, DataTableComponent]
 })
 export class QuestionGroupLibrariesComponent implements OnInit {
   //#region Properties
@@ -31,7 +31,7 @@ export class QuestionGroupLibrariesComponent implements OnInit {
   deleteById: number = 0;
   data: Pagination<QuestionGroupLibraryModel> = new Pagination<QuestionGroupLibraryModel>();
   trashData: Pagination<QuestionGroupLibraryModel> = new Pagination<QuestionGroupLibraryModel>();
-  icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular, cilCloudUpload, cilCloudDownload };
+  icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular, cilCloudUpload, cilCloudDownload, cilX };
   createForm: FormGroup = new FormGroup({
     nameEN: new FormControl('', Validators.required),
     nameVN: new FormControl('', Validators.required),

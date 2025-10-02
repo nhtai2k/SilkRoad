@@ -1,3 +1,4 @@
-<nz-range-picker [nzShowTime]="showTime()" [(ngModel)]="initialData" (ngModelChange)="onChange($event)"
+<nz-range-picker [nzShowTime]="showTime()" (ngModel)="initialData()" (ngModelChange)="onChange($event)"
   [nzDisabled]="isDisabled()" [nzPlaceHolder]="placeHolder()" class="w-100">
 </nz-range-picker>
+  
