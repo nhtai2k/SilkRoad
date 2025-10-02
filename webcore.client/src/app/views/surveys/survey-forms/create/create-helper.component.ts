@@ -22,6 +22,7 @@ import { TreeSelectComponent } from "@components/selects/tree-select/tree-select
 import { PredefinedAnswerLibraryModel } from '@models/survey-models/predefined-answer-library.model';
 import { EQuestionTypes } from '@common/global';
 import { QuestionLibraryService } from '@services/survey-services/question-library.service';
+import { sin } from '@amcharts/amcharts5/.internal/core/util/Math';
 
 
 @Component({
@@ -59,7 +60,9 @@ export class CreateHelperComponent implements OnInit {
   visibleCreateQuestionModal = signal(false);
   visibleUpdateQuestionModal = signal(false);
   visibleDeleteQuestionModal = signal(false);
-  //visible Predefined Answer Modal
+  //visible Predefined Answer Form
+  visibleCreatePredefinedAnswerForm = signal(false);
+  updatePredefinedAnswerIndex = signal<number>(-1);
   // visibleCreatePredefinedAnswerModal = signal(false);
   // visibleDeletePredefinedAnswerModal = signal(false);
   // visibleUpdatePredefinedAnswerModal = signal(false);
@@ -98,8 +101,8 @@ export class CreateHelperComponent implements OnInit {
   });
   // Create Predefined Answer Form
   createPredefinedAnswerForm: FormGroup = new FormGroup({
-    nameEN: new FormControl(''),
-    nameVN: new FormControl(''),
+    nameEN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
+    nameVN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
     priority: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(255)])
   });
   // Update Predefined Answer Form
@@ -291,14 +294,14 @@ export class CreateHelperComponent implements OnInit {
     if (this.updateQuestionGroupForm.valid && this.updateQuestionGroupIndex() !== -1) {
       const index = this.updateQuestionGroupIndex();
       const selectedQuestionGroup = this.questionGroups[index];
-      
+
       const updatedQuestionGroup: QuestionGroupModel = {
         ...selectedQuestionGroup,
         nameEN: this.updateQuestionGroupForm.value.nameEN ?? '',
         nameVN: this.updateQuestionGroupForm.value.nameVN ?? '',
         priority: this.updateQuestionGroupForm.value.priority ?? 1
       };
-      
+
       this.questionGroups[index] = updatedQuestionGroup;
       this.updateQuestionGroupForm.reset({ nameEN: '', nameVN: '', priority: 1 });
       this.updateQuestionGroupIndex.set(-1);
@@ -388,7 +391,7 @@ export class CreateHelperComponent implements OnInit {
       this.initQuestionTypeId.set(-1);
       this.onchangeQuestionType(this.initQuestionTypeId());
       this.toggleCreateQuestionModal();
-      
+
     } else {
       this.createQuestionForm.markAllAsTouched();
     }
@@ -413,7 +416,7 @@ export class CreateHelperComponent implements OnInit {
       nameVN: selectedQuestion.nameVN,
       priority: selectedQuestion.priority
     });
-    
+
     // Set predefined answers if they exist
     if (selectedQuestion.predefinedAnswers && selectedQuestion.predefinedAnswers.length > 0) {
       this.predefinedAnswerList = [...selectedQuestion.predefinedAnswers.map((pa) => ({
@@ -428,7 +431,7 @@ export class CreateHelperComponent implements OnInit {
     } else {
       this.predefinedAnswerList = [];
     }
-    
+
     this.onchangeQuestionType(selectedQuestion.questionTypeId);
     this.toggleUpdateQuestionModal();
   }
@@ -437,13 +440,13 @@ export class CreateHelperComponent implements OnInit {
     if (this.updateQuestionForm.valid && this.updateQuestionIndex() !== -1) {
       const index = this.updateQuestionIndex();
       const selectedQuestion = this.questions[index];
-      
+
       const predefinedAnswers = this.predefinedAnswerList.map((pa) => ({
         nameEN: pa.nameEN,
         nameVN: pa.nameVN,
         priority: pa.priority
       }));
-      
+
       const updatedQuestion: QuestionModel = {
         ...selectedQuestion,
         questionTypeId: this.updateQuestionForm.value.questionTypeId ?? 1,
@@ -452,7 +455,7 @@ export class CreateHelperComponent implements OnInit {
         priority: this.updateQuestionForm.value.priority ?? 1,
         predefinedAnswers: predefinedAnswers
       };
-      
+
       this.questions[index] = updatedQuestion;
       this.updateQuestionForm.reset({ questionTypeId: 1, nameEN: '', nameVN: '', priority: 1 });
       this.predefinedAnswerList = [];
@@ -492,15 +495,41 @@ export class CreateHelperComponent implements OnInit {
 
 
   //#region predefined answer form
+  showCreatePredefinedAnswerForm(): void {
+    this.visibleCreatePredefinedAnswerForm.set(true);
+    this.updatePredefinedAnswerIndex.set(-1);
+  }
+  hideCreatePredefinedAnswerForm(): void {
+    this.visibleCreatePredefinedAnswerForm.set(false);
+  }
+
+
   onSubmitCreatePredefinedAnswer(): void {
     this.predefinedAnswerList.push(this.createPredefinedAnswerForm.value);
     // this.toggleCreatePredefinedAnswerModal();
     this.createPredefinedAnswerForm.reset();
     this.createPredefinedAnswerForm.patchValue({ priority: 1 });
   }
+    get nameENCreatePredefinedAnswerForm() {
+    return this.createPredefinedAnswerForm.get('nameEN');
+  }
+  get nameVNCreatePredefinedAnswerForm() {
+    return this.createPredefinedAnswerForm.get('nameVN');
+  }
+  get priorityCreatePredefinedAnswerForm() {
+    return this.createPredefinedAnswerForm.get('priority');
+  }
+
   updatePredefinedAnswer(index: number): void {
-    const updatedAnswer = this.updatePredefinedAnswerForm.value;
-    this.predefinedAnswerList[index] = updatedAnswer;
+    this.updatePredefinedAnswerIndex.set(index);
+    this.visibleCreatePredefinedAnswerForm.set(false);
+    const selectedPredefinedAnswer = this.predefinedAnswerList[index];
+    this.updatePredefinedAnswerForm.patchValue({
+      nameEN: selectedPredefinedAnswer.nameEN,
+      nameVN: selectedPredefinedAnswer.nameVN,
+      priority: selectedPredefinedAnswer.priority
+    });
+    // this.toggleUpdatePredefinedAnswerModal();
   }
   onSubmitUpdatePredefinedAnswer(): void {
     // if (this.updatePredefinedAnswerForm.valid) {
@@ -512,6 +541,16 @@ export class CreateHelperComponent implements OnInit {
     //   this.updatePredefinedAnswerForm.markAllAsTouched();
     // }
   }
+  get nameENUpdatePredefinedAnswerForm() {
+    return this.updatePredefinedAnswerForm.get('nameEN');
+  }
+  get nameVNUpdatePredefinedAnswerForm() {
+    return this.updatePredefinedAnswerForm.get('nameVN');
+  }
+  get priorityUpdatePredefinedAnswerForm() {
+    return this.updatePredefinedAnswerForm.get('priority');
+  }
+
   deletePredefinedAnswer(index: number): void {
     this.predefinedAnswerList.splice(index, 1);
   }

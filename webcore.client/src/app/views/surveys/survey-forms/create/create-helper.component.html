@@ -309,7 +309,7 @@
 </c-modal>
 
 <!-- Create Question Modal -->
-<c-modal id="visibleCreateQuestionModal" [visible]="visibleCreateQuestionModal()" size="lg" backdrop="static"
+<c-modal id="visibleCreateQuestionModal" [visible]="visibleCreateQuestionModal()" size="xl" backdrop="static"
     (visibleChange)="handleCreateQuestionModalChange($event)">
     <c-modal-header class="bg-success d-flex justify-content-between align-items-center">
         <h5 cModalTitle class="text-white fw-bold">Create Question</h5>
@@ -325,7 +325,7 @@
         </div>
         <form cForm [formGroup]="createQuestionForm" (ngSubmit)="onSubmitCreateQuestion()">
             <div class="row mb-2">
-                                <div class="col-4">
+                <div class="col-4">
                     <label for="priority" cLabel class="me-2">Priority: <span class="text-danger">(*)</span></label>
                     <input formControlName="priority" type="number" cFormControl class="me-2" min="1" max="255">
                     @if (priorityCreateQuestionForm?.invalid && (priorityCreateQuestionForm?.dirty ||
@@ -380,12 +380,13 @@
         <div class="d-flex justify-content-between align-items-center title mt-4">
             <span>Predefined Answers</span>
             <div class="d-flex justify-content-end">
-                <button cButton type="button" class="btn-success text-white d-flex align-items-center">
+                <button cButton type="button" class="btn-success text-white d-flex align-items-center"
+                    (click)="showCreatePredefinedAnswerForm()" [disabled]="visibleCreatePredefinedAnswerForm()">
                     <svg [cIcon]="icons.cilPlus" width="22" class="text-white" title="Plus Icon"></svg>
                 </button>
             </div>
         </div>
-        <table [hover]="true" [responsive]="true" [striped]="true" align="middle" cTable class="mb-0">
+        <table [hover]="true" [responsive]="true"  cTable>
             <thead>
                 <tr>
                     <th>No.</th>
@@ -396,26 +397,139 @@
                 </tr>
             </thead>
             <tbody>
+                <!-- Predefined Answer Form Row -->
+                @if(visibleCreatePredefinedAnswerForm()) {
+                    <tr [formGroup]="createPredefinedAnswerForm" class="adding">
+                        <td class="new-id">New</td>
+                        <td>
+                            <input type="text" formControlName="nameEN" class="form-control"
+                                placeholder="Enter predefined answer name in English">
+                            @if (nameENCreatePredefinedAnswerForm?.invalid && (nameENCreatePredefinedAnswerForm?.dirty ||
+                            nameENCreatePredefinedAnswerForm?.touched)) {
+                            <div class="text-danger">
+                                @if (nameENCreatePredefinedAnswerForm?.hasError('required')) {
+                                <div>Enter Name, please!</div>
+                                }
+                            </div>
+                            }
+                        </td>
+                        <td>
+                            <input type="text" formControlName="nameVN" class="form-control"
+                                placeholder="Enter predefined answer name in Vietnamese">
+                            @if (nameVNCreatePredefinedAnswerForm?.invalid && (nameVNCreatePredefinedAnswerForm?.dirty ||
+                            nameVNCreatePredefinedAnswerForm?.touched)) {
+                            <div class="text-danger">
+                                @if (nameVNCreatePredefinedAnswerForm?.hasError('required')) {
+                                <div>Enter Name, please!</div>
+                                }
+                            </div>
+                            }
+                        </td>
+                        <td>
+                            <input type="number" formControlName="priority" class="form-control number-control"
+                                min="1" max="255">
+                            @if (priorityCreatePredefinedAnswerForm?.invalid && (priorityCreatePredefinedAnswerForm?.dirty ||
+                            priorityCreatePredefinedAnswerForm?.touched)) {
+                            <div class="text-danger">
+                                @if (priorityCreatePredefinedAnswerForm?.hasError('min') ||
+                                priorityCreatePredefinedAnswerForm?.hasError('max')) {
+                                <div>Priority must be between 1 and 255.</div>
+                                }
+                            </div>
+                            }
+                        </td>
+                        <td class="d-flex justify-content-end">
+                            <button cButton type="button" (click)="onSubmitCreatePredefinedAnswer()"
+                                class="btn btn-primary me-2" [disabled]="createPredefinedAnswerForm.invalid">
+                                <svg [cIcon]="icons.cilSave" width="20" class="text-white" title="Save Icon"></svg>
+                            </button>
+                            <button cButton type="button" (click)="hideCreatePredefinedAnswerForm()"
+                                class="btn btn-danger">
+                                <svg [cIcon]="icons.cilX" width="20" class="text-white" title="Close Icon"></svg>
+                            </button>
+                        </td>
+
+                    </tr>
+                }
+
                 @for (item of predefinedAnswerList; track $index; let i = $index) {
-                <tr>
-                    <td>{{ i + 1 }}</td>
-                    <td>{{ item.nameEN }}</td>
-                    <td>{{ item.nameVN }}</td>
-                    <td>{{ item.priority }}</td>
-                    <td class="d-flex justify-content-end">
-                        <button cButton type="button" (click)="updatePredefinedAnswer(i)"
-                            class="btn btn-primary me-2">
-                            <svg [cIcon]="icons.cilPen" width="20" class="text-white" title="Edit Icon"></svg>
-                        </button>
-                        <button cButton type="button" (click)="deletePredefinedAnswer(i)"
-                            class="btn btn-danger">
-                            <svg [cIcon]="icons.cilTrash" width="20" class="text-white" title="Delete Icon"></svg>
-                        </button>
-                    </td>
-                </tr>
+                    @if(updatePredefinedAnswerIndex() !== -1 && updatePredefinedAnswerIndex() === i) {
+                         <tr [formGroup]="updatePredefinedAnswerForm" class="editing">
+                          <td>{{ i + 1 }}</td>
+                        <td>
+                            <input type="text" formControlName="nameEN" class="form-control"
+                                placeholder="Enter predefined answer name in English">
+                            @if (nameENUpdatePredefinedAnswerForm?.invalid && (nameENUpdatePredefinedAnswerForm?.dirty ||
+                            nameENUpdatePredefinedAnswerForm?.touched)) {
+                            <div class="text-danger">
+                                @if (nameENUpdatePredefinedAnswerForm?.hasError('required')) {
+                                <div>Enter Name, please!</div>
+                                }
+                            </div>
+                            }
+                        </td>
+                        <td>
+                            <input type="text" formControlName="nameVN" class="form-control"
+                                placeholder="Enter predefined answer name in Vietnamese">
+                            @if (nameVNUpdatePredefinedAnswerForm?.invalid && (nameVNUpdatePredefinedAnswerForm?.dirty ||
+                            nameVNUpdatePredefinedAnswerForm?.touched)) {
+                            <div class="text-danger">
+                                @if (nameVNUpdatePredefinedAnswerForm?.hasError('required')) {
+                                <div>Enter Name, please!</div>
+                                }
+                            </div>
+                            }
+                        </td>
+                        <td>
+                            <input type="number" formControlName="priority" class="form-control number-control"
+                                min="1" max="255">
+                            @if (priorityUpdatePredefinedAnswerForm?.invalid && (priorityUpdatePredefinedAnswerForm?.dirty ||
+                            priorityUpdatePredefinedAnswerForm?.touched)) {
+                            <div class="text-danger">
+                                @if (priorityUpdatePredefinedAnswerForm?.hasError('min') ||
+                                priorityUpdatePredefinedAnswerForm?.hasError('max')) {
+                                <div>Priority must be between 1 and 255.</div>
+                                }
+                            </div>
+                            }
+                        </td>
+                        <td class="d-flex justify-content-end">
+                            <button cButton type="button" (click)="onSubmitCreatePredefinedAnswer()"
+                                class="btn btn-primary me-2" [disabled]="createPredefinedAnswerForm.invalid">
+                                <svg [cIcon]="icons.cilSave" width="20" class="text-white" title="Save Icon"></svg>
+                            </button>
+                            <button cButton type="button" (click)="hideCreatePredefinedAnswerForm()"
+                                class="btn btn-danger">
+                                <svg [cIcon]="icons.cilX" width="20" class="text-white" title="Close Icon"></svg>
+                            </button>
+                        </td>
+
+                    </tr>
+                    }@else {
+                        <tr>
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ item.nameEN }}</td>
+                            <td>{{ item.nameVN }}</td>
+                            <td>{{ item.priority }}</td>
+                            <td class="d-flex justify-content-end">
+                                <button cButton type="button" (click)="updatePredefinedAnswer(i)" class="btn btn-primary me-2">
+                                    <svg [cIcon]="icons.cilPen" width="20" class="text-white" title="Edit Icon"></svg>
+                                </button>
+                                <button cButton type="button" (click)="deletePredefinedAnswer(i)" class="btn btn-danger">
+                                    <svg [cIcon]="icons.cilTrash" width="20" class="text-white" title="Delete Icon"></svg>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                       
                 }
             </tbody>
         </table>
+        @if(predefinedAnswerList.length === 0) {
+        <div class="py-4">
+            <p class="text-center opacity-50">No users found. Click Btn Add to get started.</p>
+        </div>
+        }
         <!-- <div class="d-flex justify-content-end mb-2">
             <button cButton type="button"
                 class="ms-2 btn-success text-white d-flex align-items-center justify-content-center">
