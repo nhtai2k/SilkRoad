@@ -172,31 +172,34 @@
                 </div>
                 }
             </div>
-            <div class="mb-2">
-                <label for="nameEN" cLabel>Name EN: <span class="text-danger">(*)</span></label>
-                <input type="text" cFormControl formControlName="nameEN"
-                    placeholder="Enter question group name in English">
-                @if (nameENCreateQuestionGroupForm?.invalid && (nameENCreateQuestionGroupForm?.dirty ||
-                nameENCreateQuestionGroupForm?.touched)) {
-                <div class="text-danger">
-                    @if (nameENCreateQuestionGroupForm?.hasError('required')) {
-                    <div>Enter Name, please!</div>
+            <div class="row">
+
+                <div class="col-6">
+                    <label for="nameEN" cLabel>Name EN: <span class="text-danger">(*)</span></label>
+                    <input type="text" cFormControl formControlName="nameEN"
+                        placeholder="Enter question group name in English">
+                    @if (nameENCreateQuestionGroupForm?.invalid && (nameENCreateQuestionGroupForm?.dirty ||
+                    nameENCreateQuestionGroupForm?.touched)) {
+                    <div class="text-danger">
+                        @if (nameENCreateQuestionGroupForm?.hasError('required')) {
+                        <div>Enter Name, please!</div>
+                        }
+                    </div>
                     }
                 </div>
-                }
-            </div>
-            <div class="mb-2">
-                <label for="nameVN" cLabel>Name VN: <span class="text-danger">(*)</span></label>
-                <input type="text" cFormControl formControlName="nameVN"
-                    placeholder="Enter question group name in Vietnamese">
-                @if (nameVNCreateQuestionGroupForm?.invalid && (nameVNCreateQuestionGroupForm?.dirty ||
-                nameVNCreateQuestionGroupForm?.touched)) {
-                <div class="text-danger">
-                    @if (nameVNCreateQuestionGroupForm?.hasError('required')) {
-                    <div>Enter Name, please!</div>
+                <div class="col-6">
+                    <label for="nameVN" cLabel>Name VN: <span class="text-danger">(*)</span></label>
+                    <input type="text" cFormControl formControlName="nameVN"
+                        placeholder="Enter question group name in Vietnamese">
+                    @if (nameVNCreateQuestionGroupForm?.invalid && (nameVNCreateQuestionGroupForm?.dirty ||
+                    nameVNCreateQuestionGroupForm?.touched)) {
+                    <div class="text-danger">
+                        @if (nameVNCreateQuestionGroupForm?.hasError('required')) {
+                        <div>Enter Name, please!</div>
+                        }
+                    </div>
                     }
                 </div>
-                }
             </div>
         </form>
     </c-modal-body>
@@ -235,31 +238,34 @@
                 </div>
                 }
             </div>
-            <div class="mb-2">
-                <label for="nameEN" cLabel>Name EN: <span class="text-danger">(*)</span></label>
-                <input type="text" cFormControl formControlName="nameEN"
-                    placeholder="Enter question group name in English">
-                @if (nameENUpdateQuestionGroupForm?.invalid && (nameENUpdateQuestionGroupForm?.dirty ||
-                nameENUpdateQuestionGroupForm?.touched)) {
-                <div class="text-danger">
-                    @if (nameENUpdateQuestionGroupForm?.hasError('required')) {
-                    <div>Enter Name, please!</div>
+            <div class="row">
+
+                <div class="col-12 col-md-6">
+                    <label for="nameEN" cLabel>Name EN: <span class="text-danger">(*)</span></label>
+                    <input type="text" cFormControl formControlName="nameEN"
+                        placeholder="Enter question group name in English">
+                    @if (nameENUpdateQuestionGroupForm?.invalid && (nameENUpdateQuestionGroupForm?.dirty ||
+                    nameENUpdateQuestionGroupForm?.touched)) {
+                    <div class="text-danger">
+                        @if (nameENUpdateQuestionGroupForm?.hasError('required')) {
+                        <div>Enter Name, please!</div>
+                        }
+                    </div>
                     }
                 </div>
-                }
-            </div>
-            <div class="mb-2">
-                <label for="nameVN" cLabel>Name VN: <span class="text-danger">(*)</span></label>
-                <input type="text" cFormControl formControlName="nameVN"
-                    placeholder="Enter question group name in Vietnamese">
-                @if (nameVNUpdateQuestionGroupForm?.invalid && (nameVNUpdateQuestionGroupForm?.dirty ||
-                nameVNUpdateQuestionGroupForm?.touched)) {
-                <div class="text-danger">
-                    @if (nameVNUpdateQuestionGroupForm?.hasError('required')) {
-                    <div>Enter Name, please!</div>
+                <div class="col-12 col-md-6">
+                    <label for="nameVN" cLabel>Name VN: <span class="text-danger">(*)</span></label>
+                    <input type="text" cFormControl formControlName="nameVN"
+                        placeholder="Enter question group name in Vietnamese">
+                    @if (nameVNUpdateQuestionGroupForm?.invalid && (nameVNUpdateQuestionGroupForm?.dirty ||
+                    nameVNUpdateQuestionGroupForm?.touched)) {
+                    <div class="text-danger">
+                        @if (nameVNUpdateQuestionGroupForm?.hasError('required')) {
+                        <div>Enter Name, please!</div>
+                        }
+                    </div>
                     }
                 </div>
-                }
             </div>
         </form>
     </c-modal-body>
@@ -287,7 +293,8 @@
         <p>Are you sure you want to delete this question group?</p>
         @if(deleteQuestionGroupIndex() !== -1 && questionGroups[deleteQuestionGroupIndex()]) {
         <div class="alert alert-warning">
-            <strong>Question Group:</strong> {{ questionGroups[deleteQuestionGroupIndex()].nameEN }} / {{ questionGroups[deleteQuestionGroupIndex()].nameVN }}
+            <strong>Question Group:</strong> {{ questionGroups[deleteQuestionGroupIndex()].nameEN }} / {{
+            questionGroups[deleteQuestionGroupIndex()].nameVN }}
         </div>
         }
     </c-modal-body>
@@ -311,67 +318,113 @@
         </button>
     </c-modal-header>
     <c-modal-body>
+        <div class="mb-4">
+            <span cLabel class="fw-bold">Search Question Library: </span>
+            <app-tree-select [options]="treeOptionList" (onChangeValue)="handleQuestionLibraryChange($event)"
+                placeholder="Select question group library..."></app-tree-select>
+        </div>
         <form cForm [formGroup]="createQuestionForm" (ngSubmit)="onSubmitCreateQuestion()">
-            <div class="mb-3">
-                <label cLabel class="me-2">Search Question Library: </label>
-                <app-tree-select [options]="treeOptionList" (onChangeValue)="handleQuestionLibraryChange($event)"
-                    placeholder="Select question group library..."></app-tree-select>
-            </div>
-            <div class="mb-2">
-                <label for="priority" cLabel class="me-2">Priority: <span class="text-danger">(*)</span></label>
-                <input formControlName="priority" type="number" class="me-2 number-control" min="1" max="255">
-                @if (priorityCreateQuestionForm?.invalid && (priorityCreateQuestionForm?.dirty ||
-                priorityCreateQuestionForm?.touched)) {
-                <div class="text-danger">
-                    @if (priorityCreateQuestionForm?.hasError('min') ||
-                    priorityCreateQuestionForm?.hasError('max')) {
-                    <div>Priority must be between 1 and 255.</div>
+            <div class="row mb-2">
+                                <div class="col-4">
+                    <label for="priority" cLabel class="me-2">Priority: <span class="text-danger">(*)</span></label>
+                    <input formControlName="priority" type="number" cFormControl class="me-2" min="1" max="255">
+                    @if (priorityCreateQuestionForm?.invalid && (priorityCreateQuestionForm?.dirty ||
+                    priorityCreateQuestionForm?.touched)) {
+                    <div class="text-danger">
+                        @if (priorityCreateQuestionForm?.hasError('min') ||
+                        priorityCreateQuestionForm?.hasError('max')) {
+                        <div>Priority must be between 1 and 255.</div>
+                        }
+                    </div>
                     }
                 </div>
-                }
+                <div class="col-8">
+                    <label cLabel class="me-2">Question type: <span class="text-danger">(*)</span></label>
+                    <app-select-search [options]="questionTypeList" [selectedValue]="initQuestionTypeId()"
+                        (onChangeValue)="onchangeQuestionType($event)"
+                        placeholder="Select question type..."></app-select-search>
+                </div>
             </div>
-            <div class="mb-2">
-                <label cLabel class="me-2">Question type: <span class="text-danger">(*)</span></label>
-                <app-select-search [options]="questionTypeList" [selectedValue]="initQuestionTypeId()"
-                    (onChangeValue)="onchangeQuestionType($event)"
-                    placeholder="Select question type..."></app-select-search>
-            </div>
-            <div class="mb-2">
-                <label for="nameEN" cLabel>Name EN: <span class="text-danger">(*)</span></label>
-                <input type="text" cFormControl formControlName="nameEN"
-                    placeholder="Enter question group name in English">
-                @if (nameENCreateQuestionForm?.invalid && (nameENCreateQuestionForm?.dirty ||
-                nameENCreateQuestionForm?.touched)) {
-                <div class="text-danger">
-                    @if (nameENCreateQuestionForm?.hasError('required')) {
-                    <div>Enter Name, please!</div>
+            <div class="row">
+
+                <div class="col-6">
+                    <label for="nameEN" cLabel>Name EN: <span class="text-danger">(*)</span></label>
+                    <input type="text" cFormControl formControlName="nameEN"
+                        placeholder="Enter question group name in English">
+                    @if (nameENCreateQuestionForm?.invalid && (nameENCreateQuestionForm?.dirty ||
+                    nameENCreateQuestionForm?.touched)) {
+                    <div class="text-danger">
+                        @if (nameENCreateQuestionForm?.hasError('required')) {
+                        <div>Enter Name, please!</div>
+                        }
+                    </div>
                     }
                 </div>
-                }
-            </div>
-            <div class="mb-2">
-                <label for="nameVN" cLabel>Name VN: <span class="text-danger">(*)</span></label>
-                <input type="text" cFormControl formControlName="nameVN"
-                    placeholder="Enter question group name in Vietnamese">
-                @if (nameVNCreateQuestionForm?.invalid && (nameVNCreateQuestionForm?.dirty ||
-                nameVNCreateQuestionForm?.touched)) {
-                <div class="text-danger">
-                    @if (nameVNCreateQuestionForm?.hasError('required')) {
-                    <div>Enter Name, please!</div>
+                <div class="col-6">
+                    <label for="nameVN" cLabel>Name VN: <span class="text-danger">(*)</span></label>
+                    <input type="text" cFormControl formControlName="nameVN"
+                        placeholder="Enter question group name in Vietnamese">
+                    @if (nameVNCreateQuestionForm?.invalid && (nameVNCreateQuestionForm?.dirty ||
+                    nameVNCreateQuestionForm?.touched)) {
+                    <div class="text-danger">
+                        @if (nameVNCreateQuestionForm?.hasError('required')) {
+                        <div>Enter Name, please!</div>
+                        }
+                    </div>
                     }
                 </div>
-                }
             </div>
         </form>
         @if(showPredefinedAnswerTable()) {
-        <div class="d-flex justify-content-end mb-2">
-            <button (click)="toggleCreatePredefinedAnswerModal()" cButton type="button"
+
+        <div class="d-flex justify-content-between align-items-center title mt-4">
+            <span>Predefined Answers</span>
+            <div class="d-flex justify-content-end">
+                <button cButton type="button" class="btn-success text-white d-flex align-items-center">
+                    <svg [cIcon]="icons.cilPlus" width="22" class="text-white" title="Plus Icon"></svg>
+                </button>
+            </div>
+        </div>
+        <table [hover]="true" [responsive]="true" [striped]="true" align="middle" cTable class="mb-0">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>NameEN</th>
+                    <th>NameVN</th>
+                    <th>Priority</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (item of predefinedAnswerList; track $index; let i = $index) {
+                <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ item.nameEN }}</td>
+                    <td>{{ item.nameVN }}</td>
+                    <td>{{ item.priority }}</td>
+                    <td class="d-flex justify-content-end">
+                        <button cButton type="button" (click)="updatePredefinedAnswer(i)"
+                            class="btn btn-primary me-2">
+                            <svg [cIcon]="icons.cilPen" width="20" class="text-white" title="Edit Icon"></svg>
+                        </button>
+                        <button cButton type="button" (click)="deletePredefinedAnswer(i)"
+                            class="btn btn-danger">
+                            <svg [cIcon]="icons.cilTrash" width="20" class="text-white" title="Delete Icon"></svg>
+                        </button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        <!-- <div class="d-flex justify-content-end mb-2">
+            <button cButton type="button"
                 class="ms-2 btn-success text-white d-flex align-items-center justify-content-center">
                 <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
                 <span>Predefined Answer</span>
             </button>
-        </div>
-        <c-accordion>
+        </div> -->
+
+        <!-- <c-accordion>
             <c-accordion-item #item0="cAccordionItem" [visible]="true">
                 <ng-template cTemplateId="accordionHeaderTemplate">
                     <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
@@ -406,7 +459,7 @@
                     </table>
                 </ng-template>
             </c-accordion-item>
-        </c-accordion>
+        </c-accordion> -->
         }
     </c-modal-body>
     <c-modal-footer>
@@ -451,8 +504,7 @@
             </div>
             <div class="mb-2">
                 <label for="nameEN" cLabel>Name EN: <span class="text-danger">(*)</span></label>
-                <input type="text" cFormControl formControlName="nameEN"
-                    placeholder="Enter question name in English">
+                <input type="text" cFormControl formControlName="nameEN" placeholder="Enter question name in English">
                 @if (nameENUpdateQuestionForm?.invalid && (nameENUpdateQuestionForm?.dirty ||
                 nameENUpdateQuestionForm?.touched)) {
                 <div class="text-danger">
@@ -478,7 +530,7 @@
         </form>
         @if(showPredefinedAnswerTable()) {
         <div class="d-flex justify-content-end mb-2">
-            <button (click)="toggleCreatePredefinedAnswerModal()" cButton type="button"
+            <button cButton type="button"
                 class="ms-2 btn-success text-white d-flex align-items-center justify-content-center">
                 <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
                 <span>Predefined Answer</span>
@@ -545,7 +597,8 @@
         <p>Are you sure you want to delete this question?</p>
         @if(deleteQuestionIndex() !== -1 && questions[deleteQuestionIndex()]) {
         <div class="alert alert-warning">
-            <strong>Question:</strong> {{ questions[deleteQuestionIndex()].nameEN }} / {{ questions[deleteQuestionIndex()].nameVN }}
+            <strong>Question:</strong> {{ questions[deleteQuestionIndex()].nameEN }} / {{
+            questions[deleteQuestionIndex()].nameVN }}
         </div>
         }
         <p class="text-muted">This action cannot be undone.</p>

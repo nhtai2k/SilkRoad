@@ -60,9 +60,9 @@ export class CreateHelperComponent implements OnInit {
   visibleUpdateQuestionModal = signal(false);
   visibleDeleteQuestionModal = signal(false);
   //visible Predefined Answer Modal
-  visibleCreatePredefinedAnswerModal = signal(false);
-  visibleDeletePredefinedAnswerModal = signal(false);
-  visibleUpdatePredefinedAnswerModal = signal(false);
+  // visibleCreatePredefinedAnswerModal = signal(false);
+  // visibleDeletePredefinedAnswerModal = signal(false);
+  // visibleUpdatePredefinedAnswerModal = signal(false);
 
   initQuestionTypeId = signal<number>(-1);
   updateQuestionGroupIndex = signal<number>(-1);
@@ -207,27 +207,27 @@ export class CreateHelperComponent implements OnInit {
   //#endregion
 
   //#region Predefined Answer Modal
-  // Create Predefined Answer Modal
-  toggleCreatePredefinedAnswerModal(): void {
-    this.visibleCreatePredefinedAnswerModal.set(!this.visibleCreatePredefinedAnswerModal());
-  }
-  handleCreatePredefinedAnswerModalChange(event: any) {
-    this.visibleCreatePredefinedAnswerModal.set(event);
-  }
-  // Update Predefined Answer Modal
-  toggleUpdatePredefinedAnswerModal(): void {
-    this.visibleUpdatePredefinedAnswerModal.set(!this.visibleUpdatePredefinedAnswerModal());
-  }
-  handleUpdatePredefinedAnswerModalChange(event: any) {
-    this.visibleUpdatePredefinedAnswerModal.set(event);
-  }
-  // Delete Predefined Answer Modal
-  toggleDeletePredefinedAnswerModal(): void {
-    this.visibleDeletePredefinedAnswerModal.set(!this.visibleDeletePredefinedAnswerModal());
-  }
-  handleDeletePredefinedAnswerModalChange(event: any) {
-    this.visibleDeletePredefinedAnswerModal.set(event);
-  }
+  // // Create Predefined Answer Modal
+  // toggleCreatePredefinedAnswerModal(): void {
+  //   this.visibleCreatePredefinedAnswerModal.set(!this.visibleCreatePredefinedAnswerModal());
+  // }
+  // handleCreatePredefinedAnswerModalChange(event: any) {
+  //   this.visibleCreatePredefinedAnswerModal.set(event);
+  // }
+  // // Update Predefined Answer Modal
+  // toggleUpdatePredefinedAnswerModal(): void {
+  //   this.visibleUpdatePredefinedAnswerModal.set(!this.visibleUpdatePredefinedAnswerModal());
+  // }
+  // handleUpdatePredefinedAnswerModalChange(event: any) {
+  //   this.visibleUpdatePredefinedAnswerModal.set(event);
+  // }
+  // // Delete Predefined Answer Modal
+  // toggleDeletePredefinedAnswerModal(): void {
+  //   this.visibleDeletePredefinedAnswerModal.set(!this.visibleDeletePredefinedAnswerModal());
+  // }
+  // handleDeletePredefinedAnswerModalChange(event: any) {
+  //   this.visibleDeletePredefinedAnswerModal.set(event);
+  // }
   //#endregion
   //#endregion
 
@@ -494,7 +494,7 @@ export class CreateHelperComponent implements OnInit {
   //#region predefined answer form
   onSubmitCreatePredefinedAnswer(): void {
     this.predefinedAnswerList.push(this.createPredefinedAnswerForm.value);
-    this.toggleCreatePredefinedAnswerModal();
+    // this.toggleCreatePredefinedAnswerModal();
     this.createPredefinedAnswerForm.reset();
     this.createPredefinedAnswerForm.patchValue({ priority: 1 });
   }
