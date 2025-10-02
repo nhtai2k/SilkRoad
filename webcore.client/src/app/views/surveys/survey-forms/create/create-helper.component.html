@@ -22,7 +22,7 @@
     <tbody>
         @for(item of questionGroups; track $index; let i = $index) {
         <tr>
-            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ i + 1 }}</td>
             <td>{{ item.nameEN }}</td>
             <td>{{ item.nameVN }}</td>
             <td>{{ item.priority }}</td>
@@ -98,11 +98,11 @@
 <!-- Question Template -->
 <ng-template #questionTemplate let-node="node" let-level="level" let-index="index">
     <tr class="tree-row" [class.expanded]="node.expanded" [class.children]="level > 0">
-        <th>
+        <td>
             <span [ngStyle]="{'margin-left.px': level * 15}">
                 {{ index + 1 }}
             </span>
-        </th>
+        </td>
         <td>{{ node.nameEN }}</td>
         <td>{{ node.nameVN }}</td>
         <td>{{ node.priority }}</td>
@@ -131,11 +131,11 @@
 </ng-template>
 <ng-template #predefinedAnswerTemplate let-node="node" let-level="level" let-index="index">
     <tr class="tree-row" [class.expanded]="node.expanded" [class.children]="level > 0">
-        <th>
+        <td>
             <span [ngStyle]="{'margin-left.px': level * 15}">
                 {{ index + 1 }}
             </span>
-        </th>
+        </td>
         <td>{{ node.nameVN }}</td>
         <td>{{ node.nameEN }}</td>
         <td>{{ node.priority }}</td>
@@ -494,11 +494,11 @@
                             }
                         </td>
                         <td class="d-flex justify-content-end">
-                            <button cButton type="button" (click)="onSubmitCreatePredefinedAnswer()"
-                                class="btn btn-primary me-2" [disabled]="createPredefinedAnswerForm.invalid">
+                            <button cButton type="button" (click)="onSubmitUpdatePredefinedAnswer()"
+                                class="btn btn-primary me-2" [disabled]="updatePredefinedAnswerForm.invalid">
                                 <svg [cIcon]="icons.cilSave" width="20" class="text-white" title="Save Icon"></svg>
                             </button>
-                            <button cButton type="button" (click)="hideCreatePredefinedAnswerForm()"
+                            <button cButton type="button" (click)="updatePredefinedAnswer(-1)"
                                 class="btn btn-danger">
                                 <svg [cIcon]="icons.cilX" width="20" class="text-white" title="Close Icon"></svg>
                             </button>
@@ -530,50 +530,6 @@
             <p class="text-center opacity-50">No users found. Click Btn Add to get started.</p>
         </div>
         }
-        <!-- <div class="d-flex justify-content-end mb-2">
-            <button cButton type="button"
-                class="ms-2 btn-success text-white d-flex align-items-center justify-content-center">
-                <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
-                <span>Predefined Answer</span>
-            </button>
-        </div> -->
-
-        <!-- <c-accordion>
-            <c-accordion-item #item0="cAccordionItem" [visible]="true">
-                <ng-template cTemplateId="accordionHeaderTemplate">
-                    <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
-                        Answer List
-                    </button>
-                </ng-template>
-                <ng-template cTemplateId="accordionBodyTemplate">
-                    <table [hover]="true" [responsive]="true" [striped]="true" align="middle" cTable class="mb-0">
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>NameEN</th>
-                                <th>NameVN</th>
-                                <th>Priority</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for (item of predefinedAnswerList; track $index; let i = $index) {
-                            <tr>
-                                <td>{{ i + 1 }}</td>
-                                <td>{{ item.nameEN }}</td>
-                                <td>{{ item.nameVN }}</td>
-                                <td>{{ item.priority }}</td>
-                                <td class="d-flex justify-content-center">
-                                    <button cButton type="button" (click)="updatePredefinedAnswer(i)" class="btn btn-warning me-2">Update</button>
-                                    <button cButton type="button" (click)="deletePredefinedAnswer(i)" class="btn btn-danger">Delete</button>
-                                </td>
-                            </tr>
-                            }
-                        </tbody>
-                    </table>
-                </ng-template>
-            </c-accordion-item>
-        </c-accordion> -->
         }
     </c-modal-body>
     <c-modal-footer>
@@ -597,95 +553,211 @@
     </c-modal-header>
     <c-modal-body>
         <form cForm [formGroup]="updateQuestionForm" (ngSubmit)="onSubmitUpdateQuestion()">
-            <div class="mb-2">
-                <label for="priority" cLabel class="me-2">Priority: <span class="text-danger">(*)</span></label>
-                <input formControlName="priority" type="number" class="me-2 number-control" min="1" max="255">
-                @if (priorityUpdateQuestionForm?.invalid && (priorityUpdateQuestionForm?.dirty ||
-                priorityUpdateQuestionForm?.touched)) {
-                <div class="text-danger">
-                    @if (priorityUpdateQuestionForm?.hasError('min') ||
-                    priorityUpdateQuestionForm?.hasError('max')) {
-                    <div>Priority must be between 1 and 255.</div>
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="priority" cLabel class="me-2">Priority: <span class="text-danger">(*)</span></label>
+                    <input formControlName="priority" type="number" cFormControl min="1" max="255">
+                    @if (priorityUpdateQuestionForm?.invalid && (priorityUpdateQuestionForm?.dirty ||
+                    priorityUpdateQuestionForm?.touched)) {
+                    <div class="text-danger">
+                        @if (priorityUpdateQuestionForm?.hasError('min') ||
+                        priorityUpdateQuestionForm?.hasError('max')) {
+                        <div>Priority must be between 1 and 255.</div>
+                        }
+                    </div>
                     }
                 </div>
-                }
+
+                <div class="col-8">
+                    <label cLabel class="me-2">Question type: <span class="text-danger">(*)</span></label>
+                    <app-select-search [options]="questionTypeList" [selectedValue]="initQuestionTypeId()"
+                        (onChangeValue)="onchangeQuestionType($event)"
+                        placeholder="Select question type..."></app-select-search>
+                </div>
             </div>
-            <div class="mb-2">
-                <label cLabel class="me-2">Question type: <span class="text-danger">(*)</span></label>
-                <app-select-search [options]="questionTypeList" [selectedValue]="initQuestionTypeId()"
-                    (onChangeValue)="onchangeQuestionType($event)"
-                    placeholder="Select question type..."></app-select-search>
-            </div>
-            <div class="mb-2">
-                <label for="nameEN" cLabel>Name EN: <span class="text-danger">(*)</span></label>
-                <input type="text" cFormControl formControlName="nameEN" placeholder="Enter question name in English">
-                @if (nameENUpdateQuestionForm?.invalid && (nameENUpdateQuestionForm?.dirty ||
-                nameENUpdateQuestionForm?.touched)) {
-                <div class="text-danger">
-                    @if (nameENUpdateQuestionForm?.hasError('required')) {
-                    <div>Enter Name, please!</div>
+            <div class="row">
+                <div class="col-6">
+                    <label for="nameEN" cLabel>Name EN: <span class="text-danger">(*)</span></label>
+                    <input type="text" cFormControl formControlName="nameEN" placeholder="Enter question name in English">
+                    @if (nameENUpdateQuestionForm?.invalid && (nameENUpdateQuestionForm?.dirty ||
+                    nameENUpdateQuestionForm?.touched)) {
+                    <div class="text-danger">
+                        @if (nameENUpdateQuestionForm?.hasError('required')) {
+                        <div>Enter Name, please!</div>
+                        }
+                    </div>
                     }
                 </div>
-                }
-            </div>
-            <div class="mb-2">
-                <label for="nameVN" cLabel>Name VN: <span class="text-danger">(*)</span></label>
-                <input type="text" cFormControl formControlName="nameVN"
-                    placeholder="Enter question name in Vietnamese">
-                @if (nameVNUpdateQuestionForm?.invalid && (nameVNUpdateQuestionForm?.dirty ||
-                nameVNUpdateQuestionForm?.touched)) {
-                <div class="text-danger">
-                    @if (nameVNUpdateQuestionForm?.hasError('required')) {
-                    <div>Enter Name, please!</div>
+                <div class="col-6">
+                    <label for="nameVN" cLabel>Name VN: <span class="text-danger">(*)</span></label>
+                    <input type="text" cFormControl formControlName="nameVN"
+                        placeholder="Enter question name in Vietnamese">
+                    @if (nameVNUpdateQuestionForm?.invalid && (nameVNUpdateQuestionForm?.dirty ||
+                    nameVNUpdateQuestionForm?.touched)) {
+                    <div class="text-danger">
+                        @if (nameVNUpdateQuestionForm?.hasError('required')) {
+                        <div>Enter Name, please!</div>
+                        }
+                    </div>
                     }
                 </div>
-                }
             </div>
         </form>
         @if(showPredefinedAnswerTable()) {
-        <div class="d-flex justify-content-end mb-2">
-            <button cButton type="button"
-                class="ms-2 btn-success text-white d-flex align-items-center justify-content-center">
-                <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
-                <span>Predefined Answer</span>
-            </button>
+
+        <div class="d-flex justify-content-between align-items-center title mt-4">
+            <span>Predefined Answers</span>
+            <div class="d-flex justify-content-end">
+                <button cButton type="button" class="btn-success text-white d-flex align-items-center"
+                    (click)="showCreatePredefinedAnswerForm()" [disabled]="visibleCreatePredefinedAnswerForm()">
+                    <svg [cIcon]="icons.cilPlus" width="22" class="text-white" title="Plus Icon"></svg>
+                </button>
+            </div>
         </div>
-        <c-accordion>
-            <c-accordion-item #item1="cAccordionItem" [visible]="true">
-                <ng-template cTemplateId="accordionHeaderTemplate">
-                    <button (click)="item1.toggleItem()" [collapsed]="!item1.visible" cAccordionButton>
-                        Answer List
-                    </button>
-                </ng-template>
-                <ng-template cTemplateId="accordionBodyTemplate">
-                    <table [hover]="true" [responsive]="true" [striped]="true" align="middle" cTable class="mb-0">
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>NameEN</th>
-                                <th>NameVN</th>
-                                <th>Priority</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for (item of predefinedAnswerList; track $index; let i = $index) {
-                            <tr>
-                                <td>{{ i + 1 }}</td>
-                                <td>{{ item.nameEN }}</td>
-                                <td>{{ item.nameVN }}</td>
-                                <td>{{ item.priority }}</td>
-                                <td class="d-flex justify-content-center">
-                                    <button cButton type="button" class="btn btn-warning me-2">Update</button>
-                                    <button cButton type="button" class="btn btn-danger">Delete</button>
-                                </td>
-                            </tr>
+        <table [hover]="true" [responsive]="true"  cTable>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>NameEN</th>
+                    <th>NameVN</th>
+                    <th>Priority</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Predefined Answer Form Row -->
+                @if(visibleCreatePredefinedAnswerForm()) {
+                    <tr [formGroup]="createPredefinedAnswerForm" class="adding">
+                        <td class="new-id">New</td>
+                        <td>
+                            <input type="text" formControlName="nameEN" class="form-control"
+                                placeholder="Enter predefined answer name in English">
+                            @if (nameENCreatePredefinedAnswerForm?.invalid && (nameENCreatePredefinedAnswerForm?.dirty ||
+                            nameENCreatePredefinedAnswerForm?.touched)) {
+                            <div class="text-danger">
+                                @if (nameENCreatePredefinedAnswerForm?.hasError('required')) {
+                                <div>Enter Name, please!</div>
+                                }
+                            </div>
                             }
-                        </tbody>
-                    </table>
-                </ng-template>
-            </c-accordion-item>
-        </c-accordion>
+                        </td>
+                        <td>
+                            <input type="text" formControlName="nameVN" class="form-control"
+                                placeholder="Enter predefined answer name in Vietnamese">
+                            @if (nameVNCreatePredefinedAnswerForm?.invalid && (nameVNCreatePredefinedAnswerForm?.dirty ||
+                            nameVNCreatePredefinedAnswerForm?.touched)) {
+                            <div class="text-danger">
+                                @if (nameVNCreatePredefinedAnswerForm?.hasError('required')) {
+                                <div>Enter Name, please!</div>
+                                }
+                            </div>
+                            }
+                        </td>
+                        <td>
+                            <input type="number" formControlName="priority" class="form-control number-control"
+                                min="1" max="255">
+                            @if (priorityCreatePredefinedAnswerForm?.invalid && (priorityCreatePredefinedAnswerForm?.dirty ||
+                            priorityCreatePredefinedAnswerForm?.touched)) {
+                            <div class="text-danger">
+                                @if (priorityCreatePredefinedAnswerForm?.hasError('min') ||
+                                priorityCreatePredefinedAnswerForm?.hasError('max')) {
+                                <div>Priority must be between 1 and 255.</div>
+                                }
+                            </div>
+                            }
+                        </td>
+                        <td class="d-flex justify-content-end">
+                            <button cButton type="button" (click)="onSubmitCreatePredefinedAnswer()"
+                                class="btn btn-primary me-2" [disabled]="createPredefinedAnswerForm.invalid">
+                                <svg [cIcon]="icons.cilSave" width="20" class="text-white" title="Save Icon"></svg>
+                            </button>
+                            <button cButton type="button" (click)="hideCreatePredefinedAnswerForm()"
+                                class="btn btn-danger">
+                                <svg [cIcon]="icons.cilX" width="20" class="text-white" title="Close Icon"></svg>
+                            </button>
+                        </td>
+
+                    </tr>
+                }
+
+                @for (item of predefinedAnswerList; track $index; let i = $index) {
+                    @if(updatePredefinedAnswerIndex() !== -1 && updatePredefinedAnswerIndex() === i) {
+                         <tr [formGroup]="updatePredefinedAnswerForm" class="editing">
+                          <td>{{ i + 1 }}</td>
+                        <td>
+                            <input type="text" formControlName="nameEN" class="form-control"
+                                placeholder="Enter predefined answer name in English">
+                            @if (nameENUpdatePredefinedAnswerForm?.invalid && (nameENUpdatePredefinedAnswerForm?.dirty ||
+                            nameENUpdatePredefinedAnswerForm?.touched)) {
+                            <div class="text-danger">
+                                @if (nameENUpdatePredefinedAnswerForm?.hasError('required')) {
+                                <div>Enter Name, please!</div>
+                                }
+                            </div>
+                            }
+                        </td>
+                        <td>
+                            <input type="text" formControlName="nameVN" class="form-control"
+                                placeholder="Enter predefined answer name in Vietnamese">
+                            @if (nameVNUpdatePredefinedAnswerForm?.invalid && (nameVNUpdatePredefinedAnswerForm?.dirty ||
+                            nameVNUpdatePredefinedAnswerForm?.touched)) {
+                            <div class="text-danger">
+                                @if (nameVNUpdatePredefinedAnswerForm?.hasError('required')) {
+                                <div>Enter Name, please!</div>
+                                }
+                            </div>
+                            }
+                        </td>
+                        <td>
+                            <input type="number" formControlName="priority" class="form-control number-control"
+                                min="1" max="255">
+                            @if (priorityUpdatePredefinedAnswerForm?.invalid && (priorityUpdatePredefinedAnswerForm?.dirty ||
+                            priorityUpdatePredefinedAnswerForm?.touched)) {
+                            <div class="text-danger">
+                                @if (priorityUpdatePredefinedAnswerForm?.hasError('min') ||
+                                priorityUpdatePredefinedAnswerForm?.hasError('max')) {
+                                <div>Priority must be between 1 and 255.</div>
+                                }
+                            </div>
+                            }
+                        </td>
+                        <td class="d-flex justify-content-end">
+                            <button cButton type="button" (click)="onSubmitUpdatePredefinedAnswer()"
+                                class="btn btn-primary me-2" [disabled]="updatePredefinedAnswerForm.invalid">
+                                <svg [cIcon]="icons.cilSave" width="20" class="text-white" title="Save Icon"></svg>
+                            </button>
+                            <button cButton type="button" (click)="updatePredefinedAnswer(-1)"
+                                class="btn btn-danger">
+                                <svg [cIcon]="icons.cilX" width="20" class="text-white" title="Close Icon"></svg>
+                            </button>
+                        </td>
+
+                    </tr>
+                    }@else {
+                        <tr>
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ item.nameEN }}</td>
+                            <td>{{ item.nameVN }}</td>
+                            <td>{{ item.priority }}</td>
+                            <td class="d-flex justify-content-end">
+                                <button cButton type="button" (click)="updatePredefinedAnswer(i)" class="btn btn-primary me-2">
+                                    <svg [cIcon]="icons.cilPen" width="20" class="text-white" title="Edit Icon"></svg>
+                                </button>
+                                <button cButton type="button" (click)="deletePredefinedAnswer(i)" class="btn btn-danger">
+                                    <svg [cIcon]="icons.cilTrash" width="20" class="text-white" title="Delete Icon"></svg>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                       
+                }
+            </tbody>
+        </table>
+        @if(predefinedAnswerList.length === 0) {
+        <div class="py-4">
+            <p class="text-center opacity-50">No users found. Click Btn Add to get started.</p>
+        </div>
+        }
         }
     </c-modal-body>
     <c-modal-footer>
@@ -726,70 +798,3 @@
         </button>
     </c-modal-footer>
 </c-modal>
-
-<!-- Create Predefined Answer Modal -->
-<!-- <c-modal id="visibleCreatePredefinedAnswerModal" [visible]="visibleCreatePredefinedAnswerModal()" backdrop="static"
-    size="lg" (visibleChange)="handleCreatePredefinedAnswerModalChange($event)">
-    <c-modal-header>
-        <h5 cModalTitle>Create Answer</h5>
-    </c-modal-header>
-    <form cForm [formGroup]="createPredefinedAnswerForm" (ngSubmit)="onSubmitCreatePredefinedAnswer()">
-        <c-modal-body>
-            <div class="mb-2 d-flex flex-row">
-                <div>
-                    <label for="priority" class="me-2">Priority: </label>
-                    <input formControlName="priority" type="number" class="me-2 number-control" min="1" max="255">
-                </div>
-            </div>
-            <div class="mb-2 row">
-                <div class="col-12 col-md-6">
-                    <label cLabel for="nameEN" class="me-2">NameEN: <span class="text-danger">(*)</span> </label>
-                    <input cFormControl formControlName="nameEN">
-                </div>
-                <div class="col-12 col-md-6">
-                    <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
-                    <input cFormControl formControlName="nameVN">
-                </div>
-            </div>
-        </c-modal-body>
-        <c-modal-footer>
-            <button (click)="toggleCreatePredefinedAnswerModal()" cButton color="secondary">
-                Close
-            </button>
-            <button cButton type="submit" [disabled]="!createPredefinedAnswerForm.valid" color="primary">Save</button>
-        </c-modal-footer>
-    </form>
-</c-modal> -->
-<!-- Update Predefined Answer Modal -->
-<!-- <c-modal id="visibleUpdatePredefinedAnswerModal" [visible]="visibleUpdatePredefinedAnswerModal()" backdrop="static"
-    size="lg" (visibleChange)="handleUpdatePredefinedAnswerModalChange($event)">
-    <c-modal-header>
-        <h5 cModalTitle>Update Predefined Answer</h5>
-    </c-modal-header>
-    <form cForm [formGroup]="updatePredefinedAnswerForm" (ngSubmit)="onSubmitUpdatePredefinedAnswer()">
-        <c-modal-body>
-            <div class="mb-2 d-flex flex-row">
-                <div>
-                    <label for="priority" class="me-2">Priority: </label>
-                    <input formControlName="priority" type="number" class="me-2 number-control" min="1" max="255">
-                </div>
-            </div>
-            <div class="mb-2 row">
-                <div class="col-12 col-md-6">
-                    <label cLabel for="nameEN" class="me-2">NameEN: <span class="text-danger">(*)</span> </label>
-                    <input cFormControl formControlName="nameEN">
-                </div>
-                <div class="col-12 col-md-6">
-                    <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
-                    <input cFormControl formControlName="nameVN">
-                </div>
-            </div>
-        </c-modal-body>
-        <c-modal-footer>
-            <button (click)="toggleUpdatePredefinedAnswerModal()" cButton color="secondary">
-                Close
-            </button>
-            <button cButton type="submit" [disabled]="!updatePredefinedAnswerForm.valid" color="primary">Save</button>
-        </c-modal-footer>
-    </form>
-</c-modal> -->

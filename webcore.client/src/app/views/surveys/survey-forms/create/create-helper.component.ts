@@ -63,9 +63,6 @@ export class CreateHelperComponent implements OnInit {
   //visible Predefined Answer Form
   visibleCreatePredefinedAnswerForm = signal(false);
   updatePredefinedAnswerIndex = signal<number>(-1);
-  // visibleCreatePredefinedAnswerModal = signal(false);
-  // visibleDeletePredefinedAnswerModal = signal(false);
-  // visibleUpdatePredefinedAnswerModal = signal(false);
 
   initQuestionTypeId = signal<number>(-1);
   updateQuestionGroupIndex = signal<number>(-1);
@@ -207,30 +204,6 @@ export class CreateHelperComponent implements OnInit {
   handleDeleteQuestionModalChange(event: any) {
     this.visibleDeleteQuestionModal.set(event);
   }
-  //#endregion
-
-  //#region Predefined Answer Modal
-  // // Create Predefined Answer Modal
-  // toggleCreatePredefinedAnswerModal(): void {
-  //   this.visibleCreatePredefinedAnswerModal.set(!this.visibleCreatePredefinedAnswerModal());
-  // }
-  // handleCreatePredefinedAnswerModalChange(event: any) {
-  //   this.visibleCreatePredefinedAnswerModal.set(event);
-  // }
-  // // Update Predefined Answer Modal
-  // toggleUpdatePredefinedAnswerModal(): void {
-  //   this.visibleUpdatePredefinedAnswerModal.set(!this.visibleUpdatePredefinedAnswerModal());
-  // }
-  // handleUpdatePredefinedAnswerModalChange(event: any) {
-  //   this.visibleUpdatePredefinedAnswerModal.set(event);
-  // }
-  // // Delete Predefined Answer Modal
-  // toggleDeletePredefinedAnswerModal(): void {
-  //   this.visibleDeletePredefinedAnswerModal.set(!this.visibleDeletePredefinedAnswerModal());
-  // }
-  // handleDeletePredefinedAnswerModalChange(event: any) {
-  //   this.visibleDeletePredefinedAnswerModal.set(event);
-  // }
   //#endregion
   //#endregion
 
@@ -532,14 +505,21 @@ export class CreateHelperComponent implements OnInit {
     // this.toggleUpdatePredefinedAnswerModal();
   }
   onSubmitUpdatePredefinedAnswer(): void {
-    // if (this.updatePredefinedAnswerForm.valid) {
-    //   const updatedAnswer = this.updatePredefinedAnswerForm.value;
-    //   this.updatePredefinedAnswer(this.selectedPredefinedAnswerIndex, updatedAnswer);
-    //   this.updatePredefinedAnswerForm.reset({ nameEN: '', nameVN: '', priority: 1 });
-    //   this.toggleUpdatePredefinedAnswerModal();
-    // } else {
-    //   this.updatePredefinedAnswerForm.markAllAsTouched();
-    // }
+    if (this.updatePredefinedAnswerIndex() !== -1) {
+      const index = this.updatePredefinedAnswerIndex();
+      const selectedPredefinedAnswer = this.predefinedAnswerList[index];
+
+      const updatedPredefinedAnswer: PredefinedAnswerModel = {
+        ...selectedPredefinedAnswer,
+        nameEN: this.updatePredefinedAnswerForm.value.nameEN ?? '',
+        nameVN: this.updatePredefinedAnswerForm.value.nameVN ?? '',
+        priority: this.updatePredefinedAnswerForm.value.priority ?? 1
+      };
+
+      this.predefinedAnswerList[index] = updatedPredefinedAnswer;
+      this.updatePredefinedAnswerForm.reset({ nameEN: '', nameVN: '', priority: 1 });
+      this.updatePredefinedAnswerIndex.set(-1);
+    }
   }
   get nameENUpdatePredefinedAnswerForm() {
     return this.updatePredefinedAnswerForm.get('nameEN');
