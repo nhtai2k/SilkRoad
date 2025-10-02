@@ -8,6 +8,7 @@
         </button>
     </div>
 </div>
+@if(questionGroups.length > 0) {
 <table cTable>
     <thead>
         <tr>
@@ -34,7 +35,7 @@
                 <button cButton type="button" class="btn-success text-white me-2">
                     <svg [cIcon]="icons.cilPlus" width="20" class="text-white" title="Edit Icon"></svg>
                 </button>
-                <button cButton type="button" class="btn-primary text-white me-2">
+                <button cButton type="button" (click)="updateQuestionGroup(i)" class="btn-primary text-white me-2">
                     <svg [cIcon]="icons.cilPen" width="20" class="text-white" title="Edit Icon"></svg>
                 </button>
                 <button cButton type="button" (click)="toggleDeleteQuestionGroupModal()" class="btn-danger text-white">
@@ -53,7 +54,11 @@
         }
     </tbody>
 </table>
-
+} @else {
+<div class="text-center my-4">
+    No question group available.
+</div>
+}
 <!-- Table of Questions -->
 
 <div class="d-flex justify-content-between align-items-center title mt-4">
@@ -65,6 +70,7 @@
         </button>
     </div>
 </div>
+@if(questions.length > 0) {
 <table cTable>
     <thead>
         <tr>
@@ -84,6 +90,11 @@
         }
     </tbody>
 </table>
+} @else {
+<div class="text-center my-4">
+    No question available.
+</div>
+}
 
 <!-- Question Template -->
 <ng-template #questionTemplate let-node="node" let-level="level" let-index="index">
@@ -105,7 +116,7 @@
             <button cButton type="button" (click)="toggleCreateQuestionModal()" class="btn-success text-white me-2">
                 <svg [cIcon]="icons.cilPlus" width="20" class="text-white" title="Plus Icon"></svg>
             </button>
-            <button cButton type="button" class="btn-primary text-white me-2">
+            <button cButton type="button" (click)="toggleUpdateQuestionModal()" class="btn-primary text-white me-2">
                 <svg [cIcon]="icons.cilPen" width="20" class="text-white" title="Edit Icon"></svg>
             </button>
             <button cButton type="button" (click)="toggleDeleteQuestionModal()" class="btn-danger text-white">
@@ -139,7 +150,6 @@
 </ng-template>
 
 <!-- Create Question Group Modal -->
-
 <c-modal id="visibleCreateQuestionGroupModal" [visible]="visibleCreateQuestionGroupModal()" size="lg" backdrop="static"
     (visibleChange)="handleCreateQuestionGroupModalChange($event)">
     <c-modal-header>
@@ -155,16 +165,41 @@
             <div class="mb-2">
                 <label for="priority" cLabel class="me-2">Priority: <span class="text-danger">(*)</span></label>
                 <input formControlName="priority" type="number" class="me-2 number-control" min="1" max="255">
+                @if (priorityCreateQuestionGroupForm?.invalid && (priorityCreateQuestionGroupForm?.dirty ||
+                priorityCreateQuestionGroupForm?.touched)) {
+                <div class="text-danger">
+                    @if (priorityCreateQuestionGroupForm?.hasError('min') ||
+                    priorityCreateQuestionGroupForm?.hasError('max')) {
+                    <div>Priority must be between 1 and 255.</div>
+                    }
+                </div>
+                }
             </div>
             <div class="mb-2">
                 <label for="nameEN" cLabel>Name EN: <span class="text-danger">(*)</span></label>
                 <input type="text" cFormControl formControlName="nameEN"
                     placeholder="Enter question group name in English">
+                @if (nameENCreateQuestionGroupForm?.invalid && (nameENCreateQuestionGroupForm?.dirty ||
+                nameENCreateQuestionGroupForm?.touched)) {
+                <div class="text-danger">
+                    @if (nameENCreateQuestionGroupForm?.hasError('required')) {
+                    <div>Enter Name, please!</div>
+                    }
+                </div>
+                }
             </div>
             <div class="mb-2">
                 <label for="nameVN" cLabel>Name VN: <span class="text-danger">(*)</span></label>
                 <input type="text" cFormControl formControlName="nameVN"
                     placeholder="Enter question group name in Vietnamese">
+                @if (nameVNCreateQuestionGroupForm?.invalid && (nameVNCreateQuestionGroupForm?.dirty ||
+                nameVNCreateQuestionGroupForm?.touched)) {
+                <div class="text-danger">
+                    @if (nameVNCreateQuestionGroupForm?.hasError('required')) {
+                    <div>Enter Name, please!</div>
+                    }
+                </div>
+                }
             </div>
         </form>
     </c-modal-body>
@@ -174,12 +209,67 @@
             [disabled]="createQuestionGroupForm.invalid">Add</button>
     </c-modal-footer>
 </c-modal>
+<!-- Update Question Group Modal -->
+<c-modal id="visibleUpdateQuestionGroupModal" [visible]="visibleUpdateQuestionGroupModal()" size="lg" backdrop="static"
+    (visibleChange)="handleUpdateQuestionGroupModalChange($event)">
+    <c-modal-header>
+        <h5 cModalTitle>Update Question Group</h5>
+    </c-modal-header>
+    <c-modal-body>
+        <form cForm [formGroup]="updateQuestionGroupForm" (ngSubmit)="onSubmitUpdateQuestionGroup()">
+            <div class="mb-2">
+                <label for="priority" cLabel class="me-2">Priority: <span class="text-danger">(*)</span></label>
+                <input formControlName="priority" type="number" class="me-2 number-control" min="1" max="255">
+                @if (priorityUpdateQuestionGroupForm?.invalid && (priorityUpdateQuestionGroupForm?.dirty ||
+                priorityUpdateQuestionGroupForm?.touched)) {
+                <div class="text-danger">
+                    @if (priorityUpdateQuestionGroupForm?.hasError('min') ||
+                    priorityUpdateQuestionGroupForm?.hasError('max')) {
+                    <div>Priority must be between 1 and 255.</div>
+                    }
+                </div>
+                }
+            </div>
+            <div class="mb-2">
+                <label for="nameEN" cLabel>Name EN: <span class="text-danger">(*)</span></label>
+                <input type="text" cFormControl formControlName="nameEN"
+                    placeholder="Enter question group name in English">
+                @if (nameENUpdateQuestionGroupForm?.invalid && (nameENUpdateQuestionGroupForm?.dirty ||
+                nameENUpdateQuestionGroupForm?.touched)) {
+                <div class="text-danger">
+                    @if (nameENUpdateQuestionGroupForm?.hasError('required')) {
+                    <div>Enter Name, please!</div>
+                    }
+                </div>
+                }
+            </div>
+            <div class="mb-2">
+                <label for="nameVN" cLabel>Name VN: <span class="text-danger">(*)</span></label>
+                <input type="text" cFormControl formControlName="nameVN"
+                    placeholder="Enter question group name in Vietnamese">
+                @if (nameVNUpdateQuestionGroupForm?.invalid && (nameVNUpdateQuestionGroupForm?.dirty ||
+                nameVNUpdateQuestionGroupForm?.touched)) {
+                <div class="text-danger">
+                    @if (nameVNUpdateQuestionGroupForm?.hasError('required')) {
+                    <div>Enter Name, please!</div>
+                    }
+                </div>
+                }
+            </div>
+        </form>
+    </c-modal-body>
+    <c-modal-footer>
+        <button (click)="toggleUpdateQuestionGroupModal()" cButton color="secondary">Close</button>
+        <button cButton color="primary" (click)="onSubmitUpdateQuestionGroup()"
+            [disabled]="updateQuestionGroupForm.invalid">Save</button>
+    </c-modal-footer>
+</c-modal>
 
-<!-- <c-modal id="visibleDeleteQuestionGroupModal" [visible]="visibleDeleteQuestionGroupModal()"
+<!-- Delete Question Group Modal -->
+<c-modal id="visibleDeleteQuestionGroupModal" [visible]="visibleDeleteQuestionGroupModal()"
     (visibleChange)="handleDeleteQuestionGroupModalChange($event)">
     <c-modal-header>
         <h5 cModalTitle>Modal title visibleDeleteQuestionGroupModal</h5>
-        <button (click)="toggleDeleteQuestionGroupModal()" cButtonClose></button>
     </c-modal-header>
     <c-modal-body>Woohoo, you are reading this text in a modal!</c-modal-body>
     <c-modal-footer>
@@ -188,15 +278,13 @@
         </button>
         <button cButton color="primary">Save changes</button>
     </c-modal-footer>
-</c-modal> -->
-
+</c-modal>
 
 <!-- Create Question Modal -->
 <c-modal id="visibleCreateQuestionModal" [visible]="visibleCreateQuestionModal()" size="lg" backdrop="static"
     (visibleChange)="handleCreateQuestionModalChange($event)">
     <c-modal-header>
         <h5 cModalTitle>Create Question</h5>
-        <!-- <button (click)="toggleCreateQuestionModal()" cButtonClose></button> -->
     </c-modal-header>
     <c-modal-body>
         <form cForm [formGroup]="createQuestionForm" (ngSubmit)="onSubmitCreateQuestion()">
@@ -208,21 +296,47 @@
             <div class="mb-2">
                 <label for="priority" cLabel class="me-2">Priority: <span class="text-danger">(*)</span></label>
                 <input formControlName="priority" type="number" class="me-2 number-control" min="1" max="255">
+                @if (priorityCreateQuestionForm?.invalid && (priorityCreateQuestionForm?.dirty ||
+                priorityCreateQuestionForm?.touched)) {
+                <div class="text-danger">
+                    @if (priorityCreateQuestionForm?.hasError('min') ||
+                    priorityCreateQuestionForm?.hasError('max')) {
+                    <div>Priority must be between 1 and 255.</div>
+                    }
+                </div>
+                }
             </div>
             <div class="mb-2">
                 <label cLabel class="me-2">Question type: <span class="text-danger">(*)</span></label>
-                <app-select-search [options]="questionTypeList" [selectedValue]="initQuestionTypeId()"  (onChangeValue)="onchangeQuestionType($event)"
+                <app-select-search [options]="questionTypeList" [selectedValue]="initQuestionTypeId()"
+                    (onChangeValue)="onchangeQuestionType($event)"
                     placeholder="Select question type..."></app-select-search>
             </div>
             <div class="mb-2">
                 <label for="nameEN" cLabel>Name EN: <span class="text-danger">(*)</span></label>
                 <input type="text" cFormControl formControlName="nameEN"
                     placeholder="Enter question group name in English">
+                @if (nameENCreateQuestionForm?.invalid && (nameENCreateQuestionForm?.dirty ||
+                nameENCreateQuestionForm?.touched)) {
+                <div class="text-danger">
+                    @if (nameENCreateQuestionForm?.hasError('required')) {
+                    <div>Enter Name, please!</div>
+                    }
+                </div>
+                }
             </div>
             <div class="mb-2">
                 <label for="nameVN" cLabel>Name VN: <span class="text-danger">(*)</span></label>
                 <input type="text" cFormControl formControlName="nameVN"
                     placeholder="Enter question group name in Vietnamese">
+                @if (nameVNCreateQuestionForm?.invalid && (nameVNCreateQuestionForm?.dirty ||
+                nameVNCreateQuestionForm?.touched)) {
+                <div class="text-danger">
+                    @if (nameVNCreateQuestionForm?.hasError('required')) {
+                    <div>Enter Name, please!</div>
+                    }
+                </div>
+                }
             </div>
         </form>
         @if(showPredefinedAnswerTable()) {
@@ -277,17 +391,48 @@
             changes</button>
     </c-modal-footer>
 </c-modal>
+<!-- Update Question Modal -->
+<c-modal id="visibleUpdateQuestionModal" [visible]="visibleUpdateQuestionModal()" size="lg" backdrop="static"
+    (visibleChange)="handleUpdateQuestionModalChange($event)">
+    <c-modal-header>
+        <h5 cModalTitle>Update Question</h5>
+    </c-modal-header>
+    <c-modal-body>
+        Woohoo, you are reading this text in a modal!
+    </c-modal-body>
+    <c-modal-footer>
+        <button (click)="toggleUpdateQuestionModal()" cButton color="secondary">
+            Close
+        </button>
+        <button cButton color="primary">Save changes</button>
+    </c-modal-footer>
+</c-modal>
+
+<!-- Delete Question Modal -->
+<c-modal id="visibleDeleteQuestionModal" [visible]="visibleDeleteQuestionModal()"
+    (visibleChange)="handleDeleteQuestionModalChange($event)">
+    <c-modal-header>
+        <h5 cModalTitle>Modal title visibleDeleteQuestionModal</h5>
+    </c-modal-header>
+    <c-modal-body>Woohoo, you are reading this text in a modal!</c-modal-body>
+    <c-modal-footer>
+        <button (click)="toggleDeleteQuestionModal()" cButton color="secondary">
+            Close
+        </button>
+        <button cButton color="primary">Save changes</button>
+    </c-modal-footer>
+</c-modal>
 
 <!-- Create Predefined Answer Modal -->
-<c-modal id="visibleCreatePredefinedAnswerModal" [visible]="visibleCreatePredefinedAnswerModal()"  backdrop="static" size="lg" 
-(visibleChange)="handleCreatePredefinedAnswerModalChange($event)">
+<c-modal id="visibleCreatePredefinedAnswerModal" [visible]="visibleCreatePredefinedAnswerModal()" backdrop="static"
+    size="lg" (visibleChange)="handleCreatePredefinedAnswerModalChange($event)">
     <c-modal-header>
         <h5 cModalTitle>Create Answer</h5>
         <!-- <button (click)="toggleCreatePredefinedAnswerModal()" cButtonClose></button> -->
     </c-modal-header>
     <form cForm [formGroup]="createPredefinedAnswerForm" (ngSubmit)="onSubmitCreatePredefinedAnswer()">
         <c-modal-body>
-             <div class="mb-2 d-flex flex-row">
+            <div class="mb-2 d-flex flex-row">
                 <div>
                     <label for="priority" class="me-2">Priority: </label>
                     <input formControlName="priority" type="number" class="me-2 number-control" min="1" max="255">
@@ -336,8 +481,8 @@
     </form>
 </c-modal>
 <!-- Update Predefined Answer Modal -->
-<c-modal id="visibleUpdatePredefinedAnswerModal" [visible]="visibleUpdatePredefinedAnswerModal()" backdrop="static" size="lg"
-    (visibleChange)="handleUpdatePredefinedAnswerModalChange($event)">
+<c-modal id="visibleUpdatePredefinedAnswerModal" [visible]="visibleUpdatePredefinedAnswerModal()" backdrop="static"
+    size="lg" (visibleChange)="handleUpdatePredefinedAnswerModalChange($event)">
     <c-modal-header>
         <h5 cModalTitle>Update Predefined Answer</h5>
     </c-modal-header>
@@ -368,18 +513,3 @@
         </c-modal-footer>
     </form>
 </c-modal>
-
-<!-- <c-modal id="visibleDeleteQuestionModal" [visible]="visibleDeleteQuestionModal()"
-    (visibleChange)="handleDeleteQuestionModalChange($event)">
-    <c-modal-header>
-        <h5 cModalTitle>Modal title visibleDeleteQuestionModal</h5>
-        <button (click)="toggleDeleteQuestionModal()" cButtonClose></button>
-    </c-modal-header>
-    <c-modal-body>Woohoo, you are reading this text in a modal!</c-modal-body>
-    <c-modal-footer>
-        <button (click)="toggleDeleteQuestionModal()" cButton color="secondary">
-            Close
-        </button>
-        <button cButton color="primary">Save changes</button>
-    </c-modal-footer>
-</c-modal> -->

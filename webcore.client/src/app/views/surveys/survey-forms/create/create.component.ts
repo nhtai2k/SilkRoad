@@ -19,7 +19,7 @@ import { CreateHelperComponent } from "./create-helper.component";
 @Component({
   selector: 'app-create',
   imports: [FormControlDirective, FormLabelDirective, CardComponent, CardBodyComponent, ReactiveFormsModule, FormDirective, ButtonDirective, CommonModule,
-    RouterLink, RangeDatetimePickerComponent, CreateHelperComponent],
+    RouterLink, CreateHelperComponent],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })

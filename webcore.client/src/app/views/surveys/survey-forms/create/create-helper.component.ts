@@ -24,28 +24,10 @@ import { EQuestionTypes } from '@common/global';
 import { QuestionLibraryService } from '@services/survey-services/question-library.service';
 
 
-const predefinedAnswerList: PredefinedAnswerModel[] = [
-  { id: "1", questionId: "1", nameEN: 'Answer 1', nameVN: 'Câu trả lời 1', priority: 1 },
-  { id: "2", questionId: "1", nameEN: 'Answer 2', nameVN: 'Câu trả lời 2', priority: 2 },
-  { id: "3", questionId: "2", nameEN: 'Answer 3', nameVN: 'Câu trả lời 3', priority: 3 },
-  { id: "4", questionId: "2", nameEN: 'Answer 4', nameVN: 'Câu trả lời 4', priority: 4 },
-];
-
-const questionList: QuestionModel[] = [
-  { id: "1", questionTypeId: 1, priority: 1, nameEN: 'Question 1', nameVN: 'Câu hỏi 1', predefinedAnswers: [...predefinedAnswerList] },
-  { id: "2", questionTypeId: 1, priority: 2, nameEN: 'Question 2', nameVN: 'Câu hỏi 2', predefinedAnswers: [...predefinedAnswerList] },
-  { id: "3", questionTypeId: 1, priority: 3, nameEN: 'Question 3', nameVN: 'Câu hỏi 3', predefinedAnswers: [...predefinedAnswerList] },
-];
-
-const questionGroupList: QuestionGroupModel[] = [
-  { id: "1", nameEN: 'Group 1', nameVN: 'Nhóm 1', priority: 1, questions: [questionList[0], questionList[1]] },
-  { id: "2", nameEN: 'Group 2', nameVN: 'Nhóm 2', priority: 2, questions: [questionList[2]] },
-];
-
 @Component({
   selector: 'app-create-helper',
   imports: [ReactiveFormsModule, ButtonDirective, CommonModule, TableDirective, IconDirective, BookIconComponent, ModalComponent, ModalHeaderComponent,
-    ModalTitleDirective, ButtonCloseDirective, ModalBodyComponent, ModalFooterComponent, SelectSearchComponent, FormControlDirective, TreeSelectComponent,
+    ModalTitleDirective, ModalBodyComponent, ModalFooterComponent, SelectSearchComponent, FormControlDirective, TreeSelectComponent,
     AccordionButtonDirective, AccordionComponent,
     AccordionItemComponent, TemplateIdDirective],
   templateUrl: './create-helper.component.html',
@@ -56,8 +38,8 @@ export class CreateHelperComponent implements OnInit {
   //#region Variables
   icons: any = { cilPlus, cilTrash, cilPen };
 
-  questionGroups: QuestionGroupModel[] = [...questionGroupList];
-  questions: QuestionModel[] = [...questionList];
+  questionGroups: QuestionGroupModel[] = [];
+  questions: QuestionModel[] = [];
   predefinedAnswerList: PredefinedAnswerLibraryModel[] = [];
 
   questionTypeList: OptionModel[] = [];
@@ -69,45 +51,65 @@ export class CreateHelperComponent implements OnInit {
   showQuestionChildrenByParentId = signal<string | null>(null);
   showPredefinedAnswerChildrenByParentId = signal<string | null>(null);
   showPredefinedAnswerTable = signal<boolean>(false);
-
-  visibleCreateQuestionModal = signal(false);
-  visibleDeleteQuestionModal = signal(false);
+  //visible Question Group Modal
   visibleCreateQuestionGroupModal = signal(false);
+  visibleUpdateQuestionGroupModal = signal(false);
   visibleDeleteQuestionGroupModal = signal(false);
+  //visible Question Modal
+  visibleCreateQuestionModal = signal(false);
+  visibleUpdateQuestionModal = signal(false);
+  visibleDeleteQuestionModal = signal(false);
+  //visible Predefined Answer Modal
   visibleCreatePredefinedAnswerModal = signal(false);
+  visibleDeletePredefinedAnswerModal = signal(false);
   visibleUpdatePredefinedAnswerModal = signal(false);
 
   initQuestionTypeId = signal<number>(-1);
 
+  // Create Question Group Form
   createQuestionGroupForm = new FormGroup({
     nameEN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
     nameVN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
     priority: new FormControl(1, [Validators.required, Validators.min(1)])
   });
-
+  // Update Question Group Form
+  updateQuestionGroupForm = new FormGroup({
+    nameEN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
+    nameVN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
+    priority: new FormControl(1, [Validators.required, Validators.min(1)])
+  });
+  // Create Question Form
   createQuestionForm = new FormGroup({
     questionTypeId: new FormControl(1, [Validators.required]),
     nameEN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
     nameVN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
     priority: new FormControl(1, [Validators.required, Validators.min(1)])
   });
-
+  // Update Question Form
+  updateQuestionForm = new FormGroup({
+    questionTypeId: new FormControl(1, [Validators.required]),
+    nameEN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
+    nameVN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
+    priority: new FormControl(1, [Validators.required, Validators.min(1)])
+  });
+  // Create Predefined Answer Form
   createPredefinedAnswerForm: FormGroup = new FormGroup({
     nameEN: new FormControl(''),
     nameVN: new FormControl(''),
     priority: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(255)])
   });
-    updatePredefinedAnswerForm: FormGroup = new FormGroup({
+  // Update Predefined Answer Form
+  updatePredefinedAnswerForm: FormGroup = new FormGroup({
     nameEN: new FormControl(''),
     nameVN: new FormControl(''),
     priority: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(255)])
   });
   //#endregion
 
-  //#region table tree
+  //#region Handle show table tree
   constructor(private questionGroupLibraryService: QuestionGroupLibraryService,
     private questionLibraryService: QuestionLibraryService,
-     private questionTypeService: QuestionTypeService) { }
+    private questionTypeService: QuestionTypeService) { }
   ngOnInit(): void {
     this.questionGroupLibraryService.getOptionList().subscribe({
       next: (res) => {
@@ -143,7 +145,7 @@ export class CreateHelperComponent implements OnInit {
 
   togglePredefinedAnswerNode(node: QuestionModel): void {
     node.expanded = !node.expanded;
-    if (node.expanded) {
+    if (node.expanded && node.id) {
       this.showPredefinedAnswerChildrenByParentId.set(node.id);
     } else {
       this.showPredefinedAnswerChildrenByParentId.set(null);
@@ -151,87 +153,81 @@ export class CreateHelperComponent implements OnInit {
   }
   //#endregion
 
-  //#region form submit
-  onSubmitCreateQuestionGroup(): void {
-    if (this.createQuestionGroupForm.valid) {
-      const newQuestionGroup: QuestionGroupModel = {
-        id: (this.questionGroups.length + 1).toString(),
-        nameEN: this.createQuestionGroupForm.value.nameEN ?? '',
-        nameVN: this.createQuestionGroupForm.value.nameVN ?? '',
-        priority: this.createQuestionGroupForm.value.priority ?? 1,
-        questions: []
-      };
-      this.questionGroups.push(newQuestionGroup);
-      this.createQuestionGroupForm.reset({ nameEN: '', nameVN: '', priority: 1 });
-      this.toggleCreateQuestionGroupModal();
-    } else {
-      this.createQuestionGroupForm.markAllAsTouched();
-    }
-  }
-
-  onSubmitCreateQuestion(): void {
-    if (this.createQuestionForm.valid) {
-      const newQuestion: QuestionModel = {
-        id: (this.questions.length + 1).toString(),
-        questionTypeId: this.createQuestionForm.value.questionTypeId ?? 1,
-        nameEN: this.createQuestionForm.value.nameEN ?? '',
-        nameVN: this.createQuestionForm.value.nameVN ?? '',
-        priority: this.createQuestionForm.value.priority ?? 1,
-        predefinedAnswers: []
-      };
-      this.questions.push(newQuestion);
-      this.createQuestionForm.reset({ questionTypeId: 1, nameEN: '', nameVN: '', priority: 1 });
-      this.toggleCreateQuestionModal();
-    } else {
-      this.createQuestionForm.markAllAsTouched();
-    }
-  }
-  //#endregion
-
-  //#region modal
-  toggleCreateQuestionModal(): void {
-    this.visibleCreateQuestionModal.set(!this.visibleCreateQuestionModal());
-  }
-  handleCreateQuestionModalChange(event: any) {
-    this.visibleCreateQuestionModal.set(event);
-  }
-
-  toggleDeleteQuestionModal(): void {
-    this.visibleDeleteQuestionModal.set(!this.visibleDeleteQuestionModal());
-  }
-  handleDeleteQuestionModalChange(event: any) {
-    this.visibleDeleteQuestionModal.set(event);
-  }
-
+  //#region Manage show and hide modal
+  //#region Question Group Modal
+  // Create Question Group Modal
   toggleCreateQuestionGroupModal(): void {
     this.visibleCreateQuestionGroupModal.set(!this.visibleCreateQuestionGroupModal());
   }
   handleCreateQuestionGroupModalChange(event: any) {
     this.visibleCreateQuestionGroupModal.set(event);
   }
-
+  // Update Question Group Modal
+  toggleUpdateQuestionGroupModal(): void {
+    this.visibleUpdateQuestionGroupModal.set(!this.visibleUpdateQuestionGroupModal());
+  }
+  handleUpdateQuestionGroupModalChange(event: any) {
+    this.visibleUpdateQuestionGroupModal.set(event);
+  }
+  // Delete Question Group Modal
   toggleDeleteQuestionGroupModal(): void {
     this.visibleDeleteQuestionGroupModal.set(!this.visibleDeleteQuestionGroupModal());
   }
   handleDeleteQuestionGroupModalChange(event: any) {
     this.visibleDeleteQuestionGroupModal.set(event);
   }
+  //#endregion
 
+  //#region Question Modal
+  // Create Question Modal
+  toggleCreateQuestionModal(): void {
+    this.visibleCreateQuestionModal.set(!this.visibleCreateQuestionModal());
+  }
+  handleCreateQuestionModalChange(event: any) {
+    this.visibleCreateQuestionModal.set(event);
+  }
+  // Update Question Modal
+  toggleUpdateQuestionModal(): void {
+    this.visibleUpdateQuestionModal.set(!this.visibleUpdateQuestionModal());
+  }
+  handleUpdateQuestionModalChange(event: any) {
+    this.visibleUpdateQuestionModal.set(event);
+  }
+  // Delete Question Modal
+  toggleDeleteQuestionModal(): void {
+    this.visibleDeleteQuestionModal.set(!this.visibleDeleteQuestionModal());
+  }
+  handleDeleteQuestionModalChange(event: any) {
+    this.visibleDeleteQuestionModal.set(event);
+  }
+  //#endregion
+
+  //#region Predefined Answer Modal
+  // Create Predefined Answer Modal
   toggleCreatePredefinedAnswerModal(): void {
     this.visibleCreatePredefinedAnswerModal.set(!this.visibleCreatePredefinedAnswerModal());
   }
   handleCreatePredefinedAnswerModalChange(event: any) {
     this.visibleCreatePredefinedAnswerModal.set(event);
   }
+  // Update Predefined Answer Modal
   toggleUpdatePredefinedAnswerModal(): void {
     this.visibleUpdatePredefinedAnswerModal.set(!this.visibleUpdatePredefinedAnswerModal());
   }
   handleUpdatePredefinedAnswerModalChange(event: any) {
     this.visibleUpdatePredefinedAnswerModal.set(event);
   }
+  // Delete Predefined Answer Modal
+  toggleDeletePredefinedAnswerModal(): void {
+    this.visibleDeletePredefinedAnswerModal.set(!this.visibleDeletePredefinedAnswerModal());
+  }
+  handleDeletePredefinedAnswerModalChange(event: any) {
+    this.visibleDeletePredefinedAnswerModal.set(event);
+  }
+  //#endregion
   //#endregion
 
-  //#region form control
+  //#region Handle question group form
   handleQuestionGroupLibraryChange(event: any): void {
     if (event != -1) {
       this.questionGroupLibraryService.getById(event).subscribe({
@@ -250,6 +246,72 @@ export class CreateHelperComponent implements OnInit {
     }
   }
 
+  onSubmitCreateQuestionGroup(): void {
+    if (this.createQuestionGroupForm.valid) {
+      const newQuestionGroup: QuestionGroupModel = {
+        id: (this.questionGroups.length + 1).toString(),
+        nameEN: this.createQuestionGroupForm.value.nameEN ?? '',
+        nameVN: this.createQuestionGroupForm.value.nameVN ?? '',
+        priority: this.createQuestionGroupForm.value.priority ?? 1,
+        questions: []
+      };
+      this.questionGroups.push(newQuestionGroup);
+      this.createQuestionGroupForm.reset({ nameEN: '', nameVN: '', priority: 1 });
+      this.toggleCreateQuestionGroupModal();
+    } else {
+      this.createQuestionGroupForm.markAllAsTouched();
+    }
+  }
+
+  get nameENCreateQuestionGroupForm() {
+    return this.createQuestionGroupForm.get('nameEN');
+  }
+  get nameVNCreateQuestionGroupForm() {
+    return this.createQuestionGroupForm.get('nameVN');
+  }
+  get priorityCreateQuestionGroupForm() {
+    return this.createQuestionGroupForm.get('priority');
+  }
+  updateQuestionGroup(index: number): void {
+    const selectedQuestionGroup = this.questionGroups[index];
+    this.updateQuestionGroupForm.patchValue({
+      nameEN: selectedQuestionGroup.nameEN,
+      nameVN: selectedQuestionGroup.nameVN,
+      priority: selectedQuestionGroup.priority
+    });
+    this.toggleUpdateQuestionGroupModal();
+  }
+
+  onSubmitUpdateQuestionGroup(): void {
+    if (this.updateQuestionGroupForm.valid) {
+      // const updatedQuestionGroup: QuestionGroupModel = {
+      //   ...this.selectedQuestionGroup,
+      //   nameEN: this.updateQuestionGroupForm.value.nameEN ?? '',
+      //   nameVN: this.updateQuestionGroupForm.value.nameVN ?? '',
+      //   priority: this.updateQuestionGroupForm.value.priority ?? 1
+      // };
+      // const index = this.questionGroups.findIndex(qg => qg.id === this.selectedQuestionGroup.id);
+      // if (index !== -1) {
+      //   this.questionGroups[index] = updatedQuestionGroup;
+      // }
+      this.updateQuestionGroupForm.reset({ nameEN: '', nameVN: '', priority: 1 });
+      this.toggleUpdateQuestionGroupModal();
+    } else {
+      this.updateQuestionGroupForm.markAllAsTouched();
+    }
+  }
+  get nameENUpdateQuestionGroupForm() {
+    return this.updateQuestionGroupForm.get('nameEN');
+  }
+  get nameVNUpdateQuestionGroupForm() {
+    return this.updateQuestionGroupForm.get('nameVN');
+  }
+  get priorityUpdateQuestionGroupForm() {
+    return this.updateQuestionGroupForm.get('priority');
+  }
+  //#endregion
+
+  //#region Handle question form
   handleQuestionLibraryChange(event: any): void {
     if (event != -1) {
       this.questionLibraryService.getEagerLoadingById(event).subscribe({
@@ -285,14 +347,51 @@ export class CreateHelperComponent implements OnInit {
       this.showPredefinedAnswerTable.set(false);
     }
   }
+
+  onSubmitCreateQuestion(): void {
+    if (this.createQuestionForm.valid) {
+
+      const predefinedAnswers = this.predefinedAnswerList.map((pa) => ({
+        nameEN: pa.nameEN,
+        nameVN: pa.nameVN,
+        priority: pa.priority
+      }));
+      const newQuestion: QuestionModel = {
+        questionTypeId: this.createQuestionForm.value.questionTypeId ?? 1,
+        nameEN: this.createQuestionForm.value.nameEN ?? '',
+        nameVN: this.createQuestionForm.value.nameVN ?? '',
+        priority: this.createQuestionForm.value.priority ?? 1,
+        predefinedAnswers: predefinedAnswers
+      };
+      this.questions.push(newQuestion);
+      this.createQuestionForm.reset({ questionTypeId: 1, nameEN: '', nameVN: '', priority: 1 });
+      this.predefinedAnswerList = [];
+      this.initQuestionTypeId.set(-1);
+      this.onchangeQuestionType(this.initQuestionTypeId());
+      this.toggleCreateQuestionModal();
+      
+    } else {
+      this.createQuestionForm.markAllAsTouched();
+    }
+  }
+  get nameENCreateQuestionForm() {
+    return this.createQuestionForm.get('nameEN');
+  }
+  get nameVNCreateQuestionForm() {
+    return this.createQuestionForm.get('nameVN');
+  }
+  get priorityCreateQuestionForm() {
+    return this.createQuestionForm.get('priority');
+  }
   //#endregion
+
 
   //#region predefined answer form
   onSubmitCreatePredefinedAnswer(): void {
-this.predefinedAnswerList.push(this.createPredefinedAnswerForm.value);
+    this.predefinedAnswerList.push(this.createPredefinedAnswerForm.value);
     this.toggleCreatePredefinedAnswerModal();
     this.createPredefinedAnswerForm.reset();
-    this.createPredefinedAnswerForm.patchValue({priority: 1});
+    this.createPredefinedAnswerForm.patchValue({ priority: 1 });
   }
   updatePredefinedAnswer(index: number): void {
     const updatedAnswer = this.updatePredefinedAnswerForm.value;
