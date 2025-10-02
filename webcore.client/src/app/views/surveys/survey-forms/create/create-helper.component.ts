@@ -40,7 +40,7 @@ export class CreateHelperComponent implements OnInit {
 
   questionGroups: QuestionGroupModel[] = [];
   questions: QuestionModel[] = [];
-  predefinedAnswerList: PredefinedAnswerLibraryModel[] = [];
+  predefinedAnswerList: PredefinedAnswerModel[] = [];
 
   questionTypeList: OptionModel[] = [];
   optionList: OptionModel[] = [];
@@ -416,9 +416,7 @@ export class CreateHelperComponent implements OnInit {
     
     // Set predefined answers if they exist
     if (selectedQuestion.predefinedAnswers && selectedQuestion.predefinedAnswers.length > 0) {
-      this.predefinedAnswerList = [...selectedQuestion.predefinedAnswers.map((pa, idx) => ({
-        id: (idx + 1).toString(), // Temporary ID for display
-        questionLibraryId: 0, // Temporary ID
+      this.predefinedAnswerList = [...selectedQuestion.predefinedAnswers.map((pa) => ({
         nameEN: pa.nameEN,
         nameVN: pa.nameVN,
         priority: pa.priority,
@@ -513,6 +511,9 @@ export class CreateHelperComponent implements OnInit {
     // } else {
     //   this.updatePredefinedAnswerForm.markAllAsTouched();
     // }
+  }
+  deletePredefinedAnswer(index: number): void {
+    this.predefinedAnswerList.splice(index, 1);
   }
   //#endregion
 }

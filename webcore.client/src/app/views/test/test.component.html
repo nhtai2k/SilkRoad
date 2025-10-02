@@ -1,2 +1,144 @@
-<!-- <app-range-datetime-picker></app-range-datetime-picker> -->
-<app-select-search [options]="data"></app-select-search>
+<div class="table-demo-container">
+  <div class="header">
+    <h2>User Management Demo</h2>
+    <button class="btn btn-primary" (click)="showAddUserForm()" [disabled]="showAddForm">
+      <i class="icon-plus"></i> Add New User
+    </button>
+  </div>
+
+  <!-- Add User Form -->
+  <div class="add-form" *ngIf="showAddForm">
+    <h3>Add New User</h3>
+    <form [formGroup]="addUserForm" (ngSubmit)="addUser()">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="addName">Name:</label>
+          <input type="text" id="addName" formControlName="name" placeholder="Enter name" 
+                 class="form-control" [class.error]="hasError(addUserForm, 'name', 'required') || hasError(addUserForm, 'name', 'minlength') || hasError(addUserForm, 'name', 'maxlength')">
+          <div class="error-message" *ngIf="getErrorMessage(addUserForm, 'name')">
+            {{ getErrorMessage(addUserForm, 'name') }}
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="addEmail">Email:</label>
+          <input type="email" id="addEmail" formControlName="email" placeholder="Enter email" 
+                 class="form-control" [class.error]="hasError(addUserForm, 'email', 'required') || hasError(addUserForm, 'email', 'email')">
+          <div class="error-message" *ngIf="getErrorMessage(addUserForm, 'email')">
+            {{ getErrorMessage(addUserForm, 'email') }}
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="addRole">Role:</label>
+          <select id="addRole" formControlName="role" class="form-control" 
+                  [class.error]="hasError(addUserForm, 'role', 'required')">
+            <option value="">Select role</option>
+            <option value="Admin">Admin</option>
+            <option value="Manager">Manager</option>
+            <option value="User">User</option>
+          </select>
+          <div class="error-message" *ngIf="getErrorMessage(addUserForm, 'role')">
+            {{ getErrorMessage(addUserForm, 'role') }}
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-success" [disabled]="addUserForm.invalid">
+            Save
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="cancelAdd()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Users Table -->
+  <div class="table-container">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; trackBy: trackByUserId" 
+            [class.editing]="editingUserId === user.id">
+          
+          <!-- Regular row view -->
+          <ng-container *ngIf="editingUserId !== user.id">
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <span class="role-badge" [class]="'role-' + user.role.toLowerCase()">
+                {{ user.role }}
+              </span>
+            </td>
+            <td class="actions">
+              <button class="btn btn-sm btn-edit" (click)="editUser(user)" title="Edit">
+                <i class="icon-edit"></i>
+              </button>
+              <button class="btn btn-sm btn-delete" (click)="deleteUser(user.id)" title="Delete">
+                <i class="icon-delete"></i>
+              </button>
+            </td>
+          </ng-container>
+
+          <!-- Edit row view -->
+          <ng-container *ngIf="editingUserId === user.id" [formGroup]="editUserForm">
+            <td>{{ user.id }}</td>
+            <td>
+              <input type="text" formControlName="name" class="form-control-sm" 
+                     [class.error]="hasError(editUserForm, 'name', 'required') || hasError(editUserForm, 'name', 'minlength') || hasError(editUserForm, 'name', 'maxlength')">
+              <div class="error-message-inline" *ngIf="getErrorMessage(editUserForm, 'name')">
+                {{ getErrorMessage(editUserForm, 'name') }}
+              </div>
+            </td>
+            <td>
+              <input type="email" formControlName="email" class="form-control-sm"
+                     [class.error]="hasError(editUserForm, 'email', 'required') || hasError(editUserForm, 'email', 'email')">
+              <div class="error-message-inline" *ngIf="getErrorMessage(editUserForm, 'email')">
+                {{ getErrorMessage(editUserForm, 'email') }}
+              </div>
+            </td>
+            <td>
+              <select formControlName="role" class="form-control-sm"
+                      [class.error]="hasError(editUserForm, 'role', 'required')">
+                <option value="">Select role</option>
+                <option value="Admin">Admin</option>
+                <option value="Manager">Manager</option>
+                <option value="User">User</option>
+              </select>
+              <div class="error-message-inline" *ngIf="getErrorMessage(editUserForm, 'role')">
+                {{ getErrorMessage(editUserForm, 'role') }}
+              </div>
+            </td>
+            <td class="actions">
+              <button class="btn btn-sm btn-success" (click)="saveUser()" 
+                      [disabled]="editUserForm.invalid"
+                      title="Save">
+                <i class="icon-save"></i>
+              </button>
+              <button class="btn btn-sm btn-secondary" (click)="cancelEdit()" title="Cancel">
+                <i class="icon-cancel"></i>
+              </button>
+            </td>
+          </ng-container>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="table-footer" *ngIf="users.length === 0">
+      <p class="no-data">No users found. Click "Add New User" to get started.</p>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="summary">
+    <p>Total Users: <strong>{{ users.length }}</strong></p>
+  </div>
+</div>
