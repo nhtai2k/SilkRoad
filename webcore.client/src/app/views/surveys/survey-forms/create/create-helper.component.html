@@ -21,7 +21,7 @@
     </thead>
     <tbody>
         @for(item of questionGroups; track $index; let i = $index) {
-        <tr>
+        <tr class="tree-row" [class.expanded]="item.expanded">
             <td>{{ i + 1 }}</td>
             <td>{{ item.nameEN }}</td>
             <td>{{ item.nameVN }}</td>
@@ -32,7 +32,7 @@
                     <app-book-icon [open]="item.expanded ?? false" [size]="20"></app-book-icon>
                 </button>
                 }
-                <button cButton type="button" class="btn-success text-white me-2">
+                <button cButton type="button" (click)="toggleCreateQuestionModal(i)" class="btn-success text-white me-2">
                     <svg [cIcon]="icons.cilPlus" width="20" class="text-white" title="Edit Icon"></svg>
                 </button>
                 <button cButton type="button" (click)="updateQuestionGroup(i)" class="btn-primary text-white me-2">
@@ -47,7 +47,7 @@
         @for(item1 of item.questions; track $index; let j = $index) {
         <ng-container>
             <ng-container [ngTemplateOutlet]="questionTemplate"
-                [ngTemplateOutletContext]="{ node: item1, index: j, level: 1 }"></ng-container>
+                [ngTemplateOutletContext]="{ node: item1, index: j, level: 1, questionGroupIndex: i }"></ng-container>
         </ng-container>
         }
         }
@@ -55,10 +55,11 @@
     </tbody>
 </table>
 } @else {
-        <div class="pt-4">
-            <p class="text-center opacity-50"> No question group available. Click Button Add to get started.</p>
-        </div>
+<div class="pt-4">
+    <p class="text-center opacity-50"> No question group available. Click Button Add to get started.</p>
+</div>
 }
+
 <!-- Table of Questions -->
 <div class="d-flex justify-content-between align-items-center title mt-4">
     <span>3. Questions</span>
@@ -84,19 +85,19 @@
         @for(item of questions; track $index; let i = $index) {
         <ng-container>
             <ng-container [ngTemplateOutlet]="questionTemplate"
-                [ngTemplateOutletContext]="{ node: item, index: i, level: 0 }"></ng-container>
+                [ngTemplateOutletContext]="{ node: item, index: i, level: 0, questionGroupIndex: -1 }"></ng-container>
         </ng-container>
         }
     </tbody>
 </table>
 } @else {
-        <div class="pt-4">
-            <p class="text-center opacity-50">No question available. Click Button Add to get started.</p>
-        </div>
+<div class="pt-4">
+    <p class="text-center opacity-50">No question available. Click Button Add to get started.</p>
+</div>
 }
 
 <!-- Question Template -->
-<ng-template #questionTemplate let-node="node" let-level="level" let-index="index">
+<ng-template #questionTemplate let-node="node" let-level="level" let-index="index" let-questionGroupIndex="questionGroupIndex">
     <tr class="tree-row" [class.expanded]="node.expanded" [class.children]="level > 0">
         <td>
             <span [ngStyle]="{'margin-left.px': level * 15}">
@@ -112,10 +113,10 @@
                 <app-book-icon [open]="node.expanded ?? false" [size]="20"></app-book-icon>
             </button>
             }
-            <button cButton type="button" (click)="updateQuestion(index)" class="btn-primary text-white me-2">
+            <button cButton type="button" (click)="updateQuestion(index, questionGroupIndex)" class="btn-primary text-white me-2">
                 <svg [cIcon]="icons.cilPen" width="20" class="text-white" title="Edit Icon"></svg>
             </button>
-            <button cButton type="button" (click)="deleteQuestion(index)" class="btn-danger text-white">
+            <button cButton type="button" (click)="deleteQuestion(index, questionGroupIndex)" class="btn-danger text-white">
                 <svg [cIcon]="icons.cilTrash" width="20" class="text-white" title="Trash Icon"></svg>
             </button>
         </td>
@@ -386,7 +387,7 @@
                 </button>
             </div>
         </div>
-        <table [hover]="true" [responsive]="true"  cTable>
+        <table [hover]="true" [responsive]="true" cTable>
             <thead>
                 <tr>
                     <th>No.</th>
@@ -399,129 +400,129 @@
             <tbody>
                 <!-- Predefined Answer Form Row -->
                 @if(visibleCreatePredefinedAnswerForm()) {
-                    <tr [formGroup]="createPredefinedAnswerForm" class="adding">
-                        <td class="new-id">New</td>
-                        <td>
-                            <input type="text" formControlName="nameEN" class="form-control"
-                                placeholder="Enter predefined answer name in English">
-                            @if (nameENCreatePredefinedAnswerForm?.invalid && (nameENCreatePredefinedAnswerForm?.dirty ||
-                            nameENCreatePredefinedAnswerForm?.touched)) {
-                            <div class="text-danger">
-                                @if (nameENCreatePredefinedAnswerForm?.hasError('required')) {
-                                <div>Enter Name, please!</div>
-                                }
-                            </div>
+                <tr [formGroup]="createPredefinedAnswerForm" class="adding">
+                    <td class="new-id">New</td>
+                    <td>
+                        <input type="text" formControlName="nameEN" class="form-control"
+                            placeholder="Enter predefined answer name in English">
+                        @if (nameENCreatePredefinedAnswerForm?.invalid && (nameENCreatePredefinedAnswerForm?.dirty ||
+                        nameENCreatePredefinedAnswerForm?.touched)) {
+                        <div class="text-danger">
+                            @if (nameENCreatePredefinedAnswerForm?.hasError('required')) {
+                            <div>Enter Name, please!</div>
                             }
-                        </td>
-                        <td>
-                            <input type="text" formControlName="nameVN" class="form-control"
-                                placeholder="Enter predefined answer name in Vietnamese">
-                            @if (nameVNCreatePredefinedAnswerForm?.invalid && (nameVNCreatePredefinedAnswerForm?.dirty ||
-                            nameVNCreatePredefinedAnswerForm?.touched)) {
-                            <div class="text-danger">
-                                @if (nameVNCreatePredefinedAnswerForm?.hasError('required')) {
-                                <div>Enter Name, please!</div>
-                                }
-                            </div>
+                        </div>
+                        }
+                    </td>
+                    <td>
+                        <input type="text" formControlName="nameVN" class="form-control"
+                            placeholder="Enter predefined answer name in Vietnamese">
+                        @if (nameVNCreatePredefinedAnswerForm?.invalid && (nameVNCreatePredefinedAnswerForm?.dirty ||
+                        nameVNCreatePredefinedAnswerForm?.touched)) {
+                        <div class="text-danger">
+                            @if (nameVNCreatePredefinedAnswerForm?.hasError('required')) {
+                            <div>Enter Name, please!</div>
                             }
-                        </td>
-                        <td>
-                            <input type="number" formControlName="priority" class="form-control number-control"
-                                min="1" max="255">
-                            @if (priorityCreatePredefinedAnswerForm?.invalid && (priorityCreatePredefinedAnswerForm?.dirty ||
-                            priorityCreatePredefinedAnswerForm?.touched)) {
-                            <div class="text-danger">
-                                @if (priorityCreatePredefinedAnswerForm?.hasError('min') ||
-                                priorityCreatePredefinedAnswerForm?.hasError('max')) {
-                                <div>Priority must be between 1 and 255.</div>
-                                }
-                            </div>
+                        </div>
+                        }
+                    </td>
+                    <td>
+                        <input type="number" formControlName="priority" class="form-control number-control" min="1"
+                            max="255">
+                        @if (priorityCreatePredefinedAnswerForm?.invalid && (priorityCreatePredefinedAnswerForm?.dirty
+                        ||
+                        priorityCreatePredefinedAnswerForm?.touched)) {
+                        <div class="text-danger">
+                            @if (priorityCreatePredefinedAnswerForm?.hasError('min') ||
+                            priorityCreatePredefinedAnswerForm?.hasError('max')) {
+                            <div>Priority must be between 1 and 255.</div>
                             }
-                        </td>
-                        <td class="d-flex justify-content-end">
-                            <button cButton type="button" (click)="onSubmitCreatePredefinedAnswer()"
-                                class="btn btn-primary me-2" [disabled]="createPredefinedAnswerForm.invalid">
-                                <svg [cIcon]="icons.cilSave" width="20" class="text-white" title="Save Icon"></svg>
-                            </button>
-                            <button cButton type="button" (click)="hideCreatePredefinedAnswerForm()"
-                                class="btn btn-danger">
-                                <svg [cIcon]="icons.cilX" width="20" class="text-white" title="Close Icon"></svg>
-                            </button>
-                        </td>
+                        </div>
+                        }
+                    </td>
+                    <td class="d-flex justify-content-end">
+                        <button cButton type="button" (click)="onSubmitCreatePredefinedAnswer()"
+                            class="btn btn-primary me-2" [disabled]="createPredefinedAnswerForm.invalid">
+                            <svg [cIcon]="icons.cilSave" width="20" class="text-white" title="Save Icon"></svg>
+                        </button>
+                        <button cButton type="button" (click)="hideCreatePredefinedAnswerForm()" class="btn btn-danger">
+                            <svg [cIcon]="icons.cilX" width="20" class="text-white" title="Close Icon"></svg>
+                        </button>
+                    </td>
 
-                    </tr>
+                </tr>
                 }
 
                 @for (item of predefinedAnswerList; track $index; let i = $index) {
-                    @if(updatePredefinedAnswerIndex() !== -1 && updatePredefinedAnswerIndex() === i) {
-                         <tr [formGroup]="updatePredefinedAnswerForm" class="editing">
-                          <td>{{ i + 1 }}</td>
-                        <td>
-                            <input type="text" formControlName="nameEN" class="form-control"
-                                placeholder="Enter predefined answer name in English">
-                            @if (nameENUpdatePredefinedAnswerForm?.invalid && (nameENUpdatePredefinedAnswerForm?.dirty ||
-                            nameENUpdatePredefinedAnswerForm?.touched)) {
-                            <div class="text-danger">
-                                @if (nameENUpdatePredefinedAnswerForm?.hasError('required')) {
-                                <div>Enter Name, please!</div>
-                                }
-                            </div>
+                @if(updatePredefinedAnswerIndex() !== -1 && updatePredefinedAnswerIndex() === i) {
+                <tr [formGroup]="updatePredefinedAnswerForm" class="editing">
+                    <td>{{ i + 1 }}</td>
+                    <td>
+                        <input type="text" formControlName="nameEN" class="form-control"
+                            placeholder="Enter predefined answer name in English">
+                        @if (nameENUpdatePredefinedAnswerForm?.invalid && (nameENUpdatePredefinedAnswerForm?.dirty ||
+                        nameENUpdatePredefinedAnswerForm?.touched)) {
+                        <div class="text-danger">
+                            @if (nameENUpdatePredefinedAnswerForm?.hasError('required')) {
+                            <div>Enter Name, please!</div>
                             }
-                        </td>
-                        <td>
-                            <input type="text" formControlName="nameVN" class="form-control"
-                                placeholder="Enter predefined answer name in Vietnamese">
-                            @if (nameVNUpdatePredefinedAnswerForm?.invalid && (nameVNUpdatePredefinedAnswerForm?.dirty ||
-                            nameVNUpdatePredefinedAnswerForm?.touched)) {
-                            <div class="text-danger">
-                                @if (nameVNUpdatePredefinedAnswerForm?.hasError('required')) {
-                                <div>Enter Name, please!</div>
-                                }
-                            </div>
+                        </div>
+                        }
+                    </td>
+                    <td>
+                        <input type="text" formControlName="nameVN" class="form-control"
+                            placeholder="Enter predefined answer name in Vietnamese">
+                        @if (nameVNUpdatePredefinedAnswerForm?.invalid && (nameVNUpdatePredefinedAnswerForm?.dirty ||
+                        nameVNUpdatePredefinedAnswerForm?.touched)) {
+                        <div class="text-danger">
+                            @if (nameVNUpdatePredefinedAnswerForm?.hasError('required')) {
+                            <div>Enter Name, please!</div>
                             }
-                        </td>
-                        <td>
-                            <input type="number" formControlName="priority" class="form-control number-control"
-                                min="1" max="255">
-                            @if (priorityUpdatePredefinedAnswerForm?.invalid && (priorityUpdatePredefinedAnswerForm?.dirty ||
-                            priorityUpdatePredefinedAnswerForm?.touched)) {
-                            <div class="text-danger">
-                                @if (priorityUpdatePredefinedAnswerForm?.hasError('min') ||
-                                priorityUpdatePredefinedAnswerForm?.hasError('max')) {
-                                <div>Priority must be between 1 and 255.</div>
-                                }
-                            </div>
+                        </div>
+                        }
+                    </td>
+                    <td>
+                        <input type="number" formControlName="priority" class="form-control number-control" min="1"
+                            max="255">
+                        @if (priorityUpdatePredefinedAnswerForm?.invalid && (priorityUpdatePredefinedAnswerForm?.dirty
+                        ||
+                        priorityUpdatePredefinedAnswerForm?.touched)) {
+                        <div class="text-danger">
+                            @if (priorityUpdatePredefinedAnswerForm?.hasError('min') ||
+                            priorityUpdatePredefinedAnswerForm?.hasError('max')) {
+                            <div>Priority must be between 1 and 255.</div>
                             }
-                        </td>
-                        <td class="d-flex justify-content-end">
-                            <button cButton type="button" (click)="onSubmitUpdatePredefinedAnswer()"
-                                class="btn btn-primary me-2" [disabled]="updatePredefinedAnswerForm.invalid">
-                                <svg [cIcon]="icons.cilSave" width="20" class="text-white" title="Save Icon"></svg>
-                            </button>
-                            <button cButton type="button" (click)="updatePredefinedAnswer(-1)"
-                                class="btn btn-danger">
-                                <svg [cIcon]="icons.cilX" width="20" class="text-white" title="Close Icon"></svg>
-                            </button>
-                        </td>
+                        </div>
+                        }
+                    </td>
+                    <td class="d-flex justify-content-end">
+                        <button cButton type="button" (click)="onSubmitUpdatePredefinedAnswer()"
+                            class="btn btn-primary me-2" [disabled]="updatePredefinedAnswerForm.invalid">
+                            <svg [cIcon]="icons.cilSave" width="20" class="text-white" title="Save Icon"></svg>
+                        </button>
+                        <button cButton type="button" (click)="updatePredefinedAnswer(-1)" class="btn btn-danger">
+                            <svg [cIcon]="icons.cilX" width="20" class="text-white" title="Close Icon"></svg>
+                        </button>
+                    </td>
 
-                    </tr>
-                    }@else {
-                        <tr>
-                            <td>{{ i + 1 }}</td>
-                            <td>{{ item.nameEN }}</td>
-                            <td>{{ item.nameVN }}</td>
-                            <td>{{ item.priority }}</td>
-                            <td class="d-flex justify-content-end">
-                                <button cButton type="button" (click)="updatePredefinedAnswer(i)" class="btn btn-primary me-2">
-                                    <svg [cIcon]="icons.cilPen" width="20" class="text-white" title="Edit Icon"></svg>
-                                </button>
-                                <button cButton type="button" (click)="deletePredefinedAnswer(i)" class="btn btn-danger">
-                                    <svg [cIcon]="icons.cilTrash" width="20" class="text-white" title="Delete Icon"></svg>
-                                </button>
-                            </td>
-                        </tr>
-                    }
-                       
+                </tr>
+                }@else {
+                <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ item.nameEN }}</td>
+                    <td>{{ item.nameVN }}</td>
+                    <td>{{ item.priority }}</td>
+                    <td class="d-flex justify-content-end">
+                        <button cButton type="button" (click)="updatePredefinedAnswer(i)" class="btn btn-primary me-2">
+                            <svg [cIcon]="icons.cilPen" width="20" class="text-white" title="Edit Icon"></svg>
+                        </button>
+                        <button cButton type="button" (click)="deletePredefinedAnswer(i)" class="btn btn-danger">
+                            <svg [cIcon]="icons.cilTrash" width="20" class="text-white" title="Delete Icon"></svg>
+                        </button>
+                    </td>
+                </tr>
+                }
+
                 }
             </tbody>
         </table>
@@ -578,7 +579,8 @@
             <div class="row">
                 <div class="col-6">
                     <label for="nameEN" cLabel>Name EN: <span class="text-danger">(*)</span></label>
-                    <input type="text" cFormControl formControlName="nameEN" placeholder="Enter question name in English">
+                    <input type="text" cFormControl formControlName="nameEN"
+                        placeholder="Enter question name in English">
                     @if (nameENUpdateQuestionForm?.invalid && (nameENUpdateQuestionForm?.dirty ||
                     nameENUpdateQuestionForm?.touched)) {
                     <div class="text-danger">
@@ -614,7 +616,7 @@
                 </button>
             </div>
         </div>
-        <table [hover]="true" [responsive]="true"  cTable>
+        <table [hover]="true" [responsive]="true" cTable>
             <thead>
                 <tr>
                     <th>No.</th>
@@ -627,129 +629,129 @@
             <tbody>
                 <!-- Predefined Answer Form Row -->
                 @if(visibleCreatePredefinedAnswerForm()) {
-                    <tr [formGroup]="createPredefinedAnswerForm" class="adding">
-                        <td class="new-id">New</td>
-                        <td>
-                            <input type="text" formControlName="nameEN" class="form-control"
-                                placeholder="Enter predefined answer name in English">
-                            @if (nameENCreatePredefinedAnswerForm?.invalid && (nameENCreatePredefinedAnswerForm?.dirty ||
-                            nameENCreatePredefinedAnswerForm?.touched)) {
-                            <div class="text-danger">
-                                @if (nameENCreatePredefinedAnswerForm?.hasError('required')) {
-                                <div>Enter Name, please!</div>
-                                }
-                            </div>
+                <tr [formGroup]="createPredefinedAnswerForm" class="adding">
+                    <td class="new-id">New</td>
+                    <td>
+                        <input type="text" formControlName="nameEN" class="form-control"
+                            placeholder="Enter predefined answer name in English">
+                        @if (nameENCreatePredefinedAnswerForm?.invalid && (nameENCreatePredefinedAnswerForm?.dirty ||
+                        nameENCreatePredefinedAnswerForm?.touched)) {
+                        <div class="text-danger">
+                            @if (nameENCreatePredefinedAnswerForm?.hasError('required')) {
+                            <div>Enter Name, please!</div>
                             }
-                        </td>
-                        <td>
-                            <input type="text" formControlName="nameVN" class="form-control"
-                                placeholder="Enter predefined answer name in Vietnamese">
-                            @if (nameVNCreatePredefinedAnswerForm?.invalid && (nameVNCreatePredefinedAnswerForm?.dirty ||
-                            nameVNCreatePredefinedAnswerForm?.touched)) {
-                            <div class="text-danger">
-                                @if (nameVNCreatePredefinedAnswerForm?.hasError('required')) {
-                                <div>Enter Name, please!</div>
-                                }
-                            </div>
+                        </div>
+                        }
+                    </td>
+                    <td>
+                        <input type="text" formControlName="nameVN" class="form-control"
+                            placeholder="Enter predefined answer name in Vietnamese">
+                        @if (nameVNCreatePredefinedAnswerForm?.invalid && (nameVNCreatePredefinedAnswerForm?.dirty ||
+                        nameVNCreatePredefinedAnswerForm?.touched)) {
+                        <div class="text-danger">
+                            @if (nameVNCreatePredefinedAnswerForm?.hasError('required')) {
+                            <div>Enter Name, please!</div>
                             }
-                        </td>
-                        <td>
-                            <input type="number" formControlName="priority" class="form-control number-control"
-                                min="1" max="255">
-                            @if (priorityCreatePredefinedAnswerForm?.invalid && (priorityCreatePredefinedAnswerForm?.dirty ||
-                            priorityCreatePredefinedAnswerForm?.touched)) {
-                            <div class="text-danger">
-                                @if (priorityCreatePredefinedAnswerForm?.hasError('min') ||
-                                priorityCreatePredefinedAnswerForm?.hasError('max')) {
-                                <div>Priority must be between 1 and 255.</div>
-                                }
-                            </div>
+                        </div>
+                        }
+                    </td>
+                    <td>
+                        <input type="number" formControlName="priority" class="form-control number-control" min="1"
+                            max="255">
+                        @if (priorityCreatePredefinedAnswerForm?.invalid && (priorityCreatePredefinedAnswerForm?.dirty
+                        ||
+                        priorityCreatePredefinedAnswerForm?.touched)) {
+                        <div class="text-danger">
+                            @if (priorityCreatePredefinedAnswerForm?.hasError('min') ||
+                            priorityCreatePredefinedAnswerForm?.hasError('max')) {
+                            <div>Priority must be between 1 and 255.</div>
                             }
-                        </td>
-                        <td class="d-flex justify-content-end">
-                            <button cButton type="button" (click)="onSubmitCreatePredefinedAnswer()"
-                                class="btn btn-primary me-2" [disabled]="createPredefinedAnswerForm.invalid">
-                                <svg [cIcon]="icons.cilSave" width="20" class="text-white" title="Save Icon"></svg>
-                            </button>
-                            <button cButton type="button" (click)="hideCreatePredefinedAnswerForm()"
-                                class="btn btn-danger">
-                                <svg [cIcon]="icons.cilX" width="20" class="text-white" title="Close Icon"></svg>
-                            </button>
-                        </td>
+                        </div>
+                        }
+                    </td>
+                    <td class="d-flex justify-content-end">
+                        <button cButton type="button" (click)="onSubmitCreatePredefinedAnswer()"
+                            class="btn btn-primary me-2" [disabled]="createPredefinedAnswerForm.invalid">
+                            <svg [cIcon]="icons.cilSave" width="20" class="text-white" title="Save Icon"></svg>
+                        </button>
+                        <button cButton type="button" (click)="hideCreatePredefinedAnswerForm()" class="btn btn-danger">
+                            <svg [cIcon]="icons.cilX" width="20" class="text-white" title="Close Icon"></svg>
+                        </button>
+                    </td>
 
-                    </tr>
+                </tr>
                 }
 
                 @for (item of predefinedAnswerList; track $index; let i = $index) {
-                    @if(updatePredefinedAnswerIndex() !== -1 && updatePredefinedAnswerIndex() === i) {
-                         <tr [formGroup]="updatePredefinedAnswerForm" class="editing">
-                          <td>{{ i + 1 }}</td>
-                        <td>
-                            <input type="text" formControlName="nameEN" class="form-control"
-                                placeholder="Enter predefined answer name in English">
-                            @if (nameENUpdatePredefinedAnswerForm?.invalid && (nameENUpdatePredefinedAnswerForm?.dirty ||
-                            nameENUpdatePredefinedAnswerForm?.touched)) {
-                            <div class="text-danger">
-                                @if (nameENUpdatePredefinedAnswerForm?.hasError('required')) {
-                                <div>Enter Name, please!</div>
-                                }
-                            </div>
+                @if(updatePredefinedAnswerIndex() !== -1 && updatePredefinedAnswerIndex() === i) {
+                <tr [formGroup]="updatePredefinedAnswerForm" class="editing">
+                    <td>{{ i + 1 }}</td>
+                    <td>
+                        <input type="text" formControlName="nameEN" class="form-control"
+                            placeholder="Enter predefined answer name in English">
+                        @if (nameENUpdatePredefinedAnswerForm?.invalid && (nameENUpdatePredefinedAnswerForm?.dirty ||
+                        nameENUpdatePredefinedAnswerForm?.touched)) {
+                        <div class="text-danger">
+                            @if (nameENUpdatePredefinedAnswerForm?.hasError('required')) {
+                            <div>Enter Name, please!</div>
                             }
-                        </td>
-                        <td>
-                            <input type="text" formControlName="nameVN" class="form-control"
-                                placeholder="Enter predefined answer name in Vietnamese">
-                            @if (nameVNUpdatePredefinedAnswerForm?.invalid && (nameVNUpdatePredefinedAnswerForm?.dirty ||
-                            nameVNUpdatePredefinedAnswerForm?.touched)) {
-                            <div class="text-danger">
-                                @if (nameVNUpdatePredefinedAnswerForm?.hasError('required')) {
-                                <div>Enter Name, please!</div>
-                                }
-                            </div>
+                        </div>
+                        }
+                    </td>
+                    <td>
+                        <input type="text" formControlName="nameVN" class="form-control"
+                            placeholder="Enter predefined answer name in Vietnamese">
+                        @if (nameVNUpdatePredefinedAnswerForm?.invalid && (nameVNUpdatePredefinedAnswerForm?.dirty ||
+                        nameVNUpdatePredefinedAnswerForm?.touched)) {
+                        <div class="text-danger">
+                            @if (nameVNUpdatePredefinedAnswerForm?.hasError('required')) {
+                            <div>Enter Name, please!</div>
                             }
-                        </td>
-                        <td>
-                            <input type="number" formControlName="priority" class="form-control number-control"
-                                min="1" max="255">
-                            @if (priorityUpdatePredefinedAnswerForm?.invalid && (priorityUpdatePredefinedAnswerForm?.dirty ||
-                            priorityUpdatePredefinedAnswerForm?.touched)) {
-                            <div class="text-danger">
-                                @if (priorityUpdatePredefinedAnswerForm?.hasError('min') ||
-                                priorityUpdatePredefinedAnswerForm?.hasError('max')) {
-                                <div>Priority must be between 1 and 255.</div>
-                                }
-                            </div>
+                        </div>
+                        }
+                    </td>
+                    <td>
+                        <input type="number" formControlName="priority" class="form-control number-control" min="1"
+                            max="255">
+                        @if (priorityUpdatePredefinedAnswerForm?.invalid && (priorityUpdatePredefinedAnswerForm?.dirty
+                        ||
+                        priorityUpdatePredefinedAnswerForm?.touched)) {
+                        <div class="text-danger">
+                            @if (priorityUpdatePredefinedAnswerForm?.hasError('min') ||
+                            priorityUpdatePredefinedAnswerForm?.hasError('max')) {
+                            <div>Priority must be between 1 and 255.</div>
                             }
-                        </td>
-                        <td class="d-flex justify-content-end">
-                            <button cButton type="button" (click)="onSubmitUpdatePredefinedAnswer()"
-                                class="btn btn-primary me-2" [disabled]="updatePredefinedAnswerForm.invalid">
-                                <svg [cIcon]="icons.cilSave" width="20" class="text-white" title="Save Icon"></svg>
-                            </button>
-                            <button cButton type="button" (click)="updatePredefinedAnswer(-1)"
-                                class="btn btn-danger">
-                                <svg [cIcon]="icons.cilX" width="20" class="text-white" title="Close Icon"></svg>
-                            </button>
-                        </td>
+                        </div>
+                        }
+                    </td>
+                    <td class="d-flex justify-content-end">
+                        <button cButton type="button" (click)="onSubmitUpdatePredefinedAnswer()"
+                            class="btn btn-primary me-2" [disabled]="updatePredefinedAnswerForm.invalid">
+                            <svg [cIcon]="icons.cilSave" width="20" class="text-white" title="Save Icon"></svg>
+                        </button>
+                        <button cButton type="button" (click)="updatePredefinedAnswer(-1)" class="btn btn-danger">
+                            <svg [cIcon]="icons.cilX" width="20" class="text-white" title="Close Icon"></svg>
+                        </button>
+                    </td>
 
-                    </tr>
-                    }@else {
-                        <tr>
-                            <td>{{ i + 1 }}</td>
-                            <td>{{ item.nameEN }}</td>
-                            <td>{{ item.nameVN }}</td>
-                            <td>{{ item.priority }}</td>
-                            <td class="d-flex justify-content-end">
-                                <button cButton type="button" (click)="updatePredefinedAnswer(i)" class="btn btn-primary me-2">
-                                    <svg [cIcon]="icons.cilPen" width="20" class="text-white" title="Edit Icon"></svg>
-                                </button>
-                                <button cButton type="button" (click)="deletePredefinedAnswer(i)" class="btn btn-danger">
-                                    <svg [cIcon]="icons.cilTrash" width="20" class="text-white" title="Delete Icon"></svg>
-                                </button>
-                            </td>
-                        </tr>
-                    }
-                       
+                </tr>
+                }@else {
+                <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ item.nameEN }}</td>
+                    <td>{{ item.nameVN }}</td>
+                    <td>{{ item.priority }}</td>
+                    <td class="d-flex justify-content-end">
+                        <button cButton type="button" (click)="updatePredefinedAnswer(i)" class="btn btn-primary me-2">
+                            <svg [cIcon]="icons.cilPen" width="20" class="text-white" title="Edit Icon"></svg>
+                        </button>
+                        <button cButton type="button" (click)="deletePredefinedAnswer(i)" class="btn btn-danger">
+                            <svg [cIcon]="icons.cilTrash" width="20" class="text-white" title="Delete Icon"></svg>
+                        </button>
+                    </td>
+                </tr>
+                }
+
                 }
             </tbody>
         </table>

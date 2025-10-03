@@ -114,16 +114,16 @@
 }
 
 //#region table tree
-.expanded td {
-    font-weight: bold;
-    color: #fff;
-    background-color: #323a49;
-}
 .tableChildren td,
 .tableChildren th,
 .tdChildren,
 .children td {
-    background-color: #d4d4d4 !important;
+    background-color: #d4d4d4;
+}
+.expanded td {
+    font-weight: bold;
+    color: #fff;
+    background-color: #323a49;
 }
 //#endregion
 

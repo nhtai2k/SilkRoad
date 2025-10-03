@@ -59,6 +59,7 @@ export class CreateHelperComponent implements OnInit {
   deleteQuestionGroupIndex = signal<number>(-1);
   updateQuestionIndex = signal<number>(-1);
   deleteQuestionIndex = signal<number>(-1);
+  selectedQuestionGroupIndex = signal<number>(-1);
 
   // Create Question Group Form
   createQuestionGroupForm = new FormGroup({
@@ -174,8 +175,9 @@ export class CreateHelperComponent implements OnInit {
 
   //#region Question Modal
   // Create Question Modal
-  toggleCreateQuestionModal(): void {
+  toggleCreateQuestionModal(questionGroupIndex: number = -1): void {
     this.visibleCreateQuestionModal.set(!this.visibleCreateQuestionModal());
+    this.selectedQuestionGroupIndex.set(questionGroupIndex);
   }
   handleCreateQuestionModalChange(event: any) {
     this.visibleCreateQuestionModal.set(event);
@@ -242,6 +244,7 @@ export class CreateHelperComponent implements OnInit {
   get priorityCreateQuestionGroupForm() {
     return this.createQuestionGroupForm.get('priority');
   }
+
   updateQuestionGroup(index: number): void {
     const selectedQuestionGroup = this.questionGroups[index];
     this.updateQuestionGroupIndex.set(index);
@@ -273,6 +276,7 @@ export class CreateHelperComponent implements OnInit {
       this.updateQuestionGroupForm.markAllAsTouched();
     }
   }
+
   get nameENUpdateQuestionGroupForm() {
     return this.updateQuestionGroupForm.get('nameEN');
   }
@@ -282,10 +286,12 @@ export class CreateHelperComponent implements OnInit {
   get priorityUpdateQuestionGroupForm() {
     return this.updateQuestionGroupForm.get('priority');
   }
+
   deleteQuestionGroup(index: number): void {
     this.deleteQuestionGroupIndex.set(index);
     this.toggleDeleteQuestionGroupModal();
   }
+
   confirmDeleteQuestionGroup(): void {
     const index = this.deleteQuestionGroupIndex();
     if (index !== -1) {
@@ -294,6 +300,7 @@ export class CreateHelperComponent implements OnInit {
     }
     this.toggleDeleteQuestionGroupModal();
   }
+
   //#endregion
 
   //#region Handle question form
@@ -335,7 +342,6 @@ export class CreateHelperComponent implements OnInit {
 
   onSubmitCreateQuestion(): void {
     if (this.createQuestionForm.valid) {
-
       const predefinedAnswers = this.predefinedAnswerList.map((pa) => ({
         nameEN: pa.nameEN,
         nameVN: pa.nameVN,
@@ -348,7 +354,14 @@ export class CreateHelperComponent implements OnInit {
         priority: this.createQuestionForm.value.priority ?? 1,
         predefinedAnswers: predefinedAnswers
       };
-      this.questions.push(newQuestion);
+      // If a question group is selected, add the question to that group
+      if(this.selectedQuestionGroupIndex() !== -1){
+        const groupIndex = this.selectedQuestionGroupIndex();
+        const selectedGroup = this.questionGroups[groupIndex];
+        selectedGroup.questions.push(newQuestion);
+      } else {
+        this.questions.push(newQuestion);
+      }
       this.createQuestionForm.reset({ questionTypeId: 1, nameEN: '', nameVN: '', priority: 1 });
       this.predefinedAnswerList = [];
       this.initQuestionTypeId.set(-1);
@@ -369,8 +382,19 @@ export class CreateHelperComponent implements OnInit {
     return this.createQuestionForm.get('priority');
   }
 
-  updateQuestion(index: number): void {
-    const selectedQuestion = this.questions[index];
+  updateQuestion(index: number, questionGroupIndex: number): void {
+    //Set selected question group index
+    this.selectedQuestionGroupIndex.set(questionGroupIndex);
+    let selectedQuestion: QuestionModel;
+
+    if(questionGroupIndex !== -1){
+      const selectedGroup = this.questionGroups[questionGroupIndex];
+      selectedQuestion = selectedGroup.questions[index];
+    }else{
+      selectedQuestion = this.questions[index];
+    }
+    
+    //set update index and init question type id
     this.updateQuestionIndex.set(index);
     this.initQuestionTypeId.set(selectedQuestion.questionTypeId);
     this.updateQuestionForm.patchValue({
@@ -418,8 +442,14 @@ export class CreateHelperComponent implements OnInit {
         priority: this.updateQuestionForm.value.priority ?? 1,
         predefinedAnswers: predefinedAnswers
       };
-
-      this.questions[index] = updatedQuestion;
+      // If a question group is selected, update the question in that group
+      if(this.selectedQuestionGroupIndex() !== -1){
+        const groupIndex = this.selectedQuestionGroupIndex();
+        const selectedGroup = this.questionGroups[groupIndex];
+        selectedGroup.questions[index] = updatedQuestion;
+      } else {
+        this.questions[index] = updatedQuestion;
+      }
       this.updateQuestionForm.reset({ questionTypeId: 1, nameEN: '', nameVN: '', priority: 1 });
       this.predefinedAnswerList = [];
       this.updateQuestionIndex.set(-1);
@@ -441,21 +471,26 @@ export class CreateHelperComponent implements OnInit {
     return this.updateQuestionForm.get('priority');
   }
 
-  deleteQuestion(index: number): void {
+  deleteQuestion(index: number, questionGroupIndex: number): void {
     this.deleteQuestionIndex.set(index);
+    this.selectedQuestionGroupIndex.set(questionGroupIndex);
     this.toggleDeleteQuestionModal();
   }
 
   confirmDeleteQuestion(): void {
+    const groupIndex = this.selectedQuestionGroupIndex();
     const index = this.deleteQuestionIndex();
-    if (index !== -1) {
+    if(groupIndex !== -1 && index !== -1){
+      const selectedGroup = this.questionGroups[groupIndex];
+      selectedGroup.questions.splice(index, 1);
+    }
+    else if (index !== -1) {
       this.questions.splice(index, 1);
       this.deleteQuestionIndex.set(-1);
     }
     this.toggleDeleteQuestionModal();
   }
   //#endregion
-
 
   //#region predefined answer form
   showCreatePredefinedAnswerForm(): void {

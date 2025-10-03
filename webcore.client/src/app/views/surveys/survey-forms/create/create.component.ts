@@ -36,6 +36,7 @@ export class CreateComponent {
   //#endregion
 
   //#region Constructor and Hooks
+  constructor(private surveyFormService: SurveyFormService, private router: Router) { }
   onDateRangeChange(event: Date[]) {
     this.startDate?.setValue(event[0]);
     this.endDate?.setValue(event[1]);
@@ -46,7 +47,15 @@ export class CreateComponent {
   //#endregion submit
   onSubmit() {
     if (this.createForm.valid) {
-      console.log(this.createForm.value);
+      this.surveyFormService.create(this.createForm.value).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.router.navigate(['/surveys/survey-forms']);
+          } else {
+            alert('Error: ' + res.message);
+          }
+        }
+      });
     }
   }
 
