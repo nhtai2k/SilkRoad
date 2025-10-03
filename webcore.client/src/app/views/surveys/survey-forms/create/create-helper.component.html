@@ -156,7 +156,7 @@
     <c-modal-body>
         <div class="mb-4">
             <span cLabel class="fw-bold">Search Question Library: </span>
-            <app-select-search [options]="optionList" (onChangeValue)="handleQuestionGroupLibraryChange($event)"
+            <app-select-search [options]="optionList" [selectedValue]="initQuestionGroupLibraryId()" (onChangeValue)="handleQuestionGroupLibraryChange($event)"
                 placeholder="Select question group library..."></app-select-search>
         </div>
         <form cForm [formGroup]="createQuestionGroupForm" (ngSubmit)="onSubmitCreateQuestionGroup()">
@@ -321,7 +321,7 @@
     <c-modal-body>
         <div class="mb-4">
             <span cLabel class="fw-bold">Search Question Library: </span>
-            <app-tree-select [options]="treeOptionList" (onChangeValue)="handleQuestionLibraryChange($event)"
+            <app-tree-select [options]="treeOptionList" [selectedValue]="initQuestionLibraryId()" (onChangeValue)="handleQuestionLibraryChange($event)"
                 placeholder="Select question group library..."></app-tree-select>
         </div>
         <form cForm [formGroup]="createQuestionForm" (ngSubmit)="onSubmitCreateQuestion()">

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ButtonDirective, CardBodyComponent, CardComponent, FormControlDirective, FormDirective, FormLabelDirective } from '@coreui/angular';
@@ -18,10 +18,9 @@ import { RangeDatetimePickerComponent } from "@components/generals/range-datetim
 
 export class CreateComponent {
   //#region Variables
+  @ViewChild('createHelperComponent') createHelperComponent!: CreateHelperComponent;
   icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp };
 
-  // questionGroups: QuestionGroupModel[] = [...questionGroupList];
-  // questions: QuestionModel[] = [...questionList];
 
   createForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -46,17 +45,21 @@ export class CreateComponent {
 
   //#endregion submit
   onSubmit() {
-    if (this.createForm.valid) {
-      this.surveyFormService.create(this.createForm.value).subscribe({
-        next: (res) => {
-          if (res.success) {
-            this.router.navigate(['/surveys/survey-forms']);
-          } else {
-            alert('Error: ' + res.message);
-          }
-        }
-      });
-    }
+    const  questionGroups = this.createHelperComponent.questionGroups;
+    const questions = this.createHelperComponent.questions;
+    console.log('questionGroups', questionGroups);
+    console.log('questions', questions);
+    // if (this.createForm.valid) {
+    //   this.surveyFormService.create(this.createForm.value).subscribe({
+    //     next: (res) => {
+    //       if (res.success) {
+    //         this.router.navigate(['/surveys/survey-forms']);
+    //       } else {
+    //         alert('Error: ' + res.message);
+    //       }
+    //     }
+    //   });
+    // }
   }
 
   get name() { return this.createForm.get('name'); }

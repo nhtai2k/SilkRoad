@@ -53,8 +53,11 @@ export class CreateHelperComponent implements OnInit {
   //visible Predefined Answer Form
   visibleCreatePredefinedAnswerForm = signal(false);
   updatePredefinedAnswerIndex = signal<number>(-1);
+  // Init selected value for select
+  initQuestionTypeId = signal<number | null>(-1);
+  initQuestionGroupLibraryId = signal<number | null>(-1);
+  initQuestionLibraryId = signal<number | null>(-1);
 
-  initQuestionTypeId = signal<number>(-1);
   updateQuestionGroupIndex = signal<number>(-1);
   deleteQuestionGroupIndex = signal<number>(-1);
   updateQuestionIndex = signal<number>(-1);
@@ -230,6 +233,9 @@ export class CreateHelperComponent implements OnInit {
       this.questionGroups.push(newQuestionGroup);
       this.createQuestionGroupForm.reset({ nameEN: '', nameVN: '', priority: 1 });
       this.toggleCreateQuestionGroupModal();
+      // Reset the select component
+      this.initQuestionGroupLibraryId.set(null);
+      setTimeout(() => this.initQuestionGroupLibraryId.set(-1), 0);
     } else {
       this.createQuestionGroupForm.markAllAsTouched();
     }
@@ -364,8 +370,13 @@ export class CreateHelperComponent implements OnInit {
       }
       this.createQuestionForm.reset({ questionTypeId: 1, nameEN: '', nameVN: '', priority: 1 });
       this.predefinedAnswerList = [];
-      this.initQuestionTypeId.set(-1);
-      this.onchangeQuestionType(this.initQuestionTypeId());
+      // Reset the question type select component
+      this.initQuestionTypeId.set(null);
+      setTimeout(() => this.initQuestionTypeId.set(-1), 0);
+      // Reset the question library select component
+      this.initQuestionLibraryId.set(null);
+      setTimeout(() => this.initQuestionLibraryId.set(-1), 0);
+      this.onchangeQuestionType(-1);
       this.toggleCreateQuestionModal();
 
     } else {
@@ -453,8 +464,10 @@ export class CreateHelperComponent implements OnInit {
       this.updateQuestionForm.reset({ questionTypeId: 1, nameEN: '', nameVN: '', priority: 1 });
       this.predefinedAnswerList = [];
       this.updateQuestionIndex.set(-1);
-      this.initQuestionTypeId.set(-1);
-      this.onchangeQuestionType(this.initQuestionTypeId());
+      // Reset the question type select component
+      this.initQuestionTypeId.set(null);
+      setTimeout(() => this.initQuestionTypeId.set(-1), 0);
+      this.onchangeQuestionType(-1);
       this.toggleUpdateQuestionModal();
     } else {
       this.updateQuestionForm.markAllAsTouched();

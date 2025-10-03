@@ -58,10 +58,10 @@
                 </div>
             </div>
         </form>
-        <app-create-helper></app-create-helper>
+        <app-create-helper #createHelperComponent></app-create-helper>
         <!-- Button Submit Creation Form -->
         <div class="d-flex justify-content-end mt-4">
-            <button cButton type="submit" (click)="onSubmit()" [disabled]="!createForm.valid">
+            <button cButton type="submit" (click)="onSubmit()" [disabled]="createForm.valid">
             <svg [cIcon]="icons.cilSave" width="25" class="text-white" title="Save Icon"></svg>
 
             </button>
