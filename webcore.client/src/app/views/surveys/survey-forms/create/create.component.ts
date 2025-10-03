@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { ButtonDirective, CardBodyComponent, CardComponent, FormControlDirective, FormDirective, FormLabelDirective} from '@coreui/angular';
+import { ButtonDirective, CardBodyComponent, CardComponent, FormControlDirective, FormDirective, FormLabelDirective } from '@coreui/angular';
 import { SurveyFormService } from '@services/survey-services/survey-form.service';
 import { IconDirective } from '@coreui/icons-angular';
 import { cilExitToApp, cilPen, cilPlus, cilSave, cilTrash } from '@coreui/icons';
@@ -36,20 +36,18 @@ export class CreateComponent {
   //#endregion
 
   //#region Constructor and Hooks
-  constructor(
-    // private questionGroupService: QuestionGroupService,
-    private surveyFormService: SurveyFormService,
-    private router: Router
-  ) { }
-  ngOnInit() {
-    // this.questionGroupService.getEagerAllElements().subscribe((response) => {
-    //   this.intitQuestionGroupData(response.data);
-    // });
+  onDateRangeChange(event: Date[]) {
+    this.startDate?.setValue(event[0]);
+    this.endDate?.setValue(event[1]);
+    console.log(event);
   }
   //#endregion
 
   //#endregion submit
   onSubmit() {
+    if (this.createForm.valid) {
+      console.log(this.createForm.value);
+    }
   }
 
   get name() { return this.createForm.get('name'); }

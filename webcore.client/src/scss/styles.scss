@@ -1,9 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 // Import styles with default layout.
-@use "@coreui/coreui/scss/coreui" as * with (
-  $enable-deprecation-messages: false
-);
+@use "@coreui/coreui/scss/coreui" as * with ($enable-deprecation-messages: false);
 
 // Import Chart.js custom tooltips styles
 @use "@coreui/chartjs/scss/coreui-chartjs";
@@ -23,7 +21,7 @@
 
 @use "login";
 
-
+//#region custom controls
 .number-control {
     max-width: 80px;
     text-align: center;
@@ -38,16 +36,21 @@
     border-radius: var(--cui-border-radius);
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
-
 .number-control:focus {
     color: var(--cui-body-color);
     background-color: var(--cui-body-bg);
-    border-color: rgb(171.5, 170.5, 234.5);
     outline: 0;
-    box-shadow: 0 0 0 0.25rem rgba(88, 86, 214, 0.25)
+    border-color: rgb(71, 71, 71);
+    box-shadow: 0 0 0 1px rgba(71, 71, 71, 0.25);
 }
+.form-control:focus,
+.form-control:hover  {
+    border-color: rgb(71, 71, 71);
+    box-shadow: 0 0 0 1px rgba(71, 71, 71, 0.25);
+}
+//#endregion
 
-//tree select
+//#region select inputs
 .ant-select {
     width: 100%;
 }
@@ -68,53 +71,63 @@
     display: flex;
     align-items: center;
 }
-.ant-select:not(.ant-select-disabled):hover .ant-select-selector
- {
-       border: var(--cui-border-width) solid var(--cui-border-color);
+
+.ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+    border: var(--cui-border-width) solid var(--cui-border-color);
 }
 
 
 .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
     color: var(--cui-body-color);
     background-color: var(--cui-body-bg);
-    border-color: rgb(171.5, 170.5, 234.5);
     outline: 0;
-    box-shadow: 0 0 0 0.25rem rgba(88, 86, 214, 0.25);
+    border-color: rgb(71, 71, 71);
+    box-shadow: 0 0 0 1px rgba(71, 71, 71, 0.25);
 }
 
 .ant-select-selector {
     height: auto !important;
     //padding: 0.375rem 0.75rem!important;
 }
+
 .ant-select-single.ant-select-show-arrow .ant-select-selection-search,
 .ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input {
     height: 38px;
 
 }
-.ant-select-selection-item.ng-star-inserted{
+
+.ant-select-selection-item.ng-star-inserted {
     height: 100%;
 }
-.ant-select-tree.ant-select-tree-block-node .ant-select-tree-list-holder-inner{
+
+.ant-select-tree.ant-select-tree-block-node .ant-select-tree-list-holder-inner {
     max-height: 300px;
 }
 
-.cdk-overlay-container{
+.cdk-overlay-container {
     z-index: 9999;
 }
-//table tree
+
+//#endregion
+.ant-picker-range .ant-picker-active-bar {
+    background: #000000;
+}
+
+//#region table tree
 .expanded td {
     font-weight: bold;
     color: #fff;
     background-color: #323a49;
 }
-
 .tableChildren td,
 .tableChildren th,
 .tdChildren,
 .children td {
     background-color: #d4d4d4 !important;
 }
-// model
+//#endregion
+
+//#region model
 .title {
     background-color: #212631;
     padding: 0.25rem 0.5rem;
@@ -125,13 +138,17 @@
         font-size: 1.25rem;
     }
 }
-
-
 .btnClose {
     background-color: rgb(255, 255, 255, 0.2);
     font-weight: 900;
 }
-//table row
+.btnClose:hover, .btnClose:active {
+    background-color: rgb(255, 255, 255, 0.4)!important;
+    border-color: white!important;
+}
+//#endregion
+
+//#region table row
 .editing {
     td {
 
@@ -140,7 +157,6 @@
 
     border-left: 4px solid #ffc107;
 }
-
 .adding {
     td {
         background-color: #d1ecf1 !important;
@@ -154,3 +170,4 @@
         font-style: italic;
     }
 }
+//#endregion

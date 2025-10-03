@@ -1,3 +1,25 @@
+//#region date time picker
 nz-range-picker {
-    margin: 0 8px 12px 0;
-    }
+    padding: 0.375rem 0.75rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--cui-body-color);
+    appearance: none;
+    background-color: var(--cui-body-bg);
+    background-clip: padding-box;
+    border: var(--cui-border-width) solid var(--cui-border-color);
+    border-radius: var(--cui-border-radius);
+    transition: border-color 0.15s 
+    ease-in-out, box-shadow 0.15s 
+    ease-in-out;
+}
+.ant-picker-input > input{
+    font-size: 1rem;
+    line-height: normal;
+}
+.ant-picker:hover, .ant-picker-focused
+{
+    border-color: rgb(71, 71, 71);
+    box-shadow: 0 0 0 1px rgba(71, 71, 71, 0.25);
+}
+//#endregion

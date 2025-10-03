@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-6">
                     <label cLabel>Start - End Date: <span class="text-danger">(*)</span></label>
-                    <app-range-datetime-picker></app-range-datetime-picker>
+                    <app-range-datetime-picker (onChangeValue)="onDateRangeChange($event)"></app-range-datetime-picker>
                 </div>
             </div>
             <div class="mb-2 row">

@@ -1,5 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ClosedXML.Excel;
+using Common;
+using Common.Models;
+using Common.Services.ActionLoggingServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
+using SurveyBusinessLogic.IHelpers;
+using SurveyDataAccess.DTOs;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.SurveyControllers
@@ -9,136 +16,107 @@ namespace WebCore.Server.Controllers.SurveyControllers
     [Authorize]
     public class SurveyFormController : BaseApiController
     {
-        //private readonly ISurveyFormHelper _surveyFormHelper;
-        //private readonly IJwtService _jwtService;
-        //private readonly IActionloggingService _actionLog;
-        //private readonly IStringLocalizer<SharedResource> _localizer;
-        //public SurveyFormController(ISurveyFormHelper surveyFormHelper, IJwtService jwtService, IActionloggingService actionLog, IStringLocalizer<SharedResource> localizer)
-        //{
-        //    _surveyFormHelper = surveyFormHelper;
-        //    _jwtService = jwtService;
-        //    _actionLog = actionLog;
-        //    _localizer = localizer;
-        //}
+        private readonly ISurveyFormHelper _helper;
+        private readonly IActionLoggingService _actionLog;
+        private readonly IStringLocalizer<SharedResource> _localizer;
+        public SurveyFormController(ISurveyFormHelper helper, IActionLoggingService actionLog,
+            IStringLocalizer<SharedResource> localizer)
+        {
+            _helper = helper;
+            _actionLog = actionLog;
+            _localizer = localizer;
+        }
 
-        //[HttpGet("GetAll")]
-        ////[AuthorizeEnumPolicy(ERoleClaimGroup.SurveyForm, ERoleClaim.View, EModule.Survey)]
-        //public async Task<IActionResult> GetAll(int pageIndex = 1, int pageSize = 10)
-        //{
-        //    string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-        //    var controllerName = ControllerContext.ActionDescriptor.ControllerName;
-        //    if (pageIndex < 1)
-        //    {
-        //        _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Failed);
-        //        return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
-        //    }
-        //    Pagination<SurveyFormViewModel> data = await _surveyFormHelper.GetAllAsync(pageIndex, pageSize);
-        //    _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Successful);
-        //    return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
-        //}
+        [HttpGet("getAll/{pageIndex}/{pageSize}")]
+        public async Task<IActionResult> GetAll(int pageIndex, int pageSize)
+        {
+            if (pageIndex < 1 || pageSize < 1)
+            {
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
+            }
+            Pagination<SurveyFormDTO> data = await _helper.GetAllAsync(pageIndex, pageSize);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        }
 
-        //[HttpGet("GetAllActive")]
-        ////[AuthorizeEnumPolicy(ERoleClaimGroup.SurveyForm, ERoleClaim.View, EModule.Survey)]
-        //public async Task<IActionResult> GetAllActive()
-        //{
-        //    string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-        //    var controllerName = ControllerContext.ActionDescriptor.ControllerName;
-        //    IEnumerable<SurveyFormViewModel> data = await _surveyFormHelper.GetAllActiveAsync();
-        //    _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Successful);
-        //    return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
-        //}
+        [HttpGet("getAllDeleted/{pageIndex}/{pageSize}")]
+        public async Task<IActionResult> GetAllDeleted(int pageIndex, int pageSize)
+        {
+            if (pageIndex < 1 || pageSize < 1)
+                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
+            var data = await _helper.GetAllDeletedAsync(pageIndex, pageSize);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        }
 
-        //[HttpGet("GetById/{id}")]
-        ////[AuthorizeEnumPolicy(ERoleClaimGroup.SurveyForm, ERoleClaim.View, EModule.Survey)]
-        //public async Task<IActionResult> GetById(int id)
-        //{
-        //    string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-        //    var data = await _surveyFormHelper.GetByIdAsync(id);
-        //    if (data == null)
-        //    {
-        //        _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.ViewDetails, EUserActionStatus.Failed);
-        //        return Failed(EStatusCodes.NotFound, _localizer["dataNotFound"]);
-        //    }
-        //    _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.ViewDetails, EUserActionStatus.Successful);
-        //    return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
-        //}
+        [HttpGet("getById/{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var data = await _helper.GetByIdAsync(id);
+            if (data == null)
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        }
+         
+        [HttpGet("getEargerById/{id}")]
+        public async Task<IActionResult> GetEargerById(int id)
+        {
+            var data = await _helper.GetEagerLoadingByIdAsync(id);
+            if (data == null)
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
+            return Succeeded<SurveyFormDTO>(data, _localizer["dataFetchedSuccessfully"]);
+        }
 
-        //[HttpGet("GetEagerById/{id}")]
-        ////[AuthorizeEnumPolicy(ERoleClaimGroup.SurveyForm, ERoleClaim.View, EModule.Survey)]
-        //public async Task<IActionResult> GetEagerById(int id)
-        //{
-        //    string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-        //    var data = _surveyFormHelper.GetEagerSurveyFormByID(id);
-        //    if (data == null)
-        //    {
-        //        _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.ViewDetails, EUserActionStatus.Failed);
-        //        return Failed(EStatusCodes.NotFound, _localizer["dataNotFound"]);
-        //    }
-        //    _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.ViewDetails, EUserActionStatus.Successful);
-        //    return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
-        //}
+        [HttpPost("create")]
+        public async Task<IActionResult> Create([FromBody] SurveyFormDTO model)
+        {
+            if (model == null || !ModelState.IsValid)
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
+            var userName = User.Identity?.Name;
+            var result = await _helper.CreateAsync(model, userName);
+            if (!result)
+                return Failed(EStatusCodes.InternalServerError, _localizer["createFailed"]);
+            return Succeeded(_localizer["createSuccess"]);
+        }
 
-        //[HttpGet("GetEagerUIById/{id}")]
-        //[AllowAnonymous]
-        //public async Task<IActionResult> GetEagerUIById(int id)
-        //{
-        //    var data = await _surveyFormHelper.GetEagerSurveyUIByID(id, ELanguages.VN.ToString());
-        //    return Ok(data);
-        //}
+        [HttpPut("update")]
+        public async Task<IActionResult> Update([FromBody] SurveyFormDTO model)
+        {
+            if (model == null || !ModelState.IsValid)
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
+            var userName = User.Identity?.Name;
+            var result = await _helper.UpdateAsync(model, userName);
+            if (!result)
+                return Failed(EStatusCodes.InternalServerError, _localizer["updateFailed"]);
+            return Succeeded(_localizer["updateSuccess"]);
+        }
 
-        //[HttpPost("Create")]
-        ////[AuthorizeEnumPolicy(ERoleClaimGroup.SurveyForm, ERoleClaim.Create, EModule.Survey)]
-        //public async Task<IActionResult> Create([FromBody] SurveyFormViewModel model)
-        //{
-        //    string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-        //    if (!ModelState.IsValid)
-        //    {
-        //        _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Create, EUserActionStatus.Failed, model);
-        //        return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
-        //    }
-        //    bool result = await _surveyFormHelper.CreateAsync(model);
-        //    if (!result)
-        //    {
-        //        _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Create, EUserActionStatus.Failed, model);
-        //        return Failed(EStatusCodes.BadRequest, _localizer["dataCreationFailed"]);
-        //    }
-        //    _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Create, EUserActionStatus.Successful, model);
-        //    return Succeeded(_localizer["dataCreatedSuccessfully"]);
-        //}
+        [HttpPut("softDelete/{id}")]
+        public async Task<IActionResult> SoftDelete(int id)
+        {
+            var userName = User.Identity?.Name;
+            var result = await _helper.SoftDeleteAsync(id, userName);
+            if (!result)
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
+            return Succeeded(_localizer["softDeleteSuccess"]);
+        }
 
-        //[HttpPut("Update")]
-        ////[AuthorizeEnumPolicy(ERoleClaimGroup.SurveyForm, ERoleClaim.Update, EModule.Survey)]
-        //public async Task<IActionResult> Update([FromBody] SurveyFormViewModel model)
-        //{
-        //    string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-        //    if (!ModelState.IsValid)
-        //    {
-        //        _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Update, EUserActionStatus.Failed, model);
-        //        return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
-        //    }
-        //    bool result = await _surveyFormHelper.UpdateAsync(model);
-        //    if (!result)
-        //    {
-        //        _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Update, EUserActionStatus.Failed, model);
-        //        return Failed(EStatusCodes.BadRequest, _localizer["dataUpdateFailed"]);
-        //    }
-        //    _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Update, EUserActionStatus.Successful, model);
-        //    return Succeeded(_localizer["dataUpdatedSuccessfully"]);
-        //}
+        [HttpPut("restore/{id}")]
+        public async Task<IActionResult> Restore(int id)
+        {
+            var userName = User.Identity?.Name;
+            var result = await _helper.RestoreAsync(id, userName);
+            if (!result)
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
+            return Succeeded(_localizer["restoreSuccess"]);
+        }
 
-        //[HttpPatch("SoftDelete/{id}")]
-        ////[AuthorizeEnumPolicy(ERoleClaimGroup.SurveyForm, ERoleClaim.SoftDelete, EModule.Survey)]
-        //public async Task<IActionResult> Delete(int id)
-        //{
-        //    string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-        //    bool result = await _surveyFormHelper.SoftDeleteAsync(id);
-        //    if (!result)
-        //    {
-        //        _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Delete, EUserActionStatus.Failed, id);
-        //        return Failed(EStatusCodes.BadRequest, _localizer["dataDeletionFailed"]);
-        //    }
-        //    _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Delete, EUserActionStatus.Successful, id);
-        //    return Succeeded(_localizer["dataDeletedSuccessfully"]);
-        //}
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _helper.DeleteAsync(id);
+            if (!result)
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
+            return Succeeded(_localizer["deleteSuccess"]);
+        }
+
     }
 }
