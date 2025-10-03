@@ -17,6 +17,7 @@ import { EQuestionTypes } from '@common/global';
 import { QuestionLibraryService } from '@services/survey-services/question-library.service';
 
 
+
 @Component({
   selector: 'app-create-helper',
   imports: [ReactiveFormsModule, ButtonDirective, CommonModule, TableDirective, IconDirective, BookIconComponent, ModalComponent, ModalHeaderComponent,
@@ -134,7 +135,7 @@ export class CreateHelperComponent implements OnInit {
 
   toggleQuestionNode(node: QuestionGroupModel): void {
     node.expanded = !node.expanded;
-    if (node.expanded) {
+    if (node.expanded && node.id) {
       this.showQuestionChildrenByParentId.set(node.id);
     } else {
       this.showQuestionChildrenByParentId.set(null);
@@ -223,8 +224,9 @@ export class CreateHelperComponent implements OnInit {
 
   onSubmitCreateQuestionGroup(): void {
     if (this.createQuestionGroupForm.valid) {
+      // const guidId = uuidv4();
       const newQuestionGroup: QuestionGroupModel = {
-        id: (this.questionGroups.length + 1).toString(),
+        // id: guidId,
         nameEN: this.createQuestionGroupForm.value.nameEN ?? '',
         nameVN: this.createQuestionGroupForm.value.nameVN ?? '',
         priority: this.createQuestionGroupForm.value.priority ?? 1,

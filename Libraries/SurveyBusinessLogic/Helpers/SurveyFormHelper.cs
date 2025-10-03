@@ -57,9 +57,13 @@ namespace SurveyBusinessLogic.Helpers
             {
                 model.Create(userName);
                 model.Name = model.Name.Trim();
+                model.TitleEN = model.TitleEN.Trim();
+                model.TitleVN = model.TitleVN.Trim();
+                model.DescriptionEN = model.DescriptionEN.Trim();
+                model.DescriptionVN = model.DescriptionVN.Trim();
                 model.Note = model.Note?.Trim();
-                //await _unitOfWork.SurveyFormRepository.CreateAsync(model);
-                //await _unitOfWork.SaveChangesAsync();
+                await _unitOfWork.SurveyFormRepository.CreateAsync(model);
+                await _unitOfWork.SaveChangesAsync();
                 return true;
             }
             catch
