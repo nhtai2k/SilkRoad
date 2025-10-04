@@ -13,7 +13,6 @@ namespace SurveyDataAccess.Configurations
             builder.Property(s => s.Id)
                 .HasDefaultValueSql("NEWID()")
                 .ValueGeneratedOnAdd();
-            builder.Property(s => s.QuestionGroupId).IsRequired();
             builder.Property(s => s.QuestionTypeId).IsRequired();
             builder.Property(s => s.NameEN).HasColumnType("nvarchar(255)");
             builder.Property(s => s.NameVN).HasColumnType("nvarchar(255)");

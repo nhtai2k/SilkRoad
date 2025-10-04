@@ -1,8 +1,7 @@
 export interface SurveyFormModel {
     id: number;
     isPeriodic: boolean;
-    nameVN: string;
-    nameEN: string;
+    name: string;
     titleEN: string;
     titleVN: string;
     descriptionEN: string;

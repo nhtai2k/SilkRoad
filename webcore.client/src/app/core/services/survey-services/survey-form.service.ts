@@ -12,12 +12,13 @@ import { Observable, catchError, switchMap, throwError } from 'rxjs';
 })
 export class SurveyFormService {  
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) { }
-  getAll(query: any): Observable<APIResponse<Pagination<SurveyFormModel>>> {
-    return this.http.get<APIResponse<Pagination<SurveyFormModel>>>(EUrl.getAllUrlSurveyForm, { headers: this.authenticationService.GetHeaders(), params: query }).pipe(
+  getAll(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<SurveyFormModel>>> {
+    const url = EUrl.getAllUrlSurveyForm +'/' + pageIndex + '/' + pageSize;
+    return this.http.get<APIResponse<Pagination<SurveyFormModel>>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
           return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<SurveyFormModel>>>(EUrl.getAllUrlSurveyForm, { headers: this.authenticationService.GetHeaders(), params: query }))
+            switchMap(() => this.http.get<APIResponse<Pagination<SurveyFormModel>>>(url, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
           return throwError(() => error);

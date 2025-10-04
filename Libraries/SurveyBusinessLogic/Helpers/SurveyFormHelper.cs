@@ -53,23 +53,53 @@ namespace SurveyBusinessLogic.Helpers
 
         public async Task<bool> CreateAsync(SurveyFormDTO model, string? userName = null)
         {
-            try
-            {
-                model.Create(userName);
-                model.Name = model.Name.Trim();
-                model.TitleEN = model.TitleEN.Trim();
-                model.TitleVN = model.TitleVN.Trim();
-                model.DescriptionEN = model.DescriptionEN.Trim();
-                model.DescriptionVN = model.DescriptionVN.Trim();
-                model.Note = model.Note?.Trim();
+            //using (var transaction = _unitOfWork.BeginTransaction())
+            //{
+                try
+                {
+                    //var questionGroups = model.QuestionGroups;
+                    //var questions = model.Questions;
+
+                    model.Create(userName);
+                    model.Name = model.Name.Trim();
+                    model.TitleEN = model.TitleEN.Trim();
+                    model.TitleVN = model.TitleVN.Trim();
+                    model.DescriptionEN = model.DescriptionEN.Trim();
+                    model.DescriptionVN = model.DescriptionVN.Trim();
+                    model.Note = model.Note?.Trim();
+                    //model.QuestionGroups = [];
+                    //model.Questions = [];
+
                 await _unitOfWork.SurveyFormRepository.CreateAsync(model);
                 await _unitOfWork.SaveChangesAsync();
+                //if (questionGroups != null && questionGroups.Count() > 0)
+                //{
+                //    foreach (var item in questionGroups)
+                //    {
+                //        item.SurveyFormId = model.Id;
+                //        _unitOfWork.QuestionGroupRepository.Create(item);
+                //    }
+                //}
+                //if (questions != null && questions.Count() > 0)
+                //{
+                //    foreach (var item in questions)
+                //    {
+                //        item.SurveyFormId = model.Id;
+                //        _unitOfWork.QuestionRepository.Create(item);
+                //    }
+                //}
+                //_unitOfWork.SaveChanges();
+                //transaction.Commit();
+
                 return true;
-            }
-            catch
-            {
-                return false;
-            }
+                }
+                catch
+                {
+
+                    //transaction.Rollback();
+                    return false;
+                }
+            //}
         }
 
         public async Task<bool> UpdateAsync(SurveyFormDTO model, string? userName = null)

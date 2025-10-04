@@ -39,11 +39,7 @@ export class IndexComponent {
   }
 
   getData() {
-    const query: Params = {
-      pageIndex: this.pageInformation.pageIndex,
-      pageSize: this.pageInformation.pageSize
-    }
-    this.surveyFormService.getAll(query).subscribe((response) => {
+    this.surveyFormService.getAll(this.pageInformation.pageIndex, this.pageInformation.pageSize).subscribe((response) => {
       this.data = response.data;
       this.pageInformation.totalItems = response.data.totalItems;
       this.pageInformation.totalPages = response.data.totalPages;

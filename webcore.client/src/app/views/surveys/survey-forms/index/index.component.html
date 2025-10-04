@@ -52,8 +52,7 @@
     <thead class="text-nowrap text-truncate">
         <tr>
             <th scope="col">STT</th>
-            <th scope="col">NameEN</th>
-            <th scope="col">NameVN</th>
+            <th scope="col">Name</th>
             <th scope="col">Active</th>
             <th></th>
         </tr>
@@ -62,8 +61,7 @@
         @for (item of data.items; track item?.id; let i = $index) {
             <tr>
                 <td>{{ i+1 }}</td>
-                <td>{{ item.nameEN }}</td>
-                <td>{{ item.nameVN }}</td>
+                <td>{{ item.name }}</td>
                 <td>{{ item.isActive }}</td>
                 <td>
                     <div class="d-flex justify-content-end">

@@ -16,8 +16,6 @@ import { TreeSelectComponent } from "@components/selects/tree-select/tree-select
 import { EQuestionTypes } from '@common/global';
 import { QuestionLibraryService } from '@services/survey-services/question-library.service';
 
-
-
 @Component({
   selector: 'app-create-helper',
   imports: [ReactiveFormsModule, ButtonDirective, CommonModule, TableDirective, IconDirective, BookIconComponent, ModalComponent, ModalHeaderComponent,
