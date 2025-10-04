@@ -150,6 +150,10 @@ export const routes: Routes = [
         loadChildren: () => import('./views/surveys/survey-forms/create/routes').then((m) => m.routes)
       },
       {
+        path: 'surveys/survey-forms/update/:id',
+        loadChildren: () => import('./views/surveys/survey-forms/update/routes').then((m) => m.routes)
+      },
+      {
         path: 'surveys/extension',
         loadChildren: () => import('./views/surveys/extension/routes').then((m) => m.routes)
       },

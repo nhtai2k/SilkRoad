@@ -1,39 +1,26 @@
-<h3>Update Survey form</h3>
+<h3 class="fw-bold">Update Survey form</h3>
 <c-card>
     <c-card-body>
+        <!-- Survey Form Creation Form -->
+        <div class="title">
+            <span>1. Survey Information</span>
+        </div>
         <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmit()">
-            <div class="mb-2 d-flex">
-                <c-form-check class="me-2 d-flex align-items-center">
-                  <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
-                  <label cFormCheckLabel for="isActive" class="me-2">Active </label>
-                </c-form-check>
-                <c-form-check class="me-2 d-flex align-items-center">
-                  <input cFormCheckInput formControlName="isPeriodic" id="isPeriodic" class="me-2" type="checkbox" />
-                  <label cFormCheckLabel for="isPeriodic" class="me-2">IsPeriodic </label>
-                </c-form-check>
-            </div>
             <div class="mb-2 row">
                 <div class="col-6">
-                    <label cLabel for="nameEN">NameEN: <span class="text-danger">(*)</span></label>
-                    <input cFormControl formControlName="nameEN" type="text" />
-                    @if (nameEN?.invalid && (nameEN?.dirty || nameEN?.touched)) {
-                        <div class="text-danger">
-                            @if (nameEN?.hasError('required')) {
-                                <div>Enter NameEN, please!</div>
-                            }
-                        </div>
+                    <label cLabel for="name">Name: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="name" type="text" />
+                    @if (name?.invalid && (name?.dirty || name?.touched)) {
+                    <div class="text-danger">
+                        @if (name?.hasError('required')) {
+                        <div>Enter Name, please!</div>
+                        }
+                    </div>
                     }
                 </div>
                 <div class="col-6">
-                    <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
-                    <input cFormControl formControlName="nameVN" type="text" />
-                    @if (nameVN?.invalid && (nameVN?.dirty || nameVN?.touched)) {
-                        <div class="text-danger">
-                            @if (nameVN?.hasError('required')) {
-                                <div>Enter NameVN, please!</div>
-                            }
-                        </div>
-                    }
+                    <label cLabel>Start - End Date: <span class="text-danger">(*)</span></label>
+                    <app-range-datetime-picker (onChangeValue)="onDateRangeChange($event)"></app-range-datetime-picker>
                 </div>
             </div>
             <div class="mb-2 row">
@@ -41,22 +28,22 @@
                     <label cLabel for="titleEN">TitleEN: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="titleEN" type="text" />
                     @if (titleEN?.invalid && (titleEN?.dirty || titleEN?.touched)) {
-                        <div class="text-danger">
-                            @if (titleEN?.hasError('required')) {
-                                <div>Enter TitleEN, please!</div>
-                            }
-                        </div>
+                    <div class="text-danger">
+                        @if (titleEN?.hasError('required')) {
+                        <div>Enter TitleEN, please!</div>
+                        }
+                    </div>
                     }
                 </div>
                 <div class="col-6">
                     <label cLabel for="titleVN">TitleVN: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="titleVN" type="text" />
                     @if (titleVN?.invalid && (titleVN?.dirty || titleVN?.touched)) {
-                        <div class="text-danger">
-                            @if (titleVN?.hasError('required')) {
-                                <div>Enter TitleVN, please!</div>
-                            }
-                        </div>
+                    <div class="text-danger">
+                        @if (titleVN?.hasError('required')) {
+                        <div>Enter TitleVN, please!</div>
+                        }
+                    </div>
                     }
                 </div>
             </div>
@@ -70,63 +57,17 @@
                     <textarea cFormControl formControlName="descriptionVN" rows="3"></textarea>
                 </div>
             </div>
-            <div class="mb-2 row">
-                <div class="col-6">
-                    <label cLabel for="startDate">StartDate:</label>
-                    <input cFormControl formControlName="startDate" type="datetime-local"/>
-                    @if (startDate?.invalid && (startDate?.dirty || startDate?.touched)) {
-                        <div class="text-danger">
-                            @if (startDate?.hasError('required')) {
-                                <div>Enter StartDate, please!</div>
-                            }
-                        </div>
-                    }
-                </div>
-                <div class="col-6">
-                    <label cLabel for="endDate">EndDate:</label>
-                    <input cFormControl formControlName="endDate" type="datetime-local"/>
-                    @if (endDate?.invalid && (endDate?.dirty || endDate?.touched)) {
-                        <div class="text-danger">
-                            @if (endDate?.hasError('required')) {
-                                <div>Enter EndDate, please!</div>
-                            }
-                        </div>
-                    }
-                </div>
-            </div>
-            @for (questiongroup of questionGroupList; track $index; let i = $index) {
-            <c-accordion class="mb-2">
-                <c-accordion-item #item0="cAccordionItem" [visible]="false">
-                    <ng-template cTemplateId="accordionHeaderTemplate">
-                        <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
-                            {{questiongroup.nameVN}}
-                        </button>
-                    </ng-template>
-                    <ng-template cTemplateId="accordionBodyTemplate">
-                        @for (question of questiongroup.questions; track $index; let j = $index) {
-                        <div class="row px-2 py-1">
-                            <div class="col-2">
-                                <input cFormControl type="number" [value]="question.priority" (change)="onChangePriority($event, i, j)"/>
-                            </div>
-                            <div class="col-10">
-                                <c-form-check cFormCheckInput class="me-2 d-flex align-items-center">
-                                    <input class="me-2" type="checkbox" [checked]="question.checked" (change)="onCheckQuestion(i, j)" />
-                                    <label cFormCheckLabel for="isActive" class="me-2">{{question.nameVN}}</label>
-                                </c-form-check>
-                            </div>
-                        </div>
-                        }
-                        <!-- Add more fields as needed -->
-                    </ng-template>
-                </c-accordion-item>
-            </c-accordion>
-            }
-            <div class="d-flex justify-content-end">
-                <button cButton type="submit" type="submit" [disabled]="!updateForm.valid"
-                   >Submit</button>
-                <button cButton type="button" routerLink="/surveys/extend-survey/survey-forms" class="ms-2 btn-info"
-                   >Back to list</button>
-            </div>
         </form>
+
+        <!-- Button Submit Creation Form -->
+        <div class="d-flex justify-content-end mt-4">
+            <button cButton type="submit" (click)="onSubmit()" [disabled]="!updateForm.valid">
+            <svg [cIcon]="icons.cilSave" width="25" class="text-white" title="Save Icon"></svg>
+
+            </button>
+            <a cButton type="button" routerLink="/surveys/survey-forms" class="ms-2 btn-info">
+            <svg [cIcon]="icons.cilExitToApp" width="25" class="text-white" title="Close Icon"></svg>
+            </a>
+        </div>
     </c-card-body>
 </c-card>

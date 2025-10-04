@@ -38,8 +38,8 @@ export class CreateHelperComponent implements OnInit {
 
   eQuestionTypes = EQuestionTypes;
 
-  showQuestionChildrenByParentId = signal<string | null>(null);
-  showPredefinedAnswerChildrenByParentId = signal<string | null>(null);
+  // showQuestionChildrenByParentId = signal<string | null>(null);
+  // showPredefinedAnswerChildrenByParentId = signal<string | null>(null);
   showPredefinedAnswerTable = signal<boolean>(false);
   //visible Question Group Modal
   visibleCreateQuestionGroupModal = signal(false);
@@ -133,20 +133,20 @@ export class CreateHelperComponent implements OnInit {
 
   toggleQuestionNode(node: QuestionGroupModel): void {
     node.expanded = !node.expanded;
-    if (node.expanded && node.id) {
-      this.showQuestionChildrenByParentId.set(node.id);
-    } else {
-      this.showQuestionChildrenByParentId.set(null);
-    }
+    // if (node.expanded && node.id) {
+    //   this.showQuestionChildrenByParentId.set(node.id);
+    // } else {
+    //   this.showQuestionChildrenByParentId.set(null);
+    // }
   }
 
   togglePredefinedAnswerNode(node: QuestionModel): void {
     node.expanded = !node.expanded;
-    if (node.expanded && node.id) {
-      this.showPredefinedAnswerChildrenByParentId.set(node.id);
-    } else {
-      this.showPredefinedAnswerChildrenByParentId.set(null);
-    }
+    // if (node.expanded && node.id) {
+    //   this.showPredefinedAnswerChildrenByParentId.set(node.id);
+    // } else {
+    //   this.showPredefinedAnswerChildrenByParentId.set(null);
+    // }
   }
   //#endregion
 
@@ -233,6 +233,7 @@ export class CreateHelperComponent implements OnInit {
       this.questionGroups.push(newQuestionGroup);
       this.createQuestionGroupForm.reset({ nameEN: '', nameVN: '', priority: 1 });
       this.toggleCreateQuestionGroupModal();
+      console.log(this.questionGroups);
       // Reset the select component
       this.initQuestionGroupLibraryId.set(null);
       setTimeout(() => this.initQuestionGroupLibraryId.set(-1), 0);

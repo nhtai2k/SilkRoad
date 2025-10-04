@@ -1,4 +1,6 @@
-export interface SurveyFormModel {
+import { BaseModel } from "@models/base.model";
+
+export interface SurveyFormModel extends BaseModel {
     id: number;
     isPeriodic: boolean;
     name: string;
@@ -8,7 +10,6 @@ export interface SurveyFormModel {
     descriptionVN: string;
     startDate: Date;
     endDate: Date;
-    isActive: boolean;
     surveyQuestions: SelectedQuestionModel[];
 }
 
