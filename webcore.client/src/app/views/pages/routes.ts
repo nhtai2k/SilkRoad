@@ -28,5 +28,12 @@ export const routes: Routes = [
     data: {
       title: 'Register Page'
     }
+  },
+  {
+    path:'survey-form/:id',
+    loadComponent: () => import('./survey-form/survey-form.component').then(m => m.SurveyFormComponent),
+    data: {
+      title: 'Survey Form'
+    }
   }
 ];

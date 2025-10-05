@@ -6,7 +6,7 @@ import { DataTableComponent } from '@components/generals/data-table/data-table.c
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { SurveyFormModel } from '@models/survey-models/survey-form.model';
 import { SurveyFormService } from '@services/survey-services/survey-form.service';
-import { cilPlus, cilTrash, cilPen, cilSave, cilX, cilExitToApp, cilLoopCircular, cilSearch } from '@coreui/icons';
+import { cilPlus, cilTrash, cilPen, cilSave, cilX, cilExitToApp, cilLoopCircular, cilSearch, cilQrCode } from '@coreui/icons';
 import { IconDirective } from '@coreui/icons-angular';
 import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, TemplateIdDirective } from '@coreui/angular';
 import { EColors } from '@common/global';
@@ -32,7 +32,7 @@ export class IndexComponent {
   data: Pagination<SurveyFormModel> = new Pagination<SurveyFormModel>();
   trashPageInformation: PageInformation = new PageInformation();
   pageInformation: PageInformation = new PageInformation();
-  icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilX, cilExitToApp, cilLoopCircular, cilSearch };
+  icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilX, cilExitToApp, cilLoopCircular, cilSearch, cilQrCode };
   filterForm: FormGroup = new FormGroup({
     questionGroupId: new FormControl(-1),
     questionTypeId: new FormControl(-1),

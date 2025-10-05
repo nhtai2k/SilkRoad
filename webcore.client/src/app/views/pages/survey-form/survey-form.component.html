@@ -1,0 +1,28 @@
+<div class="surveyPage">
+    <div class="surveyFormContainer">
+      <h2 class="surveyTitle mb-4">Participant Survey</h2>
+      <p class="surveyDescription">We value your feedback! Please fill out this short survey to help us improve.</p>
+      <form [formGroup]="participantForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input id="name" formControlName="name" type="text" class="form-control" />
+          <div *ngIf="participantForm.get('name')?.invalid && participantForm.get('name')?.touched" class="error">
+            Name is required and must be at least 2 characters long.
+          </div>
+          <div *ngIf="participantForm.get('email')?.invalid && participantForm.get('email')?.touched" class="error">
+            A valid email is required.
+          </div>
+            <div *ngIf="participantForm.get('phoneNumber')?.invalid && participantForm.get('phoneNumber')?.touched" class="error">
+                A valid phone number is required (10-15 digits).
+              </div>
+              <div *ngIf="participantForm.get('age')?.invalid && participantForm.get('age')?.touched" class="error">
+                Age must be a number between 1 and 120.
+              </div>
+                <div *ngIf="participantForm.get('location')?.invalid && participantForm.get('location')?.touched" class="error">
+                    Location is required and must be at least 2 characters long.
+                </div>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="participantForm.invalid">Submit</button>
+        </form>
+    </div>
+</div>

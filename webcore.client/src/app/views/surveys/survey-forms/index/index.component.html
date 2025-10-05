@@ -1,4 +1,4 @@
-<h3 class="fw-bold">Survey Form List</h3>
+<h3 class="fw-bold">Survey Forms</h3>
 <c-accordion class="mb-4">
     <c-accordion-item #item0="cAccordionItem" [visible]="true">
         <ng-template cTemplateId="accordionHeaderTemplate">
@@ -29,7 +29,7 @@
                                 <div class="col-4">
                                     <button type="submit" class="btn btn-primary">
                                         <svg [cIcon]="icons.cilSearch" width="20" class="text-white"
-                                            title="Search Icon"></svg>                                  
+                                            title="Search Icon"></svg>
                                     </button>
                                 </div>
                             </div>
@@ -72,6 +72,9 @@
             <td>{{ item.createdBy }}</td>
             <td>
                 <div class="d-flex justify-content-end">
+                    <button class="btn btn-info me-2">
+                        <svg [cIcon]="icons.cilQrCode" width="25" class="text-white" title="Restore Icon"></svg>
+                    </button>
                     <a routerLink="./update/{{item.id}}" class="btn btn-primary me-2">
                         <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
                     </a>

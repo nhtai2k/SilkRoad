@@ -184,8 +184,6 @@ export const routes: Routes = [
         path: 'system-management/extension',
         loadChildren: () => import('./views/sm/extension/routes').then((m) => m.routes)
       },
-
-
       //#endregion
     ]
   },
@@ -229,6 +227,13 @@ export const routes: Routes = [
     loadComponent: () => import('./views/pages/reset-password/reset-password.component').then(m => m.ResetPasswordComponent),
     data: {
       title: 'Reset Password Page'
+    }
+  },
+    {
+    path:'survey-form/:id',
+    loadComponent: () => import('./views/pages/survey-form/survey-form.component').then(m => m.SurveyFormComponent),
+    data: {
+      title: 'Survey Form'
     }
   },
   { path: '**', redirectTo: 'dashboard' }
