@@ -29,6 +29,7 @@ export class UpdateComponent implements OnInit {
   icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp };
 
   updateForm: FormGroup = new FormGroup({
+    id: new FormControl(null),
     name: new FormControl('', Validators.required),
     titleEN: new FormControl('', Validators.required),
     titleVN: new FormControl('', Validators.required),
@@ -37,8 +38,8 @@ export class UpdateComponent implements OnInit {
     startDate: new FormControl(''),
     endDate: new FormControl(''),
     isActive: new FormControl(true),
-    questionGroups: new FormControl([]),
-    questions: new FormControl([])
+    // questionGroups: new FormControl([]),
+    // questions: new FormControl([])
   });
   //#endregion
   constructor(
@@ -57,6 +58,7 @@ export class UpdateComponent implements OnInit {
           this.initQuestions = response.data.questions;
           this.initialTimeRange = [new Date(response.data.startDate), new Date(response.data.endDate)];
           this.updateForm.patchValue({
+            id: response.data.id,
             name: response.data.name,
             titleEN: response.data.titleEN,
             titleVN: response.data.titleVN,

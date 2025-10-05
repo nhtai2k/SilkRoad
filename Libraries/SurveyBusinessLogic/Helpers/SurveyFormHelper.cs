@@ -109,12 +109,12 @@ namespace SurveyBusinessLogic.Helpers
                 var data = await _unitOfWork.SurveyFormRepository.GetByIdAsync(model.Id);
                 if (data == null) return false;
                 data.Update(userName);
-                model.Name = model.Name.Trim();
-                model.TitleEN = model.TitleEN.Trim();
-                model.TitleVN = model.TitleVN.Trim();
-                model.DescriptionEN = model.DescriptionEN.Trim();
-                model.DescriptionVN = model.DescriptionVN.Trim();
-                model.Note = model.Note?.Trim();
+                data.Name = model.Name.Trim();
+                data.TitleEN = model.TitleEN.Trim();
+                data.TitleVN = model.TitleVN.Trim();
+                data.DescriptionEN = model.DescriptionEN.Trim();
+                data.DescriptionVN = model.DescriptionVN.Trim();
+                data.Note = model.Note?.Trim();
                 await _unitOfWork.SaveChangesAsync();
                 return true;
             }

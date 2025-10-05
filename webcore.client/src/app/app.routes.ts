@@ -133,14 +133,14 @@ export const routes: Routes = [
         path: 'surveys/reports',
         loadChildren: () => import('./views/surveys/report/routes').then((m) => m.routes)
       },
-      {
-        path: 'surveys/survey-results',
-        loadChildren: () => import('./views/surveys/survey-results/index/routes').then((m) => m.routes)
-      },
-      {
-        path: 'surveys/survey-results/update/:id',
-        loadChildren: () => import('./views/surveys/survey-results/details/routes').then((m) => m.routes)
-      },
+      // {
+      //   path: 'surveys/survey-results',
+      //   loadChildren: () => import('./views/surveys/survey-results/index/routes').then((m) => m.routes)
+      // },
+      // {
+      //   path: 'surveys/survey-results/update/:id',
+      //   loadChildren: () => import('./views/surveys/survey-results/details/routes').then((m) => m.routes)
+      // },
       {
         path: 'surveys/survey-forms',
         loadChildren: () => import('./views/surveys/survey-forms/index/routes').then((m) => m.routes)
