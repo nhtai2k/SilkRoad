@@ -88,7 +88,6 @@ export class UpdateComponent implements OnInit {
     });
     this.questionLibraryService.getEagerLoadingById(id).subscribe(res => {
       this.questionForm.patchValue(res.data);
-      console.log(this.questionForm.value);
       this.selectedQuestionType.set(res.data.questionTypeId);
       this.selectedQuestionGroup.set(res.data.questionGroupLibraryId);
       this.onchangeQuestionType(res.data.questionTypeId);

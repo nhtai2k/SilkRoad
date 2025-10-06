@@ -9,18 +9,18 @@ import { CommonModule } from '@angular/common';
 import { RangeDatetimePickerComponent } from "@components/generals/range-datetime-picker/range-datetime-picker.component";
 import { ToastService } from '@services/helper-services/toast.service';
 import { EColors } from '@common/global';
-import { SurveyFormHelperComponent } from '../survey-form-helper.component';
+import { CreateHelperComponent } from './create-helper.component';
 @Component({
   selector: 'app-create',
   imports: [FormControlDirective, FormLabelDirective, CardComponent, CardBodyComponent, ReactiveFormsModule, FormDirective, ButtonDirective, CommonModule,
-    IconDirective, RouterLink, SurveyFormHelperComponent, RangeDatetimePickerComponent],
+    IconDirective, RouterLink, CreateHelperComponent, RangeDatetimePickerComponent],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })
 
 export class CreateComponent {
   //#region Variables
-  @ViewChild('surveyFormHelperComponent') surveyFormHelperComponent!: SurveyFormHelperComponent;
+  @ViewChild('createHelperComponent') createHelperComponent!: CreateHelperComponent;
   icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp };
 
   createForm: FormGroup = new FormGroup({
@@ -48,8 +48,8 @@ export class CreateComponent {
   //#endregion submit
   onSubmit() {    
     if (this.createForm.valid) {
-      const questionGroups = this.surveyFormHelperComponent.questionGroups;
-      const questions = this.surveyFormHelperComponent.questions;
+      const questionGroups = this.createHelperComponent.questionGroups;
+      const questions = this.createHelperComponent.questions;
       this.createForm.patchValue({ questionGroups, questions });
       console.log(this.createForm.value);
       this.surveyFormService.create(this.createForm.value).subscribe({

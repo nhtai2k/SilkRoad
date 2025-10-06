@@ -166,7 +166,18 @@ namespace SurveyBusinessLogic.Helpers
 
         public async Task<SurveyFormDTO?> GetEagerLoadingByIdAsync(int id)
         {
-            return await _unitOfWork.SurveyFormRepository.GetEagerSurveyFormByIdAsync(id);
+            var data = await _unitOfWork.SurveyFormRepository.GetEagerSurveyFormByIdAsync(id);
+
+            data?.QuestionGroups.OrderBy(s => s.Priority);
+            data?.QuestionGroups.ToList().ForEach(s =>
+            {
+                s?.Questions.OrderBy(p => p.Priority);
+                s?.Questions.ToList().ForEach(p => p.PredefinedAnswers.OrderBy(o => o.Priority));
+
+            });
+            data?.Questions.OrderBy(s => s.Priority);
+            data?.Questions.ToList().ForEach(p => p.PredefinedAnswers.OrderBy(o => o.Priority));
+            return data;
         }
     }
 }

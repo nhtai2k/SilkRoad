@@ -27,6 +27,7 @@ export enum EUrl {
     getAllUrlStockPrice = "/api/stockPrice/getAll",
     getNewDataUrlStockPrice = "/api/stockPrice/getNewData",
     //#endregion
+    
     //#region Hubs
     //SignalR
     chatHubUrl = "/chat",
@@ -189,9 +190,7 @@ export enum EUrl {
     getAllUrlPayment = "/api/payment/getAll",
     getByIdUrlPayment = "/api/payment/getById",
     //#endregion
-
-
-
+    
     //#region System
 
     //My Account
@@ -237,10 +236,12 @@ export enum EUrl {
     //#endregion
 
     //#region Survey
+    
     //participant
     getAllUrlParticipant = "/api/participant/getAll",
     getEagerByIdUrlParticipant = "/api/participant/getEagerById",
     exportExcelUrlParticipant = "/api/participant/exportExcel",
+    
     //questionGroupLibrary
     getAllUrlQuestionGroupLibrary = "/api/questionGroupLibrary/getAll",
     getAllActiveUrlQuestionGroupLibrary = "/api/questionGroupLibrary/getAllActive",
@@ -253,6 +254,7 @@ export enum EUrl {
     softDeleteUrlQuestionGroupLibrary = "/api/questionGroupLibrary/softDelete",
     restoreUrlQuestionGroupLibrary = "/api/questionGroupLibrary/restore",
     deleteUrlQuestionGroupLibrary = "/api/questionGroupLibrary/delete",
+    
     //questionLibrary
     getAllUrlQuestionLibrary = "/api/questionLibrary/getAll",
     getAllDeletedUrlQuestionLibrary = "/api/questionLibrary/getAllDeleted",
@@ -267,6 +269,7 @@ export enum EUrl {
     //questionType
     getAllUrlQuestionType = "/api/questionType/getAll",
     getOptionListUrlQuestionType = "/api/questionType/getOptionList",
+    
     //surveyForm
     getAllUrlSurveyForm = "/api/surveyForm/getAll",
     getAllActiveUrlSurveyForm = "/api/surveyForm/getAllActive",
@@ -279,6 +282,31 @@ export enum EUrl {
     restoreUrlSurveyForm = "/api/surveyForm/restore",
     deleteUrlSurveyForm = "/api/surveyForm/delete",
     getAllDeletedUrlSurveyForm = "/api/surveyForm/getAllDeleted",
+
+    //QuestionGroup
+    getBySurveyFormIdUrlQuestionGroup = "/api/questionGroup/getBySurveyFormId",
+    getByIdUrlQuestionGroup = "/api/questionGroup/getById",
+    createUrlQuestionGroup = "/api/questionGroup/create",
+    updateUrlQuestionGroup = "/api/questionGroup/update",
+    deleteUrlQuestionGroup = "/api/questionGroup/delete",
+
+    //Question
+    getBySurveyFormIdUrlQuestion = "/api/question/getBySurveyFormId",
+    getByQuestionGroupIdUrlQuestion = "/api/question/getByQuestionGroupId",
+    getByIdUrlQuestion = "/api/question/getById",
+    getEagerLoadingByIdUrlQuestion = "/api/question/getEagerLoadingById",
+    createUrlQuestion = "/api/question/create",
+    updateUrlQuestion = "/api/question/update",
+    deleteUrlQuestion = "/api/question/delete",
+
+    //PredefinedAnswer
+    getByQuestionIdUrlPredefinedAnswer = "/api/predefinedAnswer/getByQuestionId",
+    getByIdUrlPredefinedAnswer = "/api/predefinedAnswer/getById",
+    createUrlPredefinedAnswer = "/api/predefinedAnswer/create",
+    updateUrlPredefinedAnswer = "/api/predefinedAnswer/update",
+    deleteUrlPredefinedAnswer = "/api/predefinedAnswer/delete",
+
+
     //surveyReport
 
     //#endregion

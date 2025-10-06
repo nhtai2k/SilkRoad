@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ButtonDirective, FormControlDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, TableDirective} from '@coreui/angular';
+import { ButtonDirective, FormControlDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, TableDirective } from '@coreui/angular';
 import { QuestionGroupModel } from '@models/survey-models/question-group.model';
 import { IconDirective } from '@coreui/icons-angular';
 import { cilExitToApp, cilPen, cilPlus, cilSave, cilTrash, cilX } from '@coreui/icons';
@@ -15,18 +15,23 @@ import { QuestionTypeService } from '@services/survey-services/question-type.ser
 import { TreeSelectComponent } from "@components/selects/tree-select/tree-select.component";
 import { EQuestionTypes } from '@common/global';
 import { QuestionLibraryService } from '@services/survey-services/question-library.service';
+import { PredefinedAnswerService } from '@services/survey-services/predefined-answer.service';
+import { QuestionService } from '@services/survey-services/question.service';
+import { QuestionGroupService } from '@services/survey-services/question-group.service';
+import { n } from 'node_modules/@angular/cdk/overlay-module.d-C2CxnwqT';
 
 @Component({
-  selector: 'app-survey-form-helper',
+  selector: 'app-update-helper',
   imports: [ReactiveFormsModule, ButtonDirective, CommonModule, TableDirective, IconDirective, BookIconComponent, ModalComponent, ModalHeaderComponent,
     ModalTitleDirective, ModalBodyComponent, ModalFooterComponent, SelectSearchComponent, FormControlDirective, TreeSelectComponent],
-  templateUrl: './survey-form-helper.component.html',
+  templateUrl: './update-helper.component.html',
 })
 
-export class SurveyFormHelperComponent implements OnInit {
+export class UpdateHelperComponent implements OnInit {
   //#region Variables
   icons: any = { cilPlus, cilTrash, cilPen, cilX, cilSave, cilExitToApp };
 
+  @Input() surveyFormId: number = -1;
   @Input() questionGroups: QuestionGroupModel[] = [];
   @Input() questions: QuestionModel[] = [];
   predefinedAnswerList: PredefinedAnswerModel[] = [];
@@ -37,8 +42,6 @@ export class SurveyFormHelperComponent implements OnInit {
 
   eQuestionTypes = EQuestionTypes;
 
-  // showQuestionChildrenByParentId = signal<string | null>(null);
-  // showPredefinedAnswerChildrenByParentId = signal<string | null>(null);
   showPredefinedAnswerTable = signal<boolean>(false);
   //visible Question Group Modal
   visibleCreateQuestionGroupModal = signal(false);
@@ -55,24 +58,26 @@ export class SurveyFormHelperComponent implements OnInit {
   initQuestionTypeId = signal<number | null>(-1);
   initQuestionGroupLibraryId = signal<number | null>(-1);
   initQuestionLibraryId = signal<number | null>(-1);
-
-  updateQuestionGroupIndex = signal<number>(-1);
-  deleteQuestionGroupIndex = signal<number>(-1);
-  updateQuestionIndex = signal<number>(-1);
-  deleteQuestionIndex = signal<number>(-1);
-  selectedQuestionGroupIndex = signal<number>(-1);
+  deleteQuestionGroupId = signal<string | undefined>(undefined);
+  inQuestionGroup = signal<boolean>(false);
+  // updateQuestionIndex = signal<number>(-1);
+  deleteQuestionId = signal<string | undefined>(undefined);
+  selectedQuestionGroupId = signal<string | undefined>(undefined);
 
   // Create Question Group Form
   createQuestionGroupForm = new FormGroup({
     nameEN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
     nameVN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
-    priority: new FormControl(1, [Validators.required, Validators.min(1)])
+    priority: new FormControl(1, [Validators.required, Validators.min(1)]),
   });
   // Update Question Group Form
   updateQuestionGroupForm = new FormGroup({
+    id: new FormControl(''),
+    surveyFormId: new FormControl(-1),
     nameEN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
     nameVN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
-    priority: new FormControl(1, [Validators.required, Validators.min(1)])
+    priority: new FormControl(1, [Validators.required, Validators.min(1)]),
+    questions: new FormControl<QuestionModel[]>([]),
   });
   // Create Question Form
   createQuestionForm = new FormGroup({
@@ -83,6 +88,9 @@ export class SurveyFormHelperComponent implements OnInit {
   });
   // Update Question Form
   updateQuestionForm = new FormGroup({
+    id: new FormControl(''),
+    questionGroupId: new FormControl(''),
+    surveyFormId: new FormControl(-1),
     questionTypeId: new FormControl(1, [Validators.required]),
     nameEN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
     nameVN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
@@ -90,21 +98,24 @@ export class SurveyFormHelperComponent implements OnInit {
   });
   // Create Predefined Answer Form
   createPredefinedAnswerForm: FormGroup = new FormGroup({
-    nameEN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
-    nameVN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
+    nameEN: new FormControl(null, [Validators.required, Validators.maxLength(255)]),
+    nameVN: new FormControl(null, [Validators.required, Validators.maxLength(255)]),
     priority: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(255)])
   });
   // Update Predefined Answer Form
   updatePredefinedAnswerForm: FormGroup = new FormGroup({
-    nameEN: new FormControl(''),
-    nameVN: new FormControl(''),
+    nameEN: new FormControl(null, [Validators.required, Validators.maxLength(255)]),
+    nameVN: new FormControl(null, [Validators.required, Validators.maxLength(255)]),
     priority: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(255)])
   });
   //#endregion
 
-  //#region Handle show table tree
+  //#region Constructor and OnInit
   constructor(private questionGroupLibraryService: QuestionGroupLibraryService,
     private questionLibraryService: QuestionLibraryService,
+    private questionGroupService: QuestionGroupService,
+    private questionService: QuestionService,
+    private predefinedAnswerService: PredefinedAnswerService,
     private questionTypeService: QuestionTypeService) { }
   ngOnInit(): void {
     this.questionGroupLibraryService.getOptionList().subscribe({
@@ -128,6 +139,29 @@ export class SurveyFormHelperComponent implements OnInit {
         }
       }
     });
+  }
+
+  getQuestionGroup() {
+    if (this.surveyFormId !== -1) {
+      this.questionGroupService.getBySurveyFormId(this.surveyFormId).subscribe({
+        next: (res) => {
+          if (res.success && res.data) {
+            this.questionGroups = res.data;
+          }
+        }
+      });
+    }
+  }
+  getQuestion() {
+    if (this.surveyFormId !== -1) {
+      this.questionService.getBySurveyFormId(this.surveyFormId).subscribe({
+        next: (res) => {
+          if (res.success && res.data) {
+            this.questions = res.data;
+          }
+        }
+      });
+    }
   }
 
   toggleQuestionNode(node: QuestionGroupModel): void {
@@ -176,9 +210,9 @@ export class SurveyFormHelperComponent implements OnInit {
 
   //#region Question Modal
   // Create Question Modal
-  toggleCreateQuestionModal(questionGroupIndex: number = -1): void {
+  toggleCreateQuestionModal(questionGroupId: string | undefined = undefined): void {
     this.visibleCreateQuestionModal.set(!this.visibleCreateQuestionModal());
-    this.selectedQuestionGroupIndex.set(questionGroupIndex);
+    this.selectedQuestionGroupId.set(questionGroupId);
   }
   handleCreateQuestionModalChange(event: any) {
     this.visibleCreateQuestionModal.set(event);
@@ -221,18 +255,22 @@ export class SurveyFormHelperComponent implements OnInit {
 
   onSubmitCreateQuestionGroup(): void {
     if (this.createQuestionGroupForm.valid) {
-      // const guidId = uuidv4();
       const newQuestionGroup: QuestionGroupModel = {
-        // id: guidId,
+        surveyFormId: this.surveyFormId,
         nameEN: this.createQuestionGroupForm.value.nameEN ?? '',
         nameVN: this.createQuestionGroupForm.value.nameVN ?? '',
         priority: this.createQuestionGroupForm.value.priority ?? 1,
         questions: []
       };
-      this.questionGroups.push(newQuestionGroup);
-      this.createQuestionGroupForm.reset({ nameEN: '', nameVN: '', priority: 1 });
-      this.toggleCreateQuestionGroupModal();
-      console.log(this.questionGroups);
+      this.questionGroupService.create(newQuestionGroup).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.getQuestionGroup();
+            this.createQuestionGroupForm.reset({ nameEN: '', nameVN: '', priority: 1 });
+            this.toggleCreateQuestionGroupModal();
+          }
+        }
+      });
       // Reset the select component
       this.initQuestionGroupLibraryId.set(null);
       setTimeout(() => this.initQuestionGroupLibraryId.set(-1), 0);
@@ -253,30 +291,28 @@ export class SurveyFormHelperComponent implements OnInit {
 
   updateQuestionGroup(index: number): void {
     const selectedQuestionGroup = this.questionGroups[index];
-    this.updateQuestionGroupIndex.set(index);
-    this.updateQuestionGroupForm.patchValue({
-      nameEN: selectedQuestionGroup.nameEN,
-      nameVN: selectedQuestionGroup.nameVN,
-      priority: selectedQuestionGroup.priority
-    });
+    // this.updateQuestionGroupIndex.set(index);
+    this.updateQuestionGroupForm.patchValue(selectedQuestionGroup);
     this.toggleUpdateQuestionGroupModal();
   }
 
   onSubmitUpdateQuestionGroup(): void {
-    if (this.updateQuestionGroupForm.valid && this.updateQuestionGroupIndex() !== -1) {
-      const index = this.updateQuestionGroupIndex();
-      const selectedQuestionGroup = this.questionGroups[index];
-
-      const updatedQuestionGroup: QuestionGroupModel = {
-        ...selectedQuestionGroup,
+    if (this.updateQuestionGroupForm.valid) {
+      const questionGroup: QuestionGroupModel = {
+        id: this.updateQuestionGroupForm.value.id ?? '',
+        surveyFormId: this.surveyFormId,
         nameEN: this.updateQuestionGroupForm.value.nameEN ?? '',
         nameVN: this.updateQuestionGroupForm.value.nameVN ?? '',
-        priority: this.updateQuestionGroupForm.value.priority ?? 1
+        priority: this.updateQuestionGroupForm.value.priority ?? 1,
+        questions: []
       };
-
-      this.questionGroups[index] = updatedQuestionGroup;
-      this.updateQuestionGroupForm.reset({ nameEN: '', nameVN: '', priority: 1 });
-      this.updateQuestionGroupIndex.set(-1);
+      this.questionGroupService.update(questionGroup).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.getQuestionGroup();
+          }
+        }
+      });
       this.toggleUpdateQuestionGroupModal();
     } else {
       this.updateQuestionGroupForm.markAllAsTouched();
@@ -293,16 +329,21 @@ export class SurveyFormHelperComponent implements OnInit {
     return this.updateQuestionGroupForm.get('priority');
   }
 
-  deleteQuestionGroup(index: number): void {
-    this.deleteQuestionGroupIndex.set(index);
+  deleteQuestionGroup(id: string | undefined): void {
+    this.deleteQuestionGroupId.set(id);
     this.toggleDeleteQuestionGroupModal();
   }
 
   confirmDeleteQuestionGroup(): void {
-    const index = this.deleteQuestionGroupIndex();
-    if (index !== -1) {
-      this.questionGroups.splice(index, 1);
-      this.deleteQuestionGroupIndex.set(-1);
+    const id = this.deleteQuestionGroupId();
+    if(id){
+      this.questionGroupService.delete(id).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.getQuestionGroup();
+          }
+        }
+      });
     }
     this.toggleDeleteQuestionGroupModal();
   }
@@ -361,12 +402,25 @@ export class SurveyFormHelperComponent implements OnInit {
         predefinedAnswers: predefinedAnswers
       };
       // If a question group is selected, add the question to that group
-      if(this.selectedQuestionGroupIndex() !== -1){
-        const groupIndex = this.selectedQuestionGroupIndex();
-        const selectedGroup = this.questionGroups[groupIndex];
-        selectedGroup.questions.push(newQuestion);
+      if (this.selectedQuestionGroupId() !== undefined) {
+        const groupId = this.selectedQuestionGroupId();
+        newQuestion.questionGroupId = groupId;
+        this.questionService.create(newQuestion).subscribe({
+          next: (res) => {
+            if (res.success) {
+              this.getQuestionGroup();
+            }
+          }
+        });
       } else {
-        this.questions.push(newQuestion);
+        newQuestion.surveyFormId = this.surveyFormId;
+        this.questionService.create(newQuestion).subscribe({
+          next: (res) => {
+            if (res.success) {
+              this.getQuestion();
+            }
+          }
+        });
       }
       this.createQuestionForm.reset({ questionTypeId: 1, nameEN: '', nameVN: '', priority: 1 });
       this.predefinedAnswerList = [];
@@ -393,77 +447,49 @@ export class SurveyFormHelperComponent implements OnInit {
     return this.createQuestionForm.get('priority');
   }
 
-  updateQuestion(index: number, questionGroupIndex: number): void {
-    //Set selected question group index
-    this.selectedQuestionGroupIndex.set(questionGroupIndex);
-    let selectedQuestion: QuestionModel;
-
-    if(questionGroupIndex !== -1){
-      const selectedGroup = this.questionGroups[questionGroupIndex];
-      selectedQuestion = selectedGroup.questions[index];
-    }else{
-      selectedQuestion = this.questions[index];
-    }
-    
-    //set update index and init question type id
-    this.updateQuestionIndex.set(index);
-    this.initQuestionTypeId.set(selectedQuestion.questionTypeId);
-    this.updateQuestionForm.patchValue({
-      questionTypeId: selectedQuestion.questionTypeId,
-      nameEN: selectedQuestion.nameEN,
-      nameVN: selectedQuestion.nameVN,
-      priority: selectedQuestion.priority
+  updateQuestion(id: string, inQuestionGroup: boolean): void {
+    this.inQuestionGroup.set(inQuestionGroup);
+    this.questionService.getEagerLoadingById(id).subscribe({
+      next: (res) => {
+        if (res.success && res.data) {
+          this.updateQuestionForm.patchValue(res.data);
+          // Set predefined answers if they exist
+          if (res.data.predefinedAnswers && res.data.predefinedAnswers.length > 0) {
+            this.predefinedAnswerList = [...res.data.predefinedAnswers];
+          } else {
+            this.predefinedAnswerList = [];
+          }
+          this.onchangeQuestionType(res.data.questionTypeId);
+          this.toggleUpdateQuestionModal();
+        }
+      }
     });
-
-    // Set predefined answers if they exist
-    if (selectedQuestion.predefinedAnswers && selectedQuestion.predefinedAnswers.length > 0) {
-      this.predefinedAnswerList = [...selectedQuestion.predefinedAnswers.map((pa) => ({
-        nameEN: pa.nameEN,
-        nameVN: pa.nameVN,
-        priority: pa.priority,
-        isActive: true,
-        isDeleted: false,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      }))];
-    } else {
-      this.predefinedAnswerList = [];
-    }
-
-    this.onchangeQuestionType(selectedQuestion.questionTypeId);
-    this.toggleUpdateQuestionModal();
   }
 
   onSubmitUpdateQuestion(): void {
-    if (this.updateQuestionForm.valid && this.updateQuestionIndex() !== -1) {
-      const index = this.updateQuestionIndex();
-      const selectedQuestion = this.questions[index];
-
-      const predefinedAnswers = this.predefinedAnswerList.map((pa) => ({
-        nameEN: pa.nameEN,
-        nameVN: pa.nameVN,
-        priority: pa.priority
-      }));
-
-      const updatedQuestion: QuestionModel = {
-        ...selectedQuestion,
+    if (this.updateQuestionForm.valid) {
+      const question: QuestionModel = {
+        id: this.updateQuestionForm.value.id ?? '',
+        surveyFormId: this.surveyFormId,
+        questionGroupId: this.updateQuestionForm.value.questionGroupId ?? '',
         questionTypeId: this.updateQuestionForm.value.questionTypeId ?? 1,
         nameEN: this.updateQuestionForm.value.nameEN ?? '',
         nameVN: this.updateQuestionForm.value.nameVN ?? '',
-        priority: this.updateQuestionForm.value.priority ?? 1,
-        predefinedAnswers: predefinedAnswers
+        priority: this.updateQuestionForm.value.priority ?? 1
       };
-      // If a question group is selected, update the question in that group
-      if(this.selectedQuestionGroupIndex() !== -1){
-        const groupIndex = this.selectedQuestionGroupIndex();
-        const selectedGroup = this.questionGroups[groupIndex];
-        selectedGroup.questions[index] = updatedQuestion;
-      } else {
-        this.questions[index] = updatedQuestion;
-      }
-      this.updateQuestionForm.reset({ questionTypeId: 1, nameEN: '', nameVN: '', priority: 1 });
-      this.predefinedAnswerList = [];
-      this.updateQuestionIndex.set(-1);
+      this.questionService.update(question).subscribe({
+        next: (res) => {
+          if (res.success) {
+            if (this.inQuestionGroup()) {
+              this.getQuestionGroup();
+            } else {
+              this.getQuestion();
+            }
+            this.updateQuestionForm.reset({ questionTypeId: 1, nameEN: '', nameVN: '', priority: 1 });
+            this.predefinedAnswerList = [];
+          }
+        }
+      });
       // Reset the question type select component
       this.initQuestionTypeId.set(null);
       setTimeout(() => this.initQuestionTypeId.set(-1), 0);
@@ -484,22 +510,26 @@ export class SurveyFormHelperComponent implements OnInit {
     return this.updateQuestionForm.get('priority');
   }
 
-  deleteQuestion(index: number, questionGroupIndex: number): void {
-    this.deleteQuestionIndex.set(index);
-    this.selectedQuestionGroupIndex.set(questionGroupIndex);
+  deleteQuestion(id: string, inQuestionGroup: boolean): void {
+    this.deleteQuestionId.set(id);
+    this.inQuestionGroup.set(inQuestionGroup);
     this.toggleDeleteQuestionModal();
   }
 
   confirmDeleteQuestion(): void {
-    const groupIndex = this.selectedQuestionGroupIndex();
-    const index = this.deleteQuestionIndex();
-    if(groupIndex !== -1 && index !== -1){
-      const selectedGroup = this.questionGroups[groupIndex];
-      selectedGroup.questions.splice(index, 1);
-    }
-    else if (index !== -1) {
-      this.questions.splice(index, 1);
-      this.deleteQuestionIndex.set(-1);
+    const id = this.deleteQuestionId();
+    if(id){
+      this.questionService.delete(id).subscribe({
+        next: (res) => {
+          if (res.success) {
+            if (this.inQuestionGroup()) {
+              this.getQuestionGroup();
+            } else {
+            this.getQuestion();
+            }
+          }
+        }
+      });
     }
     this.toggleDeleteQuestionModal();
   }
@@ -521,7 +551,7 @@ export class SurveyFormHelperComponent implements OnInit {
     this.createPredefinedAnswerForm.reset();
     this.createPredefinedAnswerForm.patchValue({ priority: 1 });
   }
-    get nameENCreatePredefinedAnswerForm() {
+  get nameENCreatePredefinedAnswerForm() {
     return this.createPredefinedAnswerForm.get('nameEN');
   }
   get nameVNCreatePredefinedAnswerForm() {

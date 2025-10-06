@@ -2,7 +2,7 @@
 <c-card>
     <c-card-body>
         <!-- Survey Form Creation Form -->
-        <div class="title">
+        <div class="customTitle">
             <span>1. Survey Information</span>
         </div>
         <form cForm [formGroup]="createForm" (ngSubmit)="onSubmit()">
@@ -58,7 +58,7 @@
                 </div>
             </div>
         </form>
-        <app-survey-form-helper #createHelperComponent></app-survey-form-helper>
+        <app-create-helper #createHelperComponent></app-create-helper>
         <!-- Button Submit Creation Form -->
         <div class="d-flex justify-content-end mt-4">
             <button cButton type="submit" (click)="onSubmit()" [disabled]="!createForm.valid">

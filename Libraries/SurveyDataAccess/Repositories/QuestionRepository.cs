@@ -8,9 +8,14 @@ namespace SurveyDataAccess.Repositories
     {
 
         public QuestionRepository(ApplicationContext dbContext) : base(dbContext)
+        {}
+
+        public async Task<QuestionDTO?> GetEagerLoadingByIdAsync(Guid id)
         {
-
+            var entity = await _dbSet
+                .Include(q => q.PredefinedAnswers).OrderBy(p => p.Priority)
+                .FirstOrDefaultAsync(q => q.Id == id);
+            return entity;
         }
-
     }
 }

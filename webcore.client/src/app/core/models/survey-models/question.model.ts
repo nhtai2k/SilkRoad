@@ -3,7 +3,7 @@ import { PredefinedAnswerModel } from "./predefined-answer.model";
 export interface QuestionModel {
     id?: string;
     questionGroupId?: string;
-    surveyFormId?: string;
+    surveyFormId?: number;
     questionTypeId: number;
     priority: number;
     nameEN: string;

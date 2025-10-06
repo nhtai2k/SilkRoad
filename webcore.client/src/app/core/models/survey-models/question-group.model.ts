@@ -2,7 +2,7 @@ import { QuestionModel } from "./question.model";
 
 export interface QuestionGroupModel {
     id?: string;
-    surveyFormId?: string;
+    surveyFormId?: number;
     nameEN: string;
     nameVN: string;
     priority: number;
