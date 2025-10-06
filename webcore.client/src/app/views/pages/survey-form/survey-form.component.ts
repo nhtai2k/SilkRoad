@@ -9,7 +9,7 @@ import { EQuestionTypes } from '@common/global';
 
 @Component({
   selector: 'app-survey-form',
-  imports: [CommonModule, FormControlDirective, FormLabelDirective, FormDirective, ReactiveFormsModule, ButtonDirective],
+  imports: [CommonModule, FormControlDirective, FormLabelDirective, FormDirective, ReactiveFormsModule],
   templateUrl: './survey-form.component.html',
   styleUrls: ['./survey-form.component.scss']
 })

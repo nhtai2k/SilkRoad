@@ -102,7 +102,7 @@ export class CreateHelperComponent implements OnInit {
   });
   //#endregion
 
-  //#region Handle show table tree
+  //#region constructor and ngOnInit
   constructor(private questionGroupLibraryService: QuestionGroupLibraryService,
     private questionLibraryService: QuestionLibraryService,
     private questionTypeService: QuestionTypeService) { }
@@ -325,6 +325,7 @@ export class CreateHelperComponent implements OnInit {
             });
             if (newQuestion.predefinedAnswerLibraries && newQuestion.predefinedAnswerLibraries.length > 0) {
               this.predefinedAnswerList = [...newQuestion.predefinedAnswerLibraries];
+              console.log(this.predefinedAnswerList);
             } else {
               this.predefinedAnswerList = [];
             }
