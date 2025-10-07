@@ -27,7 +27,10 @@
                                         placeholder="Search by name...">
                                 </div>
                                 <div class="col-4">
-                                    <button type="submit" class="btn btn-primary w-100">Filter</button>
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        <svg [cIcon]="icons.cilSearch" width="20" class="text-white"
+                                            title="Search Icon"></svg>
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -107,8 +110,8 @@
         {{ index + 1 }}
       </span>
     </td>
-    <td>{{ node.nameVN }}</td>
     <td>{{ node.nameEN }}</td>
+    <td>{{ node.nameVN }}</td>
     <td>{{ node.priority }}</td>
     <td>###</td>
     <td>###</td>

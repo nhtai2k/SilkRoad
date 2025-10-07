@@ -56,8 +56,8 @@ namespace WebCore.Server.Controllers.SurveyControllers
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
          
-        [HttpGet("getEargerById/{id}")]
-        public async Task<IActionResult> GetEargerById(int id)
+        [HttpGet("getEagerById/{id}")]
+        public async Task<IActionResult> GetEagerById(int id)
         {
             var data = await _helper.GetEagerLoadingByIdAsync(id);
             if (data == null)
@@ -89,7 +89,7 @@ namespace WebCore.Server.Controllers.SurveyControllers
             return Succeeded(_localizer["updateSuccess"]);
         }
 
-        [HttpPut("softDelete/{id}")]
+        [HttpDelete("softDelete/{id}")]
         public async Task<IActionResult> SoftDelete(int id)
         {
             var userName = User.Identity?.Name;

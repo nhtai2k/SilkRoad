@@ -17,7 +17,7 @@ namespace SurveyDataAccess.Repositories
         public async Task<QuestionLibraryDTO?> GetEagerLoadingByIdAsync(int id)
         {
             return await _dbSet.Where(s => s.Id == id)
-                .Include(q => q.PredefinedAnswerLibraries)
+                .Include(q => q.PredefinedAnswerLibraries.OrderBy(s => s.Priority))
                 .FirstOrDefaultAsync();
         }
     }

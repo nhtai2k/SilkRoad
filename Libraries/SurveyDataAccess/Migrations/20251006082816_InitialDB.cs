@@ -22,7 +22,7 @@ namespace SurveyDataAccess.Migrations
                     NameEN = table.Column<string>(type: "nvarchar(255)", nullable: false),
                     NameVN = table.Column<string>(type: "nvarchar(255)", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(500)", nullable: true),
-                    Priority = table.Column<byte>(type: "tinyint", nullable: false),
+                    Priority = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -88,6 +88,7 @@ namespace SurveyDataAccess.Migrations
                     NameEN = table.Column<string>(type: "nvarchar(255)", nullable: false),
                     NameVN = table.Column<string>(type: "nvarchar(255)", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(500)", nullable: true),
+                    Priority = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -164,7 +165,8 @@ namespace SurveyDataAccess.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWID()"),
                     QuestionLibraryId = table.Column<int>(type: "int", nullable: false),
                     NameVN = table.Column<string>(type: "nvarchar(255)", nullable: false),
-                    NameEN = table.Column<string>(type: "nvarchar(255)", nullable: false)
+                    NameEN = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    Priority = table.Column<byte>(type: "tinyint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -207,9 +209,10 @@ namespace SurveyDataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWID()"),
-                    QuestionGroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    QuestionGroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     SurveyFormId = table.Column<int>(type: "int", nullable: true),
                     QuestionTypeId = table.Column<int>(type: "int", nullable: false),
+                    Priority = table.Column<int>(type: "int", nullable: false),
                     NameEN = table.Column<string>(type: "nvarchar(255)", nullable: false),
                     NameVN = table.Column<string>(type: "nvarchar(255)", nullable: false)
                 },
@@ -226,7 +229,8 @@ namespace SurveyDataAccess.Migrations
                         name: "FK_Table_Questions_Table_QuestionTypes_QuestionTypeId",
                         column: x => x.QuestionTypeId,
                         principalTable: "Table_QuestionTypes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Table_Questions_Table_SurveyForms_SurveyFormId",
                         column: x => x.SurveyFormId,
@@ -241,7 +245,8 @@ namespace SurveyDataAccess.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWID()"),
                     QuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     NameVN = table.Column<string>(type: "nvarchar(255)", nullable: false),
-                    NameEN = table.Column<string>(type: "nvarchar(255)", nullable: false)
+                    NameEN = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    Priority = table.Column<byte>(type: "tinyint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -259,11 +264,11 @@ namespace SurveyDataAccess.Migrations
                 columns: new[] { "Id", "CreatedAt", "IsActive", "Name", "Note" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2025, 9, 23, 9, 14, 57, 963, DateTimeKind.Local).AddTicks(7644), true, "Câu hỏi đóng", "Câu hỏi đóng (Closed-ended question) – Chỉ có các câu trả lời sẵn." },
-                    { 2, new DateTime(2025, 9, 23, 9, 14, 57, 963, DateTimeKind.Local).AddTicks(9027), true, "Câu hỏi mở", "Câu hỏi mở (Open-ended question) – Người dùng nhập câu trả lời." },
-                    { 3, new DateTime(2025, 9, 23, 9, 14, 57, 963, DateTimeKind.Local).AddTicks(9034), true, "Câu hỏi kết hợp", "Câu hỏi kết hợp (Hybrid question) hoặc Câu hỏi mở rộng (Extended question) – Vừa có câu trả lời sẵn, vừa cho phép người dùng nhập câu trả lời riêng." },
-                    { 4, new DateTime(2025, 9, 23, 9, 14, 57, 963, DateTimeKind.Local).AddTicks(9035), true, "Câu hỏi nhiều lựa chọn", "Cho phép chọn nhiều đáp án cùng lúc. (MultipleChoiceQuestion)" },
-                    { 5, new DateTime(2025, 9, 23, 9, 14, 57, 963, DateTimeKind.Local).AddTicks(9036), true, "Câu hỏi đánh giá", "Cẩu hỏi đáng giá (RatingQuestion) - Cho người dùng đánh giá mức độ trên 5 sao." }
+                    { 1, new DateTime(2025, 10, 6, 15, 28, 15, 396, DateTimeKind.Local).AddTicks(8655), true, "Câu hỏi đóng", "Câu hỏi đóng (Closed-ended question) – Chỉ có các câu trả lời sẵn." },
+                    { 2, new DateTime(2025, 10, 6, 15, 28, 15, 396, DateTimeKind.Local).AddTicks(9778), true, "Câu hỏi mở", "Câu hỏi mở (Open-ended question) – Người dùng nhập câu trả lời." },
+                    { 3, new DateTime(2025, 10, 6, 15, 28, 15, 396, DateTimeKind.Local).AddTicks(9782), true, "Câu hỏi kết hợp", "Câu hỏi kết hợp (Hybrid question) hoặc Câu hỏi mở rộng (Extended question) – Vừa có câu trả lời sẵn, vừa cho phép người dùng nhập câu trả lời riêng." },
+                    { 4, new DateTime(2025, 10, 6, 15, 28, 15, 396, DateTimeKind.Local).AddTicks(9783), true, "Câu hỏi nhiều lựa chọn", "Cho phép chọn nhiều đáp án cùng lúc. (MultipleChoiceQuestion)" },
+                    { 5, new DateTime(2025, 10, 6, 15, 28, 15, 396, DateTimeKind.Local).AddTicks(9784), true, "Câu hỏi đánh giá", "Cẩu hỏi đáng giá (RatingQuestion) - Cho người dùng đánh giá mức độ trên 5 sao." }
                 });
 
             migrationBuilder.CreateIndex(

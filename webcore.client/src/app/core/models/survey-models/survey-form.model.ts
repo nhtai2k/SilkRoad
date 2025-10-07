@@ -1,22 +1,25 @@
-export interface SurveyFormModel {
+import { BaseModel } from "@models/base.model";
+import { QuestionGroupModel } from "./question-group.model";
+import { QuestionModel } from "./question.model";
+
+export interface SurveyFormModel extends BaseModel {
     id: number;
-    isPeriodic: boolean;
-    nameVN: string;
-    nameEN: string;
+    name: string;
     titleEN: string;
     titleVN: string;
     descriptionEN: string;
     descriptionVN: string;
     startDate: Date;
     endDate: Date;
-    isActive: boolean;
-    surveyQuestions: SelectedQuestionModel[];
+    note?: string;
+    questionGroups: QuestionGroupModel[];
+    questions: QuestionModel[];
 }
 
-export interface SelectedQuestionModel {
-    ID: number;
-    questionGroupID: number;
-    questionID: number;
-    priority: number;
-    checked: boolean;
-}
+// export interface SelectedQuestionModel {
+//     ID: number;
+//     questionGroupID: number;
+//     questionID: number;
+//     priority: number;
+//     checked: boolean;
+// }

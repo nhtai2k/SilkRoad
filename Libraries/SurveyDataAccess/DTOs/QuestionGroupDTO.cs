@@ -7,7 +7,11 @@
         public required string NameEN { get; set; }
         public required string NameVN { get; set; }
         public int Priority { get; set; }
-        public ICollection<QuestionDTO>? Questions { get; set; }
+        public ICollection<QuestionDTO> Questions { get; set; }
         public SurveyFormDTO? SurveyForm { get; set; }
+        public QuestionGroupDTO()
+        {
+            Questions = new List<QuestionDTO>();
+        }
     }
 }

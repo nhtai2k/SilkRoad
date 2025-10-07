@@ -12,8 +12,8 @@ using SurveyDataAccess;
 namespace SurveyDataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250924063712_AddPriority")]
-    partial class AddPriority
+    [Migration("20251006082816_InitialDB")]
+    partial class InitialDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -170,7 +170,7 @@ namespace SurveyDataAccess.Migrations
                     b.Property<int>("Priority")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("QuestionGroupId")
+                    b.Property<Guid?>("QuestionGroupId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("QuestionTypeId")
@@ -347,7 +347,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 9, 24, 13, 37, 11, 870, DateTimeKind.Local).AddTicks(10),
+                            CreatedAt = new DateTime(2025, 10, 6, 15, 28, 15, 396, DateTimeKind.Local).AddTicks(8655),
                             IsActive = true,
                             Name = "Câu hỏi đóng",
                             Note = "Câu hỏi đóng (Closed-ended question) – Chỉ có các câu trả lời sẵn."
@@ -355,7 +355,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 9, 24, 13, 37, 11, 870, DateTimeKind.Local).AddTicks(1165),
+                            CreatedAt = new DateTime(2025, 10, 6, 15, 28, 15, 396, DateTimeKind.Local).AddTicks(9778),
                             IsActive = true,
                             Name = "Câu hỏi mở",
                             Note = "Câu hỏi mở (Open-ended question) – Người dùng nhập câu trả lời."
@@ -363,7 +363,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 9, 24, 13, 37, 11, 870, DateTimeKind.Local).AddTicks(1168),
+                            CreatedAt = new DateTime(2025, 10, 6, 15, 28, 15, 396, DateTimeKind.Local).AddTicks(9782),
                             IsActive = true,
                             Name = "Câu hỏi kết hợp",
                             Note = "Câu hỏi kết hợp (Hybrid question) hoặc Câu hỏi mở rộng (Extended question) – Vừa có câu trả lời sẵn, vừa cho phép người dùng nhập câu trả lời riêng."
@@ -371,7 +371,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 9, 24, 13, 37, 11, 870, DateTimeKind.Local).AddTicks(1169),
+                            CreatedAt = new DateTime(2025, 10, 6, 15, 28, 15, 396, DateTimeKind.Local).AddTicks(9783),
                             IsActive = true,
                             Name = "Câu hỏi nhiều lựa chọn",
                             Note = "Cho phép chọn nhiều đáp án cùng lúc. (MultipleChoiceQuestion)"
@@ -379,7 +379,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2025, 9, 24, 13, 37, 11, 870, DateTimeKind.Local).AddTicks(1170),
+                            CreatedAt = new DateTime(2025, 10, 6, 15, 28, 15, 396, DateTimeKind.Local).AddTicks(9784),
                             IsActive = true,
                             Name = "Câu hỏi đánh giá",
                             Note = "Cẩu hỏi đáng giá (RatingQuestion) - Cho người dùng đánh giá mức độ trên 5 sao."
@@ -495,13 +495,12 @@ namespace SurveyDataAccess.Migrations
                     b.HasOne("SurveyDataAccess.DTOs.QuestionGroupDTO", "QuestionGroup")
                         .WithMany("Questions")
                         .HasForeignKey("QuestionGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("SurveyDataAccess.DTOs.QuestionTypeDTO", "QuestionType")
                         .WithMany()
                         .HasForeignKey("QuestionTypeId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SurveyDataAccess.DTOs.SurveyFormDTO", "SurveyForm")

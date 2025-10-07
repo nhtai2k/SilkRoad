@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, Input, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonDirective, FormControlDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, TableDirective} from '@coreui/angular';
 import { QuestionGroupModel } from '@models/survey-models/question-group.model';
@@ -16,14 +16,11 @@ import { TreeSelectComponent } from "@components/selects/tree-select/tree-select
 import { EQuestionTypes } from '@common/global';
 import { QuestionLibraryService } from '@services/survey-services/question-library.service';
 
-
-
 @Component({
   selector: 'app-create-helper',
   imports: [ReactiveFormsModule, ButtonDirective, CommonModule, TableDirective, IconDirective, BookIconComponent, ModalComponent, ModalHeaderComponent,
     ModalTitleDirective, ModalBodyComponent, ModalFooterComponent, SelectSearchComponent, FormControlDirective, TreeSelectComponent],
   templateUrl: './create-helper.component.html',
-  styleUrl: './create.component.scss'
 })
 
 export class CreateHelperComponent implements OnInit {
@@ -40,8 +37,8 @@ export class CreateHelperComponent implements OnInit {
 
   eQuestionTypes = EQuestionTypes;
 
-  showQuestionChildrenByParentId = signal<string | null>(null);
-  showPredefinedAnswerChildrenByParentId = signal<string | null>(null);
+  // showQuestionChildrenByParentId = signal<string | null>(null);
+  // showPredefinedAnswerChildrenByParentId = signal<string | null>(null);
   showPredefinedAnswerTable = signal<boolean>(false);
   //visible Question Group Modal
   visibleCreateQuestionGroupModal = signal(false);
@@ -105,7 +102,7 @@ export class CreateHelperComponent implements OnInit {
   });
   //#endregion
 
-  //#region Handle show table tree
+  //#region constructor and ngOnInit
   constructor(private questionGroupLibraryService: QuestionGroupLibraryService,
     private questionLibraryService: QuestionLibraryService,
     private questionTypeService: QuestionTypeService) { }
@@ -135,20 +132,20 @@ export class CreateHelperComponent implements OnInit {
 
   toggleQuestionNode(node: QuestionGroupModel): void {
     node.expanded = !node.expanded;
-    if (node.expanded && node.id) {
-      this.showQuestionChildrenByParentId.set(node.id);
-    } else {
-      this.showQuestionChildrenByParentId.set(null);
-    }
+    // if (node.expanded && node.id) {
+    //   this.showQuestionChildrenByParentId.set(node.id);
+    // } else {
+    //   this.showQuestionChildrenByParentId.set(null);
+    // }
   }
 
   togglePredefinedAnswerNode(node: QuestionModel): void {
     node.expanded = !node.expanded;
-    if (node.expanded && node.id) {
-      this.showPredefinedAnswerChildrenByParentId.set(node.id);
-    } else {
-      this.showPredefinedAnswerChildrenByParentId.set(null);
-    }
+    // if (node.expanded && node.id) {
+    //   this.showPredefinedAnswerChildrenByParentId.set(node.id);
+    // } else {
+    //   this.showPredefinedAnswerChildrenByParentId.set(null);
+    // }
   }
   //#endregion
 
@@ -235,6 +232,7 @@ export class CreateHelperComponent implements OnInit {
       this.questionGroups.push(newQuestionGroup);
       this.createQuestionGroupForm.reset({ nameEN: '', nameVN: '', priority: 1 });
       this.toggleCreateQuestionGroupModal();
+      console.log(this.questionGroups);
       // Reset the select component
       this.initQuestionGroupLibraryId.set(null);
       setTimeout(() => this.initQuestionGroupLibraryId.set(-1), 0);
@@ -327,6 +325,7 @@ export class CreateHelperComponent implements OnInit {
             });
             if (newQuestion.predefinedAnswerLibraries && newQuestion.predefinedAnswerLibraries.length > 0) {
               this.predefinedAnswerList = [...newQuestion.predefinedAnswerLibraries];
+              console.log(this.predefinedAnswerList);
             } else {
               this.predefinedAnswerList = [];
             }

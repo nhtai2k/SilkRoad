@@ -9,7 +9,7 @@ namespace SurveyDataAccess.IRepositories
 {
     public interface IPredefinedAnswerLibraryRepository : IGenericRepository<PredefinedAnswerLibraryDTO>
     {
-        public Task<bool> DeleteByQuestionLibraryIdAsync(int questionLibraryId);
-        public Task<ICollection<PredefinedAnswerLibraryDTO>> GetAllByQuestionLibraryIdAsync(int questionLibraryId);
+        //public Task<bool> DeleteByQuestionLibraryIdAsync(int questionLibraryId);
+        public Task<ICollection<PredefinedAnswerLibraryDTO>> GetByQuestionLibraryIdAsync(int questionLibraryId);
     }
 }

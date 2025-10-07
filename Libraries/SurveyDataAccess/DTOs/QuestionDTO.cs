@@ -12,7 +12,11 @@
         public QuestionTypeDTO? QuestionType { get; set; }
         public QuestionGroupDTO? QuestionGroup { get; set; }
         public SurveyFormDTO? SurveyForm { get; set; }
-        public ICollection<PredefinedAnswerDTO>? PredefinedAnswers { get; set; }
+        public ICollection<PredefinedAnswerDTO> PredefinedAnswers { get; set; }
+        public QuestionDTO()
+        {
+            PredefinedAnswers = new List<PredefinedAnswerDTO>();
+        }
 
     }
 }

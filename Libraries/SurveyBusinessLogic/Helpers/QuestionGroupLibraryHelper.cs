@@ -15,7 +15,7 @@ namespace SurveyBusinessLogic.Helpers
 
         public async Task<Pagination<QuestionGroupLibraryDTO>> GetAllAsync(int pageIndex, int pageSize)
         {
-            var allItems = await _unitOfWork.QuestionGroupLibraryRepository.GetAllAsync(x => !x.IsDeleted);
+            var allItems = await _unitOfWork.QuestionGroupLibraryRepository.GetAllAsync(x => !x.IsDeleted,orderBy: p => p.OrderBy(s => s.Priority));
             int totalItems = allItems.Count();
             int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
             if (pageIndex > totalPages)

@@ -6,8 +6,10 @@ import { SurveyFormService } from '@services/survey-services/survey-form.service
 import { IconDirective } from '@coreui/icons-angular';
 import { cilExitToApp, cilPen, cilPlus, cilSave, cilTrash } from '@coreui/icons';
 import { CommonModule } from '@angular/common';
-import { CreateHelperComponent } from "./create-helper.component";
 import { RangeDatetimePickerComponent } from "@components/generals/range-datetime-picker/range-datetime-picker.component";
+import { ToastService } from '@services/helper-services/toast.service';
+import { EColors } from '@common/global';
+import { CreateHelperComponent } from './create-helper.component';
 @Component({
   selector: 'app-create',
   imports: [FormControlDirective, FormLabelDirective, CardComponent, CardBodyComponent, ReactiveFormsModule, FormDirective, ButtonDirective, CommonModule,
@@ -29,14 +31,14 @@ export class CreateComponent {
     descriptionVN: new FormControl(''),
     startDate: new FormControl(''),
     endDate: new FormControl(''),
-    isActive: new FormControl(true),
+    isActive: new FormControl(false),
     questionGroups: new FormControl([]),
     questions: new FormControl([])
   });
   //#endregion
 
   //#region Constructor and Hooks
-  constructor(private surveyFormService: SurveyFormService, private router: Router) { }
+  constructor(private surveyFormService: SurveyFormService, private toastService: ToastService, private router: Router) { }
   onDateRangeChange(event: Date[]) {
     this.startDate?.setValue(event[0]);
     this.endDate?.setValue(event[1]);
@@ -46,17 +48,18 @@ export class CreateComponent {
   //#endregion submit
   onSubmit() {    
     if (this.createForm.valid) {
-      const  questionGroups = this.createHelperComponent.questionGroups;
+      const questionGroups = this.createHelperComponent.questionGroups;
       const questions = this.createHelperComponent.questions;
       this.createForm.patchValue({ questionGroups, questions });
       console.log(this.createForm.value);
       this.surveyFormService.create(this.createForm.value).subscribe({
         next: (res) => {
-          // if (res.success) {
-          //   this.router.navigate(['/surveys/survey-forms']);
-          // } else {
-          //   alert('Error: ' + res.message);
-          // }
+          if (res.success) {
+            this.toastService.showToast(EColors.success, 'Survey form created successfully');
+            this.router.navigate(['/surveys/survey-forms']);
+          } else {
+            this.toastService.showToast(EColors.danger, res.message);
+          }
         }
       });
     }

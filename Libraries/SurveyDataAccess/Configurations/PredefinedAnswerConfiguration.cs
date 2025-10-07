@@ -16,7 +16,10 @@ namespace SurveyDataAccess.Configurations
             builder.Property(s => s.NameEN).HasColumnType("nvarchar(255)");
             builder.Property(s => s.NameVN).HasColumnType("nvarchar(255)");
             builder.Property(s => s.Priority).HasColumnType("tinyint");
-            builder.HasOne<QuestionDTO>(s => s.Question).WithMany(g => g.PredefinedAnswers).HasForeignKey(s => s.QuestionId);
+            builder.HasOne<QuestionDTO>(s => s.Question)
+                .WithMany(g => g.PredefinedAnswers)
+                .HasForeignKey(s => s.QuestionId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

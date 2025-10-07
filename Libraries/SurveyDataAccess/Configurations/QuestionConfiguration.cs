@@ -13,15 +13,16 @@ namespace SurveyDataAccess.Configurations
             builder.Property(s => s.Id)
                 .HasDefaultValueSql("NEWID()")
                 .ValueGeneratedOnAdd();
-            builder.Property(s => s.QuestionGroupId).IsRequired();
             builder.Property(s => s.QuestionTypeId).IsRequired();
             builder.Property(s => s.NameEN).HasColumnType("nvarchar(255)");
             builder.Property(s => s.NameVN).HasColumnType("nvarchar(255)");
-            builder.HasOne<QuestionGroupDTO>(s => s.QuestionGroup).WithMany(g => g.Questions).HasForeignKey(s => s.QuestionGroupId);
+            builder.HasOne<QuestionGroupDTO>(s => s.QuestionGroup)
+                .WithMany(g => g.Questions)
+                .HasForeignKey(s => s.QuestionGroupId)
+                .OnDelete(DeleteBehavior.Cascade);
             builder.HasOne<QuestionTypeDTO>(s => s.QuestionType)
                 .WithMany()
-                .HasForeignKey(s => s.QuestionTypeId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .HasForeignKey(s => s.QuestionTypeId);
             // If you have a SurveyForm relationship, add it here with the correct FK
         }
     }

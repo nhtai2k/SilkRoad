@@ -133,14 +133,14 @@ export const routes: Routes = [
         path: 'surveys/reports',
         loadChildren: () => import('./views/surveys/report/routes').then((m) => m.routes)
       },
-      {
-        path: 'surveys/survey-results',
-        loadChildren: () => import('./views/surveys/survey-results/index/routes').then((m) => m.routes)
-      },
-      {
-        path: 'surveys/survey-results/update/:id',
-        loadChildren: () => import('./views/surveys/survey-results/details/routes').then((m) => m.routes)
-      },
+      // {
+      //   path: 'surveys/survey-results',
+      //   loadChildren: () => import('./views/surveys/survey-results/index/routes').then((m) => m.routes)
+      // },
+      // {
+      //   path: 'surveys/survey-results/update/:id',
+      //   loadChildren: () => import('./views/surveys/survey-results/details/routes').then((m) => m.routes)
+      // },
       {
         path: 'surveys/survey-forms',
         loadChildren: () => import('./views/surveys/survey-forms/index/routes').then((m) => m.routes)
@@ -148,6 +148,10 @@ export const routes: Routes = [
       {
         path: 'surveys/survey-forms/create',
         loadChildren: () => import('./views/surveys/survey-forms/create/routes').then((m) => m.routes)
+      },
+      {
+        path: 'surveys/survey-forms/update/:id',
+        loadChildren: () => import('./views/surveys/survey-forms/update/routes').then((m) => m.routes)
       },
       {
         path: 'surveys/extension',
@@ -180,8 +184,6 @@ export const routes: Routes = [
         path: 'system-management/extension',
         loadChildren: () => import('./views/sm/extension/routes').then((m) => m.routes)
       },
-
-
       //#endregion
     ]
   },
@@ -225,6 +227,13 @@ export const routes: Routes = [
     loadComponent: () => import('./views/pages/reset-password/reset-password.component').then(m => m.ResetPasswordComponent),
     data: {
       title: 'Reset Password Page'
+    }
+  },
+    {
+    path:'survey-form/:id',
+    loadComponent: () => import('./views/pages/survey-form/survey-form.component').then(m => m.SurveyFormComponent),
+    data: {
+      title: 'Survey Form'
     }
   },
   { path: '**', redirectTo: 'dashboard' }

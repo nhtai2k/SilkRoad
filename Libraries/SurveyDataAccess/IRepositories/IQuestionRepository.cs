@@ -4,7 +4,9 @@ namespace SurveyDataAccess.IRepositories
 {
     public interface IQuestionRepository : IGenericRepository<QuestionDTO>
     {
-        //public QuestionLibraryDTO? GetEagerQuestionById(int id);
-        //public bool CheckExistenceByQuestionGroupId(int questionGroupId);
+        public Task<QuestionDTO?> GetEagerLoadingByIdAsync(Guid id);
+        public Task<IEnumerable<QuestionDTO>> GetEagerLoadingByQuestionGroupIdAsync(Guid questionGroupId);
+        public Task<IEnumerable<QuestionDTO>> GetEagerLoadingBySurveyFormIdAsync(int surveyFormId);
+
     }
 }

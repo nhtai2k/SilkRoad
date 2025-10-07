@@ -17,7 +17,8 @@ namespace SurveyDataAccess.Repositories
 
         public async Task<IEnumerable<QuestionGroupLibraryDTO>> GetEagerLoadingAsync()
         {
-            return await _dbSet.Where(x => !x.IsDeleted && x.IsActive).Include(x => x.QuestionLibraries).ToListAsync();
+            return await _dbSet.Where(x => !x.IsDeleted && x.IsActive).OrderBy(s => s.Priority)
+                .Include(x => x.QuestionLibraries).OrderBy(s => s.Priority).ToListAsync();
         }
     }
 }

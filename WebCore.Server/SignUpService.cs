@@ -66,9 +66,13 @@ namespace WebCore.Server
             services.AddScoped<IParticipantHelper, ParticipantHelper>();
             services.AddScoped<IQuestionGroupLibraryHelper, QuestionGroupLibraryHelper>();
             services.AddScoped<IQuestionLibraryHelper, QuestionLibraryHelper>();
+            services.AddScoped<IPredefinedAnswerLibraryHelper, PredefinedAnswerLibraryHelper>();
             services.AddScoped<ISurveyFormHelper, SurveyFormHelper>();
             services.AddScoped<ISurveyReportHelper, SurveyReportHelper>();
             services.AddScoped<IQuestionTypeHelper, QuestionTypeHelper>();
+            services.AddScoped<IQuestionGroupHelper, QuestionGroupHelper>();
+            services.AddScoped<IQuestionHelper, QuestionHelper>();
+            services.AddScoped<IPredefinedAnswerHelper, PredefinedAnswerHelper>();
             #endregion
             #region Restaurant
             //services.AddScoped<ICategoryHelper, CategoryHelper>();

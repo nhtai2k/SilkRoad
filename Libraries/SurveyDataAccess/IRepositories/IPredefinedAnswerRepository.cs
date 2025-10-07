@@ -4,5 +4,6 @@ namespace SurveyDataAccess.IRepositories
 {
     public interface IPredefinedAnswerRepository : IGenericRepository<PredefinedAnswerDTO>
     {
+        public Task<IEnumerable<PredefinedAnswerDTO>> GetByQuestionIdAsync(Guid questionId);
     }
 }

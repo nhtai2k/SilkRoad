@@ -11,6 +11,10 @@
         public int Priority { get; set; }
         public QuestionTypeDTO? QuestionType { get; set; }
         public QuestionGroupLibraryDTO? QuestionGroupLibrary { get; set; }
-        public ICollection<PredefinedAnswerLibraryDTO>? PredefinedAnswerLibraries { get; set; }
+        public ICollection<PredefinedAnswerLibraryDTO> PredefinedAnswerLibraries { get; set; }
+        public QuestionLibraryDTO()
+        {
+            PredefinedAnswerLibraries = new List<PredefinedAnswerLibraryDTO>();
+        }
     }
 }

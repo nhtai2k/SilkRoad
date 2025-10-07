@@ -2,7 +2,7 @@
 <c-card>
     <c-card-body>
         <!-- Survey Form Creation Form -->
-        <div class="title">
+        <div class="customTitle">
             <span>1. Survey Information</span>
         </div>
         <form cForm [formGroup]="createForm" (ngSubmit)="onSubmit()">
@@ -65,9 +65,9 @@
             <svg [cIcon]="icons.cilSave" width="25" class="text-white" title="Save Icon"></svg>
 
             </button>
-            <button cButton type="button" routerLink="/surveys/extend-survey/survey-forms" class="ms-2 btn-info">
+            <a cButton type="button" routerLink="/surveys/survey-forms" class="ms-2 btn-info">
             <svg [cIcon]="icons.cilExitToApp" width="25" class="text-white" title="Close Icon"></svg>
-            </button>
+            </a>
         </div>
     </c-card-body>
 </c-card>

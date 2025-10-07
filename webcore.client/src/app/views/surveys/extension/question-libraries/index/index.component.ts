@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PageInformation, Pagination } from '@models/pagination.model';
-import { cilPlus, cilTrash, cilPen, cilSave } from '@coreui/icons';
+import { cilPlus, cilTrash, cilPen, cilSave, cilSearch } from '@coreui/icons';
 import { RouterLink } from '@angular/router';
 import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, TemplateIdDirective } from '@coreui/angular';
 import { DataTableComponent } from '@components/generals/data-table/data-table.component';
@@ -31,7 +31,7 @@ export class IndexComponent {
   questionGroupLibraries: OptionModel[] = [];
   questionTypes: OptionModel[] = [];
   pageInformation: PageInformation = new PageInformation();
-  icons: any = { cilPlus, cilTrash, cilPen, cilSave };
+  icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilSearch };
   showChildrenByParentId  = signal<number | null>(null);
   filterForm: FormGroup = new FormGroup({
     questionGroupId: new FormControl(-1),

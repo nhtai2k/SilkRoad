@@ -4,8 +4,8 @@ namespace SurveyDataAccess.IRepositories
 {
     public interface ISurveyFormRepository : IGenericRepository<SurveyFormDTO>
     {
-        public SurveyFormDTO GetEagerActiveSurverFormByID(int ID);
-        public SurveyFormDTO? GetEagerSurveyFormByID(int ID);
-        public void RemoveSelectQuestionBySurveyFormID(int surveyFormID);
+        //public Task<SurveyFormDTO?> GetEagerSurveyFormByIdAsync(int Id);
+        //public SurveyFormDTO GetEagerActiveSurverFormByID(int ID);
+        //public void RemoveSelectQuestionBySurveyFormID(int surveyFormID);
     }
 }
