@@ -11,12 +11,12 @@ import { OptionModel } from '@models/option.model';
 import { SelectSearchComponent } from "@components/selects/select-search/select-search.component";
 import { PredefinedAnswerLibraryModel } from '@models/survey-models/predefined-answer-library.model';
 import { IconDirective } from '@coreui/icons-angular';
-import { cilPlus } from '@coreui/icons';
+import { cilPlus, cilTrash, cilPen, cilX, cilSave, cilExitToApp } from '@coreui/icons';
+import { PredefinedAnswerLibraryService } from '@services/survey-services/predefined-answer-library.service';
 @Component({
   selector: 'app-update',
-  imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective, ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule,
-     ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, CardComponent, CardBodyComponent, AccordionButtonDirective, AccordionComponent,
-      AccordionItemComponent, TemplateIdDirective, TableDirective, RouterLink, SelectSearchComponent, IconDirective, FormCheckComponent],
+  imports: [FormControlDirective, FormLabelDirective, ButtonDirective, FormDirective, ReactiveFormsModule, CardComponent,
+    CardBodyComponent, TableDirective, RouterLink, SelectSearchComponent, IconDirective, FormCheckComponent],
   templateUrl: './update.component.html',
   styleUrl: './update.component.scss'
 })
@@ -26,16 +26,18 @@ export class UpdateComponent implements OnInit {
   questionTypeList: OptionModel[] = [];
   predefinedAnswerList: PredefinedAnswerLibraryModel[] = [];
   eQuestionTypes = EQuestionTypes;
-  icons: any = { cilPlus };
+  icons: any = { cilPlus, cilTrash, cilPen, cilX, cilSave, cilExitToApp };
 
-  visibleCreateModal: boolean = false;
-  visibleUpdateModal: boolean = false;
-  visibleDelete: boolean = false;
+  //visible Predefined Answer Form
+  visibleCreatePredefinedAnswerForm = signal(false);
+  updatePredefinedAnswerIndex = signal<number>(-1);
 
   updateByIndex = signal<number>(0);
   deleteByIndex = signal<number>(0);
   selectedQuestionType = signal<number>(-1);
   selectedQuestionGroup = signal<number>(-1);
+
+  questionLibraryId = signal<any>(0);
 
   showPredefinedAnswerTable = signal<boolean>(false);
 
@@ -52,19 +54,18 @@ export class UpdateComponent implements OnInit {
   });
 
   createPredefinedAnswerForm: FormGroup = new FormGroup({
-    // id: new FormControl(''),
-    // questionLibraryId: new FormControl(0),
-    nameEN: new FormControl(''),
-    nameVN: new FormControl(''),
+    questionLibraryId: new FormControl(''),
+    nameEN: new FormControl('', Validators.required),
+    nameVN: new FormControl('', Validators.required),
     priority: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(255)])
 
   });
 
   updatePredefinedAnswerForm: FormGroup = new FormGroup({
-    // id: new FormControl(''),
-    // questionLibraryId: new FormControl(0),
-    nameEN: new FormControl(''),
-    nameVN: new FormControl(''),
+    id: new FormControl(''),
+    questionLibraryId: new FormControl(0),
+    nameEN: new FormControl('', Validators.required),
+    nameVN: new FormControl('', Validators.required),
     priority: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(255)])
 
   });
@@ -75,11 +76,13 @@ export class UpdateComponent implements OnInit {
     private questionGroupLibraryService: QuestionGroupLibraryService,
     private questionTypeService: QuestionTypeService,
     private questionLibraryService: QuestionLibraryService,
+    private predefinedAnswerLibraryService: PredefinedAnswerLibraryService,
     private toastService: ToastService,
     private route: ActivatedRoute,
     private router: Router) { }
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
+    this.questionLibraryId.set(id);
     this.questionGroupLibraryService.getOptionList().subscribe((res) => {
       this.questionGroupList = res.data;
     });
@@ -96,8 +99,13 @@ export class UpdateComponent implements OnInit {
       }
     });
   }
+  getPredefinedAnswerList() {
+    this.predefinedAnswerLibraryService.getByQuestionLibraryId(this.questionLibraryId()).subscribe(res => {
+      this.predefinedAnswerList = res.data;
+    });
+  }
   //#endregion
-  
+
   //#region Form Submit
 
   onSubmit() {
@@ -105,8 +113,8 @@ export class UpdateComponent implements OnInit {
       this.questionForm.markAllAsTouched();
       this.toastService.showToast(EColors.warning, "Please fill in all required fields!");
       return;
-    }  
-    this.questionForm.patchValue({predefinedAnswerLibraries: this.predefinedAnswerList});
+    }
+    this.questionForm.patchValue({ predefinedAnswerLibraries: this.predefinedAnswerList });
     console.log(this.questionForm.value);
     this.questionLibraryService.update(this.questionForm.value).subscribe({
       next: (res) => {
@@ -126,80 +134,82 @@ export class UpdateComponent implements OnInit {
   //#endregion
 
   //#region  Create Predefined Answer Form
-  onSubmitCreateForm() {
-    this.predefinedAnswerList.push(this.createPredefinedAnswerForm.value);
-    this.toastService.showToast(EColors.success, "Create Predefined Answer Success!");
-    this.toggleLiveCreateModel();
-    this.createPredefinedAnswerForm.reset();
-    this.createPredefinedAnswerForm.patchValue({priority: 1});
-
+  showCreatePredefinedAnswerForm(): void {
+    this.visibleCreatePredefinedAnswerForm.set(true);
+    this.updatePredefinedAnswerIndex.set(-1);
+  }
+  hideCreatePredefinedAnswerForm(): void {
+    this.visibleCreatePredefinedAnswerForm.set(false);
+  }
+  onSubmitCreatePredefinedAnswer(): void {
+    if(this.createPredefinedAnswerForm.valid){
+      this.createPredefinedAnswerForm.patchValue({ questionLibraryId: this.questionLibraryId() });
+      this.predefinedAnswerLibraryService.create(this.createPredefinedAnswerForm.value).subscribe(res => {
+        if(res.success){
+          this.toastService.showToast(EColors.success, res.message);
+          this.getPredefinedAnswerList();
+          this.createPredefinedAnswerForm.reset();
+          this.createPredefinedAnswerForm.patchValue({ priority: 1 });
+        }
+      });
+    }
   }
 
-  toggleLiveCreateModel() {
-    this.visibleCreateModal = !this.visibleCreateModal;
-  }
-
-  handleLiveCreateModelChange(event: any) {
-    this.visibleCreateModal = event;
-  }
-
-  get nameENCreateForm() { return this.createPredefinedAnswerForm.get('nameEN'); }
-  get nameVNCreateForm() { return this.createPredefinedAnswerForm.get('nameVN'); }
-  get priorityCreateForm() { return this.createPredefinedAnswerForm.get('priority'); }
+  get nameENCreatePredefinedAnswerForm() { return this.createPredefinedAnswerForm.get('nameEN'); }
+  get nameVNCreatePredefinedAnswerForm() { return this.createPredefinedAnswerForm.get('nameVN'); }
+  get priorityCreatePredefinedAnswerForm() { return this.createPredefinedAnswerForm.get('priority'); }
   //#endregion
 
   //#region  Update Predefined Answer Form
-  updateData(index: number) {
-    this.updateByIndex.set(index);
-    this.updatePredefinedAnswerForm.patchValue(this.predefinedAnswerList[index]);
-    this.toggleLiveUpdateModel();
+  updatePredefinedAnswer(index: number): void {
+    this.updatePredefinedAnswerIndex.set(index);
+    this.visibleCreatePredefinedAnswerForm.set(false);
+    const selectedPredefinedAnswer = this.predefinedAnswerList[index];
+    this.updatePredefinedAnswerForm.patchValue({
+      id: selectedPredefinedAnswer.id,
+      questionLibraryId: selectedPredefinedAnswer.questionLibraryId,
+      nameEN: selectedPredefinedAnswer.nameEN,
+      nameVN: selectedPredefinedAnswer.nameVN,
+      priority: selectedPredefinedAnswer.priority
+    });
   }
-  onSubmitUpdateForm() {
-    this.predefinedAnswerList[this.updateByIndex()] = this.updatePredefinedAnswerForm.value;
-    this.toastService.showToast(EColors.success, "Update Predefined Answer Success!");
-    this.toggleLiveUpdateModel();
-    this.updatePredefinedAnswerForm.reset();
+  onSubmitUpdatePredefinedAnswer(): void {
+    if(this.updatePredefinedAnswerForm.valid){
+      this.predefinedAnswerLibraryService.update(this.updatePredefinedAnswerForm.value).subscribe(res => {
+        if(res.success){
+          this.toastService.showToast(EColors.success, res.message);
+          this.getPredefinedAnswerList();
+          this.updatePredefinedAnswerForm.reset({ nameEN: '', nameVN: '', priority: 1 });
+                    this.updatePredefinedAnswerIndex.set(-1);
+        }
+      });
+    }
   }
 
-  toggleLiveUpdateModel() {
-    this.visibleUpdateModal = !this.visibleUpdateModal;
-  }
-
-  handleLiveUpdateModelChange(event: any) {
-    this.visibleUpdateModal = event;
-  }
-
-  get nameENUpdateForm() { return this.updatePredefinedAnswerForm.get('nameEN'); }
-  get nameVNUpdateForm() { return this.updatePredefinedAnswerForm.get('nameVN'); }
-  get priorityUpdateForm() { return this.updatePredefinedAnswerForm.get('priority'); }
+  get nameENUpdatePredefinedAnswerForm() { return this.updatePredefinedAnswerForm.get('nameEN'); }
+  get nameVNUpdatePredefinedAnswerForm() { return this.updatePredefinedAnswerForm.get('nameVN'); }
+  get priorityUpdatePredefinedAnswerForm() { return this.updatePredefinedAnswerForm.get('priority'); }
   //#endregion
-  
+
   //#region Delete
-  deleteData(index: number) {
-    this.deleteByIndex.set(index);
-    this.toggleLiveDelete();
-  }
-  deleteDataConfirm() {
-    this.predefinedAnswerList.splice(this.deleteByIndex(), 1);
-    this.toastService.showToast(EColors.success, "Delete Predefined Answer Success!");
-    this.toggleLiveDelete();
-  }
-  toggleLiveDelete() {
-    this.visibleDelete = !this.visibleDelete;
+  deletePredefinedAnswer(id: string): void {
+    this.predefinedAnswerLibraryService.delete(id).subscribe(res => {
+      if(res.success){
+        this.toastService.showToast(EColors.success, res.message);
+        this.getPredefinedAnswerList();
+      }
+    });
   }
 
-  handleLiveDeleteChange(event: any) {
-    this.visibleDelete = event;
-  }
   //#endregion
 
   onchangeQuestionType(event: any) {
-    this.questionForm.patchValue({questionTypeId: event});
+    this.questionForm.patchValue({ questionTypeId: event });
     if (event == EQuestionTypes.ClosedEndedQuestion ||
-       event == EQuestionTypes.HybridQuestion ||
-       event == EQuestionTypes.MultipleChoiceQuestion) {
-        this.showPredefinedAnswerTable.set(true);
-    }else{
+      event == EQuestionTypes.HybridQuestion ||
+      event == EQuestionTypes.MultipleChoiceQuestion) {
+      this.showPredefinedAnswerTable.set(true);
+    } else {
       this.showPredefinedAnswerTable.set(false);
     }
   }

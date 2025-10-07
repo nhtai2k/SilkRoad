@@ -25,7 +25,7 @@ namespace SurveyDataAccess.Repositories
             }
         }
 
-        public async Task<ICollection<PredefinedAnswerLibraryDTO>> GetAllByQuestionLibraryIdAsync(int questionLibraryId)
+        public async Task<ICollection<PredefinedAnswerLibraryDTO>> GetByQuestionLibraryIdAsync(int questionLibraryId)
         {
             return await _dbSet.Where(s => s.QuestionLibraryId == questionLibraryId).OrderBy(s => s.Priority).ToListAsync();
         }

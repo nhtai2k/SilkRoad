@@ -12,13 +12,12 @@ import { OptionModel } from '@models/option.model';
 import { SelectSearchComponent } from "@components/selects/select-search/select-search.component";
 import { PredefinedAnswerLibraryModel } from '@models/survey-models/predefined-answer-library.model';
 import { IconDirective } from '@coreui/icons-angular';
-import { cilPlus } from '@coreui/icons';
+import { cilPlus, cilTrash, cilPen, cilX, cilSave, cilExitToApp } from '@coreui/icons';
 
 @Component({
   selector: 'app-create',
-  imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective, ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule,
-     ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, CardComponent, CardBodyComponent, AccordionButtonDirective, AccordionComponent,
-      AccordionItemComponent, TemplateIdDirective, TableDirective, RouterLink, SelectSearchComponent, IconDirective, FormCheckComponent],
+  imports: [FormControlDirective, FormLabelDirective, ButtonDirective, FormDirective, ReactiveFormsModule, CardComponent,
+    CardBodyComponent, TableDirective, RouterLink, SelectSearchComponent, IconDirective, FormCheckComponent],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })
@@ -28,11 +27,11 @@ export class CreateComponent implements OnInit {
   questionTypeList: OptionModel[] = [];
   predefinedAnswerList: PredefinedAnswerLibraryModel[] = [];
   eQuestionTypes = EQuestionTypes;
-  icons: any = { cilPlus };
+  icons: any = { cilPlus, cilTrash, cilPen, cilX, cilSave, cilExitToApp };
 
-  visibleCreateModal: boolean = false;
-  visibleUpdateModal: boolean = false;
-  visibleDelete: boolean = false;
+  //visible Predefined Answer Form
+  visibleCreatePredefinedAnswerForm = signal(false);
+  updatePredefinedAnswerIndex = signal<number>(-1);
 
   updateByIndex = signal<number>(0);
   deleteByIndex = signal<number>(0);
@@ -42,27 +41,27 @@ export class CreateComponent implements OnInit {
   questionForm: FormGroup = new FormGroup({
     questionTypeId: new FormControl(-1, Validators.min(1)),
     questionGroupLibraryId: new FormControl(-1, Validators.min(1)),
-    nameEN: new FormControl(null, Validators.required),
-    nameVN: new FormControl(null, Validators.required),
-    note: new FormControl(null, Validators.maxLength(500)),
-    predefinedAnswerLibraries: new FormControl([]),
-    isActive: new FormControl(true, Validators.required),
-    priority: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(999)])
+    nameEN: new FormControl('', Validators.required),
+    nameVN: new FormControl('', Validators.required),
+    note: new FormControl('', Validators.maxLength(500)),
+    isActive: new FormControl(true),
+    priority: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(999)]),
+    predefinedAnswerLibraries: new FormControl([])
   });
 
   createPredefinedAnswerForm: FormGroup = new FormGroup({
     // id: new FormControl(''),
     // questionLibraryId: new FormControl(0),
-    nameEN: new FormControl(''),
-    nameVN: new FormControl(''),
+    nameEN: new FormControl('', Validators.required),
+    nameVN: new FormControl('', Validators.required),
     priority: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(255)])
   });
 
   updatePredefinedAnswerForm: FormGroup = new FormGroup({
     // id: new FormControl(''),
     // questionLibraryId: new FormControl(0),
-    nameEN: new FormControl(''),
-    nameVN: new FormControl(''),
+    nameEN: new FormControl('', Validators.required),
+    nameVN: new FormControl('', Validators.required),
     priority: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(255)])
   });
   //#endregion
@@ -83,16 +82,17 @@ export class CreateComponent implements OnInit {
     });
   }
   //#endregion
-  
+
   //#region Form Submit
 
   onSubmit() {
+    console.log(this.questionForm.value);
     if (!this.questionForm.valid) {
       this.questionForm.markAllAsTouched();
       this.toastService.showToast(EColors.warning, "Please fill in all required fields!");
       return;
-    }  
-    this.questionForm.patchValue({predefinedAnswerLibraries: this.predefinedAnswerList});
+    }
+    this.questionForm.patchValue({ predefinedAnswerLibraries: this.predefinedAnswerList });
     console.log(this.questionForm.value);
     this.questionLibraryService.create(this.questionForm.value).subscribe({
       next: (res) => {
@@ -112,79 +112,76 @@ export class CreateComponent implements OnInit {
   //#endregion
 
   //#region  Create Predefined Answer Form
-  onSubmitCreateForm() {
+  showCreatePredefinedAnswerForm(): void {
+    this.visibleCreatePredefinedAnswerForm.set(true);
+    this.updatePredefinedAnswerIndex.set(-1);
+  }
+  hideCreatePredefinedAnswerForm(): void {
+    this.visibleCreatePredefinedAnswerForm.set(false);
+  }
+  onSubmitCreatePredefinedAnswer(): void {
     this.predefinedAnswerList.push(this.createPredefinedAnswerForm.value);
-    this.toastService.showToast(EColors.success, "Create Predefined Answer Success!");
-    this.toggleLiveCreateModel();
+    // this.toggleCreatePredefinedAnswerModal();
     this.createPredefinedAnswerForm.reset();
-    this.createPredefinedAnswerForm.patchValue({priority: 1});
+    this.createPredefinedAnswerForm.patchValue({ priority: 1 });
   }
 
-  toggleLiveCreateModel() {
-    this.visibleCreateModal = !this.visibleCreateModal;
-  }
-
-  handleLiveCreateModelChange(event: any) {
-    this.visibleCreateModal = event;
-  }
-
-  get nameENCreateForm() { return this.createPredefinedAnswerForm.get('nameEN'); }
-  get nameVNCreateForm() { return this.createPredefinedAnswerForm.get('nameVN'); }
-  get priorityCreateForm() { return this.createPredefinedAnswerForm.get('priority'); }
+  get nameENCreatePredefinedAnswerForm() { return this.createPredefinedAnswerForm.get('nameEN'); }
+  get nameVNCreatePredefinedAnswerForm() { return this.createPredefinedAnswerForm.get('nameVN'); }
+  get priorityCreatePredefinedAnswerForm() { return this.createPredefinedAnswerForm.get('priority'); }
   //#endregion
 
   //#region  Update Predefined Answer Form
-  updateData(index: number) {
-    this.updateByIndex.set(index);
-    this.updatePredefinedAnswerForm.patchValue(this.predefinedAnswerList[index]);
-    this.toggleLiveUpdateModel();
+
+  updatePredefinedAnswer(index: number): void {
+    this.updatePredefinedAnswerIndex.set(index);
+    this.visibleCreatePredefinedAnswerForm.set(false);
+    const selectedPredefinedAnswer = this.predefinedAnswerList[index];
+    this.updatePredefinedAnswerForm.patchValue({
+      nameEN: selectedPredefinedAnswer.nameEN,
+      nameVN: selectedPredefinedAnswer.nameVN,
+      priority: selectedPredefinedAnswer.priority
+    });
+    // this.toggleUpdatePredefinedAnswerModal();
   }
-  onSubmitUpdateForm() {
-    this.predefinedAnswerList[this.updateByIndex()] = this.updatePredefinedAnswerForm.value;
-    this.toastService.showToast(EColors.success, "Update Predefined Answer Success!");
-    this.toggleLiveUpdateModel();
-    this.updatePredefinedAnswerForm.reset();
+  onSubmitUpdatePredefinedAnswer(): void {
+    if (this.updatePredefinedAnswerIndex() !== -1) {
+      const index = this.updatePredefinedAnswerIndex();
+      const selectedPredefinedAnswer = this.predefinedAnswerList[index];
+
+      const updatedPredefinedAnswer: PredefinedAnswerLibraryModel = {
+        ...selectedPredefinedAnswer,
+        nameEN: this.updatePredefinedAnswerForm.value.nameEN ?? '',
+        nameVN: this.updatePredefinedAnswerForm.value.nameVN ?? '',
+        priority: this.updatePredefinedAnswerForm.value.priority ?? 1
+      };
+
+      this.predefinedAnswerList[index] = updatedPredefinedAnswer;
+      
+      this.updatePredefinedAnswerForm.reset({ nameEN: '', nameVN: '', priority: 1 });
+      this.updatePredefinedAnswerIndex.set(-1);
+    }
   }
 
-  toggleLiveUpdateModel() {
-    this.visibleUpdateModal = !this.visibleUpdateModal;
-  }
-
-  handleLiveUpdateModelChange(event: any) {
-    this.visibleUpdateModal = event;
-  }
-
-  get nameENUpdateForm() { return this.updatePredefinedAnswerForm.get('nameEN'); }
-  get nameVNUpdateForm() { return this.updatePredefinedAnswerForm.get('nameVN'); }
-  get priorityUpdateForm() { return this.updatePredefinedAnswerForm.get('priority'); }
+  get nameENUpdatePredefinedAnswerForm() { return this.updatePredefinedAnswerForm.get('nameEN'); }
+  get nameVNUpdatePredefinedAnswerForm() { return this.updatePredefinedAnswerForm.get('nameVN'); }
+  get priorityUpdatePredefinedAnswerForm() { return this.updatePredefinedAnswerForm.get('priority'); }
   //#endregion
-  
+
   //#region Delete
-  deleteData(index: number) {
-    this.deleteByIndex.set(index);
-    this.toggleLiveDelete();
-  }
-  deleteDataConfirm() {
-    this.predefinedAnswerList.splice(this.deleteByIndex(), 1);
-    this.toastService.showToast(EColors.success, "Delete Predefined Answer Success!");
-    this.toggleLiveDelete();
-  }
-  toggleLiveDelete() {
-    this.visibleDelete = !this.visibleDelete;
+  deletePredefinedAnswer(index: number): void {
+    this.predefinedAnswerList.splice(index, 1);
   }
 
-  handleLiveDeleteChange(event: any) {
-    this.visibleDelete = event;
-  }
   //#endregion
 
   onchangeQuestionType(event: any) {
-    this.questionForm.patchValue({questionTypeId: event});
+    this.questionForm.patchValue({ questionTypeId: event });
     if (event == EQuestionTypes.ClosedEndedQuestion ||
-       event == EQuestionTypes.HybridQuestion ||
-       event == EQuestionTypes.MultipleChoiceQuestion) {
-        this.showPredefinedAnswerTable.set(true);
-    }else{
+      event == EQuestionTypes.HybridQuestion ||
+      event == EQuestionTypes.MultipleChoiceQuestion) {
+      this.showPredefinedAnswerTable.set(true);
+    } else {
       this.showPredefinedAnswerTable.set(false);
     }
   }

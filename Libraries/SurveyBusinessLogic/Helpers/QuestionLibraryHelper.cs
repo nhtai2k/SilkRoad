@@ -23,7 +23,7 @@ namespace SurveyBusinessLogic.Helpers
             var items = allItems.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
             foreach (var item in items)
             {
-                item.PredefinedAnswerLibraries = await _unitOfWork.PredefinedAnswerLibraryRepository.GetAllByQuestionLibraryIdAsync(item.Id);
+                item.PredefinedAnswerLibraries = await _unitOfWork.PredefinedAnswerLibraryRepository.GetByQuestionLibraryIdAsync(item.Id);
             }
             return new Pagination<QuestionLibraryDTO>
             {
@@ -67,69 +67,69 @@ namespace SurveyBusinessLogic.Helpers
 
         public async Task<bool> CreateAsync(QuestionLibraryDTO model, string? userName = null)
         {
-                try
-                {
-                    model.CreatedBy = userName;
-                    model.ModifiedBy = userName;
-                    model.NameEN = model.NameEN.Trim();
-                    model.NameVN = model.NameVN.Trim();
-                    model.Note = model.Note?.Trim();
-                    await _unitOfWork.QuestionLibraryRepository.CreateAsync(model);
-                    await _unitOfWork.SaveChangesAsync();
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
+            try
+            {
+                model.CreatedBy = userName;
+                model.ModifiedBy = userName;
+                model.NameEN = model.NameEN.Trim();
+                model.NameVN = model.NameVN.Trim();
+                model.Note = model.Note?.Trim();
+                await _unitOfWork.QuestionLibraryRepository.CreateAsync(model);
+                await _unitOfWork.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public async Task<bool> UpdateAsync(QuestionLibraryDTO model, string? userName = null)
         {
-            using (var transaction = _unitOfWork.BeginTransaction())
+            //using (var transaction = _unitOfWork.BeginTransaction())
+            //{
+            try
             {
-                try
-                {
-                bool deletePredefinedAnswerResult = await _unitOfWork.PredefinedAnswerLibraryRepository.DeleteByQuestionLibraryIdAsync(model.Id);
-                if (!deletePredefinedAnswerResult)
-                {
-                    _unitOfWork.Rollback();
-                    return false;
-                }
+                //bool deletePredefinedAnswerResult = await _unitOfWork.PredefinedAnswerLibraryRepository.DeleteByQuestionLibraryIdAsync(model.Id);
+                //if (!deletePredefinedAnswerResult)
+                //{
+                //    _unitOfWork.Rollback();
+                //    return false;
+                //}
                 var data = await _unitOfWork.QuestionLibraryRepository.GetByIdAsync(model.Id);
-                    if (data == null) return false;
-                    data.IsActive = model.IsActive;
-                    data.NameEN = model.NameEN.Trim();
-                    data.NameVN = model.NameVN.Trim();
-                    data.Note = model.Note?.Trim();
-                    data.Priority = model.Priority;
-                    data.QuestionGroupLibraryId = model.QuestionGroupLibraryId;
-                    data.QuestionTypeId = model.QuestionTypeId;
-                    data.Update(userName);
-                    await _unitOfWork.SaveChangesAsync();
-
-                if (model.PredefinedAnswerLibraries != null)
-                {
-                    foreach (var item in model.PredefinedAnswerLibraries)
-                    {
-                        item.Id = Guid.NewGuid();
-                        item.QuestionLibraryId = model.Id;
-                        item.NameEN = item.NameEN.Trim();
-                        item.NameVN = item.NameVN.Trim();
-                        _unitOfWork.PredefinedAnswerLibraryRepository.Create(item);
-                    }
-                }
+                if (data == null) return false;
+                data.IsActive = model.IsActive;
+                data.NameEN = model.NameEN.Trim();
+                data.NameVN = model.NameVN.Trim();
+                data.Note = model.Note?.Trim();
+                data.Priority = model.Priority;
+                data.QuestionGroupLibraryId = model.QuestionGroupLibraryId;
+                data.QuestionTypeId = model.QuestionTypeId;
+                data.Update(userName);
                 await _unitOfWork.SaveChangesAsync();
-                _unitOfWork.Commit();
+
+                //if (model.PredefinedAnswerLibraries != null)
+                //{
+                //    foreach (var item in model.PredefinedAnswerLibraries)
+                //    {
+                //        item.Id = Guid.NewGuid();
+                //        item.QuestionLibraryId = model.Id;
+                //        item.NameEN = item.NameEN.Trim();
+                //        item.NameVN = item.NameVN.Trim();
+                //        _unitOfWork.PredefinedAnswerLibraryRepository.Create(item);
+                //    }
+                //}
+                //await _unitOfWork.SaveChangesAsync();
+                //_unitOfWork.Commit();
 
                 return true;
-                }
-                catch
-                {
-                    _unitOfWork.Rollback();
+            }
+            catch
+            {
+                //_unitOfWork.Rollback();
                 return false;
-                }
-        }
+            }
+            //}
         }
 
         public async Task<bool> SoftDeleteAsync(int id, string? userName = null)

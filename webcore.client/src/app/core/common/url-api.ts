@@ -27,7 +27,7 @@ export enum EUrl {
     getAllUrlStockPrice = "/api/stockPrice/getAll",
     getNewDataUrlStockPrice = "/api/stockPrice/getNewData",
     //#endregion
-    
+
     //#region Hubs
     //SignalR
     chatHubUrl = "/chat",
@@ -190,7 +190,7 @@ export enum EUrl {
     getAllUrlPayment = "/api/payment/getAll",
     getByIdUrlPayment = "/api/payment/getById",
     //#endregion
-    
+
     //#region System
 
     //My Account
@@ -236,12 +236,12 @@ export enum EUrl {
     //#endregion
 
     //#region Survey
-    
+
     //participant
     getAllUrlParticipant = "/api/participant/getAll",
     getEagerByIdUrlParticipant = "/api/participant/getEagerById",
     exportExcelUrlParticipant = "/api/participant/exportExcel",
-    
+
     //questionGroupLibrary
     getAllUrlQuestionGroupLibrary = "/api/questionGroupLibrary/getAll",
     getAllActiveUrlQuestionGroupLibrary = "/api/questionGroupLibrary/getAllActive",
@@ -254,7 +254,7 @@ export enum EUrl {
     softDeleteUrlQuestionGroupLibrary = "/api/questionGroupLibrary/softDelete",
     restoreUrlQuestionGroupLibrary = "/api/questionGroupLibrary/restore",
     deleteUrlQuestionGroupLibrary = "/api/questionGroupLibrary/delete",
-    
+
     //questionLibrary
     getAllUrlQuestionLibrary = "/api/questionLibrary/getAll",
     getAllDeletedUrlQuestionLibrary = "/api/questionLibrary/getAllDeleted",
@@ -265,11 +265,18 @@ export enum EUrl {
     softDeleteUrlQuestionLibrary = "/api/questionLibrary/softDelete",
     restoreUrlQuestionLibrary = "/api/questionLibrary/restore",
     deleteUrlQuestionLibrary = "/api/questionLibrary/delete",
-    
+
+    //PredefinedAnswerLibrary
+    getByQuestionLibraryIdUrlPredefinedAnswerLibrary = "/api/predefinedAnswerLibrary/getByQuestionLibraryId",
+    getByIdUrlPredefinedAnswerLibrary = "/api/predefinedAnswerLibrary/getById",
+    createUrlPredefinedAnswerLibrary = "/api/predefinedAnswerLibrary/create",
+    updateUrlPredefinedAnswerLibrary = "/api/predefinedAnswerLibrary/update",
+    deleteUrlPredefinedAnswerLibrary = "/api/predefinedAnswerLibrary/delete",
+
     //questionType
     getAllUrlQuestionType = "/api/questionType/getAll",
     getOptionListUrlQuestionType = "/api/questionType/getOptionList",
-    
+
     //surveyForm
     getAllUrlSurveyForm = "/api/surveyForm/getAll",
     getAllActiveUrlSurveyForm = "/api/surveyForm/getAllActive",
@@ -305,6 +312,8 @@ export enum EUrl {
     createUrlPredefinedAnswer = "/api/predefinedAnswer/create",
     updateUrlPredefinedAnswer = "/api/predefinedAnswer/update",
     deleteUrlPredefinedAnswer = "/api/predefinedAnswer/delete",
+
+
 
 
     //surveyReport

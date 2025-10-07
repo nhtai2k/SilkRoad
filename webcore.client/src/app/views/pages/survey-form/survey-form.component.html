@@ -44,7 +44,7 @@
   
       <form cForm [formGroup]="participantForm" (ngSubmit)="onSubmit()">
         <div class="mb-2 row">
-          <div class="col-4">
+          <div class="col-12 col-md-4">
             <label cLabel for="fullName">Full Name: <span class="text-danger">(*)</span></label>
             <input cFormControl formControlName="fullName">
             @if (fullName?.invalid && (fullName?.dirty || fullName?.touched)) {
@@ -55,7 +55,7 @@
             </div>
             }
           </div>
-          <div class="col-4">
+          <div class="col-12 col-md-4">
             <label cLabel for="phoneNumber">Phone number: <span class="text-danger">(*)</span></label>
             <input cFormControl formControlName="phoneNumber">
             @if (phoneNumber?.invalid && (phoneNumber?.dirty || phoneNumber?.touched)) {
@@ -66,7 +66,7 @@
             </div>
             }
           </div>
-          <div class="col-4">
+          <div class="col-12 col-md-4">
             <label cLabel for="email">Email:</label>
             <input cFormControl formControlName="email">
             <!-- @if (email?.invalid && (email?.dirty || email?.touched)) {
