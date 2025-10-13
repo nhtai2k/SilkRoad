@@ -26,6 +26,24 @@ namespace WebCore.Server.Controllers.FeatureControllers
             _actionLog = actionLog;
         }
 
+        [HttpGet]
+        [Route("GetAllFonts")]
+        public async Task<IActionResult> GetAllFonts()
+        {
+            try
+            {
+                string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+                string controllerName = ControllerContext.ActionDescriptor.ControllerName;
+                // _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Successful, null);
+                var fonts = await _qrCodeHelper.GetAllFontsAsync();
+                return Succeeded(fonts, _localizer["getDataSuccess"]);
+            }
+            catch (Exception ex)
+            {
+                return Failed(EStatusCodes.InternalServerError, ex.Message);
+            }
+        }
+
 
         [HttpPost]
         [Route("GenerateAQRCode")]

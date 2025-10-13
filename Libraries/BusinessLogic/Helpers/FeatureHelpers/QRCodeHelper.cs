@@ -133,5 +133,10 @@ namespace BusinessLogic.Helpers.FeatureHelpers
                 workbook.SaveAs(filePath);
             }
         }
+
+        public Task<List<string>> GetAllFontsAsync()
+        {
+            return _qrCodeService.GetAllFontsAsync();
+        }
     }
 }

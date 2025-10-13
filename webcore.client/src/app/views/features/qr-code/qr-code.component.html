@@ -26,8 +26,11 @@
                         <div class="col-6 col-sm-3">
                             <label cLabel for="fontFamily">Select Font Family</label>
                             <select cFormControl formControlName="fontFamily" id="fontFamily" cSelect>
-                                <option value="arial.ttf">Arial</option>
-                                <option value="arialbd.ttf">Arial Bold</option>
+                                <!-- <option value="arial.ttf">Arial</option>
+                                <option value="arialbd.ttf">Arial Bold</option> -->
+                                @for(item of fonts; track $index;) {
+                                    <option [value]="item"> {{item}} </option>
+                                }
                             </select>
                         </div>
                         <div class="col-6 col-sm-3">

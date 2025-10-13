@@ -4,6 +4,8 @@
     {
         //QRCode Server
         public required string PythonServiceUrl { get; set; }
+        public required string GenerateQrCodeUrl { get; set; }
+        public required string GetAllFontsUrl { get; set; }
         //Server
         public required string ServerUrl { get; set; }
         //Client

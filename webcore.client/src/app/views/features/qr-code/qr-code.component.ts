@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EColors } from '@common/global';
 import { ButtonDirective, CardBodyComponent, CardComponent,FormControlDirective, FormDirective, FormLabelDirective, FormSelectDirective, TableDirective } from '@coreui/angular';
@@ -14,11 +14,12 @@ import { ToastService } from '@services/helper-services/toast.service';
   templateUrl: './qr-code.component.html',
   styleUrl: './qr-code.component.scss'
 })
-export class QrCodeComponent {
+export class QrCodeComponent implements OnInit {
   //#region Variables
   color: string = '#ffffff';
   icons: any = { cilCloudUpload };
   demoLogo: string = '';
+  fonts: string[] = [];
   qrCodeImageUrl: string = '';
   qrCodeTypeList: string[] = ["Numbers", "Characters", "Characters and Numbers"];
   generateAQrCodeForm: FormGroup = new FormGroup({
@@ -43,6 +44,22 @@ export class QrCodeComponent {
 
   //#region LifeCycle
   constructor(private qrCodeService: QrCodeService, private toastService: ToastService, private loadingService: LoadingService) { }
+  ngOnInit(): void {
+    this.qrCodeService.getAllFonts().subscribe({
+      next: (res) => {
+        this.fonts = res.data;
+
+        if (this.fonts.length > 0) {
+          this.generateAQrCodeForm.patchValue({
+            fontFamily: this.fonts[0]
+          });
+        }
+      },
+      error: (err) => {
+        this.toastService.showToast(EColors.danger, err.message);
+      }
+    });
+  }
   //#endregion
 
   //#region Methods

@@ -37,6 +37,7 @@ export enum EUrl {
     //QRCode
     generateAQRCode = "/api/qrCode/generateAQRCode",
     generateListQRCode = "/api/qrCode/generateListQRCode",
+    getAllFonts = "/api/qrCode/getAllFonts",
     //#endregion
 
     //#region LipstickShop
