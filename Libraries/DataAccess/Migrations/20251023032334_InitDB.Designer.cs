@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250331023726_AddPriority")]
-    partial class AddPriority
+    [Migration("20251023032334_InitDB")]
+    partial class InitDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.3")
+                .HasAnnotation("ProductVersion", "9.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -292,13 +292,13 @@ namespace DataAccess.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            CreatedOn = new DateTime(2025, 3, 31, 9, 37, 26, 154, DateTimeKind.Local).AddTicks(2406),
+                            CreatedOn = new DateTime(2025, 10, 23, 10, 23, 33, 586, DateTimeKind.Local).AddTicks(7202),
                             Description = "System Admin Role",
                             IsActive = true,
                             IsDeleted = false,
                             IsSystemRole = true,
                             ModifiedBy = "System",
-                            ModifiedOn = new DateTime(2025, 3, 31, 9, 37, 26, 155, DateTimeKind.Local).AddTicks(2467),
+                            ModifiedOn = new DateTime(2025, 10, 23, 10, 23, 33, 586, DateTimeKind.Local).AddTicks(7437),
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -356,9 +356,6 @@ namespace DataAccess.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -419,6 +416,52 @@ namespace DataAccess.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("TBSystem_Users", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "d80acb9d-e6d1-433f-ae6d-d9be0aa87643",
+                            CreatedBy = "System",
+                            CreatedOn = new DateTime(2025, 10, 23, 10, 23, 33, 598, DateTimeKind.Local).AddTicks(2862),
+                            Email = "jsonmasker@gmail.com",
+                            EmailConfirmed = false,
+                            IsActive = true,
+                            IsDeleted = false,
+                            LockoutEnabled = false,
+                            ModifiedBy = "System",
+                            ModifiedOn = new DateTime(2025, 10, 23, 10, 23, 33, 598, DateTimeKind.Local).AddTicks(2865),
+                            NormalizedEmail = "JSONMASKER@GMAIL.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBqYupXb3q2vZNJOJJ3n/06IR+gi06F0PPpKg7FYW28k0S9DLN0Ct2nKc95H8ZaWzQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "MCPIPS6ZUHZPKFMTGP23N4HC65V3DD5U",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "3d8f3fdf-c482-4b8b-879e-66ed6e6ba863",
+                            CreatedBy = "System",
+                            CreatedOn = new DateTime(2025, 10, 23, 10, 23, 33, 598, DateTimeKind.Local).AddTicks(2906),
+                            Email = "tranthibaongoc779152@gmail.com",
+                            EmailConfirmed = false,
+                            IsActive = true,
+                            IsDeleted = false,
+                            LockoutEnabled = false,
+                            ModifiedBy = "System",
+                            ModifiedOn = new DateTime(2025, 10, 23, 10, 23, 33, 598, DateTimeKind.Local).AddTicks(2906),
+                            NormalizedEmail = "TRANTHIBAONGOC779152@GMAIL.COM",
+                            NormalizedUserName = "BAONGOC",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJQIa+hJeFzLkVaHpmxKMrO4mfQ9867u0fyjan1pdVP5hQMvQd9VcJC0zP0De/FH2w==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "WPN32OCCQQ27WSIHMJDYFU3MXZDKYM4K",
+                            TwoFactorEnabled = false,
+                            UserName = "baongoc"
+                        });
                 });
 
             modelBuilder.Entity("DataAccess.DTOs.UserLoginDTO", b =>
@@ -455,6 +498,18 @@ namespace DataAccess.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("TBSytem_UserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 1
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            RoleId = 1
+                        });
                 });
 
             modelBuilder.Entity("DataAccess.DTOs.UserTokenDTO", b =>
@@ -501,7 +556,7 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("DataAccess.DTOs.ControllerDTO", b =>
                 {
                     b.HasOne("DataAccess.DTOs.ModuleDTO", "Module")
-                        .WithMany("RoleClaimGroups")
+                        .WithMany("Controllers")
                         .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -557,11 +612,13 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DataAccess.DTOs.UserDTO", null)
-                        .WithMany()
+                    b.HasOne("DataAccess.DTOs.UserDTO", "User")
+                        .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DataAccess.DTOs.UserTokenDTO", b =>
@@ -585,7 +642,7 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.DTOs.ModuleDTO", b =>
                 {
-                    b.Navigation("RoleClaimGroups");
+                    b.Navigation("Controllers");
                 });
 
             modelBuilder.Entity("DataAccess.DTOs.RoleDTO", b =>
@@ -596,6 +653,8 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("DataAccess.DTOs.UserDTO", b =>
                 {
                     b.Navigation("Notifications");
+
+                    b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618
         }

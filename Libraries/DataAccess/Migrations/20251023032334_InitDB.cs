@@ -1,11 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
+
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
 namespace DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialDB : Migration
+    public partial class InitDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,7 +19,6 @@ namespace DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -49,6 +51,7 @@ namespace DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Priority = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Label = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -291,9 +294,27 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "TBSystem_Users",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedBy", "CreatedOn", "Email", "EmailConfirmed", "IsActive", "IsDeleted", "LockoutEnabled", "LockoutEnd", "ModifiedBy", "ModifiedOn", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { 1, 0, "d80acb9d-e6d1-433f-ae6d-d9be0aa87643", "System", new DateTime(2025, 10, 23, 10, 23, 33, 598, DateTimeKind.Local).AddTicks(2862), "jsonmasker@gmail.com", false, true, false, false, null, "System", new DateTime(2025, 10, 23, 10, 23, 33, 598, DateTimeKind.Local).AddTicks(2865), "JSONMASKER@GMAIL.COM", "ADMIN", "AQAAAAIAAYagAAAAEBqYupXb3q2vZNJOJJ3n/06IR+gi06F0PPpKg7FYW28k0S9DLN0Ct2nKc95H8ZaWzQ==", null, false, "MCPIPS6ZUHZPKFMTGP23N4HC65V3DD5U", false, "admin" },
+                    { 2, 0, "3d8f3fdf-c482-4b8b-879e-66ed6e6ba863", "System", new DateTime(2025, 10, 23, 10, 23, 33, 598, DateTimeKind.Local).AddTicks(2906), "tranthibaongoc779152@gmail.com", false, true, false, false, null, "System", new DateTime(2025, 10, 23, 10, 23, 33, 598, DateTimeKind.Local).AddTicks(2906), "TRANTHIBAONGOC779152@GMAIL.COM", "BAONGOC", "AQAAAAIAAYagAAAAEJQIa+hJeFzLkVaHpmxKMrO4mfQ9867u0fyjan1pdVP5hQMvQd9VcJC0zP0De/FH2w==", null, false, "WPN32OCCQQ27WSIHMJDYFU3MXZDKYM4K", false, "baongoc" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "TBSytem_Roles",
                 columns: new[] { "Id", "ConcurrencyStamp", "CreatedBy", "CreatedOn", "Description", "IsActive", "IsDeleted", "IsSystemRole", "ModifiedBy", "ModifiedOn", "Name", "NormalizedName" },
-                values: new object[] { 1, null, "System", new DateTime(2025, 3, 29, 11, 34, 23, 565, DateTimeKind.Local).AddTicks(2782), "System Admin Role", true, false, true, "System", new DateTime(2025, 3, 29, 11, 34, 23, 566, DateTimeKind.Local).AddTicks(777), "Admin", "ADMIN" });
+                values: new object[] { 1, null, "System", new DateTime(2025, 10, 23, 10, 23, 33, 586, DateTimeKind.Local).AddTicks(7202), "System Admin Role", true, false, true, "System", new DateTime(2025, 10, 23, 10, 23, 33, 586, DateTimeKind.Local).AddTicks(7437), "Admin", "ADMIN" });
+
+            migrationBuilder.InsertData(
+                table: "TBSytem_UserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 1, 2 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_TBSystem_RoleClaims_RoleId",
