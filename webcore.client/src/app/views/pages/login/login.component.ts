@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IconDirective } from '@coreui/icons-angular';
 import { InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective, FormCheckComponent } from '@coreui/angular';
@@ -41,7 +41,6 @@ export class LoginComponent implements OnInit {
   }
   ngOnInit(): void {
         const isAuthenticated = this.authenticationService.CheckLogin();
-    
         if (isAuthenticated) {
           this.router.navigate(['/introduction']);
         }

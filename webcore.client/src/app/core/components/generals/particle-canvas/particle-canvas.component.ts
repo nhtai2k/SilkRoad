@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, HostListener, ViewEncapsulation, input, Input } from '@angular/core';
+import { Component, AfterViewInit, HostListener, ViewEncapsulation, input, Input, DestroyRef, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-particle-canvas',
@@ -7,7 +7,8 @@ import { Component, AfterViewInit, HostListener, ViewEncapsulation, input, Input
   standalone: true,
   //encapsulation: ViewEncapsulation.None
 })
-export class ParticleCanvasComponent implements AfterViewInit {
+export class ParticleCanvasComponent implements AfterViewInit, OnDestroy {
+
   @Input() id: string = 'canvas';
   private canvas!: HTMLCanvasElement;
   private ctx!: CanvasRenderingContext2D;
@@ -19,12 +20,14 @@ export class ParticleCanvasComponent implements AfterViewInit {
     this.canvas.height = window.innerHeight;
   }
   
-
   ngAfterViewInit() {
     this.canvas = document.getElementById(this.id) as HTMLCanvasElement;
     this.ctx = this.canvas.getContext('2d')!;
     this.initializeParticles();
     this.update();
+  }
+  ngOnDestroy(): void {
+    this.canvas.remove();
   }
 
   initializeParticles() {
