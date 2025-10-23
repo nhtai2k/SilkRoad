@@ -4,6 +4,7 @@ namespace DataAccess.IRepositories
 {
     public interface IUserTokenRepository : IGenericRepository<UserTokenDTO>
     {
-        public Task<UserTokenDTO> GetUserTokenByRefreshToken(string refreshToken);
+        public Task<UserTokenDTO?> GetUserTokenByRefreshToken(string refreshToken);
+        public void DeleteUserTokenByUserId(int userId);
     }
 }

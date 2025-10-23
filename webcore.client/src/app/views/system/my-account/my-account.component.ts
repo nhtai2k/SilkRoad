@@ -56,7 +56,7 @@ export class MyAccountComponent implements OnInit {
     // this.roleService.getRoles().subscribe((res: RoleModel[]) => {
     //   this.roles = res;
     // });
-    this.accountService.getAccountById(id).subscribe((res) => {
+    this.accountService.getById(id).subscribe((res) => {
       this.formData.patchValue(res.data);
     });
   }

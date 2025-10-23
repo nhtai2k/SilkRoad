@@ -9,6 +9,21 @@ namespace DataAccess.Configurations
         public void Configure(EntityTypeBuilder<UserRoleDTO> builder)
         {
             builder.ToTable("TBSytem_UserRoles");
+            builder.HasData([
+   new UserRoleDTO
+                    {
+                        UserId = 1,
+                        RoleId = 1
+                    },
+  new UserRoleDTO
+                    {
+                        UserId = 2,
+                        RoleId = 1
+                    },
+            ]);
+            builder.HasOne(s => s.User)
+            .WithMany(g => g.UserRoles)
+            .HasForeignKey(s => s.UserId);
         }
     }
 }

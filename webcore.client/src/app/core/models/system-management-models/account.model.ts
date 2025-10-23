@@ -1,14 +1,11 @@
 export interface AccountModel {
     id: number;
-    mallId: number;
-    officeId: number;
-    roleId: number;
-    //fullName: string;
     userName: string;
     email: string;
     phoneNumber: string;
-    isVerifiedEmail: boolean;
     isActive: boolean;
+    createdBy?: string;
+    modifiedBy?: string;
 }
 
 export interface AccountErrorModel {

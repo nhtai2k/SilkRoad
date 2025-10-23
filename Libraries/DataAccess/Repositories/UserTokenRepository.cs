@@ -6,15 +6,16 @@ namespace DataAccess.Repositories
 {
     public class UserTokenRepository : GenericRepository<UserTokenDTO>, IUserTokenRepository
     {
-        private DbSet<UserTokenDTO> UserTokens;
         public UserTokenRepository(ApplicationContext context) : base(context)
         {
-            UserTokens = context.Set<UserTokenDTO>();
         }
-
-        public async Task<UserTokenDTO> GetUserTokenByRefreshToken(string refreshToken)
+        public void DeleteUserTokenByUserId(int userId)
         {
-            return await UserTokens.Where(s => string.Equals(s.Value, refreshToken)).FirstOrDefaultAsync();
+            _dbSet.RemoveRange(_dbSet.Where(s => s.UserId == userId));
+        }
+        public async Task<UserTokenDTO?> GetUserTokenByRefreshToken(string refreshToken)
+        {
+            return await _dbSet.Where(s => string.Equals(s.Value, refreshToken)).FirstOrDefaultAsync();
         }
     }
 }

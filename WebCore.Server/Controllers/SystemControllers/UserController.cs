@@ -26,14 +26,24 @@ namespace WebCore.Server.Controllers.SystemControllers
         /// </summary>
         /// <param name="pageIndex"></param>
         /// <returns></returns>
+        //[HttpGet("GetAll/{pageIndex}/{pageSize}")]
+        //public async Task<IActionResult> GetAll(int pageIndex, int pageSize)
+        //{
+        //    if (pageIndex < 1)
+        //    {
+        //        return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
+        //    }
+        //    Pagination<UserViewModel> data = await _userSystemHelper.GetAllAsync(pageIndex, pageSize);
+        //    return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        //}
         [HttpGet("GetAll/{pageIndex}/{pageSize}")]
-        public async Task<IActionResult> GetAll(int pageIndex, int pageSize)
+        public async Task<IActionResult> GetAll(int pageIndex, int pageSize, int roleId = -1, string textSearch = "")
         {
             if (pageIndex < 1)
             {
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             }
-            Pagination<UserViewModel> data = await _userSystemHelper.GetAllAsync(pageIndex, pageSize);
+            Pagination<UserViewModel> data = await _userSystemHelper.GetAllAsync(pageIndex, pageSize, roleId, textSearch);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
         /// <summary>
@@ -134,5 +144,36 @@ namespace WebCore.Server.Controllers.SystemControllers
                 return Failed(EStatusCodes.BadRequest, _localizer["dataDeleteFailed"]);
             return Succeeded(_localizer["dataDeletedSuccessfully"]);
         }
+
+        [HttpPut("deactivateUser/{Id}")]
+        [AuthorizeEnumPolicy(ERoles.Admin)]
+        public async Task<IActionResult> DeactivateUser(int Id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
+            }
+            var userName = User.Identity?.Name;
+            bool result = await _userSystemHelper.DeactivateUserAsync(Id, userName);
+            if (!result)
+                return Failed(EStatusCodes.BadRequest, _localizer["dataUpdateFailed"]);
+            return Succeeded(_localizer["dataUpdatedSuccessfully"]);
+        }
+
+        [HttpPut("activateUser/{Id}")]
+        [AuthorizeEnumPolicy(ERoles.Admin)]
+        public async Task<IActionResult> ActivateUser(int Id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
+            }
+            var userName = User.Identity?.Name;
+            bool result = await _userSystemHelper.ActivateUserAsync(Id, userName);
+            if (!result)
+                return Failed(EStatusCodes.BadRequest, _localizer["dataUpdateFailed"]);
+            return Succeeded(_localizer["dataUpdatedSuccessfully"]);
+        }
+
     }
 }

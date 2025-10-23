@@ -1,4 +1,5 @@
 ﻿using BusinessLogic.IHelpers.ISystemHelpers;
+using ClosedXML.Excel;
 using Common.Models;
 using Common.ViewModels.SystemViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -13,11 +14,11 @@ namespace WebCore.Server.Controllers.SystemControllers
     [Authorize]
     public class RoleController : BaseApiController
     {
-        private readonly IRoleHelper _roleHelper;
+        private readonly IRoleHelper _helper;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public RoleController(IRoleHelper roleHelper, IStringLocalizer<SharedResource> localizer)
+        public RoleController(IRoleHelper helper, IStringLocalizer<SharedResource> localizer)
         {
-            _roleHelper = roleHelper;
+            _helper = helper;
             _localizer = localizer;
         }
         /// <summary>
@@ -30,14 +31,19 @@ namespace WebCore.Server.Controllers.SystemControllers
         {
             if (pageIndex < 1)
                 return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
-            Pagination<RoleViewModel> data = await _roleHelper.GetAllAsync(pageIndex, pageSize);
+            Pagination<RoleViewModel> data = await _helper.GetAllAsync(pageIndex, pageSize);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
-
+        [HttpGet("getOptionList")]
+        public async Task<IActionResult> GetOptionList()
+        {
+            var data = await _helper.GetOptionListAsync();
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        }
         [HttpGet("GetAllActive")]
         public async Task<IActionResult> GetAllActive()
         {
-            var data = await _roleHelper.GetAllActiveAsync();
+            var data = await _helper.GetAllActiveAsync();
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
@@ -49,7 +55,7 @@ namespace WebCore.Server.Controllers.SystemControllers
         [HttpGet("GetById/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            RoleViewModel data = await _roleHelper.GetByIdAsync(id);
+            RoleViewModel data = await _helper.GetByIdAsync(id);
             if (data == null)
                 return Failed(Common.EStatusCodes.NotFound, _localizer["dataNotFound"]);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
@@ -65,7 +71,7 @@ namespace WebCore.Server.Controllers.SystemControllers
         {
             if (!ModelState.IsValid)
                 return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidData"]);
-            bool result = await _roleHelper.CreateAsync(model);
+            bool result = await _helper.CreateAsync(model);
             if (!result)
                 return Failed(Common.EStatusCodes.BadRequest, _localizer["dataCreationFailed"]);
             return Succeeded(_localizer["dataCreatedSuccessfully"]);
@@ -81,7 +87,7 @@ namespace WebCore.Server.Controllers.SystemControllers
         {
             if (!ModelState.IsValid)
                 return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidData"]);
-            bool result = await _roleHelper.UpdateAsync(model);
+            bool result = await _helper.UpdateAsync(model);
             if (!result)
                 return Failed(Common.EStatusCodes.NotFound, _localizer["dataUpdateFailed"]);
             return Succeeded(_localizer["dataUpdatedSuccessfully"]);
@@ -95,7 +101,7 @@ namespace WebCore.Server.Controllers.SystemControllers
         [AuthorizeEnumPolicy(Common.ERoles.Admin)]
         public async Task<IActionResult> SoftDelete(int id)
         {
-            bool result = await _roleHelper.SoftDeleteAsync(id);
+            bool result = await _helper.SoftDeleteAsync(id);
             if (!result)
                 return Failed(Common.EStatusCodes.NotFound, _localizer["dataDeletionFailed"]);
             return Succeeded(_localizer["dataDeletedSuccessfully"]);
@@ -109,7 +115,7 @@ namespace WebCore.Server.Controllers.SystemControllers
         [AuthorizeEnumPolicy(Common.ERoles.Admin)]
         public async Task<IActionResult> Restore(int id)
         {
-            bool result = await _roleHelper.RestoreAsync(id);
+            bool result = await _helper.RestoreAsync(id);
             if (!result)
                 return Failed(Common.EStatusCodes.NotFound, _localizer["dataRestorationFailed"]);
             return Succeeded(_localizer["dataRestoredSuccessfully"]);
@@ -123,7 +129,7 @@ namespace WebCore.Server.Controllers.SystemControllers
         [AuthorizeEnumPolicy(Common.ERoles.Admin)]
         public async Task<IActionResult> Delete(int id)
         {
-            bool result = await _roleHelper.DeleteAsync(id);
+            bool result = await _helper.DeleteAsync(id);
             if (!result)
                 return Failed(Common.EStatusCodes.NotFound, _localizer["dataDeletionFailed"]);
             return Succeeded(_localizer["dataDeletedSuccessfully"]);

@@ -38,6 +38,48 @@ namespace BusinessLogic.Helpers.SystemHelpers
             IEnumerable<UserDTO> data = await _unitOfWork.UserSystemRepository.GetAllAsync(s => !s.IsDeleted);
             return _mapper.Map<IEnumerable<UserViewModel>>(data);
         }
+        public async Task<Pagination<UserViewModel>> GetAllAsync(int pageIndex, int pageSize, int roleId, string textSearch)
+        {
+            Pagination<UserViewModel> result = new Pagination<UserViewModel>();
+            if (pageSize < 0)
+                pageSize = result.PageSize;
+            // Query only necessary data with pagination at the database level
+            var query = _unitOfWork.UserSystemRepository.Query(s => !s.IsDeleted, includeProperties: "UserRoles");
+            if (roleId != -1)
+            {
+                query = query.Where(s => s.UserRoles.Any(r => r.RoleId == roleId));
+            }
+            if (!string.IsNullOrEmpty(textSearch))
+            {
+                query = query.Where(x => (x.PhoneNumber != null && x.PhoneNumber.Contains(textSearch))
+                    || (x.Email != null && x.Email.Contains(textSearch))
+                    || (x.UserName != null && x.UserName.Contains(textSearch)));
+            }
+            result.PageIndex = pageIndex;
+            result.TotalItems = await query.CountAsync();
+            result.TotalPages = (int)Math.Ceiling(result.TotalPages / (double)pageSize);
+
+            var data = await query
+                .OrderBy(s => s.Id)  // Ensure ordering for consistent pagination
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync(); // Fetch only the required data
+
+            result.Items = data.Select(s => new UserViewModel
+            {
+                Id = s.Id,
+                UserName = s.UserName ?? string.Empty, // Fix CS8601: Ensure non-null assignment
+                Email = s.Email ?? string.Empty,       // Defensive: Email is required, ensure non-null
+                Password = "********", // Masking the password
+                PhoneNumber = s.PhoneNumber,
+                IsActive = s.IsActive,
+                CreatedBy = s.CreatedBy,
+                ModifiedBy = s.ModifiedBy
+            }).ToList();
+
+            return result;
+        }
+
         public async Task<Pagination<UserViewModel>> GetAllAsync(int pageIndex, int pageSize)
         {
             Pagination<UserViewModel> result = new Pagination<UserViewModel>();
@@ -138,6 +180,38 @@ namespace BusinessLogic.Helpers.SystemHelpers
         public Task<bool> RestoreAsync(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> DeactivateUserAsync(int Id, string? userName)
+        {
+            var data = await _unitOfWork.UserSystemRepository.GetByIdAsync(Id);
+
+            if (data == null)
+                return false;
+
+            data.IsActive = false;
+            data.ModifiedOn = DateTime.Now;
+            data.ModifiedBy = userName;
+
+            _unitOfWork.UserTokenRepository.DeleteUserTokenByUserId(Id);
+
+            _unitOfWork.SaveChanges();
+            return true;
+        }
+
+        public async Task<bool> ActivateUserAsync(int Id, string? userName)
+        {
+            var data = await _unitOfWork.UserSystemRepository.GetByIdAsync(Id);
+
+            if (data == null)
+                return false;
+
+            data.IsActive = true;
+            data.ModifiedOn = DateTime.Now;
+            data.ModifiedBy = userName;
+
+            _unitOfWork.SaveChanges();
+            return true;
         }
     }
 }

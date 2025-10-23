@@ -209,8 +209,11 @@ export enum EUrl {
     getByIdUrlAccount = "/api/user/getById/",
     createUrlAccount = "/api/user/create",
     updateUrlAccount = "/api/user/update",
+    deactivateUserUrlAccount = "/api/user/deactivateUser/",
+    activateUserUrlAccount = "/api/user/activateUser/",
     //Role
     getAllUrlRole = "/api/role/getAll",
+    getOptionListUrlRole = "/api/role/getOptionList",
     getAllActiveUrlRole = "/api/role/getAllActive",
     getByIdUrlRole = "/api/role/getById",
     createUrlRole = "/api/role/create",
