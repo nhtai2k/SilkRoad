@@ -34,8 +34,43 @@ namespace WebCore.Server.Controllers.SystemControllers
             _actionLog = actionLog;
         }
 
-        [HttpPost("Login")]
-        [AllowAnonymous]
+        //[HttpPost("Login")]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> Login([FromBody] LoginViewModel model)
+        //{
+        //    string controllerName = ControllerContext.ActionDescriptor.ControllerName;
+        //    UserActionModel userAction = new UserActionModel()
+        //    {
+        //        UserName = model.UserName,
+        //        ControllerName = controllerName,
+        //        ActionName = EUserAction.LogIn.ToString(),
+        //        Status = EUserActionStatus.Failed.ToString(),
+        //    };
+        //    if (!ModelState.IsValid)
+        //    {
+        //        _actionLog.CreateAsync(userAction);
+        //        return Failed(EStatusCodes.BadRequest, _sharedLocalizer["invalidData"]);
+        //    }
+        //    var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, lockoutOnFailure: true);
+        //    if (result.Succeeded)
+        //    {
+        //        await _signInManager.SignOutAsync();
+        //        JwtViewModel jwt = await _myAccountHelper.LoginAsync(model);
+        //        userAction.Status = EUserActionStatus.Successful.ToString();
+        //        _actionLog.CreateAsync(userAction);
+        //        return Succeeded(jwt, _localizer["loginSuccess"]);
+        //    }
+        //    else if (result.IsLockedOut)
+        //    {
+        //        _actionLog.CreateAsync(userAction);
+        //        return Failed(EStatusCodes.Locked, _localizer["accountLocked"]);
+        //    }
+        //    else
+        //    {
+        //        _actionLog.CreateAsync(userAction);
+        //        return Failed(EStatusCodes.BadRequest, _localizer["usernameOrPasswordIncorrect"]);
+        //    }
+        //}
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
             string controllerName = ControllerContext.ActionDescriptor.ControllerName;
@@ -48,26 +83,37 @@ namespace WebCore.Server.Controllers.SystemControllers
             };
             if (!ModelState.IsValid)
             {
-                _actionLog.CreateAsync(userAction);
+                //await _actionLog.CreateAsync(userAction);
                 return Failed(EStatusCodes.BadRequest, _sharedLocalizer["invalidData"]);
             }
             var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, lockoutOnFailure: true);
             if (result.Succeeded)
             {
                 await _signInManager.SignOutAsync();
-                JwtViewModel jwt = await _myAccountHelper.LoginAsync(model);
-                userAction.Status = EUserActionStatus.Successful.ToString();
-                _actionLog.CreateAsync(userAction);
+                //JwtViewModel jwt = await _myAccountHelper.LoginAsync(model);
+                //userAction.Status = EUserActionStatus.Successful.ToString();
+                //await _actionLog.CreateAsync(userAction);
+                var user = await _myAccountHelper.FindByNameAsync(model.UserName);
+                if (user == null)
+                {
+                    return Failed(EStatusCodes.BadRequest, _localizer["usernameOrPasswordIncorrect"]);
+                }
+                else if (!user.IsActive)
+                {
+                    return Failed(EStatusCodes.BadRequest, _localizer["deactiveUser"]);
+                }
+                JwtViewModel jwt = await _myAccountHelper.Authenticate(user, model.RememberMe);
+
                 return Succeeded(jwt, _localizer["loginSuccess"]);
             }
             else if (result.IsLockedOut)
             {
-                _actionLog.CreateAsync(userAction);
+                //await _actionLog.CreateAsync(userAction);
                 return Failed(EStatusCodes.Locked, _localizer["accountLocked"]);
             }
             else
             {
-                _actionLog.CreateAsync(userAction);
+                //await _actionLog.CreateAsync(userAction);
                 return Failed(EStatusCodes.BadRequest, _localizer["usernameOrPasswordIncorrect"]);
             }
         }

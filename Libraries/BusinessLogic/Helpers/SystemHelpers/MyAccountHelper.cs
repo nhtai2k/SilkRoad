@@ -15,21 +15,70 @@ namespace BusinessLogic.Helpers.SystemHelpers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly UserManager<UserDTO> _userManager;
-        private readonly RoleManager<RoleDTO> _roleManager;
+        //private readonly RoleManager<RoleDTO> _roleManager;
         private readonly IJwtService _jwtService;
         public MyAccountHelper(IUnitOfWork unitOfWork,
             IMapper mapper,
             UserManager<UserDTO> userManager,
-            RoleManager<RoleDTO> roleManager,
+            //RoleManager<RoleDTO> roleManager,
             IJwtService jwtService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _userManager = userManager;
-            _roleManager = roleManager;
+            //_roleManager = roleManager;
             _jwtService = jwtService;
             //_userInformation = userInformation;
             //_userLogHelper = userLogHelper;
+        }
+        public async Task<UserDTO?> FindByNameAsync(string userName)
+        {
+            return await _userManager.FindByNameAsync(userName);
+        }
+
+        public async Task<JwtViewModel> Authenticate(UserDTO user, bool rememberMe)
+        {
+
+            JwtViewModel jwtViewModel = new JwtViewModel();
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var authClaims = new List<Claim>
+                    {
+                        new Claim("Id",user.Id.ToString()),
+                        new Claim(ClaimTypes.Name, user.UserName ?? ""),
+                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    };
+
+            foreach (var userRole in userRoles)
+            {
+                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+            }
+            jwtViewModel.Token = _jwtService.CreateToken(authClaims);
+            jwtViewModel.RefreshToken = _jwtService.GenerateRefreshToken();
+            UserTokenDTO userToken = new UserTokenDTO
+            {
+                UserId = user.Id,
+                LoginProvider = "Web API",
+                Name = "RefreshToken",
+                Value = jwtViewModel.RefreshToken,
+                ExpirationTime = DateTime.Now.AddDays(1)
+            };
+            if (rememberMe)
+            {
+                userToken.ExpirationTime = DateTime.Now.AddYears(100);
+            }
+            var userTokens = await _unitOfWork.UserTokenRepository.GetAllAsync(s => s.UserId == user.Id);
+            if (userTokens != null)
+            {
+                foreach (var item in userTokens)
+                {
+                    _unitOfWork.UserTokenRepository.Delete(item);
+                }
+            }
+            await _unitOfWork.UserTokenRepository.CreateAsync(userToken);
+            await _unitOfWork.SaveChangesAsync();
+
+            return jwtViewModel;
         }
 
         public async Task<IEnumerable<UserViewModel>> GetAllAsync()
