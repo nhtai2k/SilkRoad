@@ -71,6 +71,9 @@ namespace WebCore.Server.Controllers.SystemControllers
         //        return Failed(EStatusCodes.BadRequest, _localizer["usernameOrPasswordIncorrect"]);
         //    }
         //}
+
+        [HttpPost("Login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
             string controllerName = ControllerContext.ActionDescriptor.ControllerName;

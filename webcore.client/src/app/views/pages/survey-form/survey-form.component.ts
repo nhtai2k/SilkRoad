@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SurveyFormService } from '@services/survey-services/survey-form.service';
 import { FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective } from '@coreui/angular';
+import { FormControlDirective, FormDirective, FormLabelDirective } from '@coreui/angular';
 import { SurveyFormModel } from '@models/survey-models/survey-form.model';
 import { EQuestionTypes } from '@common/global';
 
