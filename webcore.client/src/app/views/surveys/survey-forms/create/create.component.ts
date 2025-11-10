@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ButtonDirective, CardBodyComponent, CardComponent, FormControlDirective, FormDirective, FormLabelDirective, AlignDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective } from '@coreui/angular';
@@ -9,9 +9,10 @@ import { CommonModule } from '@angular/common';
 import { RangeDatetimePickerComponent } from "@components/generals/range-datetime-picker/range-datetime-picker.component";
 import { ToastService } from '@services/helper-services/toast.service';
 import { EColors } from '@common/global';
-// import { CreateHelperComponent } from './create-helper.component';
 import { TextEditorComponent } from "@components/text-editor/text-editor.component";
 import { ToolbarItem } from 'ngx-editor';
+import { OptionModel } from '@models/option.model';
+import { StoreService } from '@services/survey-services/store.service';
 @Component({
   selector: 'app-create',
   imports: [FormControlDirective, FormLabelDirective, CardComponent, CardBodyComponent, ReactiveFormsModule, FormDirective, ButtonDirective, CommonModule,
@@ -20,16 +21,18 @@ import { ToolbarItem } from 'ngx-editor';
   styleUrl: './create.component.scss'
 })
 
-export class CreateComponent {
+export class CreateComponent implements OnInit {
   //#region Variables
-  // @ViewChild('createHelperComponent') createHelperComponent!: CreateHelperComponent;
   icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp };
-    customToolbar: ToolbarItem[][] = [
-      ['bold', 'italic', 'underline'],
-      ['ordered_list', 'bullet_list'],
-      ['link']
-    ];
+  storeList: OptionModel[] = [];
+
+  customToolbar: ToolbarItem[][] = [
+    ['bold', 'italic', 'underline'],
+    ['ordered_list', 'bullet_list'],
+    ['link']
+  ];
   createForm: FormGroup = new FormGroup({
+    storeId: new FormControl(-1),
     formStyleId: new FormControl(1, Validators.required),
     name: new FormControl('', Validators.required),
     titleEN: new FormControl('', Validators.required),
@@ -47,7 +50,16 @@ export class CreateComponent {
   //#endregion
 
   //#region Constructor and Hooks
-  constructor(private surveyFormService: SurveyFormService, private toastService: ToastService, private router: Router) { }
+  constructor(private surveyFormService: SurveyFormService,private storeService: StoreService, private toastService: ToastService, private router: Router) { }
+  ngOnInit(): void {
+    this.storeService.getOptionList().subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.storeList = res.data;
+        }
+      }
+    });
+  }
   onDateRangeChange(event: Date[]) {
     this.startDate?.setValue(event[0]);
     this.endDate?.setValue(event[1]);
@@ -55,7 +67,7 @@ export class CreateComponent {
   //#endregion
 
   //#endregion submit
-  onSubmit() { 
+  onSubmit() {
     if (this.createForm.valid) {
       console.log(this.createForm.value);
       this.surveyFormService.create(this.createForm.value).subscribe({

@@ -11,6 +11,7 @@ namespace SurveyBusinessLogic.IHelpers
         public Task<SurveyFormDTO?> GetByIdAsync(int id);
         public Task<SurveyFormDTO?> CreateAsync(SurveyFormDTO model, string? userName = null);
         public Task<bool> UpdateAsync(SurveyFormDTO model, string? userName = null);
+        public Task<bool> PublishAsync(int id, string? userName = null);
         public Task<bool> SoftDeleteAsync(int id, string? userName = null);
         public Task<bool> RestoreAsync(int id, string? userName = null);
         public Task<bool> DeleteAsync(int id);

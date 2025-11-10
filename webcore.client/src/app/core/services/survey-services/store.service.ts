@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EUrl } from '@common/url-api';
 import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
+import { OptionModel } from '@models/option.model';
 import { Pagination } from '@models/pagination.model';
 import { StoreModel } from '@models/survey-models/store.model';
 import { AuthenticationService } from '@services/system-services/authentication.service';
@@ -52,33 +53,20 @@ export class StoreService {
       })
     );
   }
-//   getEagerById(id: any): Observable<APIResponse<StoreModel>> {
-//     const url = EUrl.getEagerByIdUrlStore + `/${id}`;
-//     return this.http.get<APIResponse<StoreModel>>(url, { headers: this.authenticationService.getHeaders() }).pipe(
-//       catchError(error => {
-//         if (error.status === 401) {
-//           return this.authenticationService.reNewToken().pipe(
-//             switchMap(() => this.http.get<APIResponse<StoreModel>>(url, { headers: this.authenticationService.getHeaders() }))
-//           );
-//         } else {
-//           return throwError(() => error);
-//         }
-//       })
-//     );
-//   }
-//   getEagerUIById(id: any): Observable<APIResponse<StoreModel>> {
-//     return this.http.get<APIResponse<StoreModel>>(EUrl.getEagerUIByIdUrlStore + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
-//       catchError(error => {
-//         if (error.status === 401) {
-//           return this.authenticationService.reNewToken().pipe(
-//             switchMap(() => this.http.get<APIResponse<StoreModel>>(EUrl.getEagerUIByIdUrlStore + `/${id}`, { headers: this.authenticationService.getHeaders() }))
-//           );
-//         } else {
-//           return throwError(() => error);
-//         }
-//       })
-//     );
-//   }
+ getOptionList(): Observable<APIResponse<OptionModel[]>> {
+      const url = EUrl.getOptionListUrlStore;
+      return this.http.get<APIResponse<OptionModel[]>>(url, { headers: this.authenticationService.getHeaders() }).pipe(
+        catchError(error => {
+          if (error.status === 401) {
+            return this.authenticationService.reNewToken().pipe(
+              switchMap(() => this.http.get<APIResponse<OptionModel[]>>(url, { headers: this.authenticationService.getHeaders() }))
+            );
+          } else {
+            return throwError(() =>error);
+          }
+        })
+      );
+    }
   create(model: StoreModel): Observable<BaseAPIResponse> {
     return this.http.post<BaseAPIResponse>(EUrl.createUrlStore, model, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {

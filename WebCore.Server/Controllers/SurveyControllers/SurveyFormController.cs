@@ -117,5 +117,15 @@ namespace WebCore.Server.Controllers.SurveyControllers
             return Succeeded(_localizer["deleteSuccess"]);
         }
 
+        [HttpPut("public/{id}")]
+        public async Task<IActionResult> Public(int id)
+        {
+            var userName = User.Identity?.Name;
+            var result = await _helper.PublishAsync(id, userName);
+            if (!result)
+                return Failed(EStatusCodes.InternalServerError, _localizer["updateFailed"]);
+            return Succeeded(_localizer["updateSuccess"]);
+        }
+
     }
 }

@@ -1,17 +1,20 @@
-
-        <div class="d-flex justify-content-between mb-2">
-            <h3 class="fw-bold">Update Survey form</h3>
-            <a cButton type="button" routerLink="/surveys/survey-forms" class="ms-2 btn-info">
-                        <svg [cIcon]="icons.cilExitToApp" width="25" class="text-white" title="Close Icon"></svg>
-                    </a>
-        </div>
+<div class="d-flex justify-content-between mb-2">
+    <h3 class="fw-bold">Update Survey form</h3>
+    <a cButton type="button" routerLink="/surveys/survey-forms" class="ms-2 btn-info">
+        <svg [cIcon]="icons.cilExitToApp" width="25" class="text-white" title="Close Icon"></svg>
+    </a>
+</div>
 <c-card>
     <c-card-body>
         <!-- Survey Form Creation Form -->
         <div class="d-flex justify-content-between align-items-center customTitle mt-4">
-            <span>Survey Information</span>
+            <span>1. Survey Information</span>
             <div class="d-flex justify-content-end">
-                <button cButton type="button" class="btn-success text-white d-flex align-items-center" (click)="enableUpdateForm()" [disabled]="!disableForm">
+                <button class="btn btn-info me-2" (click)="toggleLivePublicModal()">
+                    <app-internet-icon></app-internet-icon>
+                </button>
+                <button cButton type="button" class="btn-success text-white d-flex align-items-center"
+                    (click)="enableUpdateForm()" [disabled]="!disableForm">
                     <svg [cIcon]="icons.cilPen" width="22" class="text-white" title="Plus Icon"></svg>
                 </button>
             </div>
@@ -28,7 +31,16 @@
                 </c-form-check>
             </div>
             <div class="mb-2 row">
-                <div class="col-6">
+                <div class="col-3">
+                    <label cLabel for="storeId">Select Store: </label>
+                    <select cFormControl formControlName="storeId" cSelect>
+                        <option value="-1">--Select store--</option>
+                        @for (item of storeList; track item.id; let i = $index) {
+                        <option [value]="item.id">{{item.name}}</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-3">
                     <label cLabel for="formStyleId">Form Style: <span class="text-danger">(*)</span></label>
                     <select cFormControl formControlName="formStyleId" cSelect>
                         <option value="1">Group Question</option>
@@ -70,7 +82,8 @@
                 </div>
                 <div class="col-6">
                     <label cLabel>Start - End Date: <span class="text-danger">(*)</span></label>
-                    <app-range-datetime-picker [initialData]="initialTimeRange" [isDisabled]="disableForm" (onChangeValue)="onDateRangeChange($event)"></app-range-datetime-picker>
+                    <app-range-datetime-picker [initialData]="initialTimeRange" [isDisabled]="disableForm"
+                        (onChangeValue)="onDateRangeChange($event)"></app-range-datetime-picker>
                 </div>
             </div>
             <div class="mb-2 row">
@@ -101,40 +114,59 @@
                 <div class="col-6">
                     <label cLabel for="descriptionEN">DescriptionEN:</label>
                     <!-- <textarea cFormControl formControlName="descriptionEN" rows="3"></textarea> -->
-                    <app-text-editor [html]="initDescriptionEN"
-                        [disabled]="disableForm"
+                    <app-text-editor [html]="initDescriptionEN" [disabled]="disableForm"
                         (contentChange)="updateForm.patchValue({descriptionEN: $event})" [toolbar]="customToolbar"
                         placeholder="Simple editor with limited toolbar...">
                     </app-text-editor>
                 </div>
                 <div class="col-6">
                     <label cLabel for="descriptionVN">DescriptionVN:</label>
-                    <app-text-editor [html]="initDescriptionVN"
-                        [disabled]="disableForm"
+                    <app-text-editor [html]="initDescriptionVN" [disabled]="disableForm"
                         (contentChange)="updateForm.patchValue({descriptionVN: $event})" [toolbar]="customToolbar"
                         placeholder="Simple editor with limited toolbar...">
                     </app-text-editor>
                 </div>
             </div>
             @if(!disableForm){
-                <div class="d-flex justify-content-end mt-4">
-                    <button cButton type="submit" [disabled]="!updateForm.valid">
-                        <svg [cIcon]="icons.cilSave" width="25" class="text-white" title="Save Icon"></svg>
-                    </button>
-                      <button cButton type="button"  class="ms-2 btn-secondary"  (click)="disableUpdateForm()">
-                        <svg [cIcon]="icons.cilX" width="25" class="text-white" title="Save Icon"></svg>
-                    </button>
-                    
-                </div>
+            <div class="d-flex justify-content-end mt-4">
+                <button cButton type="submit" [disabled]="!updateForm.valid">
+                    <svg [cIcon]="icons.cilSave" width="25" class="text-white" title="Save Icon"></svg>
+                </button>
+                <button cButton type="button" class="ms-2 btn-secondary" (click)="disableUpdateForm()">
+                    <svg [cIcon]="icons.cilX" width="25" class="text-white" title="Save Icon"></svg>
+                </button>
+
+            </div>
             }
         </form>
         @if(disableForm && initData) {
-            <app-update-helper 
-            [formStyleId]="initData.formStyleId"
-            [questionGroups]="initQuestionGroups" [questions]="initQuestions"
-                [surveyFormId]="initData.id"></app-update-helper>
+        <app-update-helper [questionGroups]="initQuestionGroups" [questions]="initQuestions"
+            [surveyFormId]="initData.id"></app-update-helper>
         }
 
 
     </c-card-body>
 </c-card>
+
+<!-- Public Modal -->
+<c-modal backdrop="static" [visible]="visiblePublicModal" (visibleChange)="handleLivePublicModalChange($event)"
+    id="verticallyCenteredDelete">
+    <c-modal-header class="bg-info d-flex justify-content-between align-items-center">
+        <h5 cModalTitle class="fw-bold text-white">Public Survey Form</h5>
+        <button (click)="toggleLivePublicModal()" class="btn btn-sm btnClose">
+            <svg [cIcon]="icons.cilX" width="22" class="text-white" title="Close Icon"></svg>
+        </button>
+    </c-modal-header>
+    <c-modal-body>
+        <p>Are you sure you want to public this survey form? When you public it, it will be visible to all users and you don't be able to edit it anymore.</p>
+    </c-modal-body>
+    <c-modal-footer>
+        <button (click)="toggleLivePublicModal()" cButton color="secondary">
+            <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Close Icon"></svg>
+        </button>
+        <button cButton color="primary" (click)="onConfirmPublicSurveyForm()">
+            <!-- <svg [cIcon]="icons.cilTrash" width="22" class="text-white" title="Delete Icon"></svg> -->
+               <app-internet-icon></app-internet-icon>
+        </button>
+    </c-modal-footer>
+</c-modal>

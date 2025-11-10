@@ -1,7 +1,7 @@
 import { Component, OnInit, signal, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Data, Router, RouterLink } from '@angular/router';
-import { ButtonDirective, CardBodyComponent, CardComponent, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, FormControlDirective, FormDirective, FormLabelDirective, FormSelectDirective } from '@coreui/angular';
+import { ButtonDirective, CardBodyComponent, CardComponent, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, FormControlDirective, FormDirective, FormLabelDirective, FormSelectDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent } from '@coreui/angular';
 import { SurveyFormService } from '@services/survey-services/survey-form.service';
 import { IconDirective } from '@coreui/icons-angular';
 import { cilExitToApp, cilPen, cilPlus, cilSave, cilTrash, cilX } from '@coreui/icons';
@@ -15,11 +15,16 @@ import { UpdateHelperComponent } from './update-helper.component';
 import { TextEditorComponent } from '@components/text-editor/text-editor.component';
 import { ToolbarItem } from 'ngx-editor';
 import { SurveyFormModel } from '@models/survey-models/survey-form.model';
+import { StoreService } from '@services/survey-services/store.service';
+import { OptionModel } from '@models/option.model';
+import { InternetIconComponent } from "@components/icons/internet-icon.component";
 
 @Component({
   selector: 'app-update',
   imports: [FormControlDirective, FormLabelDirective, CardComponent, CardBodyComponent, ReactiveFormsModule, FormDirective, ButtonDirective, CommonModule, RouterLink,
-    IconDirective, RangeDatetimePickerComponent, FormSelectDirective, TextEditorComponent, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, UpdateHelperComponent],
+    IconDirective, RangeDatetimePickerComponent, FormSelectDirective, TextEditorComponent, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, UpdateHelperComponent, InternetIconComponent,
+  ModalComponent, ModalBodyComponent, ModalFooterComponent,
+    ModalHeaderComponent],
   templateUrl: './update.component.html',
   styleUrl: './update.component.scss'
 })
@@ -31,6 +36,8 @@ export class UpdateComponent implements OnInit {
   initialTimeRange: Date[] = [];
   initDescriptionEN: string = '';
   initDescriptionVN: string = '';
+  visiblePublicModal: boolean = false;
+  storeList: OptionModel[] = [];
   icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilX };
     customToolbar: ToolbarItem[][] = [
       ['bold', 'italic', 'underline'],
@@ -42,6 +49,7 @@ export class UpdateComponent implements OnInit {
 
   updateForm: FormGroup = new FormGroup({
     id: new FormControl(null),
+    storeId: new FormControl(-1),
     formStyleId: new FormControl(1, Validators.required),
     name: new FormControl('', Validators.required),
     titleEN: new FormControl('', Validators.required),
@@ -52,15 +60,18 @@ export class UpdateComponent implements OnInit {
     endDate: new FormControl(''),
     isActive: new FormControl(false),
     isLimited: new FormControl(false),
+    isPublished: new FormControl(false),
     maxParticipants: new FormControl(0),
     questionGroups: new FormControl([]),
     questions: new FormControl([])
   });
   //#endregion
+  //#region Constructor and Hooks
   constructor(
     private surveyFormService: SurveyFormService,
     private toastService: ToastService,
     private route: ActivatedRoute,
+    private storeService: StoreService
   ) { }
 
   ngOnInit() {
@@ -79,7 +90,15 @@ export class UpdateComponent implements OnInit {
         }
       }
     });
+     this.storeService.getOptionList().subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.storeList = res.data;
+        }
+      }
+    });
   }
+
   onDateRangeChange(event: any) {
     if (event && event.length === 2) {
       this.updateForm.patchValue({
@@ -131,4 +150,28 @@ export class UpdateComponent implements OnInit {
       this.initDescriptionVN = this.initData.descriptionVN;
     }
   }
+
+  //#endregion
+  //#region Public Survey Form Modal
+  toggleLivePublicModal() {
+    this.visiblePublicModal = !this.visiblePublicModal;
+  }
+  handleLivePublicModalChange(event: any) {
+    this.visiblePublicModal = event;
+  }
+  onConfirmPublicSurveyForm() {
+    this.surveyFormService.public(this.updateForm.value.id).subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.toastService.showToast(EColors.success, res.message);
+          this.updateForm.patchValue({ isPublished: true });
+          this.disableUpdateForm();
+          this.toggleLivePublicModal();
+        } else {
+          this.toastService.showToast(EColors.danger, res.message);
+        }
+      }
+    });
+  }
+  //#endregion
 }

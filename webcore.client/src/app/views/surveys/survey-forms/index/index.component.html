@@ -56,7 +56,8 @@
         <tr>
             <th scope="col">STT</th>
             <th scope="col">Name</th>
-            <th scope="col">Active</th>
+            <th scope="col">Is Active</th>
+            <th scope="col">Is Published</th>
             <th scope="col">Modified By</th>
             <th scope="col">Created By</th>
             <th></th>
@@ -68,17 +69,18 @@
             <td>{{ i+1 }}</td>
             <td>{{ item.name }}</td>
             <td> <input type="checkbox" [checked]="item.isActive" disabled></td>
+            <td> <input type="checkbox" [checked]="item.isPublished" disabled></td>
             <td>{{ item.modifiedBy }}</td>
             <td>{{ item.createdBy }}</td>
             <td>
                 <div class="d-flex justify-content-end">
+                    @if(item.isPublished) {
                     <button class="btn btn-info me-2" (click)="toggleLiveQrCodeModal()">
                         <svg [cIcon]="icons.cilQrCode" width="25" class="text-white" title="Restore Icon"></svg>
                     </button>
+                    }
                     <a target="_blank" routerLink="/survey-form/{{item.id}}" class="btn btn-success me-2">
-                        <!-- <app-internet-icon></app-internet-icon> -->
                         <svg [cIcon]="icons.cilFile" width="25" class="text-white" title="Restore Icon"></svg>
-
                     </a>
                     <a routerLink="./update/{{item.id}}" class="btn btn-primary me-2">
                         <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
@@ -177,10 +179,10 @@
     <c-modal-body>
         <div class="d-flex justify-content-center">
             <!-- QR Code content goes here -->
-             <div class="d-flex flex-column align-items-center">
-                 <nz-qrcode nzValue="https://ng.ant.design/"></nz-qrcode>
+            <div class="d-flex flex-column align-items-center">
+                <nz-qrcode nzValue="https://ng.ant.design/"></nz-qrcode>
                 <p class="mt-2">QR Code will be displayed here.</p>
-             </div>
+            </div>
         </div>
     </c-modal-body>
 </c-modal>

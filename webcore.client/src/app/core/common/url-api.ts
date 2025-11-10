@@ -285,7 +285,7 @@ export enum EUrl {
 
     //store
     getAllUrlStore = "/api/store/getAll",
-    // getAllActiveUrlStore = "/api/store/getAllActive",
+    getOptionListUrlStore = "/api/store/getOptionList",
     getByIdUrlStore = "/api/store/getById",
     createUrlStore = "/api/store/create",
     updateUrlStore = "/api/store/update",
@@ -306,6 +306,7 @@ export enum EUrl {
     restoreUrlSurveyForm = "/api/surveyForm/restore",
     deleteUrlSurveyForm = "/api/surveyForm/delete",
     getAllDeletedUrlSurveyForm = "/api/surveyForm/getAllDeleted",
+    publicUrlSurveyForm = "/api/surveyForm/public",
 
     //QuestionGroup
     getBySurveyFormIdUrlQuestionGroup = "/api/questionGroup/getBySurveyFormId",

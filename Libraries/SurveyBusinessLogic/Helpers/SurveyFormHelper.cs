@@ -153,5 +153,15 @@ namespace SurveyBusinessLogic.Helpers
             data.Questions = questions.ToList();
             return data;
         }
+
+        public async Task<bool> PublishAsync(int id, string? userName = null)
+        {
+            var data = await _unitOfWork.SurveyFormRepository.GetByIdAsync(id);
+            if(data == null) return false;
+            data.IsPublished = true;
+            data.Update(userName);
+            await _unitOfWork.SaveChangesAsync();
+            return true;
+        }
     }
 }

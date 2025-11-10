@@ -1,7 +1,7 @@
 <!-- Table of Question Groups -->
-@if(formStyleId == 1){
+
 <div class="d-flex justify-content-between align-items-center customTitle mt-4">
-    <span>Question Groups</span>
+    <span>2. Question Groups</span>
     <div class="d-flex justify-content-end">
         <button cButton type="button" (click)="toggleCreateQuestionGroupModal()"
             class="btn-success text-white d-flex align-items-center">
@@ -61,12 +61,12 @@
     <p class="text-center opacity-50"> No question group available. Click Button Add to get started.</p>
 </div>
 }
-}
+
 
 <!-- Table of Questions -->
-@if(formStyleId == 2){
+
 <div class="d-flex justify-content-between align-items-center customTitle mt-4">
-    <span>Questions</span>
+    <span>3. Questions</span>
     <div class="d-flex justify-content-end">
         <button cButton type="button" (click)="toggleCreateQuestionModal()"
             class="btn-success text-white d-flex align-items-center">
@@ -99,7 +99,7 @@
     <p class="text-center opacity-50">No question available. Click Button Add to get started.</p>
 </div>
 }
-}
+
 <!-- Question Template and Predefined Answer Template -->
 <ng-template #questionTemplate let-node="node" let-level="level" let-index="index"
     let-inQuestionGroup="inQuestionGroup">
