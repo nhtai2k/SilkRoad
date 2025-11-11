@@ -242,7 +242,14 @@ export const routes: Routes = [
     loadComponent: () => import('./views/pages/form-styles/review-form/review-form.component').then(m => m.ReviewFormComponent),
     data: {
       title: 'Review Form'
-    }
+    } 
+  },
+  {
+    path:'default/:id',
+    loadComponent: () => import('./views/pages/form-styles/default/default.component').then(m => m.DefaultComponent),
+    data: {
+      title: 'Default Form'
+    } 
   },
   { path: '**', redirectTo: 'dashboard' }
 ];

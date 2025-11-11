@@ -9,25 +9,23 @@ namespace SurveyDataAccess.Repositories
         public ParticipantRepository(ApplicationContext dbContext) : base(dbContext)
         {
         }
-        public ParticipantDTO? GetEagerParticipantById(int id)
+
+        public async Task<int> CountParticipantsAsync(int surveyFormId)
         {
-            //var data = _participant.Where(s => s.Id == id).Include(s => s.Answers).FirstOrDefault();
-            //return data;
-            throw new NotImplementedException();
+            return await _dbSet.CountAsync(s => s.SurveyFormId == surveyFormId);
         }
 
         public async Task<bool> HasAnyParticipantsAsync(int surveyFormId)
         {
             return await _dbSet.AnyAsync(s => s.SurveyFormId == surveyFormId);
         }
-        //public bool CheckExistenceBySurveyFormID(int surveyFormID)
+
+        //public ParticipantDTO? GetEagerParticipantById(int id)
         //{
-        //    var temp = _participant.Where(s => s.SurveyFormId == surveyFormID).FirstOrDefault();
-        //    if (temp != null)
-        //    {
-        //        return true;
-        //    }
-        //    return false;
+        //    //var data = _participant.Where(s => s.Id == id).Include(s => s.Answers).FirstOrDefault();
+        //    //return data;
+        //    throw new NotImplementedException();
         //}
+
     }
 }

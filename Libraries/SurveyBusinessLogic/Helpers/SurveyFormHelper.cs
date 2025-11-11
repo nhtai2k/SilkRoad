@@ -266,27 +266,32 @@ namespace SurveyBusinessLogic.Helpers
 
         public async Task<SurveyFormDTO?> GetReviewFormByIdAsync(int id)
         {
-            var data = await _unitOfWork.SurveyFormRepository.GetByIdAsync(id);
-            var questionGroups = await _unitOfWork.QuestionGroupRepository.GetEagerLoadingBySurveyFormIdAsync(id);
-            var questions = await _unitOfWork.QuestionRepository.GetEagerLoadingBySurveyFormIdAsync(id);
-            if (data == null) return null;
-            if (questionGroups == null) questionGroups = new List<QuestionGroupDTO>();
-            if (questions == null) questions = new List<QuestionDTO>();
-            data.QuestionGroups = questionGroups.ToList();
-            data.Questions = questions.ToList();
+            var data = await _unitOfWork.SurveyFormRepository.GetEagerSurveyFormByIdAsync(id);
             return data;
         }
 
-        public async Task<SurveyFormDTO?> GetPulicFormByIdAsync(int id)
+        /// <summary>
+        /// Gets a public survey form by its identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier of the survey form.</param>
+        /// <returns>The public survey form if found; otherwise, <see langword="null"/>.</returns>
+        public async Task<SurveyFormDTO?> GetPublicFormByIdAsync(int id)
         {
-            var data = await _unitOfWork.SurveyFormRepository.GetByIdAsync(id);
+            // Get data by id
+            var data = await _unitOfWork.SurveyFormRepository.GetEagerSurveyFormByIdAsync(id);
+            // Check published status
             if (data == null || !data.IsPublished) return null;
-            var questionGroups = await _unitOfWork.QuestionGroupRepository.GetEagerLoadingBySurveyFormIdAsync(id);
-            var questions = await _unitOfWork.QuestionRepository.GetEagerLoadingBySurveyFormIdAsync(id);
-            if (questionGroups == null) questionGroups = new List<QuestionGroupDTO>();
-            if (questions == null) questions = new List<QuestionDTO>();
-            data.QuestionGroups = questionGroups.ToList();
-            data.Questions = questions.ToList();
+            // Check limited participant
+            if (data.IsLimited)
+            {
+                var query = _unitOfWork.ParticipantRepository.Query(s => s.SurveyFormId == id && s.IsComplete && !s.IsRejected);
+                int countParticipants = await query.CountAsync();
+                // If reach max participants, return null
+                if (countParticipants >= data.MaxParticipants)
+                {
+                    return null;
+                }    
+            }
             return data;
         }
     }

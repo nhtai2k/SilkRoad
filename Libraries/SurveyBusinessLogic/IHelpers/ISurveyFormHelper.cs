@@ -8,7 +8,7 @@ namespace SurveyBusinessLogic.IHelpers
     {
         public Task<SurveyFormDTO?> GetEagerLoadingByIdAsync(int id);
         public Task<SurveyFormDTO?> GetReviewFormByIdAsync(int id);
-        public Task<SurveyFormDTO?> GetPulicFormByIdAsync(int id);
+        public Task<SurveyFormDTO?> GetPublicFormByIdAsync(int id);
         public Task<Pagination<SurveyFormDTO>> GetAllAsync(int pageIndex, int pageSize);
         public Task<Pagination<SurveyFormDTO>> FilterAsync(SurveyFormFilterModel filter);
         public Task<Pagination<SurveyFormDTO>> GetAllDeletedAsync(int pageIndex, int pageSize);

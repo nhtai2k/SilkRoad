@@ -107,7 +107,7 @@ export enum EFieldTypes
     Number = 3,
     Date = 4,
     Email = 5,
-    Phone = 6
+    PhoneNumber = 6
 }
 
 export function numberEnumToArray(enumObj: any): { key: string, value: number }[] {

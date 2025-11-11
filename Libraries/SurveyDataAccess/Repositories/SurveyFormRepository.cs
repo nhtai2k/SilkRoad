@@ -17,6 +17,7 @@ namespace SurveyDataAccess.Repositories
         {
             var data = await _dbSet
                 .Where(s => s.Id == id)
+                .Include(s => s.ParticipantInfoConfigs)
                 .Include(s => s.QuestionGroups)
                     !.ThenInclude(qg => qg.Questions)
                         .ThenInclude(q => q.QuestionType)

@@ -74,10 +74,11 @@ namespace WebCore.Server.Controllers.SurveyControllers
             return Succeeded<SurveyFormDTO>(data, _localizer["dataFetchedSuccessfully"]);
         }
 
-        [HttpGet("getPulicFormById/{id}")]
-        public async Task<IActionResult> GetPulicFormById(int id)
+        [HttpGet("getPublicFormById/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetPublicFormById(int id)
         {
-            var data = await _helper.GetPulicFormByIdAsync(id);
+            var data = await _helper.GetPublicFormByIdAsync(id);
             if (data == null)
                 return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded<SurveyFormDTO>(data, _localizer["dataFetchedSuccessfully"]);

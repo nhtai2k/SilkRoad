@@ -19,7 +19,7 @@ import { OptionModel } from '@models/option.model';
   selector: 'app-index',
   imports: [ReactiveFormsModule, DataTableComponent, RouterLink, IconDirective, AccordionButtonDirective, AccordionComponent,
     ButtonDirective, AccordionItemComponent, ModalComponent, ModalBodyComponent, TemplateIdDirective, ModalFooterComponent,
-    ModalHeaderComponent, NzQRCodeModule, FormSelectDirective,  FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective],
+    ModalHeaderComponent, NzQRCodeModule, FormSelectDirective],
   templateUrl: './index.component.html',
   styleUrl: './index.component.scss'
 })

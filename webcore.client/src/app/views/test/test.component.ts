@@ -8,7 +8,7 @@ import { NoInternetIconComponent } from "@components/icons/no-internet-icon.comp
   selector: 'app-test',
   templateUrl: './test.component.html',
   styleUrl: './test.component.scss',
-  imports: [TextEditorExampleComponent, NoInternetIconComponent]
+  imports: []
 })
 export class TestComponent {
 clicked(): void{

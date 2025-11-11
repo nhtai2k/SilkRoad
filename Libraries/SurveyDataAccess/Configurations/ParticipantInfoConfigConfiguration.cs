@@ -14,9 +14,9 @@ namespace SurveyDataAccess.Configurations
                 .HasDefaultValueSql("NEWID()")
                 .ValueGeneratedOnAdd();
             builder.Property(s => s.FieldNameEN).HasColumnType("nvarchar(255)");
-            builder.Property(s => s.PlaceholderEN).HasColumnType("varchar(255)");
+            builder.Property(s => s.PlaceholderEN).HasColumnType("nvarchar(255)");
             builder.Property(s => s.FieldNameVN).HasColumnType("nvarchar(255)");
-            builder.Property(s => s.PlaceholderVN).HasColumnType("varchar(255)");
+            builder.Property(s => s.PlaceholderVN).HasColumnType("nvarchar(255)");
             builder.HasOne<SurveyFormDTO>(s => s.SurveyForm).WithMany(g => g.ParticipantInfoConfigs).HasForeignKey(s => s.SurveyFormId);
         }
     }

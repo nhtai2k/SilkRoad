@@ -6,7 +6,7 @@
     </div>
     <div class="body">
       <h3 class="surveyTitle mb-4">{{surveyForm?.titleVN}}</h3>
-      <p class="surveyDescription">{{surveyForm?.descriptionVN}}</p>
+      <div [innerHTML]="surveyForm?.descriptionVN || ''"></div>
       <!-- Question Groups -->
        @if((surveyForm?.questions?.length ?? 0) > 0 && (surveyForm?.questionGroups?.length ?? 0) > 0) {
           <h5>I. Question Groups</h5>
