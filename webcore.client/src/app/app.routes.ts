@@ -244,5 +244,26 @@ export const routes: Routes = [
       title: 'Survey Form'
     }
   },
+    {
+    path:'gold-survey-form/:id',
+    loadComponent: () => import('./views/pages/gold-survey-form/gold-survey-form.component').then(m => m.GoldSurveyFormComponent),
+    data: {
+      title: 'Gold Survey Form'
+    }
+  },
+    {
+    path:'gold-thank-you',
+    loadComponent: () => import('./views/pages/gold-thank-you/gold-thank-you.component').then(m => m.GoldThankYouComponent),
+    data: {
+      title: 'Thank you'
+    }
+  },
+    {
+    path:'gold-finish/:id',
+    loadComponent: () => import('./views/pages/gold-finish/gold-finish.component').then(m => m.GoldFinishComponent),
+    data: {
+      title: 'Finish'
+    }
+  },
   { path: '**', redirectTo: 'dashboard' }
 ];

@@ -1,0 +1,47 @@
+@if (language() === 'EN') {
+    <h2 class="surveyTitle mb-4 mt-4">{{surveyForm?.titleEN}}</h2>
+    <div class="surveyDescription" [innerHTML]="surveyForm?.descriptionEN || ''"></div>
+} @else {
+    <h2 class="surveyTitle mb-4 mt-4">{{surveyForm?.titleVN}}</h2>
+    <div class="surveyDescription" [innerHTML]="surveyForm?.descriptionVN || ''"></div>
+}
+
+<form cForm [formGroup]="participantForm" (ngSubmit)="onSubmit()">
+    <div class="mb-2 row">
+        <div class="col-12 col-md-4">
+            <label cLabel for="fullName">Full Name: <span class="text-danger">(*)</span></label>
+            <input cFormControl formControlName="fullName">
+            @if (fullName?.invalid && (fullName?.dirty || fullName?.touched)) {
+            <div class="text-danger">
+                @if (fullName?.hasError('required')) {
+                Full Name is required.
+                }
+            </div>
+            }
+        </div>
+        <div class="col-12 col-md-4">
+            <label cLabel for="phoneNumber">Phone number: <span class="text-danger">(*)</span></label>
+            <input cFormControl formControlName="phoneNumber">
+            @if (phoneNumber?.invalid && (phoneNumber?.dirty || phoneNumber?.touched)) {
+            <div class="text-danger">
+                @if (phoneNumber?.hasError('required')) {
+                Phone number is required.
+                }
+            </div>
+            }
+        </div>
+        <div class="col-12 col-md-4">
+            <label cLabel for="email">Email:</label>
+            <input cFormControl formControlName="email">
+        </div>
+    </div>
+    <div class="d-flex justify-content-center mt-4 mb-4">
+        <button class="btn btnSubmit" type="submit" [disabled]="!participantForm.valid">
+            @if (language() === 'EN') {
+                Join the Survey
+            } @else {
+                Tham gia khảo sát
+            }
+        </button>
+    </div>
+</form>

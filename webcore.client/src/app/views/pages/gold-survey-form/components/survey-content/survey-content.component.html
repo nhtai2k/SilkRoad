@@ -1,0 +1,108 @@
+<!-- Question Groups -->
+            @if((surveyForm?.questions?.length ?? 0) > 0 && (surveyForm?.questionGroups?.length ?? 0) > 0) {
+            <h5>I. Question Groups</h5>
+            }
+            @for(questionGroup of surveyForm?.questionGroups; track questionGroup.id; let i = $index) {
+                @if (language() === 'EN') {
+                    <h5 class="questionGroupTitle" [ngClass]="{ 'mt-5': i !== 0 }">{{i + 1}}. {{questionGroup.nameEN}}</h5>
+                } @else {
+                    <h5 class="questionGroupTitle" [ngClass]="{ 'mt-5': i !== 0 }">{{i + 1}}. {{questionGroup.nameVN}}</h5>
+                }
+                <!-- Questions within the group -->
+                <div class="question">
+                    @for(question of questionGroup.questions; track question.id; let j = $index) {
+                        @if (language() === 'EN') {
+                            <p class="mb-2 text-justify" [ngClass]="{ 'mt-5': j !== 0 }">{{question.nameEN}}</p>
+                        } @else {
+                            <p class="mb-2 text-justify" [ngClass]="{ 'mt-5': j !== 0 }">{{question.nameVN}}</p>
+                        }
+                        <!-- Render question by question type -->
+                        @if(question.questionTypeId === questionTypes.ClosedEndedQuestion){
+                            <div class="answerList" id="question_{{question.id}}">
+                                @for(predefinedAnswer of question.predefinedAnswers; track predefinedAnswer.id; let k = $index) {
+                                <div class="d-flex justify-content-center position-relative">
+                                    <input type="radio" id="predefinedAnswer_{{predefinedAnswer.id}}" name="question_{{question.id}}"
+                                        value="{{predefinedAnswer.id}}" hidden>
+                                    <label 
+                                        class="labelAnswer" 
+                                        id="predefinedAnswerLabel_{{predefinedAnswer.id}}" 
+                                        for="predefinedAnswer_{{predefinedAnswer.id}}"
+                                        (click)="handleChooseAnswer(question, predefinedAnswer.id, k + 1)">
+                                            {{ k + 1}}
+                                        </label>
+                                    <div class="tooltip">
+                                        @if (language() === 'EN') {
+                                            {{predefinedAnswer.nameEN}}
+                                        } @else {
+                                            {{predefinedAnswer.nameVN}}
+                                        }
+                                    </div>
+                                </div>
+                                }
+                            </div>
+                        } @else if (question.questionTypeId === questionTypes.OpenEndedQuestion) {
+                            <div class="mb-4">
+                                @if (language() === 'EN') {
+                                    <textarea class="form-control" rows="3" placeholder="Your answer..." 
+                                        (change)="handleInputAnswer(question, $event)"></textarea>
+                                } @else {
+                                    <textarea class="form-control" rows="3" placeholder="Câu trả lời của bạn..." 
+                                        (change)="handleInputAnswer(question, $event)"></textarea>
+                                }
+                            </div>
+                        }
+                    }
+                </div>
+            }
+            <!-- Questions -->
+            @if((surveyForm?.questions?.length ?? 0) > 0 && (surveyForm?.questionGroups?.length ?? 0) > 0) {
+                <h5 class="mt-4">II. Single Questions</h5>
+            }
+            @for(item of surveyForm?.questions; track item.id; let i = $index) {
+                <h5 class="questionTitle ms-2">{{i + 1}}. {{item.nameVN}}</h5>
+                <!-- Render question by question type -->
+                @if(item.questionTypeId === questionTypes.ClosedEndedQuestion){
+                    <div class="answerList" id="question_{{item.id}}">
+                        @for(predefinedAnswer of item.predefinedAnswers; track predefinedAnswer.id; let k = $index) {
+                        <div class="d-flex justify-content-center position-relative">
+                            <input type="radio" id="predefinedAnswer_{{predefinedAnswer.id}}" name="question_{{i}}"
+                                value="{{predefinedAnswer.id}}" hidden>
+                            <label 
+                                class="labelAnswer" 
+                                id="predefinedAnswerLabel_{{predefinedAnswer.id}}" 
+                                for="predefinedAnswer_{{predefinedAnswer.id}}"
+                                (click)="handleChooseAnswer(item, predefinedAnswer.id, k + 1)">
+                                    {{ k + 1}}
+                                </label>
+                            <div class="tooltip">
+                                @if (language() === 'EN') {
+                                    {{predefinedAnswer.nameEN}}
+                                } @else {
+                                    {{predefinedAnswer.nameVN}}
+                                }
+                            </div>
+                        </div>
+                        }
+                    </div>
+                } @else if (item.questionTypeId === questionTypes.OpenEndedQuestion) {
+                    <div class="mb-4">
+                        @if (language() === 'EN') {
+                            <textarea class="form-control" rows="3" placeholder="Your answer..." 
+                                (change)="handleChooseAnswer(item, $event, 0)"></textarea>
+                        } @else {
+                            <textarea class="form-control" rows="3" placeholder="Câu trả lời của bạn..." 
+                                (change)="handleChooseAnswer(item, $event, 0)"></textarea>
+                        }
+                    </div>
+                }
+            }
+
+            <div class="d-flex justify-content-center mt-5 mb-4">
+                <button class="btn btnSubmit" type="button" [disabled]="numberOfQuestions != answerList.length" (click)="handleFinishSurvey()">
+                    @if (language() === 'EN') {
+                        Finish Survey
+                    } @else {
+                        Kết thúc khảo sát
+                    }
+                </button>
+            </div>
