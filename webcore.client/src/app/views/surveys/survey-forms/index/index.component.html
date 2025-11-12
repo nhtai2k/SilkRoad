@@ -13,19 +13,50 @@
                         <form cForm [formGroup]="filterForm" (ngSubmit)="filter()">
                             <div class="row mb-3">
                                 <div class="col-4">
-                                    <!-- <app-select-search [options]="questionGroupLibraries"
-                                        placeholder="Select question group"></app-select-search> -->
+                                    <select cFormControl formControlName="isActive" cSelect>
+                                        <option [value]="null">--All Active Status--</option>
+                                        <option [value]="true">Active</option>
+                                        <option [value]="false">Inactive</option>
+                                    </select>
                                 </div>
                                 <div class="col-4">
-                                    <!-- <app-select-search [options]="questionTypes"
-                                        placeholder="Select question type"></app-select-search> -->
+                                    <select cFormControl formControlName="isLimited" cSelect>
+                                        <option [value]="null">--All Limited Status--</option>
+                                        <option [value]="true">Limited</option>
+                                        <option [value]="false">Not Limited</option>
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <select cFormControl formControlName="isPublished" cSelect>
+                                        <option [value]="null">--All Published Status--</option>
+                                        <option [value]="true">Published</option>
+                                        <option [value]="false">Not Published</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mb-3">
                                 <div class="col-4">
+                                    <select cFormControl formControlName="storeId" cSelect>
+                                        <option value="-1">--All Store--</option>
+                                        @for (item of storeList; track item.id; let i = $index) {
+                                        <option [value]="item.id">{{item.name}}</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <select cFormControl formControlName="formStyleId" cSelect>
+                                        <option value="-1">-- All Form Styles --</option>
+                                        <option value="1">Group Question</option>
+                                        <option value="2">Single Question</option>
+                                    </select>
+                                </div>
+                                 <div class="col-4">
                                     <input formControlName="searchText" type="text" class="form-control"
                                         placeholder="Search by name...">
                                 </div>
+                            </div>
+                            <div class="row">
+                               
                                 <div class="col-4">
                                     <button type="submit" class="btn btn-primary">
                                         <svg [cIcon]="icons.cilSearch" width="20" class="text-white"

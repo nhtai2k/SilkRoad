@@ -72,6 +72,7 @@ export enum EPaymentTypes
     // PayPal = 6,
     // Stripe = 7
 }
+
 export enum EOrderStatus
 {
     New = 1,
@@ -82,6 +83,7 @@ export enum EOrderStatus
     Refunded = 6,
     Failed = 7
 }
+
 export enum EPaymentStatus
 {
     Pending = 1,
@@ -107,7 +109,13 @@ export enum EFieldTypes
     Number = 3,
     Date = 4,
     Email = 5,
-    Phone = 6
+    PhoneNumber = 6
+}
+
+export enum ELanguages
+{
+    English = 'EN',
+    Vietnamese = 'VN'
 }
 
 export function numberEnumToArray(enumObj: any): { key: string, value: number }[] {

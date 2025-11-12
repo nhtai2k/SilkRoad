@@ -31,8 +31,9 @@ export class UpdateHelperComponent implements OnInit {
   icons: any = { cilPlus, cilTrash, cilPen, cilX, cilSave, cilExitToApp };
 
   @Input() surveyFormId: number = -1;
-  @Input() questionGroups: QuestionGroupModel[] = [];
-  @Input() questions: QuestionModel[] = [];
+  @Input() disableForm: boolean = false;
+  questionGroups: QuestionGroupModel[] = [];
+  questions: QuestionModel[] = [];
   predefinedAnswerList: PredefinedAnswerModel[] = [];
 
   questionTypeList: OptionModel[] = [];
@@ -144,6 +145,8 @@ export class UpdateHelperComponent implements OnInit {
         }
       }
     });
+    this.getQuestionGroup();
+    this.getQuestion();
   }
 
   getQuestionGroup() {

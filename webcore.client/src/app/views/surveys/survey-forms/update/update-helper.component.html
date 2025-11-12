@@ -4,7 +4,7 @@
     <span>3. Question Groups</span>
     <div class="d-flex justify-content-end">
         <button cButton type="button" (click)="toggleCreateQuestionGroupModal()"
-            class="btn-success text-white d-flex align-items-center">
+            class="btn-success text-white d-flex align-items-center" [disabled]="disableForm">
             <svg [cIcon]="icons.cilPlus" width="22" class="text-white" title="Plus Icon"></svg>
         </button>
     </div>
@@ -34,13 +34,13 @@
                 </button>
                 }
                 <button cButton type="button" (click)="toggleCreateQuestionModal(item.id)"
-                    class="btn-success text-white me-2">
+                    class="btn-success text-white me-2" [disabled]="disableForm">
                     <svg [cIcon]="icons.cilPlus" width="20" class="text-white" title="Edit Icon"></svg>
                 </button>
-                <button cButton type="button" (click)="updateQuestionGroup(i)" class="btn-primary text-white me-2">
+                <button cButton type="button" (click)="updateQuestionGroup(i)" class="btn-primary text-white me-2" [disabled]="disableForm">
                     <svg [cIcon]="icons.cilPen" width="20" class="text-white" title="Edit Icon"></svg>
                 </button>
-                <button cButton type="button" (click)="deleteQuestionGroup(item.id)" class="btn-danger text-white">
+                <button cButton type="button" (click)="deleteQuestionGroup(item.id)" class="btn-danger text-white" [disabled]="disableForm">
                     <svg [cIcon]="icons.cilTrash" width="20" class="text-white" title="Trash Icon"></svg>
                 </button>
             </td>
@@ -69,7 +69,7 @@
     <span>4. Questions</span>
     <div class="d-flex justify-content-end">
         <button cButton type="button" (click)="toggleCreateQuestionModal()"
-            class="btn-success text-white d-flex align-items-center">
+            class="btn-success text-white d-flex align-items-center" [disabled]="disableForm">
             <svg [cIcon]="icons.cilPlus" width="22" class="text-white" title="Plus Icon"></svg>
         </button>
     </div>
@@ -119,11 +119,11 @@
             </button>
             }
             <button cButton type="button" (click)="updateQuestion(node.id, inQuestionGroup)"
-                class="btn-primary text-white me-2">
+                class="btn-primary text-white me-2" [disabled]="disableForm">
                 <svg [cIcon]="icons.cilPen" width="20" class="text-white" title="Edit Icon"></svg>
             </button>
             <button cButton type="button" (click)="deleteQuestion(node.id, inQuestionGroup)"
-                class="btn-danger text-white">
+                class="btn-danger text-white" [disabled]="disableForm">
                 <svg [cIcon]="icons.cilTrash" width="20" class="text-white" title="Trash Icon"></svg>
             </button>
         </td>
@@ -156,7 +156,7 @@
     (visibleChange)="handleCreateQuestionGroupModalChange($event)">
     <c-modal-header class="bg-success d-flex justify-content-between align-items-center">
         <h5 cModalTitle class="fw-bold text-white">Create Question Group</h5>
-        <button (click)="toggleCreateQuestionGroupModal()" class="btn btn-sm btnClose">
+        <button (click)="toggleCreateQuestionGroupModal()" class="btn btn-sm btnClose" >
             <svg [cIcon]="icons.cilX" width="22" class="text-white" title="Close Icon"></svg>
         </button>
     </c-modal-header>

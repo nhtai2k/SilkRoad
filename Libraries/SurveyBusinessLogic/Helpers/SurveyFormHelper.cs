@@ -1,5 +1,7 @@
 ﻿using Common.Models;
+using Microsoft.EntityFrameworkCore;
 using SurveyBusinessLogic.IHelpers;
+using SurveyBusinessLogic.Models;
 using SurveyDataAccess;
 using SurveyDataAccess.DTOs;
 
@@ -15,6 +17,7 @@ namespace SurveyBusinessLogic.Helpers
 
         public async Task<Pagination<SurveyFormDTO>> GetAllAsync(int pageIndex, int pageSize)
         {
+
             var allItems = await _unitOfWork.SurveyFormRepository.GetAllAsync(x => !x.IsDeleted);
             int totalItems = allItems.Count();
             int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
@@ -31,7 +34,54 @@ namespace SurveyBusinessLogic.Helpers
                 Items = items
             };
         }
+        public async Task<Pagination<SurveyFormDTO>> FilterAsync(SurveyFormFilterModel filter)
+        {
 
+            var query =  _unitOfWork.SurveyFormRepository.Query(x => !x.IsDeleted).AsNoTracking();
+            if(filter.StoreId != -1)
+            {
+                query = query.Where(s => s.StoreId == filter.StoreId);
+            }
+            if(filter.FormStyleId != -1)
+            {
+                query = query.Where(s => s.FormStyleId == filter.FormStyleId);
+            }
+            if(filter.IsActive != null)
+            {
+                query = query.Where(s => s.IsActive == filter.IsActive);
+            }
+            if (filter.IsLimited != null)
+            {
+                query = query.Where(s => s.IsLimited == filter.IsLimited);
+            }
+            if(filter.IsPublished != null)
+            {
+                query = query.Where(s => s.IsPublished == filter.IsPublished);
+            }
+            if (!string.IsNullOrWhiteSpace(filter.SearchText))
+            {
+                var search = filter.SearchText.Trim().ToLower();
+                query = query.Where(s =>
+                    s.Name.ToLower().Contains(search) ||
+                    s.TitleEN.ToLower().Contains(search) ||
+                    s.TitleVN.ToLower().Contains(search));
+            }
+
+            int totalItems = await query.CountAsync();
+            int totalPages = (int)Math.Ceiling(totalItems / (double)filter.PageSize);
+            if (filter.PageIndex > totalPages)
+                filter.PageIndex = totalPages > 0 ? totalPages : 1;
+            var items = await query.Skip((filter.PageIndex - 1) * filter.PageSize).Take(filter.PageSize).ToListAsync();
+            return new Pagination<SurveyFormDTO>
+            {
+                PageIndex = filter.PageIndex,
+                PageSize = filter.PageSize,
+                CurrentPage = filter.PageIndex,
+                TotalItems = totalItems,
+                TotalPages = totalPages,
+                Items = items
+            };
+        }
         public async Task<Pagination<SurveyFormDTO>> GetAllDeletedAsync(int pageIndex, int pageSize)
         {
             var allItems = await _unitOfWork.SurveyFormRepository.GetAllAsync(x => x.IsDeleted);
@@ -162,6 +212,87 @@ namespace SurveyBusinessLogic.Helpers
             data.Update(userName);
             await _unitOfWork.SaveChangesAsync();
             return true;
+        }
+
+        /// <summary>
+        /// Unpublishes a survey form by its identifier.
+        /// </summary>
+        /// <remarks>A survey form cannot be unpublished if it does not exist or if it has any
+        /// participants associated with it.</remarks>
+        /// <param name="id">The unique identifier of the survey form to unpublish.</param>
+        /// <param name="userName">The name of the user performing the operation. This parameter is optional and can be null.</param>
+        /// <returns><see langword="true"/> if the survey form was successfully unpublished; otherwise,  <see langword="false"/>
+        /// if the survey form does not exist or has participants associated with it.</returns>
+        public async Task<bool> UnpublishAsync(int id, string? userName = null)
+        {
+            var data = await _unitOfWork.SurveyFormRepository.GetByIdAsync(id);
+            bool hasAnyParticipants = await _unitOfWork.ParticipantRepository.HasAnyParticipantsAsync(id);
+            if (data == null || hasAnyParticipants) return false;
+            data.IsPublished = false;
+            data.Update(userName);
+            await _unitOfWork.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> DeactivateAsync(int Id, string? userName)
+        {
+            var data = await _unitOfWork.SurveyFormRepository.GetByIdAsync(Id);
+
+            if (data == null)
+                return false;
+
+            data.IsActive = false;
+            data.ModifiedAt = DateTime.Now;
+            data.ModifiedBy = userName;
+
+            _unitOfWork.SaveChanges();
+            return true;
+        }
+
+        public async Task<bool> ActivateAsync(int Id, string? userName)
+        {
+            var data = await _unitOfWork.SurveyFormRepository.GetByIdAsync(Id);
+
+            if (data == null)
+                return false;
+
+            data.IsActive = true;
+            data.ModifiedAt = DateTime.Now;
+            data.ModifiedBy = userName;
+
+            _unitOfWork.SaveChanges();
+            return true;
+        }
+
+        public async Task<SurveyFormDTO?> GetReviewFormByIdAsync(int id)
+        {
+            var data = await _unitOfWork.SurveyFormRepository.GetEagerSurveyFormByIdAsync(id);
+            return data;
+        }
+
+        /// <summary>
+        /// Gets a public survey form by its identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier of the survey form.</param>
+        /// <returns>The public survey form if found; otherwise, <see langword="null"/>.</returns>
+        public async Task<SurveyFormDTO?> GetPublicFormByIdAsync(int id)
+        {
+            // Get data by id
+            var data = await _unitOfWork.SurveyFormRepository.GetEagerSurveyFormByIdAsync(id);
+            // Check published status
+            if (data == null || !data.IsPublished) return null;
+            // Check limited participant
+            if (data.IsLimited)
+            {
+                var query = _unitOfWork.ParticipantRepository.Query(s => s.SurveyFormId == id && s.IsComplete && !s.IsRejected);
+                int countParticipants = await query.CountAsync();
+                // If reach max participants, return null
+                if (countParticipants >= data.MaxParticipants)
+                {
+                    return null;
+                }    
+            }
+            return data;
         }
     }
 }

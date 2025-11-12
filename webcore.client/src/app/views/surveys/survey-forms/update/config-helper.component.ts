@@ -21,8 +21,9 @@ export class ConfigHelperComponent implements OnInit {
   //#region Variables
   icons: any = { cilPlus, cilTrash, cilPen, cilX, cilSave, cilExitToApp };
   @Input() surveyFormId: number = -1;
+  @Input() disableForm: boolean = false;
   fieldTypeOptions: any[] = numberEnumToArray(EFieldTypes);
- initData: ParticipantInfoConfigModel[] = [];
+  initData: ParticipantInfoConfigModel[] = [];
 
   //visible Question Group Modal
   visibleCreateModal = signal(false);
@@ -92,7 +93,7 @@ export class ConfigHelperComponent implements OnInit {
   onCreateFormSubmit(): void {
     if (this.createForm.valid) {
       this.createForm.patchValue({ surveyFormId: this.surveyFormId });
-      
+
       const formData: ParticipantInfoConfigModel = {
         surveyFormId: this.surveyFormId,
         fieldNameEN: this.createForm.value.fieldNameEN || '',
@@ -104,7 +105,7 @@ export class ConfigHelperComponent implements OnInit {
         minLength: this.createForm.value.minLength ?? 0,
         maxLength: this.createForm.value.maxLength ?? 255,
         isRequired: this.createForm.value.isRequired ?? false
-      }; 
+      };
 
       this.participantInfoConfigService.create(formData).subscribe({
         next: (res) => {
@@ -153,7 +154,7 @@ export class ConfigHelperComponent implements OnInit {
 
   //#region Update Modal
   // Update Question Group Modal
-  update(id:string | undefined ){
+  update(id: string | undefined) {
     console.log('Update ID:', id);
     this.toggleUpdateModal();
     this.participantInfoConfigService.getById(id).subscribe({
@@ -173,7 +174,7 @@ export class ConfigHelperComponent implements OnInit {
 
   onUpdateFormSubmit(): void {
     if (this.updateForm.valid) {
-       const formData: ParticipantInfoConfigModel = {
+      const formData: ParticipantInfoConfigModel = {
         id: this.updateForm.value.id || undefined,
         surveyFormId: this.surveyFormId,
         fieldNameEN: this.updateForm.value.fieldNameEN || '',
@@ -185,14 +186,14 @@ export class ConfigHelperComponent implements OnInit {
         minLength: this.updateForm.value.minLength ?? 0,
         maxLength: this.updateForm.value.maxLength ?? 255,
         isRequired: this.updateForm.value.isRequired ?? false
-      }; 
+      };
       this.participantInfoConfigService.update(formData).subscribe({
         next: (res) => {
-          if (res.success) { 
+          if (res.success) {
             this.getAllConfigs();
             this.toggleUpdateModal();
           }
-      }
+        }
       });
     }
   }
@@ -220,13 +221,13 @@ export class ConfigHelperComponent implements OnInit {
   get isRequiredUpdateForm() {
     return this.updateForm.get('isRequired');
   }
-   get priorityUpdateForm() {
+  get priorityUpdateForm() {
     return this.updateForm.get('priority');
   }
   //#endregion
-  
+
   //#region Delete Modal
-  delete(id:string | undefined ): void {
+  delete(id: string | undefined): void {
     this.deleteId = id;
     this.toggleDeleteModal();
   }

@@ -238,11 +238,18 @@ export const routes: Routes = [
     }
   },
     {
-    path:'survey-form/:id',
-    loadComponent: () => import('./views/pages/survey-form/survey-form.component').then(m => m.SurveyFormComponent),
+    path:'review-form/:id',
+    loadComponent: () => import('./views/pages/form-styles/review-form/review-form.component').then(m => m.ReviewFormComponent),
     data: {
-      title: 'Survey Form'
-    }
+      title: 'Review Form'
+    } 
+  },
+  {
+    path:'default/:id',
+    loadComponent: () => import('./views/pages/form-styles/default/default.component').then(m => m.DefaultComponent),
+    data: {
+      title: 'Default Form'
+    } 
   },
     {
     path:'gold-survey-form/:id',

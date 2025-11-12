@@ -17,6 +17,17 @@
       padding: 1rem;
       background-color: #4c4c4c;
       color: #fff;
+      .btn-language{
+        font-weight: bold;
+        background: transparent;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        padding: 0;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
 
     .body {
@@ -30,9 +41,9 @@
         font-weight: bold;
       }
 
-      .surveyDescription {
-        text-align: justify;
-      }
+      // .surveyDescription {
+      //   text-align: justify;
+      // }
 
       .questionGroupTitle{
         padding: 0.25rem 0.5rem;
