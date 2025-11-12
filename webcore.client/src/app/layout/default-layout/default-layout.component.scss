@@ -32,3 +32,12 @@
 //  --scrollbar-thumb-transition: height ease-out 150ms, width ease-out 150ms;
 //  --scrollbar-track-transition: height ease-out 150ms, width ease-out 150ms;
 //}
+.eyeIcon{
+    position: absolute;
+      display: flex;
+      height: 100%;
+      align-items: center;
+      right: 5px;
+      top: 0;
+      cursor: pointer;
+  }

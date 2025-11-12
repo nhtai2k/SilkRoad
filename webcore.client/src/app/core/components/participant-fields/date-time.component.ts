@@ -1,5 +1,5 @@
-import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Component, Input, forwardRef, OnInit } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -38,7 +38,7 @@ import { CommonModule } from '@angular/common';
     }
   ]
 })
-export class ParticipantDateTimeComponent implements ControlValueAccessor {
+export class ParticipantDateTimeComponent implements ControlValueAccessor, OnInit {
   @Input() fieldId: string = '';
   @Input() label: string = '';
   @Input() required: boolean = false;
@@ -52,6 +52,21 @@ export class ParticipantDateTimeComponent implements ControlValueAccessor {
     this.control.valueChanges.subscribe(value => {
       this.onChange(value);
     });
+  }
+
+  ngOnInit() {
+    this.updateValidators();
+  }
+
+  private updateValidators() {
+    const validators = [];
+    
+    if (this.required) {
+      validators.push(Validators.required);
+    }
+
+    this.control.setValidators(validators);
+    this.control.updateValueAndValidity();
   }
 
   writeValue(value: any): void {

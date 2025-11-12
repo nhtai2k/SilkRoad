@@ -1,5 +1,5 @@
-import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Component, Input, forwardRef, OnInit } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -52,7 +52,7 @@ import { CommonModule } from '@angular/common';
     }
   ]
 })
-export class ParticipantTextAreaComponent implements ControlValueAccessor {
+export class ParticipantTextAreaComponent implements ControlValueAccessor, OnInit {
   @Input() fieldId: string = '';
   @Input() label: string = '';
   @Input() placeholder: string = '';
@@ -70,6 +70,29 @@ export class ParticipantTextAreaComponent implements ControlValueAccessor {
     this.control.valueChanges.subscribe(value => {
       this.onChange(value);
     });
+  }
+
+  ngOnInit() {
+    this.updateValidators();
+  }
+
+  private updateValidators() {
+    const validators = [];
+    
+    if (this.required) {
+      validators.push(Validators.required);
+    }
+    
+    if (this.minLength > 0) {
+      validators.push(Validators.minLength(this.minLength));
+    }
+    
+    if (this.maxLength > 0) {
+      validators.push(Validators.maxLength(this.maxLength));
+    }
+
+    this.control.setValidators(validators);
+    this.control.updateValueAndValidity();
   }
 
   writeValue(value: any): void {

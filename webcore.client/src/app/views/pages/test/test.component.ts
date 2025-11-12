@@ -1,17 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ParticipantDateTimeComponent, ParticipantEmailComponent, ParticipantNumberComponent, ParticipantPhoneComponent, ParticipantTextAreaComponent, ParticipantTextComponent } from '@components/participant-fields';
 import { ParticipantInfoConfigModel } from '@models/survey-models/participant-info-config.model';
-import { ParticipantTextComponent } from '@components/participant-fields/text.component';
-import { ParticipantEmailComponent } from '@components/participant-fields/email.component';
-import { ParticipantPhoneComponent } from '@components/participant-fields/phone-number.component';
-import { ParticipantTextAreaComponent } from '@components/participant-fields/text-erea.component';
-import { ParticipantDateTimeComponent } from '@components/participant-fields/date-time.component';
-import { ParticipantNumberComponent } from '@components/participant-fields/number.component';
 import { EFieldTypes } from '@common/global';
 
+
 @Component({
-  selector: 'app-participant-info',
+  selector: 'app-test',
   standalone: true,
   imports: [
     CommonModule,
@@ -23,13 +19,40 @@ import { EFieldTypes } from '@common/global';
     ParticipantDateTimeComponent,
     ParticipantNumberComponent
   ],
-  templateUrl: './participant-info.component.html',
-  styleUrl: './participant-info.component.scss'
+  templateUrl: './test.component.html',
+  styleUrl: './test.component.scss'
 })
-export class ParticipantInfoComponent implements OnInit {
+export class TestComponent implements OnInit {
   //#region Attributes & Inputs
-  @Input() selectedLanguage: string = 'EN';
-  @Input() participantFields: ParticipantInfoConfigModel[] = [];
+  selectedLanguage: string = 'EN';
+  participantFields: ParticipantInfoConfigModel[] = [
+    {
+      id: 'full_name',
+      surveyFormId: 1,
+      fieldNameEN: 'Full Name',
+      fieldNameVN: 'Họ và tên',
+      placeholderEN: 'Enter your full name',
+      placeholderVN: 'Nhập họ và tên của bạn',
+      typeId: EFieldTypes.Text,
+      priority: 1,
+      minLength: 2,
+      maxLength: 100,
+      isRequired: true
+    },
+    {
+      id: 'email',
+      surveyFormId: 1,
+      fieldNameEN: 'Email Address',
+      fieldNameVN: 'Địa chỉ email',
+      placeholderEN: 'Enter your email address',
+      placeholderVN: 'Nhập địa chỉ email của bạn',
+      typeId: EFieldTypes.Email,
+      priority: 2,
+      minLength: 0,
+      maxLength: 255,
+      isRequired: true
+    }
+  ];
   participantForm!: FormGroup;
   fieldTypes = EFieldTypes;
   //#endregion
@@ -62,7 +85,8 @@ export class ParticipantInfoComponent implements OnInit {
         }
       }
 
-      formControls[field.id || `field_${field.priority}`] = ['', validators];
+
+      formControls[field.id] = ['', validators];
     });
 
     this.participantForm = this.fb.group(formControls);
@@ -79,26 +103,26 @@ export class ParticipantInfoComponent implements OnInit {
     return field.placeholderEN || '';
   }
 
-  getFieldId(field: ParticipantInfoConfigModel): string {
-    return field.id || `field_${field.priority}`;
-  }
-
-  getFieldControl(field: ParticipantInfoConfigModel) {
-    const fieldId = this.getFieldId(field);
-    return this.participantForm.get(fieldId);
-  }
-
   trackByField(index: number, field: ParticipantInfoConfigModel): any {
     return field.id || field.priority;
   }
   //#endregion
 
-  supportMarkAsTouched(): void {
-    console.log('Mark all fields as touched to show validation errors');
-    // Mark all fields as touched to show validation errors
-    Object.keys(this.participantForm.controls).forEach(key => {
-      this.participantForm.get(key)?.markAsTouched();
-    });
-  }
+  onSubmit() {
+    if (this.participantForm.valid) {
+      const formData = this.participantForm.value;
+      console.log('Participant form data:', formData);
+      // Handle form submission here
+    } else {
+      console.log('Mark all fields as touched to show validation errors');
 
+      // Mark all fields as touched to show validation errors
+      Object.keys(this.participantForm.controls).forEach(key => {
+        this.participantForm.get(key)?.markAsTouched();
+      });
+    }
+  }
+    resetForm() {
+    this.participantForm.reset();
+  }
 }

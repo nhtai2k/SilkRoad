@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef } from '@angular/core';
+import { Component, Input, forwardRef, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -42,13 +42,13 @@ import { CommonModule } from '@angular/common';
     }
   ]
 })
-export class ParticipantEmailComponent implements ControlValueAccessor {
+export class ParticipantEmailComponent implements ControlValueAccessor, OnInit {
   @Input() fieldId: string = '';
   @Input() label: string = '';
   @Input() placeholder: string = '';
   @Input() required: boolean = false;
 
-  control = new FormControl('', [Validators.email]);
+  control = new FormControl('');
   
   private onChange = (value: any) => {};
   private onTouched = () => {};
@@ -57,6 +57,21 @@ export class ParticipantEmailComponent implements ControlValueAccessor {
     this.control.valueChanges.subscribe(value => {
       this.onChange(value);
     });
+  }
+
+  ngOnInit() {
+    this.updateValidators();
+  }
+
+  private updateValidators() {
+    const validators = [Validators.email];
+    
+    if (this.required) {
+      validators.push(Validators.required);
+    }
+
+    this.control.setValidators(validators);
+    this.control.updateValueAndValidity();
   }
 
   writeValue(value: any): void {

@@ -30,6 +30,7 @@
   <app-default-header
     [cShadowOnScroll]="'sm'"
     class="mb-4 d-print-none header header-sticky p-0 shadow-sm"
+      (clickChangePasswordButton)="toggleChangePassword()"
     position="sticky"
     sidebarId="sidebar1"
   />
@@ -37,6 +38,102 @@
   <div class="body flex-grow-1">
     <div class="h-auto px-4">
       <router-outlet />
+      <c-modal backdrop="static" [visible]="visibleChangePassword" id="staticBackdropModal1"
+        (visibleChange)="handleChangePasswordChange($event)">
+        <c-modal-header>
+          <h5 cModalTitle>Change Password</h5>
+          <button (click)="toggleChangePassword()" cButtonClose></button>
+        </c-modal-header>
+        <form cForm [formGroup]="changePasswordForm" (ngSubmit)="onSubmitChangePassword()">
+          <c-modal-body>
+            @if (changePasswordFormError) {
+            <div class="text-danger mb-2">
+              {{changePasswordFormError}}
+            </div>
+            }
+            <div class="mb-2 position-relative">
+              <input cFormControl type="password" formControlName="oldPassword" id="oldPassword"
+                placeholder="Enter old password..." />
+              <div (click)="ShowPassword('oldPassword')">
+                @if(showOldPassword){
+                <app-eye-icon class="eyeIcon"></app-eye-icon>
+                }
+                @else{
+                <app-eye-close-icon class="eyeIcon"></app-eye-close-icon>
+                }
+              </div>
+            </div>
+            @if (oldPassword?.invalid && (oldPassword?.dirty || oldPassword?.touched)) {
+            <div class="text-danger mb-2">
+              @if (oldPassword?.hasError('required')) {
+              <div>
+                Old password is required
+              </div>
+              }
+            </div>
+            }
+            <div class="mb-2 position-relative">
+              <input cFormControl type="password" formControlName="newPassword" id="newPassword" maxlength="20"
+                placeholder="Enter new password..."  />
+              <div (click)="ShowPassword('newPassword')">
+                @if(showNewPassword){
+                <app-eye-icon class="eyeIcon"></app-eye-icon>
+                }
+                @else{
+                <app-eye-close-icon class="eyeIcon"></app-eye-close-icon>
+                }
+              </div>
+            </div>
+            @if (newPassword?.invalid && (newPassword?.dirty || newPassword?.touched)) {
+            <div class="text-danger mb-2">
+              @if (newPassword?.hasError('required')) {
+              <div>
+                New password is required
+              </div>
+              }
+              @if (newPassword?.hasError('minlength')) {
+              <div>
+                New password must be at least 6 characters long and at most 20 characters long
+              </div>
+              }
+            </div>
+            }
+            <div class="mb-2 position-relative">
+              <input cFormControl type="password" formControlName="confirmPassword" id="confirmPassword" maxlength="20"
+                placeholder="Enter confirm password..." />
+              <div (click)="ShowPassword('confirmPassword')">
+                @if(showConfirmPassword){
+                <app-eye-icon class="eyeIcon"></app-eye-icon>
+                }
+                @else{
+                <app-eye-close-icon class="eyeIcon"></app-eye-close-icon>
+                }
+              </div>
+            </div>
+            @if (confirmPassword?.invalid && (confirmPassword?.dirty || confirmPassword?.touched)) {
+            <div class="text-danger mb-2">
+              @if (confirmPassword?.hasError('required')) {
+              <div>
+                Confirm password is required
+              </div>
+              }
+              @if (confirmPassword?.hasError('minlength')) {
+              <div>
+                New password must be at least 6 characters long and at most 20 characters long
+              </div>
+              }
+            </div>
+            }
+          </c-modal-body>
+          <c-modal-footer>
+            <button (click)="toggleChangePassword()" type="button" cButton color="secondary" i18n="@@close">
+              Close
+            </button>
+            <button cButton type="submit" color="primary" [disabled]="!changePasswordForm.valid"
+              i18n="@@confirm">Confirm</button>
+          </c-modal-footer>
+        </form>
+      </c-modal>
     </div>
   </div>
   <!--app footer-->

@@ -67,14 +67,26 @@ export class ParticipantNumberComponent implements ControlValueAccessor, OnInit 
   }
 
   ngOnInit() {
+    this.updateValidators();
+  }
+
+  private updateValidators() {
     const validators = [];
+    
+    if (this.required) {
+      validators.push(Validators.required);
+    }
+    
     if (this.minValue !== null) {
       validators.push(Validators.min(this.minValue));
     }
+    
     if (this.maxValue !== null) {
       validators.push(Validators.max(this.maxValue));
     }
+    
     this.control.setValidators(validators);
+    this.control.updateValueAndValidity();
   }
 
   writeValue(value: any): void {

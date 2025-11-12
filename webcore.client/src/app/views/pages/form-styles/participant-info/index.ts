@@ -1,6 +1,6 @@
 // Main Components
 export * from './participant-info.component';
-export * from './participant-info-demo.component';
+// export * from './participant-info-demo.component';
 
 // Field Components
 export * from '@components/participant-fields';

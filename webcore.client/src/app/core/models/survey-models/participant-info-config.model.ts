@@ -1,5 +1,5 @@
 export interface ParticipantInfoConfigModel {
-  id?: string; 
+  id: string; 
   surveyFormId: number;
   fieldNameEN: string;
   fieldNameVN: string;

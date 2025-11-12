@@ -95,6 +95,7 @@ export class ConfigHelperComponent implements OnInit {
       this.createForm.patchValue({ surveyFormId: this.surveyFormId });
 
       const formData: ParticipantInfoConfigModel = {
+        id: '',
         surveyFormId: this.surveyFormId,
         fieldNameEN: this.createForm.value.fieldNameEN || '',
         fieldNameVN: this.createForm.value.fieldNameVN || '',
@@ -175,7 +176,7 @@ export class ConfigHelperComponent implements OnInit {
   onUpdateFormSubmit(): void {
     if (this.updateForm.valid) {
       const formData: ParticipantInfoConfigModel = {
-        id: this.updateForm.value.id || undefined,
+        id: this.updateForm.value.id || '',
         surveyFormId: this.surveyFormId,
         fieldNameEN: this.updateForm.value.fieldNameEN || '',
         fieldNameVN: this.updateForm.value.fieldNameVN || '',

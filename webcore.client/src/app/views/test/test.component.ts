@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ParticipantInfoDemoComponent } from "../pages/form-styles/participant-info";
-
 
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
   styleUrl: './test.component.scss',
-  imports: [ParticipantInfoDemoComponent]
+  imports: []
 })
 export class TestComponent {
 clicked(): void{
