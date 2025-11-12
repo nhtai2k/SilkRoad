@@ -44,6 +44,7 @@ namespace SurveyBusinessLogic.Helpers
         public async Task<bool> UpdateAsync(QuestionGroupDTO model)
         {
             var result = await _unitOfWork.QuestionGroupRepository.UpdateAsync(model, model.Id);
+            
             if (result)
             {
                 await _unitOfWork.SaveChangesAsync();

@@ -1,4 +1,5 @@
 ﻿using Common.Models;
+using Microsoft.EntityFrameworkCore;
 using SurveyBusinessLogic.IHelpers;
 using SurveyBusinessLogic.Models;
 using SurveyDataAccess;
@@ -19,9 +20,48 @@ namespace SurveyBusinessLogic.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<Pagination<ParticipantDTO>> FilterAsync(ParticipantFilterModel filter)
+        public async Task<Pagination<ParticipantDTO>> FilterAsync(ParticipantFilterModel filter)
         {
-            throw new NotImplementedException();
+            var query = _unitOfWork.ParticipantRepository.Query(x => true).AsNoTracking();
+            if (filter.SurveyFormId != -1)
+            {
+                query = query.Where(s => s.SurveyFormId == filter.SurveyFormId);
+            }
+            if (filter.IsComplete != null)
+            {
+                query = query.Where(s => s.IsComplete == filter.IsComplete);
+            }
+            if (filter.IsRejected != null)
+            {
+                query = query.Where(s => s.IsRejected == filter.IsRejected);
+            }
+            if (filter.IsHighlighted != null)
+            {
+                query = query.Where(s => s.IsHighlighted == filter.IsHighlighted);
+            }
+            if (filter.StartDate != null)
+            {
+                query = query.Where(s => s.CreatedAt >= filter.StartDate);
+            }
+            if (filter.EndDate != null)
+            {
+                query = query.Where(s => s.CreatedAt <= filter.EndDate);
+            }
+
+            int totalItems = await query.CountAsync();
+            int totalPages = (int)Math.Ceiling(totalItems / (double)filter.PageSize);
+            if (filter.PageIndex > totalPages)
+                filter.PageIndex = totalPages > 0 ? totalPages : 1;
+            var items = await query.Skip((filter.PageIndex - 1) * filter.PageSize).Take(filter.PageSize).ToListAsync();
+            return new Pagination<ParticipantDTO>
+            {
+                PageIndex = filter.PageIndex,
+                PageSize = filter.PageSize,
+                CurrentPage = filter.PageIndex,
+                TotalItems = totalItems,
+                TotalPages = totalPages,
+                Items = items
+            };
         }
         /// <summary>
         /// Meaning to create a participant along with answers. Complete the survey
@@ -75,6 +115,44 @@ namespace SurveyBusinessLogic.Helpers
             return participant;
         }
 
+        public async Task<bool> HighlightAsync(Guid id)
+        {
+            var data = await _unitOfWork.ParticipantRepository.GetByIdAsync(id);
 
+            if (data == null)
+                return false;
+
+            data.IsHighlighted = true;
+
+            _unitOfWork.SaveChanges();
+            return true;
+        }
+
+        public async Task<bool> RemoveHighlightAsync(Guid id)
+        {
+            var data = await _unitOfWork.ParticipantRepository.GetByIdAsync(id);
+
+            if (data == null)
+                return false;
+
+            data.IsHighlighted = false;
+
+            _unitOfWork.SaveChanges();
+            return true;
+        }
+
+        public async Task<bool> RejectAsync(Guid id, string reason)
+        {
+            var data = await _unitOfWork.ParticipantRepository.GetByIdAsync(id);
+
+            if (data == null)
+                return false;
+
+            data.IsRejected = true;
+            data.Reason = reason;
+
+            _unitOfWork.SaveChanges();
+            return true;
+        }
     }
 }

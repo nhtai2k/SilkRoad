@@ -14,6 +14,9 @@ namespace SurveyBusinessLogic.IHelpers
         public Task<ParticipantDTO?> InitAsync(ParticipantDTO model);
         public Task<bool> AddAnswersAsync(List<AnswerDTO> answers);
         public Task<ParticipantDTO?> GetByIdAsync(Guid id);
+        public Task<bool> HighlightAsync(Guid id);
+        public Task<bool> RemoveHighlightAsync(Guid id);
+        public Task<bool> RejectAsync(Guid id, string reason);
 
     }
 }

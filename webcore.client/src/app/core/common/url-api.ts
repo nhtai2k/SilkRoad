@@ -249,6 +249,10 @@ export enum EUrl {
     exportExcelUrlParticipant = "/api/participant/exportExcel",
     initParticipantUrlParticipant = "/api/participant/initParticipant",
     addAnswersUrlParticipant = "/api/participant/addAnswers",
+    filterUrlParticipant = "/api/participant/filter",
+    rejectUrlParticipant = "/api/participant/reject",
+    highlightUrlParticipant = "/api/participant/highlight",
+    removeHighlightUrlParticipant = "/api/participant/removeHighlight",
 
     //questionGroupLibrary
     getAllUrlQuestionGroupLibrary = "/api/questionGroupLibrary/getAll",

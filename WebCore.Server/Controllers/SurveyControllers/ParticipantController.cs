@@ -26,9 +26,9 @@ namespace WebCore.Server.Controllers.SurveyControllers
         }
 
         [HttpPost("filter")]
-        public async  Task<IActionResult> Filter([FromBody] ParticipantFilterModel filter)
+        public async Task<IActionResult> Filter([FromBody] ParticipantFilterModel filter)
         {
-            if (filter == null )
+            if (filter == null)
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             var result = await _helper.FilterAsync(filter);
             return Succeeded(result, _localizer["createSuccess"]);
@@ -69,7 +69,7 @@ namespace WebCore.Server.Controllers.SurveyControllers
         [AllowAnonymous]
         public async Task<IActionResult> InitParticipant([FromBody] ParticipantDTO model)
         {
-            if (model == null || !ModelState.IsValid )
+            if (model == null || !ModelState.IsValid)
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             var participant = await _helper.InitAsync(model);
             if (participant == null)
@@ -102,6 +102,33 @@ namespace WebCore.Server.Controllers.SurveyControllers
             if (data == null)
                 return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        }
+
+        [HttpPost("highlight/{id}")]
+        public async Task<IActionResult> Highlight(Guid id)
+        {
+            var data = await _helper.HighlightAsync(id);
+            if (!data)
+                return Failed(EStatusCodes.InternalServerError, _localizer["operationFailed"]);
+            return Succeeded(_localizer["operationSuccess"]);
+        }
+
+        [HttpPost("removeHighlight/{id}")]
+        public async Task<IActionResult> RemoveHighlight(Guid id)
+        {
+            var data = await _helper.RemoveHighlightAsync(id);
+            if (!data)
+                return Failed(EStatusCodes.InternalServerError, _localizer["operationFailed"]);
+            return Succeeded(_localizer["operationSuccess"]);
+        }
+
+        [HttpPost("reject/{id}")]
+        public async Task<IActionResult> Reject(Guid id, [FromBody] string reason)
+        {
+            var data = await _helper.RejectAsync(id, reason);
+            if (!data)
+                return Failed(EStatusCodes.InternalServerError, _localizer["operationFailed"]);
+            return Succeeded(_localizer["operationSuccess"]);
         }
     }
 }

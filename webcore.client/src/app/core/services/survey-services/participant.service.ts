@@ -28,6 +28,20 @@ export class ParticipantService {
       })
     );
   }
+
+  filter(query: any): Observable<APIResponse<Pagination<ParticipantModel>>> {
+    return this.http.post<APIResponse<Pagination<ParticipantModel>>>(EUrl.filterUrlParticipant, query, { headers: this.authenticationService.getHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.post<APIResponse<Pagination<ParticipantModel>>>(EUrl.filterUrlParticipant, query, { headers: this.authenticationService.getHeaders() }))
+          );
+        } else {
+          return throwError(() => error);
+        }
+      })
+    );
+  }
   
   // getEagerById(id: any): Observable<APIResponse<SurveyUIModel>> {
   //   return this.http.get<APIResponse<SurveyUIModel>>(EUrl.getEagerByIdUrlParticipant + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
@@ -63,6 +77,48 @@ export class ParticipantService {
         if (error.status === 401) {
           return this.authenticationService.reNewToken().pipe(
             switchMap(() => this.http.post<APIResponse<boolean>>(EUrl.addAnswersUrlParticipant, JSON.stringify(answers), { headers: this.authenticationService.getHeaders().set('Content-Type', 'application/json') }))
+          );
+        } else {
+          return throwError(() => error);
+        }
+      })
+    );
+  }
+
+  highlight(id: number): Observable<APIResponse<boolean>> {
+    return this.http.post<APIResponse<boolean>>(EUrl.highlightUrlParticipant + `/${id}`, null, { headers: this.authenticationService.getHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.post<APIResponse<boolean>>(EUrl.highlightUrlParticipant + `/${id}`, null, { headers: this.authenticationService.getHeaders() }))
+          );
+        } else {
+          return throwError(() => error);
+        }
+      })
+    );
+  }
+
+  removeHighlight(id: number): Observable<APIResponse<boolean>> {
+    return this.http.post<APIResponse<boolean>>(EUrl.removeHighlightUrlParticipant + `/${id}`, null, { headers: this.authenticationService.getHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.post<APIResponse<boolean>>(EUrl.removeHighlightUrlParticipant + `/${id}`, null, { headers: this.authenticationService.getHeaders() }))
+          );
+        } else {
+          return throwError(() => error);
+        }
+      })
+    );
+  }
+
+  reject(participantId: any, reason: any): Observable<APIResponse<boolean>> {
+    return this.http.post<APIResponse<boolean>>(EUrl.rejectUrlParticipant + `/${participantId}`, JSON.stringify(reason), { headers: this.authenticationService.getHeaders().set('Content-Type', 'application/json') }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.post<APIResponse<boolean>>(EUrl.rejectUrlParticipant + `/${participantId}`, JSON.stringify(reason), { headers: this.authenticationService.getHeaders().set('Content-Type', 'application/json') }))
           );
         } else {
           return throwError(() => error);

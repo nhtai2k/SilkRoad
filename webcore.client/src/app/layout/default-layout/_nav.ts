@@ -209,9 +209,9 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cil-chart-line' }
   },
   {
-    name: 'Survey Results',
-    url: '/surveys/survey-results',
-    iconComponent: { name: 'cil-notes' }
+    name: 'Participants',
+    url: '/surveys/participants',
+    iconComponent: { name: 'cil-people' }
   },
   {
     name: 'Survey Forms',

@@ -1,1 +1,150 @@
-<p>index works!</p>
+<h3 class="fw-bold">Survey Forms</h3>
+<c-accordion class="mb-4">
+    <c-accordion-item #item0="cAccordionItem" [visible]="true">
+        <ng-template cTemplateId="accordionHeaderTemplate">
+            <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
+                Filter:
+            </button>
+        </ng-template>
+        <ng-template cTemplateId="accordionBodyTemplate">
+            <div class="accordion-body">
+                <div class="row">
+                    <div class="col-8">
+                        <form cForm [formGroup]="filterForm" (ngSubmit)="filter()">
+                            <div class="row mb-3">
+                                <div class="col-4">
+                                    <select cFormControl formControlName="isComplete" cSelect>
+                                        <option [value]="null">--All Complete Status--</option>
+                                        <option [value]="true">Complete</option>
+                                        <option [value]="false">Incomplete</option>
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <select cFormControl formControlName="isRejected" cSelect>
+                                        <option [value]="null">--All Rejected Status--</option>
+                                        <option [value]="true">Rejected</option>
+                                        <option [value]="false">Not Rejected</option>
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <select cFormControl formControlName="isHighlighted" cSelect>
+                                        <option [value]="null">--All Highlighted Status--</option>
+                                        <option [value]="true">Highlighted</option>
+                                        <option [value]="false">No Highlighted</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <!-- <div class="col-4">
+                                    <select cFormControl formControlName="storeId" cSelect>
+                                        <option value="-1">--All Store--</option>
+                                        @for (item of storeList; track item.id; let i = $index) {
+                                        <option [value]="item.id">{{item.name}}</option>
+                                        }
+                                    </select>
+                                </div> -->
+                                <div class="col-4">
+                                    <select cFormControl formControlName="surveyFormId" cSelect>
+                                        <option value="-1">--All Survey Form--</option>
+                                        @for (item of surveyFormList; track item.id; let i = $index) {
+                                        <option [value]="item.id">{{item.name}}</option>
+                                        }
+                                    </select>
+                                </div>
+                                 <div class="col-4">
+                                    <input formControlName="startDate" type="date" class="form-control"/>
+                                </div>
+                                 <div class="col-4">
+                                    <input formControlName="endDate" type="date" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                               
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        <svg [cIcon]="icons.cilSearch" width="20" class="text-white"
+                                            title="Search Icon"></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </c-accordion-item>
+</c-accordion>
+<app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
+    (changePageSize)="onPageSizeChange($event)">
+    <thead class="text-nowrap text-truncate">
+        <tr>
+            <th scope="col">STT</th>
+            <th scope="col">CreatedAt</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (item of data.items; track item?.id; let i = $index) {
+        <tr>
+            <td>{{ i+1 }}</td>
+            <td>{{ item.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td>
+                <div class="d-flex justify-content-end">
+                    <!-- <a target="_blank" routerLink="/gold-survey-form/{{item.id}}" class="btn btn-success me-2">
+                        <svg [cIcon]="icons.cilStar" width="25" class="text-white" title="Star Icon"></svg>
+                    </a> -->
+                    <!-- @if (item.isHighlighted) {
+                        <button class="btn btn-danger me-2" (click)="removeHighlight(item.id)">
+                            <svg [cIcon]="icons.cilStar" width="25" class="text-white" title="Star Icon"></svg>
+                        </button>
+                    } @else {
+                        <button class="btn btn-success me-2" (click)="highlight(item.id)">
+                            <svg [cIcon]="icons.cilStar" width="25" class="text-white" title="Star Icon"></svg>
+                        </button>
+                    }
+                    <button class="btn btn-danger me-2" (click)="reject(item.id)">
+                        <svg [cIcon]="icons.cilX" width="25" class="text-white" title="Delete Icon"></svg>
+                    </button> -->
+                    <a routerLink="./review-form/{{item.id}}" class="btn btn-primary">
+                        <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
+                    </a>
+                </div>
+
+            </td>
+        </tr>
+        }
+    </tbody>
+</app-data-table>
+
+<!--Reject Model-->
+<c-modal backdrop="static" [visible]="visibleReject" (visibleChange)="handleLiveRejectChange($event)"
+    id="verticallyCenteredDelete">
+    <c-modal-header class="bg-danger d-flex justify-content-between align-items-center">
+        <h5 cModalTitle class="fw-bold text-white">Rejected participant</h5>
+        <button (click)="toggleLiveReject()" class="btn btn-sm btnClose">
+            <svg [cIcon]="icons.cilX" width="22" class="text-white" title="Close Icon"></svg>
+        </button>
+    </c-modal-header><form cForm [formGroup]="rejectForm" (ngSubmit)="onConfirmReject()">
+        <c-modal-body>
+                <div class="mb-2">
+                    <label cLabel for="reason">Reason : <span class="text-danger">(*)</span></label>
+                    <textarea cFormControl formControlName="reason" rows="3"></textarea>
+                    @if (reasonRejectForm?.invalid && (reasonRejectForm?.dirty || reasonRejectForm?.touched)) {
+                    <div class="text-danger">
+                        @if (reasonRejectForm?.hasError('required') || reasonRejectForm?.hasError('maxlength')) {
+                            Reason is required and must be less than 255 characters.
+                        }
+                    </div>
+                    }
+                </div>
+        </c-modal-body>
+        <c-modal-footer>
+            <button (click)="toggleLiveReject()" cButton color="secondary">
+                <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Close Icon"></svg>
+            </button>
+            <button cButton type="submit" [disabled]="!rejectForm.valid" color="primary">
+                <svg [cIcon]="icons.cilSave" width="22" class="text-white" title="Save Icon"></svg>
+            </button>
+        </c-modal-footer>
+    </form>
+</c-modal>
