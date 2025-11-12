@@ -1,12 +1,18 @@
 ﻿
 
+using Common.Models;
+using SurveyBusinessLogic.Models;
+using SurveyDataAccess.DTOs;
+
 namespace SurveyBusinessLogic.IHelpers
 {
     public interface IParticipantHelper
     {
-        //public Task<Pagination<ParticipantViewModel>> GetAllAsync(DateTime? startDate, DateTime? endDate, int surveyFormId, int pageIndex, int pageSize);
-        //public Task CreateAsync(SurveyUIViewModel model);
-        //public SurveyUIViewModel GetEagerCustomerSurveyByID(int ID);
-        //public Task<string> ExportExcel(DateTime? startDate, DateTime? endDate, int surveyFormId);
+        public Task<Pagination<ParticipantDTO>> FilterAsync(ParticipantFilterModel filter);
+        public Task<string> ExportExcel(ParticipantFilterModel filter);
+
+        public Task<ParticipantDTO?> CreateAsync(ParticipantDTO model);
+        public Task<ParticipantDTO?> GetByIdAsync(Guid id);
+
     }
 }
