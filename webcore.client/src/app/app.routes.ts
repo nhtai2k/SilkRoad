@@ -3,8 +3,9 @@ import { DefaultLayoutComponent } from './layout';
 import { LoginComponent } from './views/pages/login/login.component';
 import { authGuard } from './core/guards/auth.guard';
 import { authenticationGuard } from './core/guards/authentication.guard';
-
+import { pageRoutes } from './views/pages/routes';
 export const routes: Routes = [
+  ...pageRoutes, 
   {
     path: '',
     //redirectTo: 'dashboard',
@@ -137,14 +138,14 @@ export const routes: Routes = [
         path: 'surveys/reports',
         loadChildren: () => import('./views/surveys/report/routes').then((m) => m.routes)
       },
-      // {
-      //   path: 'surveys/survey-results',
-      //   loadChildren: () => import('./views/surveys/survey-results/index/routes').then((m) => m.routes)
-      // },
-      // {
-      //   path: 'surveys/survey-results/update/:id',
-      //   loadChildren: () => import('./views/surveys/survey-results/details/routes').then((m) => m.routes)
-      // },
+      {
+        path: 'surveys/participants',
+        loadChildren: () => import('./views/surveys/participants/index/routes').then((m) => m.routes)
+      },
+      {
+        path: 'surveys/participants/update/:id',
+        loadChildren: () => import('./views/surveys/participants/details/routes').then((m) => m.routes)
+      },
       {
         path: 'surveys/survey-forms',
         loadChildren: () => import('./views/surveys/survey-forms/index/routes').then((m) => m.routes)
@@ -168,7 +169,7 @@ export const routes: Routes = [
         path: 'my-account',
         loadChildren: () => import('./views/system/my-account/routes').then((m) => m.routes)
       },
-                  {
+      {
         path: 'users',
         loadChildren: () => import('./views/system/users/routes').then((m) => m.routes)
       },
@@ -195,61 +196,12 @@ export const routes: Routes = [
       //#endregion
     ]
   },
-    {
-    path: '404',
-    loadComponent: () => import('./views/pages/page404/page404.component').then(m => m.Page404Component),
-    data: {
-      title: 'Page 404'
-    }
-  },
-  {
-    path: '423',
-    loadComponent: () => import('./views/pages/page423/page423.component').then(m => m.Page423Component),
-    data: {
-      title: 'Page 423'
-    }
-  },
-  {
-    path: '500',
-    loadComponent: () => import('./views/pages/page500/page500.component').then(m => m.Page500Component),
-    data: {
-      title: 'Page 500'
-    }
-  },
   {
     path: 'login',
     loadComponent: () => import('./views/pages/login/login.component').then(m => m.LoginComponent),
     data: {
       title: 'Login Page'
     }
-  },
-  {
-    path: 'recover-password',
-    loadComponent: () => import('./views/pages/recover-password/recover-password.component').then(m => m.RecoverPasswordComponent),
-    data: {
-      title: 'Reover Password Page'
-    }
-  },
-  {
-    path: 'reset-password',
-    loadComponent: () => import('./views/pages/reset-password/reset-password.component').then(m => m.ResetPasswordComponent),
-    data: {
-      title: 'Reset Password Page'
-    }
-  },
-    {
-    path:'review-form/:id',
-    loadComponent: () => import('./views/pages/form-styles/review-form/review-form.component').then(m => m.ReviewFormComponent),
-    data: {
-      title: 'Review Form'
-    } 
-  },
-  {
-    path:'default/:id',
-    loadComponent: () => import('./views/pages/form-styles/default/default.component').then(m => m.DefaultComponent),
-    data: {
-      title: 'Default Form'
-    } 
   },
   { path: '**', redirectTo: 'dashboard' }
 ];

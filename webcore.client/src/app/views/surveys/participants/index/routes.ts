@@ -5,7 +5,7 @@ export const routes: Routes = [
     path: '',
     loadComponent: () => import('./index.component').then(m => m.IndexComponent),
     data: {
-      title: $localize`Report`
+      title: $localize`Survey Participants`
     }
   }
 ];
