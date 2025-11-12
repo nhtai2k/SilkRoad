@@ -81,18 +81,14 @@ export class ParticipantInfoComponent implements OnInit {
     return field.placeholderEN || '';
   }
 
-  getFieldId(field: ParticipantInfoConfigModel): string {
-    return field.id || `field_${field.priority}`;
-  }
+  // getFieldId(field: ParticipantInfoConfigModel): string {
+  //   return field.id || `field_${field.priority}`;
+  // }
 
-  getFieldControl(field: ParticipantInfoConfigModel) {
-    const fieldId = this.getFieldId(field);
-    return this.participantForm.get(fieldId);
-  }
-
-  trackByField(index: number, field: ParticipantInfoConfigModel): any {
-    return field.id || field.priority;
-  }
+  // getFieldControl(field: ParticipantInfoConfigModel) {
+  //   const fieldId = this.getFieldId(field);
+  //   return this.participantForm.get(fieldId);
+  // }
   //#endregion
 
   onSubmit(): void {
@@ -101,11 +97,11 @@ export class ParticipantInfoComponent implements OnInit {
       const participantData = this.participantForm.value;
       const participantInfos: ParticipantInfoModel[] = [];
       this.participantFields.forEach(field => {
-        const fieldId = this.getFieldId(field);
-        const rawValue = participantData[fieldId];
+        const rawValue = participantData[field.id];
         if (rawValue !== undefined && rawValue !== null && rawValue !== '') {
           const info: ParticipantInfoModel = {
-            participantInfoConfigId: field.id || '',
+            participantInfoConfigId: field.id,
+            typeId: field.typeId
           };
           if (field.typeId === EFieldTypes.TextArea || field.typeId === EFieldTypes.Text || field.typeId === EFieldTypes.PhoneNumber || field.typeId === EFieldTypes.Email) {
             info.textValue = String(rawValue);
@@ -117,6 +113,13 @@ export class ParticipantInfoComponent implements OnInit {
             if (!isNaN(date.getTime())) info.dateValue = date;
           }
           participantInfos.push(info);
+        }else{
+           const info: ParticipantInfoModel = {
+            participantInfoConfigId: field.id,
+            typeId: field.typeId
+          };
+          participantInfos.push(info);
+
         }
       });
 
