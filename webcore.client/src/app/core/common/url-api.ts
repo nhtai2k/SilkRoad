@@ -307,6 +307,7 @@ export enum EUrl {
     deleteUrlSurveyForm = "/api/surveyForm/delete",
     getAllDeletedUrlSurveyForm = "/api/surveyForm/getAllDeleted",
     publicUrlSurveyForm = "/api/surveyForm/public",
+    checkValidFormUrlSurveyForm = "/api/surveyForm/checkValidForm",
 
     //QuestionGroup
     getBySurveyFormIdUrlQuestionGroup = "/api/questionGroup/getBySurveyFormId",

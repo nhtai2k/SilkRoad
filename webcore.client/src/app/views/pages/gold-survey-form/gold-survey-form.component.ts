@@ -36,7 +36,13 @@ export class GoldSurveyFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const surveyId = this.route.snapshot.paramMap.get('id');
+    const surveyId = this.route.snapshot.paramMap.get('id');    
+    var validForm = true;
+    // var validForm = this.surveyFormService.checkValidForm(surveyId);
+    if (!validForm) {
+      this.router.navigate(['gold-finish', surveyId]);
+      return;
+    }
     this.surveyFormService.getEagerById(surveyId).subscribe({
       next: (res) => {
         this.surveyForm = res.data;
