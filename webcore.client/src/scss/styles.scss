@@ -182,3 +182,12 @@
     background-image: url('data:image/svg+xml,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="%23fff" stroke-linecap="round" stroke-linejoin="round"%3e%3cpath d="m2 5 6 6 6-6"/%3e%3c/svg%3e');
 }
 //#endregion
+
+//#region fonts
+@font-face {
+  font-family: 'Roboto Regular';
+  src: url(../assets/fonts/Roboto-Regular.ttf) format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+//#endregion

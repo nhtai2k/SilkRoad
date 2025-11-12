@@ -247,6 +247,8 @@ export enum EUrl {
     getAllUrlParticipant = "/api/participant/getAll",
     getEagerByIdUrlParticipant = "/api/participant/getEagerById",
     exportExcelUrlParticipant = "/api/participant/exportExcel",
+    initParticipantUrlParticipant = "/api/participant/initParticipant",
+    addAnswersUrlParticipant = "/api/participant/addAnswers",
 
     //questionGroupLibrary
     getAllUrlQuestionGroupLibrary = "/api/questionGroupLibrary/getAll",
@@ -313,6 +315,7 @@ export enum EUrl {
     unPublicUrlSurveyForm = "/api/surveyForm/unPublic",
     deactivateUrlSurveyForm = "/api/surveyForm/deactivate",
     activateUrlSurveyForm = "/api/surveyForm/activate",
+    checkValidFormUrlSurveyForm = "/api/surveyForm/checkValidForm",
 
     //QuestionGroup
     getBySurveyFormIdUrlQuestionGroup = "/api/questionGroup/getBySurveyFormId",

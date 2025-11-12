@@ -1,0 +1,11 @@
+<h2 class="surveyTitle mb-4 mt-4">{{selectedLanguage() === eLanguages.English ? surveyForm?.titleEN : surveyForm?.titleVN || ''}}</h2>
+<div class="surveyDescription" [innerHTML]="selectedLanguage() === eLanguages.English ? surveyForm?.descriptionEN : surveyForm?.descriptionVN || ''"></div>
+<app-participant-info 
+    #participantInfoComponent
+    [selectedLanguage]="selectedLanguage() || ''" [participantFields]="surveyForm?.participantInfoConfigs || []">
+</app-participant-info>
+<div class="text-center mt-4">
+    <button class="btn btnSubmit" type="submit" (click)="startTheSurvey()">
+        {{selectedLanguage() === eLanguages.English ? 'Join the Survey' : 'Tham gia khảo sát'}}
+    </button>
+</div>

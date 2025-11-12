@@ -256,4 +256,19 @@ export class SurveyFormService {
       })
     );
   }
+
+  checkValidForm(id: any): Observable<APIResponse<boolean>> {
+    const url = EUrl.checkValidFormUrlSurveyForm + `/${id}`;
+    return this.http.get<APIResponse<boolean>>(url, { headers: this.authenticationService.getHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<boolean>>(url, { headers: this.authenticationService.getHeaders() }))
+          );
+        } else {
+          return throwError(() => error);
+        }
+      })
+    );
+  }
 }
