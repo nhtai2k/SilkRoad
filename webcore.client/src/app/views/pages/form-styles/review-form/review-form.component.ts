@@ -8,12 +8,12 @@ import { SurveyFormModel } from '@models/survey-models/survey-form.model';
 import { EQuestionTypes } from '@common/global';
 
 @Component({
-  selector: 'app-survey-form',
-  imports: [CommonModule, FormControlDirective, FormLabelDirective, FormDirective, ReactiveFormsModule],
-  templateUrl: './survey-form.component.html',
-  styleUrls: ['./survey-form.component.scss']
+  selector: 'app-review-form',
+  templateUrl: './review-form.component.html',
+  styleUrl: './review-form.component.scss',
+  imports: [CommonModule, FormControlDirective, FormLabelDirective, FormDirective, ReactiveFormsModule]
 })
-export class SurveyFormComponent implements OnInit {
+export class ReviewFormComponent implements OnInit {
   language: string = 'en';
   surveyForm: SurveyFormModel | null = null;
   questionTypes : any = EQuestionTypes;

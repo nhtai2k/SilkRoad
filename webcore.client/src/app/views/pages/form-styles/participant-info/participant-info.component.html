@@ -1,0 +1,66 @@
+@if (participantForm) {
+<form [formGroup]="participantForm" >
+  <div class="row">
+    @for (field of participantFields; track trackByField($index, field)) {
+    <div class="col-md-6 mb-2" [class.col-md-12]="field.typeId === fieldTypes.TextArea">
+      <!-- Text Field -->
+      @if (field.typeId === fieldTypes.Text) {
+      <app-participant-text [fieldId]="getFieldId(field)" [label]="getFieldLabel(field)"
+        [placeholder]="getFieldPlaceholder(field)" [required]="field.isRequired" [minLength]="field.minLength"
+        [maxLength]="field.maxLength" [formControlName]="getFieldId(field)">
+      </app-participant-text>
+      }
+
+      <!-- Email Field -->
+      @if (field.typeId === fieldTypes.Email) {
+      <app-participant-email [fieldId]="getFieldId(field)" [label]="getFieldLabel(field)"
+        [placeholder]="getFieldPlaceholder(field)" [required]="field.isRequired" [formControlName]="getFieldId(field)">
+      </app-participant-email>
+      }
+
+      <!-- Phone Field -->
+      @if (field.typeId === fieldTypes.PhoneNumber) {
+      <app-participant-phone [fieldId]="getFieldId(field)" [label]="getFieldLabel(field)"
+        [placeholder]="getFieldPlaceholder(field)" [required]="field.isRequired" [formControlName]="getFieldId(field)">
+      </app-participant-phone>
+      }
+
+      <!-- Text Area Field -->
+      @if (field.typeId === fieldTypes.TextArea) {
+      <app-participant-textarea [fieldId]="getFieldId(field)" [label]="getFieldLabel(field)"
+        [placeholder]="getFieldPlaceholder(field)" [required]="field.isRequired" [minLength]="field.minLength"
+        [maxLength]="field.maxLength" [formControlName]="getFieldId(field)">
+      </app-participant-textarea>
+      }
+
+      <!-- Date Time Field -->
+      @if (field.typeId === fieldTypes.Date) {
+      <app-participant-datetime [fieldId]="getFieldId(field)" [label]="getFieldLabel(field)"
+        [required]="field.isRequired" [formControlName]="getFieldId(field)">
+      </app-participant-datetime>
+      }
+
+      <!-- Number Field -->
+      @if (field.typeId === fieldTypes.Number) {
+      <app-participant-number [fieldId]="getFieldId(field)" [label]="getFieldLabel(field)"
+        [placeholder]="getFieldPlaceholder(field)" [required]="field.isRequired" [formControlName]="getFieldId(field)">
+      </app-participant-number>
+      }
+    </div>
+    }
+  </div>
+
+  <!-- Form Actions -->
+  <!-- <div class="form-actions mt-4">
+    <div class="d-flex justify-content-between">
+      <button type="button" class="btn btn-outline-secondary" (click)="resetForm()">
+        {{ selectedLanguage === 'VN' ? 'Đặt lại' : 'Reset' }}
+      </button>
+
+      <button type="submit" class="btn btn-primary">
+        {{ selectedLanguage === 'VN' ? 'Gửi' : 'Submit' }}
+      </button>
+    </div>
+  </div> -->
+</form>
+}

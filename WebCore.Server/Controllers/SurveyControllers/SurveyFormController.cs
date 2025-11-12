@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using SurveyBusinessLogic.IHelpers;
+using SurveyBusinessLogic.Models;
 using SurveyDataAccess.DTOs;
 using WebCore.Server.Controllers.BaseApiControllers;
 
@@ -37,6 +38,14 @@ namespace WebCore.Server.Controllers.SurveyControllers
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
+        [HttpPost("filter")]
+        public async Task<IActionResult> Filter(SurveyFormFilterModel filter)
+        {
+            Pagination<SurveyFormDTO> data = await _helper.FilterAsync(filter);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        }
+
+
         [HttpGet("getAllDeleted/{pageIndex}/{pageSize}")]
         public async Task<IActionResult> GetAllDeleted(int pageIndex, int pageSize)
         {
@@ -46,6 +55,7 @@ namespace WebCore.Server.Controllers.SurveyControllers
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
+        
         [HttpGet("getById/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -59,6 +69,25 @@ namespace WebCore.Server.Controllers.SurveyControllers
         public async Task<IActionResult> GetEagerById(int id)
         {
             var data = await _helper.GetEagerLoadingByIdAsync(id);
+            if (data == null)
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
+            return Succeeded<SurveyFormDTO>(data, _localizer["dataFetchedSuccessfully"]);
+        }
+
+        [HttpGet("getPublicFormById/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetPublicFormById(int id)
+        {
+            var data = await _helper.GetPublicFormByIdAsync(id);
+            if (data == null)
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
+            return Succeeded<SurveyFormDTO>(data, _localizer["dataFetchedSuccessfully"]);
+        }
+
+        [HttpGet("getReviewFormById/{id}")]
+        public async Task<IActionResult> GetReviewFormById(int id)
+        {
+            var data = await _helper.GetReviewFormByIdAsync(id);
             if (data == null)
                 return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded<SurveyFormDTO>(data, _localizer["dataFetchedSuccessfully"]);
@@ -127,5 +156,42 @@ namespace WebCore.Server.Controllers.SurveyControllers
             return Succeeded(_localizer["updateSuccess"]);
         }
 
+        [HttpPut("unPublic/{id}")]
+        public async Task<IActionResult> Unpublic(int id)
+        {
+            var userName = User.Identity?.Name;
+            var result = await _helper.UnpublishAsync(id, userName);
+            if (!result)
+                return Failed(EStatusCodes.InternalServerError, _localizer["updateFailed"]);
+            return Succeeded(_localizer["updateSuccess"]);
+        }
+
+        [HttpPut("deactivate/{Id}")]
+        public async Task<IActionResult> Deactivate(int Id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
+            }
+            var userName = User.Identity?.Name;
+            bool result = await _helper.DeactivateAsync(Id, userName);
+            if (!result)
+                return Failed(EStatusCodes.BadRequest, _localizer["dataUpdateFailed"]);
+            return Succeeded(_localizer["dataUpdatedSuccessfully"]);
+        }
+
+        [HttpPut("activate/{Id}")]
+        public async Task<IActionResult> Activate(int Id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
+            }
+            var userName = User.Identity?.Name;
+            bool result = await _helper.ActivateAsync(Id, userName);
+            if (!result)
+                return Failed(EStatusCodes.BadRequest, _localizer["dataUpdateFailed"]);
+            return Succeeded(_localizer["dataUpdatedSuccessfully"]);
+        }
     }
 }

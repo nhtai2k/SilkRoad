@@ -8,4 +8,5 @@ import { Component, Input } from '@angular/core';
 })
 export class InternetIconComponent {
     @Input() size: number = 25;
+    @Input() color: string = '#000000';
 }
