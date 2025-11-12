@@ -84,12 +84,5 @@ export const pageRoutes: Routes = [
     data: {
       title: 'Finish'
     }
-  },
-    {
-    path: 'test-component',
-    loadComponent: () => import('./test/test.component').then(m => m.TestComponent),
-    data: {
-      title: 'Test Component'
-    }
-  },
+  }
 ];

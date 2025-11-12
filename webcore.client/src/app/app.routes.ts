@@ -196,12 +196,5 @@ export const routes: Routes = [
       //#endregion
     ]
   },
-  {
-    path: 'login',
-    loadComponent: () => import('./views/pages/login/login.component').then(m => m.LoginComponent),
-    data: {
-      title: 'Login Page'
-    }
-  },
   { path: '**', redirectTo: 'dashboard' }
 ];
