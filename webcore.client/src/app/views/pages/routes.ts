@@ -28,33 +28,5 @@ export const routes: Routes = [
     data: {
       title: 'Register Page'
     }
-  },
-  {
-    path:'survey-form/:id',
-    loadComponent: () => import('./survey-form/survey-form.component').then(m => m.SurveyFormComponent),
-    data: {
-      title: 'Survey Form'
-    }
-  },
-  {
-    path:'gold-survey-form/:id',
-    loadComponent: () => import('./gold-survey-form/gold-survey-form.component').then(m => m.GoldSurveyFormComponent),
-    data: {
-      title: 'Gold Survey Form'
-    }
-  },
-  {
-    path:'gold-thank-you',
-    loadComponent: () => import('./gold-thank-you/gold-thank-you.component').then(m => m.GoldThankYouComponent),
-    data: {
-      title: 'Thank you'
-    }
-  },
-  {
-    path:'gold-finish/:id',
-    loadComponent: () => import('./gold-finish/gold-finish.component').then(m => m.GoldFinishComponent),
-    data: {
-      title: 'Finish'
-    }
   }
 ];

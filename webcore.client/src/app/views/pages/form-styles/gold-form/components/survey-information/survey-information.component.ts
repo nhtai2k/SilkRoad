@@ -1,5 +1,6 @@
 import { Component, input, OnInit, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ELanguages } from '@common/global';
 import { FormControlDirective, FormDirective, FormLabelDirective } from '@coreui/angular';
 import { SurveyFormModel } from '@models/survey-models/survey-form.model';
 
@@ -10,7 +11,8 @@ import { SurveyFormModel } from '@models/survey-models/survey-form.model';
   styleUrl: './survey-information.component.scss'
 })
 export class SurveyInformationComponent implements OnInit {
-  language = input<string>();
+  eLanguages = ELanguages;
+  selectedLanguage = input<string>();
   initSurveyForm = input<SurveyFormModel | null>();
   onUpdateCurrentParticipantId = output<string>();
   surveyForm: SurveyFormModel | null = null;

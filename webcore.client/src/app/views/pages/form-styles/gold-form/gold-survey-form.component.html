@@ -2,19 +2,19 @@
     <div class="surveyFormContainer">
         <div class="header">
             <img class="logo" src="../../../../assets/images/thisologo1.png" alt="logo" />
-            <span class="fw-bold language" (click)="handleChangeLanguage()">{{language}}</span>
+            <span class="fw-bold language" (click)="handleChangeLanguage()">{{selectedLanguage}}</span>
         </div>
         <div class="body">
             @if (surveyForm != null) {
                 @if (currentPaticipantId() == '') {
                     <app-survey-information 
-                        [language]="language" 
+                        [selectedLanguage]="selectedLanguage" 
                         [initSurveyForm]="surveyForm"
                         (onUpdateCurrentParticipantId)="onUpdateCurrentParticipantId($event)">
                     </app-survey-information>
                 } @else {
                     <app-survey-content 
-                        [language]="language" 
+                        [selectedLanguage]="selectedLanguage" 
                         [initSurveyForm]="surveyForm"
                         [participantId]="currentPaticipantId()"
                         (onSubmitParticipantForm)="onSubmitParticipantForm($event)">

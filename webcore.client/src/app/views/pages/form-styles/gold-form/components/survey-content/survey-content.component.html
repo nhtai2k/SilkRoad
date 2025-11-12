@@ -3,19 +3,11 @@
             <h5>I. Question Groups</h5>
             }
             @for(questionGroup of surveyForm?.questionGroups; track questionGroup.id; let i = $index) {
-                @if (language() === 'EN') {
-                    <h5 class="questionGroupTitle" [ngClass]="{ 'mt-5': i !== 0 }">{{i + 1}}. {{questionGroup.nameEN}}</h5>
-                } @else {
-                    <h5 class="questionGroupTitle" [ngClass]="{ 'mt-5': i !== 0 }">{{i + 1}}. {{questionGroup.nameVN}}</h5>
-                }
+                <h5 class="questionGroupTitle" [ngClass]="{ 'mt-5': i !== 0 }">{{i + 1}}. {{selectedLanguage() === eLanguages.English ? questionGroup.nameEN : questionGroup.nameVN || ''}}</h5>
                 <!-- Questions within the group -->
                 <div class="question">
                     @for(question of questionGroup.questions; track question.id; let j = $index) {
-                        @if (language() === 'EN') {
-                            <p class="mb-2 text-justify" [ngClass]="{ 'mt-5': j !== 0 }">{{question.nameEN}}</p>
-                        } @else {
-                            <p class="mb-2 text-justify" [ngClass]="{ 'mt-5': j !== 0 }">{{question.nameVN}}</p>
-                        }
+                        <p class="mb-2 text-justify" [ngClass]="{ 'mt-5': j !== 0 }">{{selectedLanguage() === eLanguages.English ? question.nameEN : question.nameVN || ''}}</p>
                         <!-- Render question by question type -->
                         @if(question.questionTypeId === questionTypes.ClosedEndedQuestion){
                             <div class="answerList" id="question_{{question.id}}">
@@ -31,24 +23,15 @@
                                             {{ k + 1}}
                                         </label>
                                     <div class="tooltip">
-                                        @if (language() === 'EN') {
-                                            {{predefinedAnswer.nameEN}}
-                                        } @else {
-                                            {{predefinedAnswer.nameVN}}
-                                        }
+                                        {{selectedLanguage() === eLanguages.English ? predefinedAnswer.nameEN : predefinedAnswer.nameVN || ''}}
                                     </div>
                                 </div>
                                 }
                             </div>
                         } @else if (question.questionTypeId === questionTypes.OpenEndedQuestion) {
                             <div class="mb-4">
-                                @if (language() === 'EN') {
-                                    <textarea class="form-control" rows="3" placeholder="Your answer..." 
-                                        (change)="handleInputAnswer(question, $event)"></textarea>
-                                } @else {
-                                    <textarea class="form-control" rows="3" placeholder="Câu trả lời của bạn..." 
-                                        (change)="handleInputAnswer(question, $event)"></textarea>
-                                }
+                                <textarea class="form-control" rows="3" [placeholder]="selectedLanguage() === eLanguages.English ? 'Your answer...' : 'Câu trả lời của bạn...'" 
+                                    (change)="handleInputAnswer(question, $event)"></textarea>
                             </div>
                         }
                     }
@@ -75,34 +58,21 @@
                                     {{ k + 1}}
                                 </label>
                             <div class="tooltip">
-                                @if (language() === 'EN') {
-                                    {{predefinedAnswer.nameEN}}
-                                } @else {
-                                    {{predefinedAnswer.nameVN}}
-                                }
+                                {{selectedLanguage() === eLanguages.English ? predefinedAnswer.nameEN : predefinedAnswer.nameVN || ''}}
                             </div>
                         </div>
                         }
                     </div>
                 } @else if (item.questionTypeId === questionTypes.OpenEndedQuestion) {
                     <div class="mb-4">
-                        @if (language() === 'EN') {
-                            <textarea class="form-control" rows="3" placeholder="Your answer..." 
-                                (change)="handleChooseAnswer(item, $event, 0)"></textarea>
-                        } @else {
-                            <textarea class="form-control" rows="3" placeholder="Câu trả lời của bạn..." 
-                                (change)="handleChooseAnswer(item, $event, 0)"></textarea>
-                        }
+                        <textarea class="form-control" rows="3" [placeholder]="selectedLanguage() === eLanguages.English ? 'Your answer...' : 'Câu trả lời của bạn...'" 
+                                    (change)="handleInputAnswer(item, $event)"></textarea>
                     </div>
                 }
             }
 
             <div class="d-flex justify-content-center mt-5 mb-4">
                 <button class="btn btnSubmit" type="button" [disabled]="numberOfQuestions != answerList.length" (click)="handleFinishSurvey()">
-                    @if (language() === 'EN') {
-                        Finish Survey
-                    } @else {
-                        Kết thúc khảo sát
-                    }
+                    {{selectedLanguage() === eLanguages.English ? 'Finish Survey' : 'Kết thúc khảo sát'}}
                 </button>
             </div>

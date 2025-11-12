@@ -2,11 +2,11 @@
     <div class="surveyFormContainer">
         <div class="header">
             <img class="logo" src="../../../../assets/images/thisologo1.png" alt="logo" />
-            <span class="fw-bold language" (click)="handleChangeLanguage()">{{language}}</span>
+            <span class="fw-bold language" (click)="handleChangeLanguage()">{{selectedLanguage}}</span>
         </div>
         <div class="body d-flex flex-column align-items-center">
             <h3 class="mt-4">
-                @if (language == "EN")
+                @if (selectedLanguage === eLanguages.English)
                 {
                     The {{surveyForm?.titleEN}} program has expired!
                 }
@@ -16,7 +16,7 @@
                 }
             </h3>
             <div class="textContent mt-4 mb-4 d-flex flex-column gap-2">
-                @if (language == "EN")
+                @if (selectedLanguage === eLanguages.English)
                 {
                     <span>Thiso Mall would like to thank you for your continued patronage.</span>
                     <span>The “{{surveyForm?.titleEN}}” program has now closed.</span>

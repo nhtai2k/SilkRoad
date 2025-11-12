@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ELanguages } from '@common/global';
 import { SurveyFormModel } from '@models/survey-models/survey-form.model';
 import { SurveyFormService } from '@services/survey-services/survey-form.service';
 
@@ -7,10 +8,11 @@ import { SurveyFormService } from '@services/survey-services/survey-form.service
   selector: 'app-gold-finish',
   imports: [],
   templateUrl: './gold-finish.component.html',
-  styleUrl: './gold-finish.component.scss'
+  styleUrl: './gold-survey-form.component.scss'
 })
 export class GoldFinishComponent implements OnInit {
-  language: string = 'EN';
+  eLanguages = ELanguages;
+  selectedLanguage: string = ELanguages.Vietnamese;
   surveyForm: SurveyFormModel | null = null;
 
   constructor(private route: ActivatedRoute, private surveyFormService: SurveyFormService) { }
@@ -28,10 +30,6 @@ export class GoldFinishComponent implements OnInit {
   }
 
   handleChangeLanguage() {
-    if (this.language === 'EN') {
-      this.language = 'VN';
-    } else {
-      this.language = 'EN';
-    }
+    this.selectedLanguage = this.selectedLanguage === ELanguages.Vietnamese ? ELanguages.English : ELanguages.Vietnamese;
   }
 }

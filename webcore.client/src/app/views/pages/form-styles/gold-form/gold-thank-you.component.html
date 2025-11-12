@@ -2,11 +2,11 @@
     <div class="surveyFormContainer">
         <div class="header">
             <img class="logo" src="../../../../assets/images/thisologo1.png" alt="logo" />
-            <span class="fw-bold language" (click)="handleChangeLanguage()">{{language}}</span>
+            <span class="fw-bold language" (click)="handleChangeLanguage()">{{selectedLanguage}}</span>
         </div>
         <div class="body d-flex flex-column align-items-center">
             <div class="textContent mt-4 mb-4 d-flex flex-column gap-2">
-                @if (language == "EN")
+                @if (selectedLanguage === eLanguages.English)
                 {
                     <span>Thank you for taking the time to complete this survey.</span>
                     <span>Reward points will be credited to your membership account within 03 working days, please check the Activity History section on Thiso Rewards app for updates.</span>

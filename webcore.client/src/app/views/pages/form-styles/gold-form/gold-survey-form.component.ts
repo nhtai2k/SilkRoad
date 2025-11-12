@@ -4,7 +4,7 @@ import { SurveyFormService } from '@services/survey-services/survey-form.service
 import { FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SurveyFormModel } from '@models/survey-models/survey-form.model';
-import { EQuestionTypes } from '@common/global';
+import { ELanguages, EQuestionTypes } from '@common/global';
 import { SurveyInformationComponent } from './components/survey-information/survey-information.component';
 import { SurveyContentComponent } from './components/survey-content/survey-content.component';
 import { AlignDirective } from "@coreui/angular";
@@ -17,7 +17,8 @@ import { AnswerModel } from '@models/survey-models/answer.model';
   styleUrl: './gold-survey-form.component.scss'
 })
 export class GoldSurveyFormComponent implements OnInit {
-  language: string = 'EN';
+  eLanguages = ELanguages;
+  selectedLanguage: string = ELanguages.Vietnamese;
   surveyForm: SurveyFormModel | null = null;
   questionTypes : any = EQuestionTypes;
   currentPaticipantId = signal<string>('');
@@ -60,11 +61,7 @@ export class GoldSurveyFormComponent implements OnInit {
   }
 
   handleChangeLanguage() {
-    if (this.language === 'EN') {
-      this.language = 'VN';
-    } else {
-      this.language = 'EN';
-    }
+    this.selectedLanguage = this.selectedLanguage === ELanguages.Vietnamese ? ELanguages.English : ELanguages.Vietnamese;
   }
   
   onUpdateCurrentParticipantId(id: string): void {

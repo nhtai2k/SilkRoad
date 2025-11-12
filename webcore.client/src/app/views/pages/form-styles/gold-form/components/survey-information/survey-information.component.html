@@ -1,10 +1,5 @@
-@if (language() === 'EN') {
-    <h2 class="surveyTitle mb-4 mt-4">{{surveyForm?.titleEN}}</h2>
-    <div class="surveyDescription" [innerHTML]="surveyForm?.descriptionEN || ''"></div>
-} @else {
-    <h2 class="surveyTitle mb-4 mt-4">{{surveyForm?.titleVN}}</h2>
-    <div class="surveyDescription" [innerHTML]="surveyForm?.descriptionVN || ''"></div>
-}
+<h2 class="surveyTitle mb-4 mt-4">{{selectedLanguage() === eLanguages.English ? surveyForm?.titleEN : surveyForm?.titleVN || ''}}</h2>
+<div class="surveyDescription" [innerHTML]="selectedLanguage() === eLanguages.English ? surveyForm?.descriptionEN : surveyForm?.descriptionVN || ''"></div>
 
 <form cForm [formGroup]="participantForm" (ngSubmit)="onSubmit()">
     <div class="mb-2 row">
@@ -37,11 +32,7 @@
     </div>
     <div class="d-flex justify-content-center mt-4 mb-4">
         <button class="btn btnSubmit" type="submit" [disabled]="!participantForm.valid">
-            @if (language() === 'EN') {
-                Join the Survey
-            } @else {
-                Tham gia khảo sát
-            }
+            {{selectedLanguage() === eLanguages.English ? 'Join the Survey' : 'Tham gia khảo sát'}}
         </button>
     </div>
 </form>

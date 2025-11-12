@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, OnInit, output } from '@angular/core';
-import { EQuestionTypes } from '@common/global';
+import { ELanguages, EQuestionTypes } from '@common/global';
 import { AnswerModel } from '@models/survey-models/answer.model';
 import { QuestionModel } from '@models/survey-models/question.model';
 import { SurveyFormModel } from '@models/survey-models/survey-form.model';
@@ -12,7 +12,8 @@ import { SurveyFormModel } from '@models/survey-models/survey-form.model';
   styleUrl: './survey-content.component.scss'
 })
 export class SurveyContentComponent implements OnInit {  
-  language = input<string>();
+  eLanguages = ELanguages;
+  selectedLanguage = input<string>();
   participantId = input<string>();
   initSurveyForm = input<SurveyFormModel | null>();
   onSubmitParticipantForm = output<AnswerModel[]>();
