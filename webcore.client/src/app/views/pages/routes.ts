@@ -64,4 +64,25 @@ export const pageRoutes: Routes = [
       title: 'Default Form'
     }
   },
+    {
+    path:'gold-survey-form/:id',
+    loadComponent: () => import('./form-styles/gold-form/gold-survey-form.component').then(m => m.GoldSurveyFormComponent),
+    data: {
+      title: 'Gold Survey Form'
+    }
+  },
+    {
+    path:'gold-thank-you',
+    loadComponent: () => import('./form-styles/gold-form/gold-thank-you.component').then(m => m.GoldThankYouComponent),
+    data: {
+      title: 'Thank you'
+    }
+  },
+    {
+    path:'gold-finish/:id',
+    loadComponent: () => import('./form-styles/gold-form/gold-finish.component').then(m => m.GoldFinishComponent),
+    data: {
+      title: 'Finish'
+    }
+  },
 ];

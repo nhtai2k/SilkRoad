@@ -9,6 +9,7 @@ import { SurveyInformationComponent } from './components/survey-information/surv
 import { SurveyContentComponent } from './components/survey-content/survey-content.component';
 import { AlignDirective } from "@coreui/angular";
 import { AnswerModel } from '@models/survey-models/answer.model';
+import { ParticipantService } from '@services/survey-services/participant.service';
 
 @Component({
   selector: 'app-gold-survey-form',
@@ -24,15 +25,10 @@ export class GoldSurveyFormComponent implements OnInit {
   currentPaticipantId = signal<string>('');
   answerList: AnswerModel[] = [];
 
-  participantForm: FormGroup = new FormGroup({
-    fullName: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    phoneNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10,15}$')])
-  });
-
   constructor(
     private route: ActivatedRoute,
     private surveyFormService: SurveyFormService,
+    private participantService: ParticipantService,
     private router: Router
   ) { }
 
@@ -44,7 +40,7 @@ export class GoldSurveyFormComponent implements OnInit {
       this.router.navigate(['gold-finish', surveyId]);
       return;
     }
-    this.surveyFormService.getEagerById(surveyId).subscribe({
+    this.surveyFormService.getReviewFormById(surveyId).subscribe({
       next: (res) => {
         this.surveyForm = res.data;
       },
@@ -52,12 +48,6 @@ export class GoldSurveyFormComponent implements OnInit {
         console.error('Error fetching survey form:', err);
       }
     });
-  }
-  onSubmit() { 
-    if (this.participantForm.valid) {
-      console.log('Participant Info:', this.participantForm.value);
-      // Here you can handle the submission logic, e.g., send data to the server
-    }
   }
 
   handleChangeLanguage() {
@@ -71,11 +61,19 @@ export class GoldSurveyFormComponent implements OnInit {
 
   onSubmitParticipantForm(answers: AnswerModel[]): void {
     console.log('Final Submitted Answers:', answers);
+    this.participantService.addAnswers(answers).subscribe({
+      next: (res) => {
+        console.log('Answers submitted successfully:', res);
+        this.navigateToThankYouPage();
+      },
+      error: (err) => {
+        console.error('Error submitting answers:', err);
+      }
+    });
+  }
+
+  navigateToThankYouPage(): void {
     // Here you can handle the final submission logic, e.g., send data to the server
     this.router.navigate(['gold-thank-you']);
   }
-
-  get fullName() { return this.participantForm.get('fullName'); }
-  get email() { return this.participantForm.get('email'); }
-  get phoneNumber() { return this.participantForm.get('phoneNumber'); }
 }

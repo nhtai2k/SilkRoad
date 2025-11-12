@@ -1,49 +1,39 @@
-// .surveyTitle {
-//     font-weight: 600;
-//     color: #926936;
-//     font-family: "SVN-Gotham Regular";
-//     text-align: center;
-//     text-transform: uppercase;
-// }
+.surveyTitle {
+    font-weight: 600;
+    color: #926936;
+    text-align: center;
+    text-transform: uppercase;
+}
 
-// .surveyDescription {
-//     text-align: justify;
-//     font-family: "SVN-Gotham Regular" !important;
-    
-//     p {
-//         font-family: "SVN-Gotham Regular" !important;
+.surveyDescription {
+    text-align: justify;
+}
 
-//         i {
-//             font-family: "SVN-Gotham Regular" !important;
-//         }
-//     }
-// }
+.form-control {
+    border: 1px solid #d8a04d;
+    background: #F9F7F1;
+}
 
-// .form-control {
-//     border: 1px solid #d8a04d;
-//     background: #F9F7F1;
-// }
+textarea {
+    border: 1px solid #d8a04d;
+    border-radius: .25rem;
+    background: #F9F7F1;
+}
 
-// textarea {
-//     border: 1px solid #d8a04d;
-//     border-radius: .25rem;
-//     background: #F9F7F1;
-// }
+.btnSubmit {
+    background-color: #F9F7F1;
+    color: #d8a04d;
+    font-weight: 700;
+    text-decoration: none;
+    transition: 300ms all;
+    border: 1px solid #d8a04d;
+    left: -4px;
+    font-size: 16px;
+    white-space: nowrap;
+    text-align: center;
 
-// .btnSubmit {
-//     background-color: #F9F7F1;
-//     color: #d8a04d;
-//     font-weight: 700;
-//     text-decoration: none;
-//     transition: 300ms all;
-//     border: 1px solid #d8a04d;
-//     left: -4px;
-//     font-size: 16px;
-//     white-space: nowrap;
-//     text-align: center;
-
-//     &:hover {
-//         background-color: #d8a04d;
-//         color: #fff;
-//     }
-// }
+    &:hover {
+        background-color: #d8a04d;
+        color: #fff;
+    }
+}

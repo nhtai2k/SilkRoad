@@ -60,6 +60,7 @@ namespace SurveyBusinessLogic.Helpers
             ParticipantDTO? participant = await _unitOfWork.ParticipantRepository.GetByIdAsync(firstAswer.ParticipantId);
             if (participant == null) return false;
             participant.IsComplete = true;
+
             foreach (AnswerDTO answer in answers)
             {
                 await _unitOfWork.AnswerRepository.CreateAsync(answer);
