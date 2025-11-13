@@ -1,0 +1,9 @@
+@if(initSurvey && initSurvey.formStyleId == eFormStyles.DefaultForm) {
+<app-default-survey-form [surveyForm]="initSurvey" [isReviewMode]="true"></app-default-survey-form>
+}
+@else if(initSurvey && initSurvey.formStyleId == eFormStyles.GoldForm) {
+<app-gold-survey-form [surveyForm]="initSurvey" [isReviewMode]="true"></app-gold-survey-form>
+}
+@else if(initSurvey && initSurvey.formStyleId == eFormStyles.SilverForm) {
+<app-silver-survey-form [surveyForm]="initSurvey" [isReviewMode]="true"></app-silver-survey-form>
+}

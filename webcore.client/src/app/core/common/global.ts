@@ -1,7 +1,5 @@
-//const baseChatbotUrl = "https://localhost:7124/"
-//const baseChatbotUrl = "https://dev2.thiso.vn/"
-export const baseUrl = "https://localhost:7185/";
-//const baseUrl = "/";
+export const baseUrl = "https://dev.thiso.vn/#/";
+
 export const chatbotHubUrl = baseUrl + "chat";
 export const ollamaUrl = baseUrl + "api/Ollama/GetResponse";
 export const streamOllamaUrl = baseUrl + "api/Ollama/GetStreamingResponse";
@@ -109,7 +107,17 @@ export enum EFieldTypes
     Number = 3,
     Date = 4,
     Email = 5,
-    PhoneNumber = 6
+    PhoneNumber = 6,
+    Datetime = 7
+    // Dropdown = 8,
+    // RadioButton = 9,
+    // Checkbox = 10
+}
+
+export enum EFormStyles{
+    DefaultForm = -1,
+    GoldForm = 1,
+    SilverForm = 2
 }
 
 export enum ELanguages

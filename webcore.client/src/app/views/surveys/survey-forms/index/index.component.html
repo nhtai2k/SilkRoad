@@ -106,11 +106,11 @@
             <td>
                 <div class="d-flex justify-content-end">
                     @if(item.isPublished) {
-                    <button class="btn btn-info me-2" (click)="toggleLiveQrCodeModal()">
+                    <button class="btn btn-info me-2" (click)="toggleLiveQrCodeModal(item.id)">
                         <svg [cIcon]="icons.cilQrCode" width="25" class="text-white" title="Restore Icon"></svg>
                     </button>
                     }
-                    <a target="_blank" routerLink="/gold-survey-form/{{item.id}}" class="btn btn-success me-2">
+                    <a target="_blank" routerLink="/review-form/{{item.id}}" class="btn btn-success me-2">
                         <svg [cIcon]="icons.cilFile" width="25" class="text-white" title="Restore Icon"></svg>
                     </a>
                     <a routerLink="./update/{{item.id}}" class="btn btn-primary me-2">
@@ -211,8 +211,10 @@
         <div class="d-flex justify-content-center">
             <!-- QR Code content goes here -->
             <div class="d-flex flex-column align-items-center">
-                <nz-qrcode nzValue="https://ng.ant.design/"></nz-qrcode>
-                <p class="mt-2">QR Code will be displayed here.</p>
+                @if(qrCodeUrl){
+                    <nz-qrcode [nzValue]="qrCodeUrl"></nz-qrcode>
+                    <a class="mt-3" [href]="qrCodeUrl" target="_blank">{{qrCodeUrl}}</a>
+                }
             </div>
         </div>
     </c-modal-body>

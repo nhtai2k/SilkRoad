@@ -9,6 +9,7 @@
         public bool IsComplete { get; set; } = false;
         public bool IsRejected { get; set; } = false;
         public bool IsHighlighted { get; set; } = false;
+        public bool IsReviewMode { get; set; } = false;
         public string? Reason { get; set; }
         public SurveyFormDTO? SurveyForm { get; set; }
         public ICollection<AnswerDTO>? Answers { get; set; }

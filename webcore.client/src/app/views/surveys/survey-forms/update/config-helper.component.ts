@@ -4,10 +4,8 @@ import { ButtonDirective, FormCheckComponent, FormCheckInputDirective, FormCheck
 import { IconDirective } from '@coreui/icons-angular';
 import { cilExitToApp, cilPen, cilPlus, cilSave, cilTrash, cilX } from '@coreui/icons';
 import { CommonModule } from '@angular/common';
-import { OptionModel } from '@models/option.model';
-import { SelectSearchComponent } from "@components/selects/select-search/select-search.component";
 import { ParticipantInfoConfigModel } from '@models/survey-models/participant-info-config.model';
-import { EFieldTypes, numberEnumToArray, stringEnumToArray } from '@common/global';
+import { EFieldTypes, numberEnumToArray } from '@common/global';
 import { ParticipantInfoConfigService } from '@services/survey-services/participant-info-config.service';
 
 @Component({
@@ -95,7 +93,7 @@ export class ConfigHelperComponent implements OnInit {
       this.createForm.patchValue({ surveyFormId: this.surveyFormId });
 
       const formData: ParticipantInfoConfigModel = {
-        id: '',
+        id: undefined,
         surveyFormId: this.surveyFormId,
         fieldNameEN: this.createForm.value.fieldNameEN || '',
         fieldNameVN: this.createForm.value.fieldNameVN || '',
@@ -176,7 +174,7 @@ export class ConfigHelperComponent implements OnInit {
   onUpdateFormSubmit(): void {
     if (this.updateForm.valid) {
       const formData: ParticipantInfoConfigModel = {
-        id: this.updateForm.value.id || '',
+        id: this.updateForm.value.id,
         surveyFormId: this.surveyFormId,
         fieldNameEN: this.updateForm.value.fieldNameEN || '',
         fieldNameVN: this.updateForm.value.fieldNameVN || '',

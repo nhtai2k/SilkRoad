@@ -8,7 +8,7 @@ import { SurveyFormService } from '@services/survey-services/survey-form.service
 import { cilPlus, cilTrash, cilPen, cilSave, cilX, cilExitToApp, cilLoopCircular, cilSearch, cilQrCode, cilFile } from '@coreui/icons';
 import { IconDirective } from '@coreui/icons-angular';
 import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, TemplateIdDirective, AlignDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective } from '@coreui/angular';
-import { EColors } from '@common/global';
+import { baseUrl, EColors } from '@common/global';
 import { ToastService } from '@services/helper-services/toast.service';
 import { NzQRCodeModule } from 'ng-zorro-antd/qr-code';
 import { StoreService } from '@services/survey-services/store.service';
@@ -29,12 +29,14 @@ export class IndexComponent implements OnInit {
   visibleTrashModal: boolean = false;
   visibleQrCodeModal: boolean = false;
   deleteById: number = 0;
-    storeList: OptionModel[] = [];
+  storeList: OptionModel[] = [];
   trashData: Pagination<SurveyFormModel> = new Pagination<SurveyFormModel>();
   data: Pagination<SurveyFormModel> = new Pagination<SurveyFormModel>();
   trashPageInformation: PageInformation = new PageInformation();
   pageInformation: PageInformation = new PageInformation();
   icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilX, cilExitToApp, cilLoopCircular, cilSearch, cilQrCode, cilFile };
+  baseUrl: string = baseUrl;
+  qrCodeUrl: string = '';
   filterForm: FormGroup = new FormGroup({
     pageIndex: new FormControl(-1),
     pageSize: new FormControl(-1),
@@ -127,7 +129,7 @@ export class IndexComponent implements OnInit {
     this.deleteById = id;
     this.toggleLiveDelete();
   }
-    onConfirmDelete() {
+  onConfirmDelete() {
     this.surveyFormService.softDelete(this.deleteById).subscribe((res) => {
       this.toggleLiveDelete();
       this.getData();
@@ -145,7 +147,12 @@ export class IndexComponent implements OnInit {
   }
   //#endregion
   //#region QR Code Modal
-  toggleLiveQrCodeModal() {
+  toggleLiveQrCodeModal(id: number | null = null) {
+    if (id !== null) {
+      this.qrCodeUrl = baseUrl + `public-form/${id}`;
+    } else {
+      this.qrCodeUrl = '';
+    }
     this.visibleQrCodeModal = !this.visibleQrCodeModal;
   }
   handleLiveQrCodeModalChange(event: any) {

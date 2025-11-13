@@ -52,37 +52,44 @@ export const pageRoutes: Routes = [
   },
   {
     path: 'review-form/:id',
-    loadComponent: () => import('./form-styles/review-form/review-form.component').then(m => m.ReviewFormComponent),
+    loadComponent: () => import('./review-form/review-form.component').then(m => m.ReviewFormComponent),
     data: {
       title: 'Review Form'
     }
   },
-  {
-    path: 'default/:id',
-    loadComponent: () => import('./form-styles/default/default.component').then(m => m.DefaultComponent),
+    {
+    path: 'public-form/:id',
+    loadComponent: () => import('./public-form/public-form.component').then(m => m.PublicFormComponent),
     data: {
-      title: 'Default Form'
+      title: 'Public Form'
     }
   },
-    {
-    path:'gold-survey-form/:id',
-    loadComponent: () => import('./form-styles/gold-form/gold-survey-form.component').then(m => m.GoldSurveyFormComponent),
-    data: {
-      title: 'Gold Survey Form'
-    }
-  },
-    {
-    path:'gold-thank-you',
-    loadComponent: () => import('./form-styles/gold-form/gold-thank-you.component').then(m => m.GoldThankYouComponent),
-    data: {
-      title: 'Thank you'
-    }
-  },
-    {
-    path:'gold-finish/:id',
-    loadComponent: () => import('./form-styles/gold-form/gold-finish.component').then(m => m.GoldFinishComponent),
-    data: {
-      title: 'Finish'
-    }
-  }
+  // {
+  //   path: 'default/:id',
+  //   loadComponent: () => import('./form-styles/default/default.component').then(m => m.DefaultComponent),
+  //   data: {
+  //     title: 'Default Form'
+  //   }
+  // },
+  //   {
+  //   path:'gold-survey-form/:id',
+  //   loadComponent: () => import('./form-styles/gold-form/gold-survey-form.component').then(m => m.GoldSurveyFormComponent),
+  //   data: {
+  //     title: 'Gold Survey Form'
+  //   }
+  // },
+  //   {
+  //   path:'gold-thank-you',
+  //   loadComponent: () => import('./form-styles/gold-form/gold-thank-you.component').then(m => m.GoldThankYouComponent),
+  //   data: {
+  //     title: 'Thank you'
+  //   }
+  // },
+  //   {
+  //   path:'gold-finish/:id',
+  //   loadComponent: () => import('./form-styles/gold-form/gold-finish.component').then(m => m.GoldFinishComponent),
+  //   data: {
+  //     title: 'Finish'
+  //   }
+  // }
 ];

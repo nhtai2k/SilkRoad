@@ -8,7 +8,7 @@ import { cilExitToApp, cilPen, cilPlus, cilSave, cilTrash, cilX, cilQrCode, cilF
 import { CommonModule } from '@angular/common';
 import { RangeDatetimePickerComponent } from "@components/generals/range-datetime-picker/range-datetime-picker.component";
 import { ToastService } from '@services/helper-services/toast.service';
-import { EColors } from '@common/global';
+import { baseUrl, EColors } from '@common/global';
 import { QuestionGroupModel } from '@models/survey-models/question-group.model';
 import { QuestionModel } from '@models/survey-models/question.model';
 import { UpdateHelperComponent } from './update-helper.component';
@@ -47,6 +47,8 @@ export class UpdateComponent implements OnInit {
   ];
 
   disableForm: boolean = true;
+  baseUrl: string = baseUrl;
+    qrCodeUrl: string = '';
 
   updateForm: FormGroup = new FormGroup({
     id: new FormControl(null),
@@ -96,6 +98,7 @@ export class UpdateComponent implements OnInit {
         }
       }
     });
+    this.qrCodeUrl = baseUrl + `public-form/${id}`;
   }
 
   onDateRangeChange(event: any) {
