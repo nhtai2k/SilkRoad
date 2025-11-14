@@ -43,19 +43,20 @@ export class ParticipantService {
     );
   }
   
-  // getEagerById(id: any): Observable<APIResponse<SurveyUIModel>> {
-  //   return this.http.get<APIResponse<SurveyUIModel>>(EUrl.getEagerByIdUrlParticipant + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
-  //     catchError(error => {
-  //       if (error.status === 401) {
-  //         return this.authenticationService.reNewToken().pipe(
-  //           switchMap(() => this.http.get<APIResponse<SurveyUIModel>>(EUrl.getEagerByIdUrlParticipant + `/${id}`, { headers: this.authenticationService.getHeaders() }))
-  //         );
-  //       } else {
-  //         return throwError(() => error);
-  //       }
-  //     })
-  //   );
-  // }
+  getById(id: any): Observable<APIResponse<ParticipantModel>> {
+    const url = `${EUrl.getByIdUrlParticipant}/${id}`;
+    return this.http.get<APIResponse<ParticipantModel>>(url, { headers: this.authenticationService.getHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<ParticipantModel>>(url, { headers: this.authenticationService.getHeaders() }))
+          );
+        } else {
+          return throwError(() => error);
+        }
+      })
+    );
+  }
 
   initParticipant(model: ParticipantModel): Observable<APIResponse<ParticipantModel>> {
     return this.http.post<APIResponse<ParticipantModel>>(EUrl.initParticipantUrlParticipant, model, { headers: this.authenticationService.getHeaders() }).pipe(

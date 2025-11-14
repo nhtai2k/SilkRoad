@@ -26,7 +26,7 @@ export class SplitSurveyFormComponent implements OnInit {
   eLanguages = ELanguages;
   selectedLanguage: string = ELanguages.Vietnamese;
   questionTypes: any = EQuestionTypes;
-  initParticipant: boolean = true;
+  initParticipant: boolean = false;
   finished: boolean = false;
   currentPaticipantId = signal<string>('okey');
   answerList: AnswerModel[] = [];

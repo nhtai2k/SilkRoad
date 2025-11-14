@@ -512,7 +512,6 @@ export class UpdateHelperComponent implements OnInit {
   }
 
   onSubmitUpdateQuestion(): void {
-    debugger;
     if (this.updateQuestionForm.valid) {
       const question: QuestionModel = {
         id: this.updateQuestionForm.value.id ?? '',

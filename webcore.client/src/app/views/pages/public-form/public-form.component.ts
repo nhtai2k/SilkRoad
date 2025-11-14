@@ -29,7 +29,7 @@ export class PublicFormComponent implements OnInit {
     const surveyId = this.route.snapshot.paramMap.get('id');
     if (surveyId)
     {
-      this.surveyFormService.getReviewFormById(surveyId).subscribe({
+      this.surveyFormService.getPublicFormById(surveyId).subscribe({
         next: (res) => {
           this.initSurvey = res.data;
         },

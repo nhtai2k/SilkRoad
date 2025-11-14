@@ -266,7 +266,7 @@ namespace SurveyBusinessLogic.Helpers
 
         public async Task<SurveyFormDTO?> GetReviewFormByIdAsync(int id)
         {
-            var data = await _unitOfWork.SurveyFormRepository.GetEagerSurveyFormByIdAsync(id);
+            var data = await _unitOfWork.SurveyFormRepository.GetEagerLoadingByIdAsync(id);
             return data;
         }
 
@@ -278,13 +278,13 @@ namespace SurveyBusinessLogic.Helpers
         public async Task<SurveyFormDTO?> GetPublicFormByIdAsync(int id)
         {
             // Get data by id
-            var data = await _unitOfWork.SurveyFormRepository.GetEagerSurveyFormByIdAsync(id);
+            var data = await _unitOfWork.SurveyFormRepository.GetEagerLoadingByIdAsync(id);
             // Check published status
             if (data == null || !data.IsPublished) return null;
             // Check limited participant
             if (data.IsLimited)
             {
-                var query = _unitOfWork.ParticipantRepository.Query(s => s.SurveyFormId == id && s.IsCompleted && !s.IsRejected);
+                var query = _unitOfWork.ParticipantRepository.Query(s => s.SurveyFormId == id && s.IsCompleted && !s.IsRejected && !s.IsReviewMode).AsNoTracking();
                 int countParticipants = await query.CountAsync();
                 // If reach max participants, return null
                 if (countParticipants >= data.MaxParticipants)

@@ -111,7 +111,9 @@ namespace SurveyBusinessLogic.Helpers
 
         public async Task<ParticipantDTO?> GetByIdAsync(Guid id)
         {
-            var participant = await _unitOfWork.ParticipantRepository.GetByIdAsync(id);
+            var participant = await _unitOfWork.ParticipantRepository.GetEagerLoadingByIdAsync(id);
+            if (participant == null) return null;
+            participant.SurveyForm = await _unitOfWork.SurveyFormRepository.GetEagerLoadingByIdAsync(participant.SurveyFormId);
             return participant;
         }
 

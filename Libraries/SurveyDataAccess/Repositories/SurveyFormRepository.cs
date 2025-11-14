@@ -13,7 +13,7 @@ namespace SurveyDataAccess.Repositories
         }
 
 
-        public async Task<SurveyFormDTO?> GetEagerSurveyFormByIdAsync(int id)
+        public async Task<SurveyFormDTO?> GetEagerLoadingByIdAsync(int id)
         {
             var data = await _dbSet
                 .Where(s => s.Id == id)
@@ -29,6 +29,7 @@ namespace SurveyDataAccess.Repositories
                 .Include(s => s.Questions!.OrderBy(p => p.Priority))
                     !.ThenInclude(q => q.PredefinedAnswers!.OrderBy(p => p.Priority))
                 .AsSplitQuery() // prevents Cartesian explosion when multiple collections are included
+                .AsNoTracking()
                 .FirstOrDefaultAsync();
 
             return data;

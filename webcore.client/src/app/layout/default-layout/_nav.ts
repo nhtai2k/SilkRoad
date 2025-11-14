@@ -11,30 +11,30 @@ export const navItems: INavData[] = [
   //   }
   // },
   //#region Stock Market
-  // {
-  //   title: true,
-  //   name: 'Stock Market'
-  // },
-  // {
-  //   name: 'Industries',
-  //   url: '/stock/industries',
-  //   iconComponent: { name: 'cil-chart-pie' }
-  // },
-  // {
-  //   name: 'Companies',
-  //   url: '/stock/companies',
-  //   iconComponent: { name: 'cil-building' }
-  // },
-  //   {
-  //   name: 'Chart',
-  //   url: '/stock/chart',
-  //   iconComponent: { name: 'cil-bar-chart' }
-  // },
-  //       {
-  //   name: 'Trade Histories',
-  //   url: '/stock/chart',
-  //   iconComponent: { name: 'cil-notes' }
-  // },
+  {
+    title: true,
+    name: 'Stock Market'
+  },
+  {
+    name: 'Industries',
+    url: '/stock/industries',
+    iconComponent: { name: 'cil-chart-pie' }
+  },
+  {
+    name: 'Companies',
+    url: '/stock/companies',
+    iconComponent: { name: 'cil-building' }
+  },
+    {
+    name: 'Chart',
+    url: '/stock/chart',
+    iconComponent: { name: 'cil-bar-chart' }
+  },
+        {
+    name: 'Trade Histories',
+    url: '/stock/chart',
+    iconComponent: { name: 'cil-notes' }
+  },
 
   //#endregion
   //#region Features
@@ -74,128 +74,128 @@ export const navItems: INavData[] = [
   // },
   //#endregion
   //#region Restaurant
-  // {
-  //   name: 'Restaurant',
-  //   title: true
-  // },
-  // {
-  //   name: 'Reservations',
-  //   url: '/reservations',
-  //   iconComponent: { name: 'cil-calendar' }
-  // },
-  // {
-  //   name: 'Categories',
-  //   url: '/categories',
-  //   iconComponent: { name: 'cil-list' }
-  // },
-  // {
-  //   name: 'Dishes',
-  //   url: '/dishes',
-  //   iconComponent: { name: 'cil-fastfood' }
-  // },
-  // {
-  //   name: 'Tables',
-  //   url: '/tables',
-  //   iconComponent: { name: 'cil-view-module' }
-  // },
-  // {
-  //   name: 'Units',
-  //   url: '/units',
-  //   iconComponent: { name: 'cil-line-style' }
-  // },
+  {
+    name: 'Restaurant',
+    title: true
+  },
+  {
+    name: 'Reservations',
+    url: '/reservations',
+    iconComponent: { name: 'cil-calendar' }
+  },
+  {
+    name: 'Categories',
+    url: '/categories',
+    iconComponent: { name: 'cil-list' }
+  },
+  {
+    name: 'Dishes',
+    url: '/dishes',
+    iconComponent: { name: 'cil-fastfood' }
+  },
+  {
+    name: 'Tables',
+    url: '/tables',
+    iconComponent: { name: 'cil-view-module' }
+  },
+  {
+    name: 'Units',
+    url: '/units',
+    iconComponent: { name: 'cil-line-style' }
+  },
   //#endregion
   //#region Lipstick Shop
-  // {
-  //   title: true,
-  //   name: 'Lipstick Shop'
-  // },
-  // {
-  //   name: 'Report',
-  //   url: '/lipstick-shop/report',
-  //   iconComponent: { name: 'cil-chart-line' }
-  // },
-  // {
-  //   name: 'Orders',
-  //   url: '/lipstick-shop/orders',
-  //   iconComponent: { name: 'cil-notes' }
-  // },
-  // {
-  //   name: 'Payments',
-  //   url: '/lipstick-shop/payments',
-  //   iconComponent: { name: 'cil-money' }
-  // },
-  // {
-  //   name: 'Products',
-  //   url: '/lipstick-shop/products',
-  //   iconComponent: { name: 'cil3d' }
-  // },
-  // {
-  //   name: 'Blogs',
-  //   url: '/lipstick-shop/blogs',
-  //   iconComponent: { name: 'cil-color-border' }
-  // },
-  // {
-  //   name: 'Members',
-  //   url: '/lipstick-shop/members',
-  //   iconComponent: { name: 'cil3d' }
-  // },
-  // {
-  //   name: 'Extend',
-  //   url: '/lipstick-shop/extension',
-  //   iconComponent: { name: 'cil-puzzle' },
-  //   children: [
-  //     {
-  //       name: 'Brands',
-  //       url: '/lipstick-shop/extension/brands',
-  //       icon: 'nav-icon-bullet'
-  //     },
-  //     {
-  //       name: 'Categories',
-  //       url: '/lipstick-shop/extension/categories',
-  //       icon: 'nav-icon-bullet'
-  //     },
-  //     {
-  //       name: 'SubCategories',
-  //       url: '/lipstick-shop/extension/sub-categories',
-  //       icon: 'nav-icon-bullet'
-  //     },
-  //     {
-  //       name: 'Colors',
-  //       url: '/lipstick-shop/extension/colors',
-  //       icon: 'nav-icon-bullet'
-  //     },
-  //     {
-  //       name: 'Sizes',
-  //       url: '/lipstick-shop/extension/sizes',
-  //       icon: 'nav-icon-bullet'
-  //     },
-  //     {
-  //       name: 'Topics',
-  //       url: '/lipstick-shop/extension/topics',
-  //       icon: 'nav-icon-bullet'
-  //     },
-  //     {
-  //       name: "Page Types",
-  //       url: '/lipstick-shop/extension/page-types',
-  //       icon: 'nav-icon-bullet'
-  //     },
-  //     {
-  //       name: "Page Contents",
-  //       url: '/lipstick-shop/extension/page-contents',
-  //       icon: 'nav-icon-bullet'
-  //     },
-  //     {
-  //       name: "Page Introductions",
-  //       url: '/lipstick-shop/extension/page-introductions',
-  //       icon: 'nav-icon-bullet'
-  //     },
-  //     {
-  //       name: 'Home Banners',
-  //       url: '/lipstick-shop/extension/home-banners',
-  //       icon: 'nav-icon-bullet'
-  //     }
-  //   ]
-  // },
+  {
+    title: true,
+    name: 'Lipstick Shop'
+  },
+  {
+    name: 'Report',
+    url: '/lipstick-shop/report',
+    iconComponent: { name: 'cil-chart-line' }
+  },
+  {
+    name: 'Orders',
+    url: '/lipstick-shop/orders',
+    iconComponent: { name: 'cil-notes' }
+  },
+  {
+    name: 'Payments',
+    url: '/lipstick-shop/payments',
+    iconComponent: { name: 'cil-money' }
+  },
+  {
+    name: 'Products',
+    url: '/lipstick-shop/products',
+    iconComponent: { name: 'cil3d' }
+  },
+  {
+    name: 'Blogs',
+    url: '/lipstick-shop/blogs',
+    iconComponent: { name: 'cil-color-border' }
+  },
+  {
+    name: 'Members',
+    url: '/lipstick-shop/members',
+    iconComponent: { name: 'cil3d' }
+  },
+  {
+    name: 'Extend',
+    url: '/lipstick-shop/extension',
+    iconComponent: { name: 'cil-puzzle' },
+    children: [
+      {
+        name: 'Brands',
+        url: '/lipstick-shop/extension/brands',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: 'Categories',
+        url: '/lipstick-shop/extension/categories',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: 'SubCategories',
+        url: '/lipstick-shop/extension/sub-categories',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: 'Colors',
+        url: '/lipstick-shop/extension/colors',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: 'Sizes',
+        url: '/lipstick-shop/extension/sizes',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: 'Topics',
+        url: '/lipstick-shop/extension/topics',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: "Page Types",
+        url: '/lipstick-shop/extension/page-types',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: "Page Contents",
+        url: '/lipstick-shop/extension/page-contents',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: "Page Introductions",
+        url: '/lipstick-shop/extension/page-introductions',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: 'Home Banners',
+        url: '/lipstick-shop/extension/home-banners',
+        icon: 'nav-icon-bullet'
+      }
+    ]
+  },
   //#endregion
   //#region Surveys
 

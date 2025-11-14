@@ -245,7 +245,7 @@ export enum EUrl {
 
     //participant
     getAllUrlParticipant = "/api/participant/getAll",
-    getEagerByIdUrlParticipant = "/api/participant/getEagerById",
+    getByIdUrlParticipant = "/api/participant/getById",
     exportExcelUrlParticipant = "/api/participant/exportExcel",
     initParticipantUrlParticipant = "/api/participant/initParticipant",
     addAnswersUrlParticipant = "/api/participant/addAnswers",

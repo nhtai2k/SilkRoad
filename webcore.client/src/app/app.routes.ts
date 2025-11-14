@@ -143,7 +143,7 @@ export const routes: Routes = [
         loadChildren: () => import('./views/surveys/participants/index/routes').then((m) => m.routes)
       },
       {
-        path: 'surveys/participants/update/:id',
+        path: 'surveys/participants/details/:id',
         loadChildren: () => import('./views/surveys/participants/details/routes').then((m) => m.routes)
       },
       {
