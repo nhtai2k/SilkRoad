@@ -16,6 +16,8 @@ interface ConvertedFile {
   styleUrl: './convert-word-to-pdf.component.scss'
 })
 export class ConvertWordToPdfComponent {
+ 
+  //#region Component Properties
   selectedFile: File | null = null;
   convertedFile: ConvertedFile | null = null;
   isDragOver = false;
@@ -24,9 +26,11 @@ export class ConvertWordToPdfComponent {
   conversionStatus = '';
   maxFileSize = 50 * 1024 * 1024; // 50MB
   errorMessage = '';
+  //#endregion
 
   constructor(private wordToPdfService: WordToPdfService, private toastService: ToastService) {}
-
+  
+  //#region Drag and Drop Handlers
   onDragOver(event: DragEvent): void {
     event.preventDefault();
     event.stopPropagation();
@@ -49,6 +53,7 @@ export class ConvertWordToPdfComponent {
       this.handleFileSelection(files[0]);
     }
   }
+  //#endregion
 
   onFileSelected(event: Event): void {
     const target = event.target as HTMLInputElement;
@@ -75,6 +80,12 @@ export class ConvertWordToPdfComponent {
     event.stopPropagation();
     this.selectedFile = null;
     this.convertedFile = null;
+    //Reset input file value to allow re-selection of the same file
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+      console.log('File input value reset');
+    }
   }
 
   formatFileSize(bytes: number): string {

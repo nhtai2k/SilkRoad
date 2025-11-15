@@ -31,124 +31,139 @@
            (drop)="onDrop($event)"
            (click)="fileInput.click()">
         
-        <input #fileInput type="file" 
+        <input #fileInput id="fileInput" type="file" 
                accept=".doc,.docx" 
                (change)="onFileSelected($event)" 
                style="display: none;">
 
-        <div class="upload-content" *ngIf="!selectedFile">
-          <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="17,8 12,3 7,8"></polyline>
-            <line x1="12" y1="3" x2="12" y2="15"></line>
-          </svg>
-          <h3>Drop your Word file here</h3>
-          <p>or click to browse files</p>
-          <div class="supported-formats">
-            <span class="format-tag">.DOC</span>
-            <span class="format-tag">.DOCX</span>
-          </div>
-        </div>
-
-        <div class="file-preview" *ngIf="selectedFile && !isConverting">
-          <div class="file-info">
-            <svg class="file-preview-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-              <polyline points="14,2 14,8 20,8"></polyline>
+        @if (!selectedFile) {
+          <div class="upload-content">
+            <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17,8 12,3 7,8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
             </svg>
-            <div class="file-details">
-              <h4>{{ selectedFile.name }}</h4>
-              <p>{{ formatFileSize(selectedFile.size) }}</p>
+            <h3>Drop your Word file here</h3>
+            <p>or click to browse files</p>
+            <div class="supported-formats">
+              <span class="format-tag">.DOC</span>
+              <span class="format-tag">.DOCX</span>
             </div>
           </div>
-          <button class="remove-file-btn" (click)="removeFile($event)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
-        </div>
+        }
+
+        @if (selectedFile && !isConverting) {
+          <div class="file-preview">
+            <div class="file-info">
+              <svg class="file-preview-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14,2 14,8 20,8"></polyline>
+              </svg>
+              <div class="file-details">
+                <h4>{{ selectedFile.name }}</h4>
+                <p>{{ formatFileSize(selectedFile.size) }}</p>
+              </div>
+            </div>
+            <button class="remove-file-btn" (click)="removeFile($event)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        }
       </div>
 
       <!-- File Size Warning -->
-      <div class="file-warning" *ngIf="selectedFile && selectedFile.size > maxFileSize">
-        <svg class="warning-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
-          <line x1="12" y1="9" x2="12" y2="13"/>
-          <line x1="12" y1="17" x2="12.01" y2="17"/>
-        </svg>
-        <span>File size exceeds {{ formatFileSize(maxFileSize) }} limit</span>
-      </div>
+      @if (selectedFile && selectedFile.size > maxFileSize) {
+        <div class="file-warning">
+          <svg class="warning-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          <span>File size exceeds {{ formatFileSize(maxFileSize) }} limit</span>
+        </div>
+      }
 
       <!-- Error Message -->
-      <div class="error-message" *ngIf="errorMessage">
-        <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="15" y1="9" x2="9" y2="15"></line>
-          <line x1="9" y1="9" x2="15" y2="15"></line>
-        </svg>
-        <span>{{ errorMessage }}</span>
-      </div>
+      @if (errorMessage) {
+        <div class="error-message">
+          <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="15" y1="9" x2="9" y2="15"></line>
+            <line x1="9" y1="9" x2="15" y2="15"></line>
+          </svg>
+          <span>{{ errorMessage }}</span>
+        </div>
+      }
     </div>
 
     <!-- Conversion Progress -->
-    <div class="progress-section" *ngIf="isConverting">
-      <div class="progress-content">
-        <div class="spinner"></div>
-        <h3>Converting your document...</h3>
-        <p>{{ conversionStatus }}</p>
-        <div class="progress-bar">
-          <div class="progress-fill" [style.width.%]="conversionProgress"></div>
+    @if (isConverting) {
+      <div class="progress-section">
+        <div class="progress-content">
+          <div class="spinner"></div>
+          <h3>Converting your document...</h3>
+          <p>{{ conversionStatus }}</p>
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="conversionProgress"></div>
+          </div>
         </div>
       </div>
-    </div>
+    }
 
     <!-- Success Section -->
-    <div class="success-section" *ngIf="convertedFile">
-      <div class="success-content">
-        <svg class="success-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="20,6 9,17 4,12"></polyline>
-        </svg>
-        <h3>Conversion Complete!</h3>
-        <p>Your PDF is ready for download</p>
-        <div class="converted-file-info">
-          <span class="file-name">{{ convertedFile.name }}</span>
-          <span class="file-size">{{ formatFileSize(convertedFile.size) }}</span>
+    @if (convertedFile) {
+      <div class="success-section">
+        <div class="success-content">
+          <svg class="success-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20,6 9,17 4,12"></polyline>
+          </svg>
+          <h3>Conversion Complete!</h3>
+          <p>Your PDF is ready for download</p>
+          <div class="converted-file-info">
+            <span class="file-name">{{ convertedFile.name }}</span>
+            <span class="file-size">{{ formatFileSize(convertedFile.size) }}</span>
+          </div>
         </div>
       </div>
-    </div>
+    }
 
     <!-- Action Buttons -->
     <div class="action-section">
-      <button class="btn btn-primary" 
-              [disabled]="!selectedFile || selectedFile.size > maxFileSize || isConverting"
-              (click)="convertFile()"
-              *ngIf="!convertedFile">
-        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-          <polyline points="7,10 12,15 17,10"></polyline>
-          <line x1="12" y1="15" x2="12" y2="3"></line>
-        </svg>
-        {{ isConverting ? 'Converting...' : 'Convert to PDF' }}
-      </button>
-
-      <div class="success-actions" *ngIf="convertedFile">
-        <button class="btn btn-success" (click)="downloadFile()">
+      @if (!convertedFile) {
+        <button class="btn btn-primary" 
+                [disabled]="!selectedFile || selectedFile.size > maxFileSize || isConverting"
+                (click)="convertFile()">
           <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
             <polyline points="7,10 12,15 17,10"></polyline>
             <line x1="12" y1="15" x2="12" y2="3"></line>
           </svg>
-          Download PDF
+          {{ isConverting ? 'Converting...' : 'Convert to PDF' }}
         </button>
-        <button class="btn btn-secondary" (click)="resetConverter()">
-          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="1,4 1,10 7,10"></polyline>
-            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-          </svg>
-          Convert Another
-        </button>
-      </div>
+      }
+
+      @if (convertedFile) {
+        <div class="success-actions">
+          <button class="btn btn-success" (click)="downloadFile()">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7,10 12,15 17,10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download PDF
+          </button>
+          <button class="btn btn-secondary" (click)="resetConverter()">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="1,4 1,10 7,10"></polyline>
+              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+            </svg>
+            Convert Another
+          </button>
+        </div>
+      }
     </div>
 
     <!-- Features Section -->
