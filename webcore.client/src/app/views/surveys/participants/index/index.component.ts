@@ -13,12 +13,13 @@ import { ParticipantModel } from '@models/survey-models/participant.model';
 import { ToastService } from '@services/helper-services/toast.service';
 import { ParticipantService } from '@services/survey-services/participant.service';
 import { StoreService } from '@services/survey-services/store.service';
+import { RangeDatetimePickerComponent } from "@components/generals/range-datetime-picker/range-datetime-picker.component";
 
 @Component({
   selector: 'app-index',
   imports: [ReactiveFormsModule, DataTableComponent, RouterLink, IconDirective, AccordionButtonDirective, AccordionComponent,
     ButtonDirective, AccordionItemComponent, ModalComponent, ModalBodyComponent, TemplateIdDirective, ModalFooterComponent,
-    ModalHeaderComponent, FormSelectDirective, DatePipe, FormControlDirective],
+    ModalHeaderComponent, FormSelectDirective, DatePipe, FormControlDirective, RangeDatetimePickerComponent],
   templateUrl: './index.component.html',
   styleUrl: './index.component.scss'
 })

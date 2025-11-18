@@ -52,13 +52,20 @@
                                     </select>
                                 </div>
                                  <div class="col-4">
-                                    <input formControlName="startDate" type="date" class="form-control"/>
+                                    <!-- <input formControlName="startDate" type="date" class="form-control"/> -->
+                                     <app-range-datetime-picker (onChangeValue)="filterForm.patchValue({startDate: $event[0],endDate: $event[1]})"></app-range-datetime-picker>
                                 </div>
-                                 <div class="col-4">
+                                 <!-- <div class="col-4">
                                     <input formControlName="endDate" type="date" class="form-control"/>
+                                </div> -->
+                                 <div class="col-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        <svg [cIcon]="icons.cilSearch" width="20" class="text-white"
+                                            title="Search Icon"></svg>
+                                    </button>
                                 </div>
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                
                                 <div class="col-4">
                                     <button type="submit" class="btn btn-primary">
@@ -66,7 +73,7 @@
                                             title="Search Icon"></svg>
                                     </button>
                                 </div>
-                            </div>
+                            </div> -->
                         </form>
                     </div>
                 </div>

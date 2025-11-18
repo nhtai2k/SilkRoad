@@ -99,56 +99,57 @@ export class SplitSurveyFormComponent implements OnInit {
     });
   }
   //#endregion
-  //#region Suvvey Content
+  
+  //#region Survey Content
   // Xử lý khi người dùng chọn câu trả lời. Dành cho câu hỏi lựa chọn
-    handleChooseAnswer(question: QuestionModel, answerId: any, rating: number) {
-      const questionElement = document.getElementById(`question_${question.id}`);
-      if (!questionElement) return;
-      // Bỏ selected khỏi answer đã chọn trước đó
-      questionElement.querySelectorAll('.labelAnswer.selected')
-        .forEach(el => el.classList.remove('selected'));
-      document.getElementById(`predefinedAnswerLabel_${answerId}`)?.classList.add('selected');
-      // Cập nhật answerList
-      const existingAnswerIndex = this.answerList.findIndex(a => a.questionId === question.id);
+  handleChooseAnswer(question: QuestionModel, answerId: any, rating: number) {
+    const questionElement = document.getElementById(`question_${question.id}`);
+    if (!questionElement) return;
+    // Bỏ selected khỏi answer đã chọn trước đó
+    questionElement.querySelectorAll('.labelAnswer.selected')
+      .forEach(el => el.classList.remove('selected'));
+    document.getElementById(`predefinedAnswerLabel_${answerId}`)?.classList.add('selected');
+    // Cập nhật answerList
+    const existingAnswerIndex = this.answerList.findIndex(a => a.questionId === question.id);
+    if (existingAnswerIndex !== -1) {
+      this.answerList[existingAnswerIndex].answerId = answerId;
+      this.answerList[existingAnswerIndex].rating = rating;
+    } else {
+      this.answerList.push({
+        participantId: this.currentPaticipantId(),
+        questionGroupId: question.questionGroupId,
+        questionId: question.id || '',
+        questionTypeId: question.questionTypeId,
+        answerId: answerId,
+        rating: rating
+      });
+    }
+  }
+
+  //Xử lý khi người dùng điền câu trả lời. Dành cho câu hỏi dạng text
+  handleInputAnswer(question: QuestionModel, event: any) {
+    const value = event.target.value;
+    const existingAnswerIndex = this.answerList.findIndex(a => a.questionId === question.id);
+    if (!value || value.trim() === '') {
+      // Nếu giá trị rỗng, xóa câu trả lời khỏi danh sách
       if (existingAnswerIndex !== -1) {
-        this.answerList[existingAnswerIndex].answerId = answerId;
-        this.answerList[existingAnswerIndex].rating = rating;
-      } else {
-        this.answerList.push({
-          participantId: this.currentPaticipantId(),
-          questionGroupId: question.questionGroupId,
-          questionId: question.id || '',
-          questionTypeId: question.questionTypeId,
-          answerId: answerId,
-          rating: rating
-        });
+        this.answerList.splice(existingAnswerIndex, 1);
       }
     }
-  
-    //Xử lý khi người dùng điền câu trả lời. Dành cho câu hỏi dạng text
-    handleInputAnswer(question: QuestionModel, event: any) {
-      const value = event.target.value;
-      const existingAnswerIndex = this.answerList.findIndex(a => a.questionId === question.id);
-      if (!value || value.trim() === '') {
-        // Nếu giá trị rỗng, xóa câu trả lời khỏi danh sách
-        if (existingAnswerIndex !== -1) {
-          this.answerList.splice(existingAnswerIndex, 1);
-        }
-      }
-      if (existingAnswerIndex !== -1) {
-        this.answerList[existingAnswerIndex].answer = event.target.value;
-      } else {
-        this.answerList.push({
-          participantId: this.currentPaticipantId(),
-          questionGroupId: question.questionGroupId,
-          questionId: question.id || '',
-          questionTypeId: question.questionTypeId,
-          answer: event.target.value
-        });
-      }
+    if (existingAnswerIndex !== -1) {
+      this.answerList[existingAnswerIndex].answer = event.target.value;
+    } else {
+      this.answerList.push({
+        participantId: this.currentPaticipantId(),
+        questionGroupId: question.questionGroupId,
+        questionId: question.id || '',
+        questionTypeId: question.questionTypeId,
+        answer: event.target.value
+      });
     }
-  
-      onSubmitParticipantForm(): void {
+  }
+
+  onSubmitParticipantForm(): void {
     console.log('Final Submitted Answers:', this.answerList);
     this.participantService.addAnswers(this.answerList).subscribe({
       next: (res) => {

@@ -1,115 +1,118 @@
 <div class="surveyPage">
-    <div class="surveyFormContainer">
-        <div class="header">
-             <span class="fw-bold">Lulusia Kingdom</span>
-            <span class="fw-bold language" (click)="handleChangeLanguage()">{{selectedLanguage}}</span>
-        </div>
-        <div class="body">
-
-            @if(!initParticipant) {
-            <ng-container *ngTemplateOutlet="participantInfoTemplate"></ng-container>
-            } @else if(!finished) {
-            <ng-container *ngTemplateOutlet="surveyContentTemplate"></ng-container>
-            }
-            @if(finished) {
-            <ng-container *ngTemplateOutlet="finishSurveyTemplate"></ng-container>
-            }
-        </div>
+  <div class="surveyFormContainer">
+    <div class="header">
+      <span class="fw-bold">Lulusia Kingdom</span>
+      <span class="fw-bold language" (click)="handleChangeLanguage()">{{selectedLanguage}}</span>
     </div>
+    <div class="body">
+
+      @if(!initParticipant) {
+      <ng-container *ngTemplateOutlet="participantInfoTemplate"></ng-container>
+      } @else if(!finished) {
+      <ng-container *ngTemplateOutlet="surveyContentTemplate"></ng-container>
+      }
+      @if(finished) {
+      <ng-container *ngTemplateOutlet="finishSurveyTemplate"></ng-container>
+      }
+    </div>
+  </div>
 </div>
 <!-- Init Participant Info -->
 <ng-template #participantInfoTemplate>
-    <h2 class="surveyTitle mb-4 mt-4">
-        {{selectedLanguage === eLanguages.English ? surveyForm.titleEN : surveyForm.titleVN || ''}}
-    </h2>
+  <h2 class="surveyTitle mb-4 mt-4">
+    {{selectedLanguage === eLanguages.English ? surveyForm.titleEN : surveyForm.titleVN || ''}}
+  </h2>
 
-    <div class="surveyDescription"
-        [innerHTML]="selectedLanguage === eLanguages.English ? surveyForm.descriptionEN : surveyForm.descriptionVN || ''">
-    </div>
+  <div class="surveyDescription"
+    [innerHTML]="selectedLanguage === eLanguages.English ? surveyForm.descriptionEN : surveyForm.descriptionVN || ''">
+  </div>
 
-    @if(surveyForm.participantInfoConfigs && surveyForm.participantInfoConfigs.length > 0) {
-    <app-participant-info #participantInfoComponent [selectedLanguage]="selectedLanguage"
-        (onSubmitParticipantInfo)="submitParticipant($event)" [participantFields]="surveyForm.participantInfoConfigs">
-    </app-participant-info>
-    }
+  @if(surveyForm.participantInfoConfigs && surveyForm.participantInfoConfigs.length > 0) {
+  <app-participant-info #participantInfoComponent [selectedLanguage]="selectedLanguage"
+    (onSubmitParticipantInfo)="submitParticipant($event)" [participantFields]="surveyForm.participantInfoConfigs">
+  </app-participant-info>
+  }
 
-    <div class="text-center mt-4">
-        <button class="btn btnSubmit" type="submit" (click)="trigger()">
-            {{selectedLanguage === eLanguages.English ? 'Join the Survey' : 'Tham gia khảo sát'}}
-        </button>
-    </div>
+  <div class="text-center mt-4">
+    <button class="btn btnSubmit" type="submit" (click)="trigger()">
+      {{selectedLanguage === eLanguages.English ? 'Join the Survey' : 'Tham gia khảo sát'}}
+    </button>
+  </div>
 </ng-template>
 
 <!-- Survey Content Template -->
 <ng-template #surveyContentTemplate>
-    <!-- Question Groups -->
-    @if(surveyForm.questions.length > 0 && surveyForm.questionGroups.length > 0) {
-    <h5>I. Question Groups</h5>
+  <!-- Question Groups -->
+  @if(surveyForm.questions.length > 0 && surveyForm.questionGroups.length > 0) {
+  <h5>I. Question Groups</h5>
+  }
+  @for(questionGroup of surveyForm.questionGroups; track questionGroup.id; let i = $index) {
+  <h5 class="questionGroupTitle">{{i + 1}}. {{questionGroup.nameVN}}</h5>
+  <!-- Questions within the group -->
+  @for(question of questionGroup.questions; track question.id; let j = $index) {
+  <h6 class="questionTitle ms-2">{{i + 1}}.{{j + 1}}. {{question.nameVN}}</h6>
+  <!-- Render question by question type -->
+  @if(question.questionTypeId === questionTypes.ClosedEndedQuestion){
+  <ul class="radioGroup">
+    @for(predefinedAnswer of question.predefinedAnswers; track predefinedAnswer.id) {
+    <li>
+      <input type="radio" id="predefinedAnswer_{{predefinedAnswer.id}}" name="question_{{question.id}}"
+        value="{{predefinedAnswer.id}}">
+      <label for="predefinedAnswer_{{predefinedAnswer.id}}">{{predefinedAnswer.nameVN}}</label>
+    </li>
     }
-      @for(questionGroup of surveyForm.questionGroups; track questionGroup.id; let i = $index) {
-      <h5 class="questionGroupTitle">{{i + 1}}. {{questionGroup.nameVN}}</h5>
-        <!-- Questions within the group -->
-        @for(question of questionGroup.questions; track question.id; let j = $index) {
-          <h6 class="questionTitle ms-2">{{i + 1}}.{{j + 1}}. {{question.nameVN}}</h6>
-          <!-- Render question by question type -->
-          @if(question.questionTypeId === questionTypes.ClosedEndedQuestion){
-            <ul class="radioGroup">
-              @for(predefinedAnswer of question.predefinedAnswers; track predefinedAnswer.id) {
-                <li>
-                    <input type="radio" id="predefinedAnswer_{{predefinedAnswer.id}}" name="question_{{question.id}}" value="{{predefinedAnswer.id}}">
-                    <label for="predefinedAnswer_{{predefinedAnswer.id}}">{{predefinedAnswer.nameVN}}</label>
-                </li>
-              }
-            </ul>
-          }@else if(question.questionTypeId === questionTypes.OpenEndedQuestion){
-            <div class="openEndedAnswer">
-                <textarea rows="4" cols="50" placeholder="Your answer here..."></textarea>
-            </div>
-        }
-        }
-      }
-    <!-- Questions -->
-    @if(surveyForm.questions.length > 0 && surveyForm.questionGroups.length > 0) {
-    <h5 class="mt-4">II. Single Questions</h5>
+  </ul>
+  }@else if(question.questionTypeId === questionTypes.OpenEndedQuestion){
+  <div class="openEndedAnswer">
+    <textarea rows="4" cols="50" placeholder="Your answer here..."></textarea>
+  </div>
+  }
+  }
+  }
+  <!-- Questions -->
+  @if(surveyForm.questions.length > 0 && surveyForm.questionGroups.length > 0) {
+  <h5 class="mt-4">II. Single Questions</h5>
+  }
+  @for(item of surveyForm.questions; track item.id; let i = $index) {
+  <h5 class="questionTitle ms-2">{{i + 1}}. {{item.nameVN}}</h5>
+  <!-- Render question by question type -->
+  @if(item.questionTypeId === questionTypes.ClosedEndedQuestion){
+  <ul class="d-flex justify-content-between flex-wrap">
+    @for(predefinedAnswer of item.predefinedAnswers; track predefinedAnswer.id) {
+    <li>{{predefinedAnswer.nameVN}}</li>
     }
-      @for(item of surveyForm.questions; track item.id; let i = $index) {
-      <h5 class="questionTitle ms-2">{{i + 1}}. {{item.nameVN}}</h5>
-        <!-- Render question by question type -->
-        @if(item.questionTypeId === questionTypes.ClosedEndedQuestion){
-          <ul class="d-flex justify-content-between flex-wrap">
-            @for(predefinedAnswer of item.predefinedAnswers; track predefinedAnswer.id) {
-              <li>{{predefinedAnswer.nameVN}}</li>
-            }
-          </ul>
-        }
-      }
+  </ul>
+  }
+  }
 
-    <div class="d-flex justify-content-center mt-5 mb-4">
-        <button class="btn btnSubmit" type="button" [disabled]="numberOfQuestions != answerList.length"
-            (click)="onSubmitParticipantForm()">
-            {{selectedLanguage === eLanguages.English ? 'Finish Survey' : 'Kết thúc khảo sát'}}
-        </button>
-    </div>
+  <div class="d-flex justify-content-center mt-5 mb-4">
+    <button class="btn btnSubmit" type="button" [disabled]="numberOfQuestions != answerList.length"
+      (click)="onSubmitParticipantForm()">
+      {{selectedLanguage === eLanguages.English ? 'Finish Survey' : 'Kết thúc khảo sát'}}
+    </button>
+  </div>
 </ng-template>
 
 <!-- Finish Survey -->
 
 <ng-template #finishSurveyTemplate>
- <div class="d-flex flex-column align-items-center">
-            <div class="textContent mt-4 mb-4 d-flex flex-column gap-2">
-                @if (selectedLanguage === eLanguages.English)
-                {
-                    <span>Thank you for taking the time to complete this survey.</span>
-                    <span>Reward points will be credited to your membership account within 03 working days, please check the Activity History section on Thiso Rewards app for updates.</span>
-                    <span>Your feedback is a valuable motivation for Thiso Mall to continuously improve.</span>
-                }
-                @else
-                {
-                    <span>Xin chân thành cảm ơn Quý khách đã dành thời gian tham gia khảo sát.</span>
-                    <span>Điểm thưởng sẽ được tích lũy vào tài khoản thành viên trong vòng 03 ngày làm việc, Quý khách vui lòng theo dõi mục Lịch sử hoạt động trên ứng dụng Thiso Rewards để biết thêm thông tin.</span>
-                    <span>Mỗi phản hồi của Quý khách là nguồn động lực quý giá, giúp Thiso Mall ngày càng hoàn thiện hơn.</span>
-                }
-            </div>
-            <img style="max-width:50%;" src="./assets/images/Pose5_Rainbow.gif" alt="..." />
-        </div>
+  <div class="d-flex flex-column align-items-center">
+    <div class="textContent mt-4 mb-4 d-flex flex-column gap-2">
+      @if (selectedLanguage === eLanguages.English)
+      {
+      <span>Thank you for taking the time to complete this survey.</span>
+      <span>Reward points will be credited to your membership account within 03 working days, please check the Activity
+        History section on Thiso Rewards app for updates.</span>
+      <span>Your feedback is a valuable motivation for Thiso Mall to continuously improve.</span>
+      }
+      @else
+      {
+      <span>Xin chân thành cảm ơn Quý khách đã dành thời gian tham gia khảo sát.</span>
+      <span>Điểm thưởng sẽ được tích lũy vào tài khoản thành viên trong vòng 03 ngày làm việc, Quý khách vui lòng theo
+        dõi mục Lịch sử hoạt động trên ứng dụng Thiso Rewards để biết thêm thông tin.</span>
+      <span>Mỗi phản hồi của Quý khách là nguồn động lực quý giá, giúp Thiso Mall ngày càng hoàn thiện hơn.</span>
+      }
+    </div>
+    <img style="max-width:50%;" src="./assets/images/Pose5_Rainbow.gif" alt="..." />
+  </div>
 </ng-template>
