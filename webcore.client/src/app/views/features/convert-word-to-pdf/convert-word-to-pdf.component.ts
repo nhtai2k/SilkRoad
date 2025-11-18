@@ -126,6 +126,7 @@ export class ConvertWordToPdfComponent {
       error: (error) => {
         console.error('Conversion failed:', error);
         this.errorMessage = 'Conversion failed. Please try again.';
+        this.convertedFile = null; // Clear any existing converted file
         this.resetConversionState();
       }
     });
