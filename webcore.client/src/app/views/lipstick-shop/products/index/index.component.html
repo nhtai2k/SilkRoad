@@ -16,35 +16,45 @@
                   <label cLabel for="categoryId">Category:</label>
                   <select class="form-control" formControlName="categoryId" cSelect (change)="changeCategoryId($event)">
                     <option [value]="-1">All</option>
-                    <option *ngFor="let item of categories" [value]="item.id">{{item.nameEN}}</option>
+                    @for (item of categories; track item.id) {
+                      <option [value]="item.id">{{item.nameEN}}</option>
+                    }
                   </select>
                 </div>
                 <div cFormFloating class="mb-2 col-3">
                   <label cLabel for="subCategoryId">SubCategory:</label>
                   <select class="form-control" formControlName="subCategoryId" cSelect>
                     <option [value]="-1">All</option>
-                    <option *ngFor="let item of subCategories" [value]="item.id">{{item.nameEN}}</option>
+                    @for (item of subCategories; track item.id) {
+                      <option [value]="item.id">{{item.nameEN}}</option>
+                    }
                   </select>
                 </div>
                 <div cFormFloating class="mb-2 col-3">
                   <label cLabel for="brandId">Brand:</label>
                   <select class="form-control" formControlName="brandId" cSelect>
                     <option [value]="-1">All</option>
-                    <option *ngFor="let item of brands" [value]="item.id">{{item.name}}</option>
+                    @for (item of brands; track item.id) {
+                      <option [value]="item.id">{{item.name}}</option>
+                    }
                   </select>
                 </div>
                 <div cFormFloating class="mb-2 col-3">
                   <label cLabel for="sizeId">Size:</label>
                   <select class="form-control" formControlName="sizeId" cSelect>
                     <option [value]="-1">All</option>
-                    <option *ngFor="let item of sizes" [value]="item.id">{{item.nameEN}}</option>
+                    @for (item of sizes; track item.id) {
+                      <option [value]="item.id">{{item.nameEN}}</option>
+                    }
                   </select>
                 </div>
                 <div cFormFloating class="mb-2 col-3">
                   <label cLabel for="colorId">Color:</label>
                   <select class="form-control" formControlName="colorId" cSelect>
                     <option [value]="-1">All</option>
-                    <option *ngFor="let item of colors" [value]="item.id">{{item.nameEN}}</option>
+                    @for (item of colors; track item.id) {
+                      <option [value]="item.id">{{item.nameEN}}</option>
+                    }
                   </select>
                 </div>
                 <div cFormFloating class="mb-2 col-3">
@@ -89,22 +99,24 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of data.items; index as i ">
-      <td>{{ (pageInformation.pageIndex *pageInformation.pageSize) + i + 1 - pageInformation.pageSize }}</td>
-      <td>{{ item.nameEN }}</td>
-      <td>{{ item.nameVN }}</td>
-      <td>{{ item.isActive }}</td>
-      <td>
-        <div class="d-flex justify-content-end">
-          <button routerLink="./update/{{item.id}}" class="btn btn-primary me-2">
-            <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
-          </button>
-          <button (click)="deleteData(item.id)" class="btn btn-danger">
-            <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
-          </button>
-        </div>
-      </td>
-    </tr>
+    @for (item of data.items; track item.id; let i = $index) {
+      <tr>
+        <td>{{ (pageInformation.pageIndex *pageInformation.pageSize) + i + 1 - pageInformation.pageSize }}</td>
+        <td>{{ item.nameEN }}</td>
+        <td>{{ item.nameVN }}</td>
+        <td>{{ item.isActive }}</td>
+        <td>
+          <div class="d-flex justify-content-end">
+            <button routerLink="./update/{{item.id}}" class="btn btn-primary me-2">
+              <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
+            </button>
+            <button (click)="deleteData(item.id)" class="btn btn-danger">
+              <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+    }
   </tbody>
 </app-data-table>
 

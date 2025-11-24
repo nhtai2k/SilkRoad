@@ -10,7 +10,7 @@ import { cilPlus, cilTrash, cilPen, cilLoopCircular, cilCloudDownload, cilUserPl
 import { IconDirective } from '@coreui/icons-angular';
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { ToastService } from '@services/helper-services/toast.service';
-import { bookingSignalrUrl, EColors } from '@common/global';
+import {  EColors } from '@common/global';
 import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 import { ReservationModel } from '@models/restaurant-models/reservation.model';
 import { ReservationService } from '@services/restaurant-services/reservation.service';

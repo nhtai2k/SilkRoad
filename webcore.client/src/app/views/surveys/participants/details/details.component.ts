@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ParticipantModel } from '@models/survey-models/participant.model';
 import { ParticipantService } from '@services/survey-services/participant.service';
-import { e } from 'node_modules/@angular/cdk/focus-monitor.d-2iZxjw4R';
-import { P } from 'node_modules/@angular/cdk/portal-directives.d-DbeNrI5D';
 
 @Component({
   selector: 'app-details',

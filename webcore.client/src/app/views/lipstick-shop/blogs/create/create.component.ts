@@ -15,8 +15,8 @@ import { CkeditorComponent } from '@components/ckeditor/ckeditor.component';
 @Component({
   selector: 'app-create',
   imports: [FormDirective, FormLabelDirective, FormSelectDirective,
-    FormControlDirective, ButtonDirective, NgIf, CkeditorComponent,
-    RouterLink, CardComponent, CardBodyComponent, IconDirective, NgFor,
+    FormControlDirective, ButtonDirective, CkeditorComponent,
+    RouterLink, CardComponent, CardBodyComponent, IconDirective,
     FormCheckComponent, ReactiveFormsModule],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'

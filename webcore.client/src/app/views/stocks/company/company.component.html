@@ -22,8 +22,9 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of data.items; index as i ">
-      <td>{{ i+1 }}</td>
+    @for (item of data.items; track item.id; let i = $index) {
+      <tr>
+        <td>{{ i+1 }}</td>
       <td>{{ item.name }}</td>
       <td>{{ item.symbol }}</td>
       <td>{{ item.isActive }}</td>
@@ -42,7 +43,8 @@
           </button>
         </div>
       </td>
-    </tr>
+      </tr>
+    }
   </tbody>
 </app-data-table>
 
@@ -66,7 +68,9 @@
           <label cLabel for="industryId">Select industry: <span class="text-danger">(*)</span></label>
           <select cFormControl formControlName="industryId" cSelect>
             <option value="-1">Select an industry</option>
-            <option *ngFor="let item of industryList" [value]="item.id">{{ item.name }}</option>
+            @for (item of industryList; track item.id) {
+              <option [value]="item.id">{{ item.name }}</option>
+            }
           </select>
         </div>
         <div class="col-6">
@@ -78,22 +82,28 @@
         <div class="col-6">
           <label cLabel for="name">Name: <span class="text-danger">(*)</span></label>
           <input cFormControl formControlName="name">
-          <div *ngIf="nameCreateForm?.invalid && (nameCreateForm?.dirty || nameCreateForm?.touched)"
-            class="text-danger">
-            <div *ngIf="nameCreateForm?.hasError('required')">
-              Name is required.
+          @if (nameCreateForm?.invalid && (nameCreateForm?.dirty || nameCreateForm?.touched)) {
+            <div class="text-danger">
+              @if (nameCreateForm?.hasError('required')) {
+                <div>
+                  Name is required.
+                </div>
+              }
             </div>
-          </div>
+          }
         </div>
         <div class="col-6">
           <label cLabel for="symbol">Symbol: <span class="text-danger">(*)</span></label>
           <input cFormControl formControlName="symbol">
-          <div *ngIf="symbolCreateForm?.invalid && (symbolCreateForm?.dirty || symbolCreateForm?.touched)"
-            class="text-danger">
-            <div *ngIf="symbolCreateForm?.hasError('required')">
-              Symbol is required.
+          @if (symbolCreateForm?.invalid && (symbolCreateForm?.dirty || symbolCreateForm?.touched)) {
+            <div class="text-danger">
+              @if (symbolCreateForm?.hasError('required')) {
+                <div>
+                  Symbol is required.
+                </div>
+              }
             </div>
-          </div>
+          }
         </div>
       </div>
     </c-modal-body>
@@ -125,7 +135,9 @@
           <label cLabel for="industryId">Select industry: <span class="text-danger">(*)</span></label>
           <select cFormControl formControlName="industryId" cSelect>
             <option value="-1">Select an industry</option>
-            <option *ngFor="let item of industryList" [value]="item.id">{{ item.name }}</option>
+            @for (item of industryList; track item.id) {
+              <option [value]="item.id">{{ item.name }}</option>
+            }
           </select>
         </div>
         <div class="col-6">
@@ -137,22 +149,28 @@
         <div class="col-12">
           <label cLabel for="name">Name: <span class="text-danger">(*)</span></label>
           <input cFormControl formControlName="name">
-          <div *ngIf="nameUpdateForm?.invalid && (nameUpdateForm?.dirty || nameUpdateForm?.touched)"
-            class="text-danger">
-            <div *ngIf="nameUpdateForm?.hasError('required')">
-              Name is required.
+          @if (nameUpdateForm?.invalid && (nameUpdateForm?.dirty || nameUpdateForm?.touched)) {
+            <div class="text-danger">
+              @if (nameUpdateForm?.hasError('required')) {
+                <div>
+                  Name is required.
+                </div>
+              }
             </div>
-          </div>
+          }
         </div>
         <div class="col-12">
           <label cLabel for="symbol">Symbol: <span class="text-danger">(*)</span></label>
           <input cFormControl formControlName="symbol">
-          <div *ngIf="symbolUpdateForm?.invalid && (symbolUpdateForm?.dirty || symbolUpdateForm?.touched)"
-            class="text-danger">
-            <div *ngIf="symbolUpdateForm?.hasError('required')">
-              Symbol is required.
+          @if (symbolUpdateForm?.invalid && (symbolUpdateForm?.dirty || symbolUpdateForm?.touched)) {
+            <div class="text-danger">
+              @if (symbolUpdateForm?.hasError('required')) {
+                <div>
+                  Symbol is required.
+                </div>
+              }
             </div>
-          </div>
+          }
         </div>
       </div>
     </c-modal-body>
@@ -200,8 +218,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of trashData.items; index as i ">
-          <td>{{ i+1 }}</td>
+        @for (item of trashData.items; track item.id; let i = $index) {
+          <tr>
+            <td>{{ i+1 }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.symbol }}</td>
           <td>
@@ -214,11 +233,14 @@
               </button>
             </div>
           </td>
-        </tr>
+          </tr>
+        }
       </tbody>
     </app-data-table>
-    <div class="d-flex justify-content-center" *ngIf="trashData.items.length === 0">
-      <h3 class="opacity-75">No data available!</h3>
-    </div>
+    @if (trashData.items.length === 0) {
+      <div class="d-flex justify-content-center">
+        <h3 class="opacity-75">No data available!</h3>
+      </div>
+    }
   </c-modal-body>
 </c-modal>

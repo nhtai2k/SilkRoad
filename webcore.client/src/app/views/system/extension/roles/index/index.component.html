@@ -15,24 +15,27 @@
   </tr>
 </thead>
 <tbody>
-  <tr *ngFor="let item of data.items; index as i ">
-    <td>{{ i+1 }}</td>
-    <td>{{ item.name }}</td>
-    <td>{{ item.description }}</td>
-    <td>{{ item.isActive }}</td>
-    <td>
-      <a
-        [routerLink]="['./update', item.id]"
-        class="btn btn-primary btn-sm"
-        >View</a
-      >
-      <!-- <button
-        class="btn btn-danger btn-sm"
-        (click)="delete(item.id)"
-      >
-        Delete
-      </button> -->
-  </tr>
+  @for (item of data.items; track item.id; let i = $index) {
+    <tr>
+      <td>{{ i+1 }}</td>
+      <td>{{ item.name }}</td>
+      <td>{{ item.description }}</td>
+      <td>{{ item.isActive }}</td>
+      <td>
+        <a
+          [routerLink]="['./update', item.id]"
+          class="btn btn-primary btn-sm"
+          >View</a
+        >
+        <!-- <button
+          class="btn btn-danger btn-sm"
+          (click)="delete(item.id)"
+        >
+          Delete
+        </button> -->
+      </td>
+    </tr>
+  }
 </tbody>
 </app-data-table>
 

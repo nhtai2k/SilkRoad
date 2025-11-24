@@ -105,12 +105,14 @@
             </div>
             <h5>Select Actions</h5>
             <div class="d-flex justify-content-center">
-                <div class="me-4" *ngFor="let action of actionList; let i = index">
+                @for (action of actionList; track action.id; let i = $index) {
+                  <div class="me-4">
                     <c-form-check class="me-4">
                         <label cFormCheckLabel for="action{{i}}">{{ action.name }}</label>
                         <input cFormCheckInput id="action{{i}}" type="checkbox" class="ms-2" />
                     </c-form-check>
-                </div>
+                  </div>
+                }
             </div>
         </form>
     </c-modal-body>

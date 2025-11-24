@@ -4,7 +4,9 @@
         <span class="me-2">Filter: </span>
         <select class="form-control" id="slideTheme" cSelect (change)="filter($event)">
           <option value="-1">All</option>
-          <option *ngFor="let item of topicList" [value]="item.id">{{ item.nameEN }}</option>
+          @for (item of topicList; track item.id) {
+            <option [value]="item.id">{{ item.nameEN }}</option>
+          }
         </select>
       </div>
   <button routerLink="./create" class="btn btn-success">
@@ -24,12 +26,13 @@
   </tr>
 </thead>
 <tbody>
-  <tr *ngFor="let item of data.items; index as i ">
+  @for (item of data.items; track item.id; let i = $index) {
+    <tr>
         <td>{{ i+1 }}</td>
         <td>
-          <ng-container *ngIf="item.avatar">
+          @if (item.avatar) {
             <img [src]="baseUrl+item.avatar" alt="image" class="img-thumbnail" style="width: 100px; height: auto;">
-          </ng-container>
+          }
         </td>
         <td>
           <span class="limit-text">
@@ -53,6 +56,7 @@
           </div>
         </td>
     </tr>
+  }
 </tbody>
 </app-data-table>
 

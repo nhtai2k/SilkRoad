@@ -26,7 +26,7 @@ import { ActionService } from '@services/system-services/action.service';
 import { ActionModel } from '@models/system-management-models/module.model';
 @Component({
   selector: 'app-create',
-  imports: [ FormDirective, FormLabelDirective, NgFor, TableDirective,
+  imports: [ FormDirective, FormLabelDirective, TableDirective,
     FormControlDirective, ButtonDirective, AccordionComponent,
     AccordionItemComponent,TemplateIdDirective,AccordionButtonDirective, FormCheckComponent,
      RouterLink, CardComponent, CardBodyComponent,

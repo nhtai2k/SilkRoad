@@ -13,7 +13,7 @@ import { RoleService } from '@services/system-services/role.service';
 @Component({
   selector: 'app-index',
   standalone: true,
-  imports: [DataTableComponent , NgFor, RouterLink],
+  imports: [DataTableComponent , RouterLink],
   templateUrl: './index.component.html',
   styleUrl: './index.component.scss'
 })

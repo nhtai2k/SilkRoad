@@ -13,76 +13,101 @@
                     <label cLabel for="topicId">Select Topic: <span class="text-danger">(*)</span></label>
                     <select cFormControl formControlName="topicId" cSelect>
                         <option value="-1">Select a topic</option>
-                        <option *ngFor="let item of topicList" [value]="item.id">{{ item.nameEN }}
-                        </option>
+                        @for (item of topicList; track item.id) {
+                          <option [value]="item.id">{{ item.nameEN }}</option>
+                        }
                     </select>
-                    <div *ngIf="topicId?.invalid && (topicId?.dirty || topicId?.touched)" class="text-danger">
-                        <div *ngIf="topicId?.hasError('min')">
+                    @if (topicId?.invalid && (topicId?.dirty || topicId?.touched)) {
+                      <div class="text-danger">
+                        @if (topicId?.hasError('min')) {
+                          <div>
                             Select topic, please!
-                        </div>
-                    </div>
+                          </div>
+                        }
+                      </div>
+                    }
                 </div>
             </div>
             <div class="mb-2">
                 <label cLabel>Upload avatar: <span class="text-danger">(*)</span></label>
                 <input class="d-none"  id="uploadImage" type="file"  accept="image/*" (change)="onChangeUploadImage($event)" />
                 <div class="mt-2 reviewImage" (click)="openFileInput()">
-                  <ng-container *ngIf="!reviewUploadImage">
+                  @if (!reviewUploadImage) {
                     <svg [cIcon]="icons.cilCloudUpload" width="140" title="Shield Icon"></svg>
-                  </ng-container>
-                  <div  *ngIf="reviewUploadImage" [innerHTML]="reviewUploadImage" class="w-100 h-100 d-flex justify-content-center align-items-center"></div>
+                  }
+                  @if (reviewUploadImage) {
+                    <div [innerHTML]="reviewUploadImage" class="w-100 h-100 d-flex justify-content-center align-items-center"></div>
+                  }
                 </div>
             </div>
             <div class="mb-2 row">
                 <div class="col-6">
                     <label cLabel for="subjectEN">SubjectEn: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="subjectEN" type="text" />
-                    <div *ngIf="subjectEN?.invalid && (subjectEN?.dirty || subjectEN?.touched)" class="text-danger">
-                        <div *ngIf="subjectEN?.hasError('required')">
+                    @if (subjectEN?.invalid && (subjectEN?.dirty || subjectEN?.touched)) {
+                      <div class="text-danger">
+                        @if (subjectEN?.hasError('required')) {
+                          <div>
                             Enter subjectEN, please!
-                        </div>
-                    </div>
+                          </div>
+                        }
+                      </div>
+                    }
                 </div>
                 <div class="col-6">
                     <label cLabel for="subjectVN">SubjectVN: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="subjectVN" type="text" />
-                    <div *ngIf="subjectVN?.invalid && (subjectVN?.dirty || subjectVN?.touched)" class="text-danger">
-                        <div *ngIf="subjectVN?.hasError('required')">
+                    @if (subjectVN?.invalid && (subjectVN?.dirty || subjectVN?.touched)) {
+                      <div class="text-danger">
+                        @if (subjectVN?.hasError('required')) {
+                          <div>
                             Enter subjectVN, please!
-                        </div>
-                    </div>
+                          </div>
+                        }
+                      </div>
+                    }
                 </div>
             </div>
             <div class="mb-2 row">
                 <div class="col-6">
                     <label cLabel for="descriptionEN">DescriptionEN: <span class="text-danger">(*)</span></label>
                     <textarea cFormControl formControlName="descriptionEN" rows="3"></textarea>
-                    <div *ngIf="descriptionEN?.invalid && (descriptionEN?.dirty || descriptionEN?.touched)"
-                        class="text-danger">
-                        <div *ngIf="descriptionEN?.hasError('required')">
+                    @if (descriptionEN?.invalid && (descriptionEN?.dirty || descriptionEN?.touched)) {
+                      <div class="text-danger">
+                        @if (descriptionEN?.hasError('required')) {
+                          <div>
                             Enter descriptionEN, please!
-                        </div>
-                    </div>
+                          </div>
+                        }
+                      </div>
+                    }
                 </div>
                 <div class="col-6">
                     <label cLabel for="descriptionVN">DescriptionVN: <span class="text-danger">(*)</span></label>
-                    <div *ngIf="descriptionVN?.invalid && (descriptionVN?.dirty || descriptionVN?.touched)"
-                        class="text-danger">
-                        <div *ngIf="descriptionVN?.hasError('required')">
+                    @if (descriptionVN?.invalid && (descriptionVN?.dirty || descriptionVN?.touched)) {
+                      <div class="text-danger">
+                        @if (descriptionVN?.hasError('required')) {
+                          <div>
                             Enter descriptionVN, please!
-                        </div>
-                    </div>
+                          </div>
+                        }
+                      </div>
+                    }
                     <textarea cFormControl formControlName="descriptionVN" rows="3"></textarea>
                 </div>
             </div>
             <div class="mb-2 row">
                 <div class="col-6">
                     <label cLabel for="contentEN">ContentEN: <span class="text-danger">(*)</span></label>
-                    <div *ngIf="contentEN?.invalid && (contentEN?.dirty || contentEN?.touched)" class="text-danger">
-                        <div *ngIf="contentEN?.hasError('required')">
+                    @if (contentEN?.invalid && (contentEN?.dirty || contentEN?.touched)) {
+                      <div class="text-danger">
+                        @if (contentEN?.hasError('required')) {
+                          <div>
                             Enter contentEN, please!
-                        </div>
-                    </div>
+                          </div>
+                        }
+                      </div>
+                    }
 
                     <app-ckeditor [initialData]="updateForm.value.contentEN" (result)="composeText($event,'EN')" />
 
@@ -90,11 +115,15 @@
                 </div>
                 <div class="col-6">
                     <label cLabel for="contentVN">ContentVN: <span class="text-danger">(*)</span></label>
-                    <div *ngIf="contentVN?.invalid && (contentVN?.dirty || contentVN?.touched)" class="text-danger">
-                        <div *ngIf="contentVN?.hasError('required')">
+                    @if (contentVN?.invalid && (contentVN?.dirty || contentVN?.touched)) {
+                      <div class="text-danger">
+                        @if (contentVN?.hasError('required')) {
+                          <div>
                             Enter contentVN, please!
-                        </div>
-                    </div>
+                          </div>
+                        }
+                      </div>
+                    }
                     <app-ckeditor [initialData]="updateForm.value.contentVN"  (result)="composeText($event,'VN')" />
 
                     <!-- <textarea cFormControl formControlName="contentVN" rows="3"></textarea> -->

@@ -9,7 +9,7 @@ import { ActionService } from '@services/system-services/action.service';
 
 @Component({
   selector: 'app-settings',
-  imports: [TableDirective, CardComponent, ModalBodyComponent, NgFor, NgIf, FormControlDirective, FormLabelDirective,
+  imports: [TableDirective, CardComponent, ModalBodyComponent, FormControlDirective, FormLabelDirective,
     ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule,
     ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent,
     CardBodyComponent, CardHeaderComponent],

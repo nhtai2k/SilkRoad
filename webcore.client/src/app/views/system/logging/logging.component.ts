@@ -11,7 +11,7 @@ import { DataTableComponent } from '@components/generals/data-table/data-table.c
 
 @Component({
   selector: 'app-logging',
-  imports: [NgFor, DatePipe,
+  imports: [ DatePipe,
     ButtonCloseDirective, ButtonDirective, ModalComponent, ModalHeaderComponent, ModalBodyComponent,
     ModalFooterComponent, FormControlDirective, FormLabelDirective, FormDirective, ReactiveFormsModule, DataTableComponent,
     AccordionButtonDirective, AccordionComponent, AccordionItemComponent, TemplateIdDirective,],

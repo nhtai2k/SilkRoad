@@ -14,8 +14,8 @@ import { ToastService } from '@services/helper-services/toast.service';
 @Component({
   selector: 'app-update',
   imports: [FormDirective, FormLabelDirective, FormSelectDirective,
-    FormControlDirective, ButtonDirective, NgIf, CkeditorComponent,
-    RouterLink, CardComponent, CardBodyComponent, IconDirective, NgFor,
+    FormControlDirective, ButtonDirective, CkeditorComponent,
+    RouterLink, CardComponent, CardBodyComponent, IconDirective,
     FormCheckComponent, ReactiveFormsModule],
   templateUrl: './update.component.html',
   styleUrl: './update.component.scss'

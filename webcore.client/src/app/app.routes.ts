@@ -22,6 +22,10 @@ export const routes: Routes = [
     },
     children: [
       {
+        path: 'test',
+        loadChildren: () => import('./views/test/routes').then((m) => m.routes)
+      },
+      {
         path: 'introduction',
         loadChildren: () => import('./views/introduction/routes').then((m) => m.routes)
       },
@@ -34,18 +38,18 @@ export const routes: Routes = [
         loadChildren: () => import('./views/dashboard/routes').then((m) => m.routes)
       },
       //#region Stock Market
-      // {
-      //   path: 'stock/industries',
-      //   loadChildren: () => import('./views/stocks/industry/routes').then((m) => m.routes)
-      // },
-      // {
-      //   path: 'stock/companies',
-      //   loadChildren: () => import('./views/stocks/company/routes').then((m) => m.routes)
-      // },
-      // {
-      //   path: 'stock/chart',
-      //   loadChildren: () => import('./views/stocks/chart/routes').then((m) => m.routes)
-      // },
+      {
+        path: 'stock/industries',
+        loadChildren: () => import('./views/stocks/industry/routes').then((m) => m.routes)
+      },
+      {
+        path: 'stock/companies',
+        loadChildren: () => import('./views/stocks/company/routes').then((m) => m.routes)
+      },
+      {
+        path: 'stock/chart',
+        loadChildren: () => import('./views/stocks/chart/routes').then((m) => m.routes)
+      },
       //#endregion
       //#region Features
       // {

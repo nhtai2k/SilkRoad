@@ -16,13 +16,17 @@
                 <div cFormFloating class="col-3">
                   <select class="form-control" id="action" cSelect formControlName="action">
                     <option value="-1">All Action</option>
-                    <option *ngFor="let item of actions" [value]="item.value">{{item.key}}</option>
+                    @for (item of actions; track item.value) {
+                      <option [value]="item.value">{{item.key}}</option>
+                    }
                   </select>
                 </div>
                 <div cFormFloating class="col-3">
                   <select class="form-control" id="controller" cSelect formControlName="controller">
                     <option value="-1">All Controller</option>
-                    <option *ngFor="let item of controllers" [value]="item.value">{{item.key}}</option>
+                    @for (item of controllers; track item.value) {
+                      <option [value]="item.value">{{item.key}}</option>
+                    }
                   </select>
                 </div>
                 <div cFormFloating class="col-3">
@@ -55,19 +59,21 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of data.items; index as i ">
-      <td>{{ i+1 }}</td>
-      <td>{{ item.userName }}</td>
-      <td>{{ item.controllerName }}</td>
-      <td>{{ item.actionName }}</td>
-      <td>{{ item.status }}</td>
-      <td>{{ item.createdDate | date: "dd/MM/yyy hh:mm:ss" }}</td>
-      <td>
-        <div class="d-flex justify-content-end">
-          <button (click)="updateData(item.id)" class="btn btn-primary me-2">Detail</button>
-        </div>
-      </td>
-    </tr>
+    @for (item of data.items; track item.id; let i = $index) {
+      <tr>
+        <td>{{ i+1 }}</td>
+        <td>{{ item.userName }}</td>
+        <td>{{ item.controllerName }}</td>
+        <td>{{ item.actionName }}</td>
+        <td>{{ item.status }}</td>
+        <td>{{ item.createdDate | date: "dd/MM/yyy hh:mm:ss" }}</td>
+        <td>
+          <div class="d-flex justify-content-end">
+            <button (click)="updateData(item.id)" class="btn btn-primary me-2">Detail</button>
+          </div>
+        </td>
+      </tr>
+    }
   </tbody>
 </app-data-table>
 

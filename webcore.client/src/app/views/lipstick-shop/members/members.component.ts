@@ -10,7 +10,6 @@ import { MemberService } from '@services/lipstick-shop-services/member.service';
 @Component({
   selector: 'app-members',
   imports: [
-    NgFor, 
     ReactiveFormsModule,
     DataTableComponent],
   templateUrl: './members.component.html',

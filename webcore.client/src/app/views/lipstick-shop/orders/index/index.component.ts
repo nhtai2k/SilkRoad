@@ -9,7 +9,7 @@ import { PageInformation, Pagination } from '@models/pagination.model';
 import { OrderService } from '@services/lipstick-shop-services/order.service';
 @Component({
   selector: 'app-index',
-  imports: [ReactiveFormsModule, RouterLink, NgFor, DataTableComponent,DecimalPipe],
+  imports: [ReactiveFormsModule, RouterLink, DataTableComponent,DecimalPipe],
   templateUrl: './index.component.html',
   styleUrl: './index.component.scss'
 })

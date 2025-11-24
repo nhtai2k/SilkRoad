@@ -93,10 +93,10 @@
             </td>
         </tr>
          @if(item.expanded && (item?.predefinedAnswerLibraries?.length ?? 0) > 0) {
-            <ng-container *ngFor="let node of item.predefinedAnswerLibraries; index as i">
+            @for (node of item.predefinedAnswerLibraries; track node.id; let i = $index) {
                 <ng-container [ngTemplateOutlet]="nodeTemplate"
                 [ngTemplateOutletContext]="{ node: node, index: i, level: 1 }"></ng-container>
-            </ng-container>
+            }
             }
          }
     </tbody>

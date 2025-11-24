@@ -16,7 +16,7 @@ import { EColors } from '@common/global';
 @Component({
   selector: 'app-create',
   standalone: true,
-  imports: [ FormDirective, FormLabelDirective, NgFor, NgIf,
+  imports: [ FormDirective, FormLabelDirective,
     FormControlDirective, ButtonDirective,FormSelectDirective,
      RouterLink, CardComponent, CardBodyComponent,
       FormCheckComponent, ReactiveFormsModule],

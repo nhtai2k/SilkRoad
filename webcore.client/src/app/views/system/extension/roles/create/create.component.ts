@@ -15,7 +15,7 @@ import { EColors } from '@common/global';
   standalone: true,
   imports: [FormDirective, FormLabelDirective,
     FormControlDirective, ButtonDirective, CollapseDirective, IconDirective,
-    RouterLink, CardComponent, CardBodyComponent, NgFor, NgIf,
+    RouterLink, CardComponent, CardBodyComponent,
     FormCheckComponent, ReactiveFormsModule],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'

@@ -15,7 +15,7 @@ import { PaymentViewModel } from '@models/lipstick-shop-models/payment.model';
 import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 @Component({
   selector: 'app-payments',
-  imports: [ModalBodyComponent, NgFor, FormControlDirective, FormLabelDirective,
+  imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective,
     ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule, DecimalPipe,
     ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, DataTableComponent],
   templateUrl: './payments.component.html',

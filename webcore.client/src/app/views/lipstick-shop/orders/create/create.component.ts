@@ -20,7 +20,7 @@ import { ProvinceService } from '@services/system-services/province.service';
   selector: 'app-create',
   imports: [
     FormDirective, FormLabelDirective, FormSelectDirective,
-    FormControlDirective, ButtonDirective, RouterLink, CardComponent, CardBodyComponent, NgFor,
+    FormControlDirective, ButtonDirective, RouterLink, CardComponent, CardBodyComponent,
     ReactiveFormsModule, ModalBodyComponent, ModalComponent, ModalFooterComponent,
     ButtonCloseDirective, ModalHeaderComponent, AccordionButtonDirective, AccordionComponent,
     AccordionItemComponent, TemplateIdDirective,

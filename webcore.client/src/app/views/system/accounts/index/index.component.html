@@ -16,20 +16,23 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of data.items; index as i ">
-      <td>{{ i+1 }}</td>
-      <td>{{ item.userName }}</td>
-      <td>{{ item.email }}</td>
-      <td>{{ item.isActive }}</td>
-      <td>
-        <div class="d-flex justify-content-end"><!--  -->
-          <a routerLink="./update/{{ item.id }}" class="btn btn-primary me-2">
-            <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
-          </a>
-          <button class="btn btn-danger">
-            <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
-          </button>
-        </div>
-    </tr>
+    @for (item of data.items; track item.id; let i = $index) {
+      <tr>
+        <td>{{ i+1 }}</td>
+        <td>{{ item.userName }}</td>
+        <td>{{ item.email }}</td>
+        <td>{{ item.isActive }}</td>
+        <td>
+          <div class="d-flex justify-content-end"><!--  -->
+            <a routerLink="./update/{{ item.id }}" class="btn btn-primary me-2">
+              <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
+            </a>
+            <button class="btn btn-danger">
+              <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+    }
   </tbody>
 </app-data-table>
