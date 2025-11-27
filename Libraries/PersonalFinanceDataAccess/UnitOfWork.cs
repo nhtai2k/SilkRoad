@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
+using PersonalFinanceDataAccess.IRepositories;
+using PersonalFinanceDataAccess.Repositories;
 
 namespace PersonalFinanceDataAccess
 {
@@ -8,11 +10,21 @@ namespace PersonalFinanceDataAccess
         private IDbContextTransaction? _transaction;
         private bool disposed = false;
 
+        public ICategoryRepository CategoryRepository { get; private set; }
+
+        public ISubCategoryRepository SubCategoryRepository { get; private set; }
+
+        public IIncomeRepository IncomeRepository { get; private set; }
+
+        public IExpenseRepository ExpenseRepository { get; private set; }
 
         public UnitOfWork(ApplicationContext databaseContext)
         {
             context = databaseContext;
-
+            CategoryRepository = new CategoryRepository(context);
+            SubCategoryRepository = new SubCategoryRepository(context);
+            IncomeRepository = new IncomeRepository(context);
+            ExpenseRepository = new ExpenseRepository(context);
         }
         public void SaveChanges()
         {

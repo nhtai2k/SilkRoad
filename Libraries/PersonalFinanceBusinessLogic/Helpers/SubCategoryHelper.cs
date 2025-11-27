@@ -1,11 +1,17 @@
 ﻿using Common.Models;
 using PersonalFinanceBusinessLogic.IHelpers;
+using PersonalFinanceDataAccess;
 using PersonalFinanceDataAccess.DTOs;
 
 namespace PersonalFinanceBusinessLogic.Helpers
 {
     public class SubCategoryHelper : ISubCategoryHelper
     {
+        private readonly IUnitOfWork _unitOfWork;
+        public SubCategoryHelper(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
         public Task<bool> CreateAsync(SubCategoryDTO model, string? userName = null)
         {
             throw new NotImplementedException();

@@ -1,11 +1,17 @@
 ﻿using Common.Models;
 using PersonalFinanceBusinessLogic.IHelpers;
+using PersonalFinanceDataAccess;
 using PersonalFinanceDataAccess.DTOs;
 
 namespace PersonalFinanceBusinessLogic.Helpers
 {
     internal class IncomeHelper : IIncomeHelper
     {
+        private readonly IUnitOfWork _unitOfWork;
+        public IncomeHelper(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
         public Task<bool> CreateAsync(IncomeDTO model, string? userName = null)
         {
             throw new NotImplementedException();

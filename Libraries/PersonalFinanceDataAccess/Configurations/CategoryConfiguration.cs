@@ -10,7 +10,8 @@ namespace PersonalFinanceDataAccess.Configurations
         {
             builder.ToTable("Categories");
             builder.HasKey(c => c.Id);
-            builder.Property(c => c.Name).HasMaxLength(100);
+            builder.Property(c => c.NameEN).HasMaxLength(100);
+            builder.Property(c => c.NameVN).HasMaxLength(100);
             builder.Property(c => c.Note).HasMaxLength(500);
             builder.Property(c => c.CreatedBy).HasMaxLength(100);
             builder.Property(c => c.ModifiedBy).HasMaxLength(100);
