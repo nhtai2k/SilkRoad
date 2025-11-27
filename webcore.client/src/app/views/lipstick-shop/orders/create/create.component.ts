@@ -1,4 +1,4 @@
-import { DecimalPipe, NgFor, NgIf } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -24,7 +24,7 @@ import { ProvinceService } from '@services/system-services/province.service';
     ReactiveFormsModule, ModalBodyComponent, ModalComponent, ModalFooterComponent,
     ButtonCloseDirective, ModalHeaderComponent, AccordionButtonDirective, AccordionComponent,
     AccordionItemComponent, TemplateIdDirective,
-    TableDirective, NgIf, DecimalPipe
+    TableDirective, DecimalPipe
   ],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'

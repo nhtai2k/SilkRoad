@@ -14,12 +14,12 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class CategoryController : BaseApiController
+    public class CategoryPFController : BaseApiController
     {
         private readonly ICategoryHelper _helper;
         private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public CategoryController(ICategoryHelper helper,
+        public CategoryPFController(ICategoryHelper helper,
         IActionLoggingService actionLog, IStringLocalizer<SharedResource> localizer)
         {
             _helper = helper;

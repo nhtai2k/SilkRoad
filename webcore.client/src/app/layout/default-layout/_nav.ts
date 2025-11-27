@@ -83,9 +83,9 @@ export const navItems: INavData[] = [
     url: '/personal-finance/reports',
     iconComponent: { name: 'cil-speedometer' }
   },
-    {
-    name: 'Incomes',
-    url: '/personal-finance/incomes',
+  {
+    name: 'Income',
+    url: '/personal-finance/income',
     iconComponent: { name: 'cil-bar-chart' }
   },
   {
@@ -94,19 +94,12 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cil-notes' }
   },
   {
-    name: 'Extend',
-    url: '/personal-finance/extension',
-    iconComponent: { name: 'cil-puzzle' },
-    children: [
-      {
-        name: 'Categories',
-        url: '/personal-finance/extension/categories',
-        icon: 'nav-icon-bullet'
-      },
-    ]
+    name: 'Categories',
+    url: '/personal-finance/categories',
+    iconComponent: { name: 'cil-notes' }
   },
   //#endregion
-  
+
   //#region Restaurant
   {
     name: 'Restaurant',
@@ -138,7 +131,7 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cil-line-style' }
   },
   //#endregion
-  
+
   //#region Lipstick Shop
   {
     title: true,
@@ -232,7 +225,7 @@ export const navItems: INavData[] = [
     ]
   },
   //#endregion
-  
+
   //#region Surveys
 
   {
@@ -282,7 +275,7 @@ export const navItems: INavData[] = [
     ]
   },
   //#endregion
-  
+
   //#region System Management
   {
     name: 'System Management',

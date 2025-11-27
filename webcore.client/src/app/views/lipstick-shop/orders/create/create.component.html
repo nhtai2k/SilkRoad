@@ -7,8 +7,9 @@
                     <label cLabel for="paymentMethodId">Select payment method: <span class="text-danger">(*)</span></label>
                     <select cFormControl formControlName="paymentMethodId" cSelect>
                         <option value="-1" disabled>Select payment method</option>
-                        <option *ngFor="let item of paymentMethods" [value]="item.value">{{ item.key }}
-                        </option>
+                        @for (item of paymentMethods; track item.value) {
+                            <option [value]="item.value">{{ item.key }}</option>
+                        }
                     </select>
                 </div>
                 <div class="col-6">
@@ -76,31 +77,35 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let item of orderDetails; let i = index">
-                                    <td>{{ i + 1 }}</td>
-                                    <td>
-                                        <img [src]="baseUrl + item.avatar" alt="Product Image"
-                                            class="img-fluid" style="width: 50px; height: 50px;">
-                                    </td>
-                                    <td>{{ item.nameVN }}</td>
-                                    <td>{{ item.price | number }} </td>
-                                    <td>{{ item.saleOff }}</td>
-                                    <td>{{ item.saleOff ?  (item.salePrice | number) : (item.price | number)}}</td>
-                                    <td>{{ item.quantity }}</td>
-                                    <td >
-                                        <div class="d-flex justify-content-center">
-                                            <button cButton type="button" (click)="updateData(i)"
-                                                class="btn btn-warning me-2">Update</button>
-                                            <button cButton type="button" (click)="deleteData(i)"
-                                                class="btn btn-danger">Delete</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr *ngIf="totalQuantity > 0">
-                                    <td colspan="6" class="text-end">Total:</td>
-                                    <td>{{ totalQuantity }}</td>
-                                    <td>{{ amount| number }} VND</td>
-                                </tr>
+                                @for (item of orderDetails; track item.productId; let i = $index) {
+                                    <tr>
+                                        <td>{{ i + 1 }}</td>
+                                        <td>
+                                            <img [src]="baseUrl + item.avatar" alt="Product Image"
+                                                class="img-fluid" style="width: 50px; height: 50px;">
+                                        </td>
+                                        <td>{{ item.nameVN }}</td>
+                                        <td>{{ item.price | number }} </td>
+                                        <td>{{ item.saleOff }}</td>
+                                        <td>{{ item.saleOff ?  (item.salePrice | number) : (item.price | number)}}</td>
+                                        <td>{{ item.quantity }}</td>
+                                        <td >
+                                            <div class="d-flex justify-content-center">
+                                                <button cButton type="button" (click)="updateData(i)"
+                                                    class="btn btn-warning me-2">Update</button>
+                                                <button cButton type="button" (click)="deleteData(i)"
+                                                    class="btn btn-danger">Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                                @if (totalQuantity > 0) {
+                                    <tr>
+                                        <td colspan="6" class="text-end">Total:</td>
+                                        <td>{{ totalQuantity }}</td>
+                                        <td>{{ amount| number }} VND</td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </ng-template>
@@ -130,21 +135,23 @@
                     <input cFormControl id="searchProduct"  (input)="onSearchCreateForm($event)"
                         placeholder="Search product by name" />
                     <div id="searchResultCreateForm" class="d-none">
-                        <ng-container *ngFor="let product of searchResults">
+                        @for (product of searchResults; track product.id) {
                             <div class="mb-1">
                                 <div class="suggest" (click)="onSelectProductCreateForm(product)">
                                     <img src="{{baseUrl + product.avatar}}" />
                                     <span>{{product.nameVN}}</span>
                                 </div>
                             </div>
-                        </ng-container>                  
+                        }                  
                     </div>
                 </div>
             </div>
             <div class="mb-2 row">
-                <div class="col-6" *ngIf="addProductForm.value.avatar">
-                    <img style="width: 150px; height: auto; border: 1px solid #c1c1c1;" src="{{baseUrl +addProductForm.value.avatar}}" />
-                </div>
+                @if (addProductForm.value.avatar) {
+                    <div class="col-6">
+                        <img style="width: 150px; height: auto; border: 1px solid #c1c1c1;" src="{{baseUrl +addProductForm.value.avatar}}" />
+                    </div>
+                }
             </div>
             <div class="mb-2 row">
                 <div class="col-12">
@@ -157,10 +164,12 @@
                     <label cLabel for="price" class="me-2">Price: (vnd)</label>
                     <input cFormControl readonly type="text" formControlName="price">
                 </div>
-                <div class="col-4" *ngIf="addProductForm.value.saleOff">
-                    <label cLabel for="salePrice" class="me-2">Sale Price: (vnd)</label>
-                    <input cFormControl readonly type="text" formControlName="salePrice">
-                </div>
+                @if (addProductForm.value.saleOff) {
+                    <div class="col-4">
+                        <label cLabel for="salePrice" class="me-2">Sale Price: (vnd)</label>
+                        <input cFormControl readonly type="text" formControlName="salePrice">
+                    </div>
+                }
                 <div class="col-4">
                     <label cLabel for="quantity">Quantity: <span class="text-danger">(*)</span></label>
                     <input type="number" cFormControl formControlName="quantity">
@@ -185,9 +194,11 @@
     <form cForm [formGroup]="updateProductForm" (ngSubmit)="onSubmitUpdateForm()">
         <c-modal-body>
              <div class="mb-2 row">
-                <div class="col-6" *ngIf="updateProductForm.value.avatar">
-                    <img style="width: 150px; height: auto; border: 1px solid #c1c1c1;" src="{{baseUrl +updateProductForm.value.avatar}}" />
-                </div>
+                @if (updateProductForm.value.avatar) {
+                    <div class="col-6">
+                        <img style="width: 150px; height: auto; border: 1px solid #c1c1c1;" src="{{baseUrl +updateProductForm.value.avatar}}" />
+                    </div>
+                }
             </div>
             <div class="mb-2 row">
                 <div class="col-12">
@@ -200,10 +211,12 @@
                     <label cLabel for="price" class="me-2">Price: (vnd)</label>
                     <input cFormControl readonly type="text" formControlName="price">
                 </div>
-                <div class="col-4" *ngIf="updateProductForm.value.saleOff">
-                    <label cLabel for="salePrice" class="me-2">Sale Price: (vnd)</label>
-                    <input cFormControl readonly type="text" formControlName="salePrice">
-                </div>
+                @if (updateProductForm.value.saleOff) {
+                    <div class="col-4">
+                        <label cLabel for="salePrice" class="me-2">Sale Price: (vnd)</label>
+                        <input cFormControl readonly type="text" formControlName="salePrice">
+                    </div>
+                }
                 <div class="col-4">
                     <label cLabel for="quantity">Quantity: <span class="text-danger">(*)</span></label>
                     <input cFormControl type="number" formControlName="quantity">

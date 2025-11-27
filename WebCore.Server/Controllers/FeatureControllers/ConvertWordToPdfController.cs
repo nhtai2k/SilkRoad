@@ -16,6 +16,7 @@ namespace WebCore.Server.Controllers.FeatureControllers
             _convertWordToPdfService = convertWordToPdfService;
         }
         [HttpPost("convertFile")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> ConvertFile([FromForm] IFormFile file)
         {
             try

@@ -22,8 +22,9 @@
         </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of data.items; index as i ">
-              <td>{{ (pageInformation.pageIndex *pageInformation.pageSize) + i + 1 - pageInformation.pageSize }}</td>
+    @for (item of data.items; track item.id) {
+      <tr>
+              <td>{{ (pageInformation.pageIndex *pageInformation.pageSize) + $index + 1 - pageInformation.pageSize }}</td>
               <td>{{ item.fullName }}</td>
               <td>{{ item.phoneNumber }}</td>
               <!-- <td>{{ item.email }}</td> -->
@@ -38,5 +39,6 @@
                 </div>
               </td>
           </tr>
+    }
   </tbody>
 </app-data-table>

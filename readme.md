@@ -38,7 +38,7 @@ The platform follows a clean, modular architecture with distinct layers:
 ## 🛠️ Technology Stack
 
 ### Backend
-- **.NET 8**: Modern cross-platform framework
+- **.NET 9**: Modern cross-platform framework
 - **ASP.NET Core**: Web API and MVC
 - **Entity Framework Core**: Object-relational mapping
 - **SignalR**: Real-time web functionality
@@ -46,7 +46,7 @@ The platform follows a clean, modular architecture with distinct layers:
 - **Serilog**: Structured logging
 
 ### Frontend
-- **Angular 18+**: Modern TypeScript-based SPA framework
+- **Angular 20**: Modern TypeScript-based SPA framework
 - **CoreUI**: Professional admin dashboard components
 - **RxJS**: Reactive programming with observables
 - **Chart.js**: Data visualization
@@ -112,8 +112,8 @@ LulusiaKingdom/
 ## 🚀 Getting Started
 
 ### Prerequisites
-- .NET 8 SDK
-- Node.js 18+
+- .NET 9 SDK
+- Node.js 20+
 - SQL Server
 - Visual Studio 2022 or VS Code
 

@@ -26,16 +26,18 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let item of data.items; index as i ">
-            <td>{{ i+1 }}</td>
-            <td>{{ item.fullName }}</td>
-            <td>{{ item.phoneNumber }}</td>
-            <td>{{ item.email }}</td>
-            <!-- <td>
-                <div class="d-flex justify-content-end">
-                    <button (click)="updateData(item.id)" class="btn btn-primary me-2">Update</button>
-                </div>
-            </td> -->
-        </tr>
+        @for (item of data.items; track item.id || $index) {
+            <tr>
+                <td>{{ $index+1 }}</td>
+                <td>{{ item.fullName }}</td>
+                <td>{{ item.phoneNumber }}</td>
+                <td>{{ item.email }}</td>
+                <!-- <td>
+                    <div class="d-flex justify-content-end">
+                        <button (click)="updateData(item.id)" class="btn btn-primary me-2">Update</button>
+                    </div>
+                </td> -->
+            </tr>
+        }
     </tbody>
 </app-data-table>

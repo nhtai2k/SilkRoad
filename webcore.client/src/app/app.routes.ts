@@ -51,6 +51,26 @@ export const routes: Routes = [
         loadChildren: () => import('./views/stocks/chart/routes').then((m) => m.routes)
       },
       //#endregion
+      
+      //#region Personal Finance
+      {
+        path: 'personal-finance/categories',
+        loadChildren: () => import('./views/personal-finance/categories/routes').then((m) => m.routes)
+      },
+      {
+        path: 'personal-finance/expenses',
+        loadChildren: () => import('./views/personal-finance/expenses/routes').then((m) => m.routes)
+      },
+      {
+        path: 'personal-finance/income',
+        loadChildren: () => import('./views/personal-finance/income/routes').then((m) => m.routes)
+      },
+      {
+        path: 'personal-finance/reports',
+        loadChildren: () => import('./views/personal-finance/reports/routes').then((m) => m.routes)
+      },
+      //#endregion
+
       //#region Features
       // {
       //   path: 'features/chatgpt',
@@ -77,6 +97,7 @@ export const routes: Routes = [
       //   loadChildren: () => import('./views/features/email-service/routes').then((m) => m.routes)
       // },
       //#endregion
+      
       //#region Lipstick
       // Report
       {
@@ -137,6 +158,7 @@ export const routes: Routes = [
         loadChildren: () => import('./views/lipstick-shop/members/routes').then((m) => m.routes)
       },
       //#endregion
+      
       //#region Surveys
       {
         path: 'surveys/reports',
@@ -167,6 +189,7 @@ export const routes: Routes = [
         loadChildren: () => import('./views/surveys/extension/routes').then((m) => m.routes)
       },
       //#endregion
+      
       //#region System Management
       //account management
       {

@@ -7,8 +7,9 @@
                     <label cLabel for="paymentMethodId">Select payment method: <span class="text-danger">(*)</span></label>
                     <select cFormControl formControlName="paymentMethodId" cSelect>
                         <option value="-1" disabled>Select payment method</option>
-                        <option *ngFor="let item of paymentMethods" [value]="item.value">{{ item.key }}
-                        </option>
+                        @for (item of paymentMethods; track item.value) {
+                            <option [value]="item.value">{{ item.key }}</option>
+                        }
                     </select>
                 </div>
                 <div class="col-6">
@@ -71,26 +72,30 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let item of orderDetails; let i = index">
-                                    <td>{{ i + 1 }}</td>
-                                    <td>
-                                        <img [src]="baseUrl + item.avatar" alt="Product Image"
-                                            class="img-fluid" style="width: 50px; height: 50px;">
-                                    </td>
-                                    <td>{{ item.nameVN }}</td>
-                                    <td>{{ item.price | number }} </td>
-                                    <td>{{ item.saleOff }}</td>
-                                    <td>{{ item.saleOff ?  (item.salePrice | number) : (item.price | number)}}</td>
-                                    <td>{{ item.quantity }}</td>          
-                                    <td>{{ item.saleOff ?  
-                                    (item.quantity * (item.salePrice == null ? 0 : item.salePrice) | number) :
-                                     (item.quantity * item.price | number)}} VND</td>            
-                                </tr>
-                                <tr *ngIf="totalQuantity > 0">
-                                    <td colspan="6" class="text-end">Total:</td>
-                                    <td>{{ totalQuantity }}</td>
-                                    <td>{{ amount| number }} VND</td>
-                                </tr>
+                                @for (item of orderDetails; track item.id || $index) {
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>
+                                            <img [src]="baseUrl + item.avatar" alt="Product Image"
+                                                class="img-fluid" style="width: 50px; height: 50px;">
+                                        </td>
+                                        <td>{{ item.nameVN }}</td>
+                                        <td>{{ item.price | number }} </td>
+                                        <td>{{ item.saleOff }}</td>
+                                        <td>{{ item.saleOff ?  (item.salePrice | number) : (item.price | number)}}</td>
+                                        <td>{{ item.quantity }}</td>          
+                                        <td>{{ item.saleOff ?  
+                                        (item.quantity * (item.salePrice == null ? 0 : item.salePrice) | number) :
+                                         (item.quantity * item.price | number)}} VND</td>            
+                                    </tr>
+                                }
+                                @if (totalQuantity > 0) {
+                                    <tr>
+                                        <td colspan="6" class="text-end">Total:</td>
+                                        <td>{{ totalQuantity }}</td>
+                                        <td>{{ amount| number }} VND</td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </ng-template>
