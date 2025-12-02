@@ -30,23 +30,23 @@ export enum EUrl {
 
   //#region PersonalFinance
   //Category
-  getAllUrlCategoryPF = "/api/categoryPF/getAll",
-  getAllDeletedUrlCategoryPF = "/api/categoryPF/getAllDeleted",
-  getByIdUrlCategoryPF = "/api/categoryPF/getById",
-  createUrlCategoryPF = "/api/categoryPF/create",
-  updateUrlCategoryPF = "/api/categoryPF/update",
-  softDeleteUrlCategoryPF = "/api/categoryPF/softDelete",
-  restoreUrlCategoryPF = "/api/categoryPF/restore",
-  deleteUrlCategoryPF = "/api/categoryPF/delete",
+  getAllUrlCategoryPF = "/api/pf/category/getAll",
+  getAllDeletedUrlCategoryPF = "/api/pf/category/getAllDeleted",
+  getByIdUrlCategoryPF = "/api/pf/category/getById",
+  createUrlCategoryPF = "/api/pf/category/create",
+  updateUrlCategoryPF = "/api/pf/category/update",
+  softDeleteUrlCategoryPF = "/api/pf/category/softDelete",
+  restoreUrlCategoryPF = "/api/pf/category/restore",
+  deleteUrlCategoryPF = "/api/pf/category/delete",
   //SubCategory
-  getAllUrlSubCategoryPF = "/api/subCategoryPF/getAll",
-  getAllDeletedUrlSubCategoryPF = "/api/subCategoryPF/getAllDeleted",
-  getByIdUrlSubCategoryPF = "/api/subCategoryPF/getById",
-  createUrlSubCategoryPF = "/api/subCategoryPF/create",
-  updateUrlSubCategoryPF = "/api/subCategoryPF/update",
-  softDeleteUrlSubCategoryPF = "/api/subCategoryPF/softDelete",
-  restoreUrlSubCategoryPF = "/api/subCategoryPF/restore",
-  deleteUrlSubCategoryPF = "/api/subCategoryPF/delete",
+  getAllUrlSubCategoryPF = "/api/pf/subCategory/getAll",
+  getAllDeletedUrlSubCategoryPF = "/api/pf/subCategory/getAllDeleted",
+  getByIdUrlSubCategoryPF = "/api/pf/subCategory/getById",
+  createUrlSubCategoryPF = "/api/pf/subCategory/create",
+  updateUrlSubCategoryPF = "/api/pf/subCategory/update",
+  softDeleteUrlSubCategoryPF = "/api/pf/subCategory/softDelete",
+  restoreUrlSubCategoryPF = "/api/pf/subCategory/restore",
+  deleteUrlSubCategoryPF = "/api/pf/subCategory/delete",
   //#endregion
 
   //#region Hubs
