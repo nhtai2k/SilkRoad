@@ -55,7 +55,7 @@ namespace WebCore.Server.Controllers.SurveyControllers
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
-        
+
         [HttpGet("getById/{id}")]
         public async Task<IActionResult> GetById(int id)
         {

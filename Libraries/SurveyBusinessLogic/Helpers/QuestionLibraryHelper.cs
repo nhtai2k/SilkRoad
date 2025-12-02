@@ -41,7 +41,7 @@ namespace SurveyBusinessLogic.Helpers
 
         public async Task<Pagination<QuestionLibraryDTO>> GetByFilterAsync(QuestionLibraryFilterModel filter)
         {
-            var query =  _unitOfWork.QuestionLibraryRepository.Query(orderBy: p => p.OrderBy(s => s.Priority)).AsNoTracking();
+            var query = _unitOfWork.QuestionLibraryRepository.Query(orderBy: p => p.OrderBy(s => s.Priority)).AsNoTracking();
             if (!string.IsNullOrEmpty(filter.SearchText))
             {
                 string searchText = filter.SearchText.Trim().ToLower();

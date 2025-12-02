@@ -37,16 +37,16 @@ namespace SurveyBusinessLogic.Helpers
         public async Task<Pagination<SurveyFormDTO>> FilterAsync(SurveyFormFilterModel filter)
         {
 
-            var query =  _unitOfWork.SurveyFormRepository.Query(x => !x.IsDeleted).AsNoTracking();
-            if(filter.StoreId != -1)
+            var query = _unitOfWork.SurveyFormRepository.Query(x => !x.IsDeleted).AsNoTracking();
+            if (filter.StoreId != -1)
             {
                 query = query.Where(s => s.StoreId == filter.StoreId);
             }
-            if(filter.FormStyleId != -1)
+            if (filter.FormStyleId != -1)
             {
                 query = query.Where(s => s.FormStyleId == filter.FormStyleId);
             }
-            if(filter.IsActive != null)
+            if (filter.IsActive != null)
             {
                 query = query.Where(s => s.IsActive == filter.IsActive);
             }
@@ -54,7 +54,7 @@ namespace SurveyBusinessLogic.Helpers
             {
                 query = query.Where(s => s.IsLimited == filter.IsLimited);
             }
-            if(filter.IsPublished != null)
+            if (filter.IsPublished != null)
             {
                 query = query.Where(s => s.IsPublished == filter.IsPublished);
             }
@@ -207,7 +207,7 @@ namespace SurveyBusinessLogic.Helpers
         public async Task<bool> PublishAsync(int id, string? userName = null)
         {
             var data = await _unitOfWork.SurveyFormRepository.GetByIdAsync(id);
-            if(data == null) return false;
+            if (data == null) return false;
             data.IsPublished = true;
             data.Update(userName);
             await _unitOfWork.SaveChangesAsync();
@@ -290,7 +290,7 @@ namespace SurveyBusinessLogic.Helpers
                 if (countParticipants >= data.MaxParticipants)
                 {
                     return null;
-                }    
+                }
             }
             return data;
         }

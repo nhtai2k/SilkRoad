@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Serilog;
 using System.Globalization;
 using System.Reflection;
@@ -176,20 +176,20 @@ namespace WebCore.Server
                         BearerFormat = "JWT",
                         Scheme = "bearer"
                     });
-                    opt.AddSecurityRequirement(new OpenApiSecurityRequirement
-                    {
-                        {
-                            new OpenApiSecurityScheme
-                            {
-                                Reference = new OpenApiReference
-                                {
-                                    Type=ReferenceType.SecurityScheme,
-                                    Id="Bearer"
-                                }
-                            },
-                            new string[]{}
-                        }
-                    });
+                    //opt.AddSecurityRequirement(new OpenApiSecurityRequirement
+                    //{
+                    //    {
+                    //        new OpenApiSecurityScheme
+                    //        {
+                    //            Reference = new OpenApiReference
+                    //            {
+                    //                Type=ReferenceType.SecurityScheme,
+                    //                Id="Bearer"
+                    //            }
+                    //        },
+                    //        new string[]{}
+                    //    }
+                    //});
                 });
                 #endregion
                 builder.Services.SignUp();

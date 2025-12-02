@@ -61,7 +61,7 @@ namespace WebCore.Server
             services.AddTransient<IWebhookHelper, WebhookHelper>();
             //services.AddScoped<IOrderHelper>
             #endregion
-            
+
             #region Survey
             services.AddScoped<SurveyDataAccess.IUnitOfWork, SurveyDataAccess.UnitOfWork>();
             services.AddScoped<IParticipantHelper, ParticipantHelper>();
@@ -91,7 +91,7 @@ namespace WebCore.Server
             services.AddScoped<IStockPriceHelper, StockPriceHelper>();
             services.AddScoped<IIndustryHelper, IndustryHelper>();
             #endregion
-            
+
             #region System Database
             services.AddScoped<DataAccess.IUnitOfWork, DataAccess.UnitOfWork>();
             //system
@@ -105,7 +105,7 @@ namespace WebCore.Server
             //services.AddScoped<IRoleClaimHelper, RoleClaimHelper>();
             services.AddScoped<ISettingHelper, SettingHelper>();
             #endregion
-            
+
             #region Service
             //service
             services.AddScoped<IMailService, MailService>();
@@ -115,7 +115,7 @@ namespace WebCore.Server
             services.AddScoped<IActionLoggingService, ActionLoggingService>();
             services.AddTransient<IApiKeyValidation, ApiKeyValidation>();
             services.AddScoped<ApiKeyAuthFilter>();
-            services.AddAutoMapper(typeof(Program));
+            //services.AddAutoMapper(typeof(Program));
             services.AddScoped<ChatService>();
             #endregion
             return services;
