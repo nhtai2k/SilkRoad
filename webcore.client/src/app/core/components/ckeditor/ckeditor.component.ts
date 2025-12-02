@@ -4,7 +4,7 @@
  */
 
 import { Component, EventEmitter, Input, Output, ViewEncapsulation, type OnInit } from '@angular/core';
-import { CommonModule, NgIf } from '@angular/common';
+
 // import { loadCKEditorCloud, CKEditorModule, type CKEditorCloudResult, type CKEditorCloudConfig, ChangeEvent } from '@ckeditor/ckeditor5-angular';
 
 // import type { ClassicEditor, EditorConfig } from 'https://cdn.ckeditor.com/typings/ckeditor5.d.ts';
@@ -19,7 +19,7 @@ import { CommonModule, NgIf } from '@angular/common';
 @Component({
 	selector: 'app-ckeditor',
 	standalone: true,
-	imports: [CommonModule],
+	imports: [],
 	templateUrl: './ckeditor.component.html',
 	styleUrl: './ckeditor.component.scss',
 	encapsulation: ViewEncapsulation.None

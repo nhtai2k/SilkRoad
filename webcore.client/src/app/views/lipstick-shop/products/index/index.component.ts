@@ -1,4 +1,4 @@
-import { CommonModule, NgFor } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Params, RouterLink } from '@angular/router';
@@ -22,13 +22,7 @@ import { DataTableComponent } from '@components/generals/data-table/data-table.c
 
 @Component({
   selector: 'app-index',
-  imports: [ModalBodyComponent, RouterLink, CommonModule, IconDirective,
-    ModalComponent, ButtonDirective, ReactiveFormsModule,  AccordionButtonDirective,
-    AccordionComponent,
-    AccordionItemComponent,
-    TemplateIdDirective,
-    ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent,
-    FormSelectDirective, DataTableComponent],
+  imports: [ModalBodyComponent, RouterLink, IconDirective, ModalComponent, ButtonDirective, ReactiveFormsModule, AccordionButtonDirective, AccordionComponent, AccordionItemComponent, TemplateIdDirective, ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, FormSelectDirective, DataTableComponent],
   templateUrl: './index.component.html',
   styleUrl: './index.component.scss'
 })

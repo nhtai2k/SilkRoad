@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit, signal, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
@@ -20,9 +20,7 @@ import { UnitService } from '@services/restaurant-services/unit.service';
 
 @Component({
   selector: 'app-create-single',
-  imports: [CommonModule, FormControlDirective, FormLabelDirective,
-    ButtonDirective, FormDirective, ReactiveFormsModule, FormCheckComponent, FormSelectDirective,
-    CardBodyComponent, CardComponent, RouterLink, IconDirective, InputCurrencyComponent, TreeSelectComponent],
+  imports: [FormControlDirective, FormLabelDirective, ButtonDirective, FormDirective, ReactiveFormsModule, FormCheckComponent, FormSelectDirective, CardBodyComponent, CardComponent, RouterLink, IconDirective, InputCurrencyComponent, TreeSelectComponent],
   templateUrl: './create-single.component.html',
   styleUrl: './create-single.component.scss'
 })

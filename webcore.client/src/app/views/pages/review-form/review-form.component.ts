@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SurveyFormService } from '@services/survey-services/survey-form.service';
 import { FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { FormControlDirective, FormDirective, FormLabelDirective } from '@coreui/angular';
 import { SurveyFormModel } from '@models/survey-models/survey-form.model';
 import { EFormStyles, EQuestionTypes } from '@common/global';
@@ -13,7 +13,7 @@ import { SplitSurveyFormComponent } from "../../form-styles/split-survey-form/sp
   selector: 'app-review-form',
   templateUrl: './review-form.component.html',
   styleUrl: './review-form.component.scss',
-  imports: [CommonModule, ReactiveFormsModule, DefaultSurveyFormComponent, SplitSurveyFormComponent]
+  imports: [ReactiveFormsModule, DefaultSurveyFormComponent, SplitSurveyFormComponent]
 })
 export class ReviewFormComponent implements OnInit {
   initSurvey: SurveyFormModel | null = null;

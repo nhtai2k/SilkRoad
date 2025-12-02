@@ -1,11 +1,11 @@
 import { Component, Input, Output, EventEmitter, forwardRef, OnChanges, SimpleChanges } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { ThousandSeparatorDirective } from '@common/directives/thousand-separator.directive';
 
 @Component({
   selector: 'app-input-number',
-  imports: [ReactiveFormsModule, CommonModule, ThousandSeparatorDirective],
+  imports: [ReactiveFormsModule, ThousandSeparatorDirective],
   templateUrl: './input-number.component.html',
   styleUrl: './input-number.component.scss',
   providers: [

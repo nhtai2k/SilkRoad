@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { WordToPdfService, ConversionProgress, ConversionResult } from '@services/feature-services/word-to-pdf.service';
 import { ToastService } from '@services/helper-services/toast.service';
 
@@ -11,7 +11,7 @@ interface ConvertedFile {
 
 @Component({
   selector: 'app-convert-word-to-pdf',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './convert-word-to-pdf.component.html',
   styleUrl: './convert-word-to-pdf.component.scss'
 })

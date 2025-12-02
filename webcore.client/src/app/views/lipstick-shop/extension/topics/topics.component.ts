@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, FormCheckComponent, FormCheckInputDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, TableDirective } from '@coreui/angular';
@@ -12,9 +12,7 @@ import { ToastService } from '@services/helper-services/toast.service';
 import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 @Component({
   selector: 'app-topics',
-  imports: [ModalBodyComponent, CommonModule, FormControlDirective, FormLabelDirective,
-    ModalComponent, ButtonDirective, FormCheckComponent, FormDirective, ReactiveFormsModule,
-    ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, IconDirective, DataTableComponent],
+  imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective, ModalComponent, ButtonDirective, FormCheckComponent, FormDirective, ReactiveFormsModule, ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, IconDirective, DataTableComponent],
   templateUrl: './topics.component.html',
   styleUrl: './topics.component.scss'
 })

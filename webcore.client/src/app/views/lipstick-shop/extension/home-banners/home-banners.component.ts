@@ -9,15 +9,13 @@ import { PageInformation, Pagination } from '@models/pagination.model';
 import { HomeBannerService } from '@services/lipstick-shop-services/home-banner.service';
 import { ToastService } from '@services/helper-services/toast.service';
 import { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular, cilCloudUpload, cilCloudDownload } from '@coreui/icons';
-import { CommonModule } from '@angular/common';
+
 import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 
 
 @Component({
   selector: 'app-home-banners',
-  imports: [ModalBodyComponent, CommonModule, FormControlDirective, FormLabelDirective,
-    ModalComponent, ButtonDirective, FormCheckComponent, FormDirective, ReactiveFormsModule,
-    ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, IconDirective, FormSelectDirective, DataTableComponent],
+  imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective, ModalComponent, ButtonDirective, FormCheckComponent, FormDirective, ReactiveFormsModule, ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, IconDirective, FormSelectDirective, DataTableComponent],
   templateUrl: './home-banners.component.html',
   styleUrl: './home-banners.component.scss'
 })

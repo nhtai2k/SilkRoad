@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ParticipantInfoConfigModel } from '@models/survey-models/participant-info-config.model';
 import { ParticipantTextComponent } from '@components/participant-fields/text.component';
@@ -17,7 +17,6 @@ import { ToastService } from '@services/helper-services/toast.service';
   selector: 'app-participant-info',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     ParticipantTextComponent,
     ParticipantEmailComponent,
@@ -26,7 +25,7 @@ import { ToastService } from '@services/helper-services/toast.service';
     ParticipantDateComponent,
     ParticipantDateTimeComponent,
     ParticipantNumberComponent
-  ],
+],
   templateUrl: './participant-info.component.html',
   styleUrl: './participant-info.component.scss'
 })

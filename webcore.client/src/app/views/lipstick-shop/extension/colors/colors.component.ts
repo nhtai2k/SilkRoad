@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, FormCheckComponent, FormCheckInputDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, TableDirective } from '@coreui/angular';
@@ -15,9 +15,7 @@ import { DataTableComponent } from '@components/generals/data-table/data-table.c
   selector: 'app-colors',
   templateUrl: './colors.component.html',
   styleUrl: './colors.component.scss',
-  imports: [ModalBodyComponent, CommonModule, FormControlDirective, FormLabelDirective,
-    ModalComponent, ButtonDirective, FormCheckComponent, FormDirective, ReactiveFormsModule,
-    ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, IconDirective, DataTableComponent]
+  imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective, ModalComponent, ButtonDirective, FormCheckComponent, FormDirective, ReactiveFormsModule, ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, IconDirective, DataTableComponent]
 })
 export class ColorsComponent implements OnInit {
   pageInformation: PageInformation = new PageInformation();

@@ -5,7 +5,7 @@ import { ButtonDirective, CardBodyComponent, CardComponent, FormCheckComponent, 
 import { SurveyFormService } from '@services/survey-services/survey-form.service';
 import { IconDirective } from '@coreui/icons-angular';
 import { cilExitToApp, cilPen, cilPlus, cilSave, cilTrash, cilX, cilQrCode, cilFile, cilCheckCircle, cilBan } from '@coreui/icons';
-import { CommonModule } from '@angular/common';
+
 import { RangeDatetimePickerComponent } from "@components/generals/range-datetime-picker/range-datetime-picker.component";
 import { ToastService } from '@services/helper-services/toast.service';
 import { baseUrl, EColors } from '@common/global';
@@ -23,10 +23,7 @@ import { NzQRCodeModule } from 'ng-zorro-antd/qr-code';
 import { NoInternetIconComponent } from "@components/icons/no-internet-icon.component";
 @Component({
   selector: 'app-update',
-  imports: [FormControlDirective, FormLabelDirective, CardComponent, CardBodyComponent, ReactiveFormsModule, FormDirective, ButtonDirective, CommonModule, RouterLink,
-    IconDirective, RangeDatetimePickerComponent, FormSelectDirective, TextEditorComponent, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, UpdateHelperComponent, InternetIconComponent,
-    ModalComponent, ModalBodyComponent, ModalFooterComponent, NzQRCodeModule,
-    ModalHeaderComponent, ConfigHelperComponent, NoInternetIconComponent],
+  imports: [FormControlDirective, FormLabelDirective, CardComponent, CardBodyComponent, ReactiveFormsModule, FormDirective, ButtonDirective, RouterLink, IconDirective, RangeDatetimePickerComponent, FormSelectDirective, TextEditorComponent, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, UpdateHelperComponent, InternetIconComponent, ModalComponent, ModalBodyComponent, ModalFooterComponent, NzQRCodeModule, ModalHeaderComponent, ConfigHelperComponent, NoInternetIconComponent],
   templateUrl: './update.component.html',
   styleUrl: './update.component.scss'
 })

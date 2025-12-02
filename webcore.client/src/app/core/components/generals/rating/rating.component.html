@@ -1,8 +1,9 @@
 <div class="rating">
-    <span *ngFor="let star of ratingArr; let i = index"
-          [class.filled]="i < rating"
-          (click)="setRating(i + 1)">
+  @for (star of ratingArr; track star; let i = $index) {
+    <span
+      [class.filled]="i < rating"
+      (click)="setRating(i + 1)">
       ★
     </span>
-  </div>
-  
+  }
+</div>

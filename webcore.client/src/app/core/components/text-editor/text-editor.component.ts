@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit, Input, Output, EventEmitter, forwardRef } from '@angular/core';
 import { NgxEditorComponent, NgxEditorMenuComponent, Editor, Toolbar, ToolbarItem } from 'ngx-editor';
 import { FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-text-editor',
-  imports: [NgxEditorComponent, NgxEditorMenuComponent, FormsModule, CommonModule],
+  imports: [NgxEditorComponent, NgxEditorMenuComponent, FormsModule],
   templateUrl: './text-editor.component.html',
   styleUrl: './text-editor.component.scss',
   providers: [

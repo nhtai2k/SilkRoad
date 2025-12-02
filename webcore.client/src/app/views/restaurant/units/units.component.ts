@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonCloseDirective, ButtonDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, FormControlDirective, FormLabelDirective, FormDirective, FormCheckComponent } from '@coreui/angular';
@@ -13,9 +13,7 @@ import { UnitModel } from '@models/restaurant-models/unit.model';
 
 @Component({
   selector: 'app-units',
-  imports: [ModalBodyComponent, CommonModule, FormControlDirective, FormLabelDirective,
-    ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule,FormCheckComponent,
-    ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, DataTableComponent, IconDirective],
+  imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective, ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule, FormCheckComponent, ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, DataTableComponent, IconDirective],
   templateUrl: './units.component.html',
   styleUrl: './units.component.scss'
 })

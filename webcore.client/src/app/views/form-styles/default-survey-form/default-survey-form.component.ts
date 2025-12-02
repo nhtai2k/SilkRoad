@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SurveyFormService } from '@services/survey-services/survey-form.service';
 import { FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { FormControlDirective, FormDirective, FormLabelDirective } from '@coreui/angular';
 import { SurveyFormModel } from '@models/survey-models/survey-form.model';
 import { EQuestionTypes } from '@common/global';
@@ -11,7 +11,7 @@ import { EQuestionTypes } from '@common/global';
   selector: 'app-default-survey-form',
   templateUrl: './default-survey-form.component.html',
   styleUrl: './default-survey-form.component.scss',
-  imports: [CommonModule, FormControlDirective, FormLabelDirective, FormDirective, ReactiveFormsModule]
+  imports: [FormControlDirective, FormLabelDirective, FormDirective, ReactiveFormsModule]
 })
 export class DefaultSurveyFormComponent {
   @Input() surveyForm!: SurveyFormModel;

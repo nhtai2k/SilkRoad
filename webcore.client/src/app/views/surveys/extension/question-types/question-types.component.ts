@@ -1,4 +1,4 @@
-import { NgFor } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { CardBodyComponent, CardComponent, TableDirective } from '@coreui/angular';
 import { PageInformation, Pagination } from '@models/pagination.model';

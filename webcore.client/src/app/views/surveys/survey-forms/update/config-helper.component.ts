@@ -3,15 +3,14 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ButtonDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, FormControlDirective, FormSelectDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, TableDirective } from '@coreui/angular';
 import { IconDirective } from '@coreui/icons-angular';
 import { cilExitToApp, cilPen, cilPlus, cilSave, cilTrash, cilX } from '@coreui/icons';
-import { CommonModule } from '@angular/common';
+
 import { ParticipantInfoConfigModel } from '@models/survey-models/participant-info-config.model';
 import { EFieldTypes, numberEnumToArray } from '@common/global';
 import { ParticipantInfoConfigService } from '@services/survey-services/participant-info-config.service';
 
 @Component({
   selector: 'app-config-helper',
-  imports: [ReactiveFormsModule, ButtonDirective, CommonModule, TableDirective, IconDirective, ModalComponent, ModalHeaderComponent,
-    ModalTitleDirective, ModalBodyComponent, ModalFooterComponent, FormSelectDirective, FormControlDirective, FormCheckInputDirective, FormCheckComponent, FormCheckLabelDirective],
+  imports: [ReactiveFormsModule, ButtonDirective, TableDirective, IconDirective, ModalComponent, ModalHeaderComponent, ModalTitleDirective, ModalBodyComponent, ModalFooterComponent, FormSelectDirective, FormControlDirective, FormCheckInputDirective, FormCheckComponent, FormCheckLabelDirective],
   templateUrl: './config-helper.component.html',
 })
 

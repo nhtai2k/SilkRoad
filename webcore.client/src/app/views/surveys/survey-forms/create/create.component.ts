@@ -5,7 +5,7 @@ import { ButtonDirective, CardBodyComponent, CardComponent, FormControlDirective
 import { SurveyFormService } from '@services/survey-services/survey-form.service';
 import { IconDirective } from '@coreui/icons-angular';
 import { cilExitToApp, cilPen, cilPlus, cilSave, cilTrash } from '@coreui/icons';
-import { CommonModule } from '@angular/common';
+
 import { RangeDatetimePickerComponent } from "@components/generals/range-datetime-picker/range-datetime-picker.component";
 import { ToastService } from '@services/helper-services/toast.service';
 import { EColors } from '@common/global';
@@ -16,8 +16,7 @@ import { StoreService } from '@services/survey-services/store.service';
 
 @Component({
   selector: 'app-create',
-  imports: [FormControlDirective, FormLabelDirective, CardComponent, CardBodyComponent, ReactiveFormsModule, FormDirective, ButtonDirective, CommonModule,
-    IconDirective, RouterLink, RangeDatetimePickerComponent, FormSelectDirective, TextEditorComponent, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective],
+  imports: [FormControlDirective, FormLabelDirective, CardComponent, CardBodyComponent, ReactiveFormsModule, FormDirective, ButtonDirective, IconDirective, RouterLink, RangeDatetimePickerComponent, FormSelectDirective, TextEditorComponent, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit, signal, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
@@ -31,9 +31,7 @@ interface NameGroup {
 }
 @Component({
   selector: 'app-update-group',
-  imports: [CommonModule, FormControlDirective, FormLabelDirective, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalBodyComponent,
-    ButtonDirective, FormDirective, ReactiveFormsModule, FormCheckComponent, FormSelectDirective, CardBodyComponent, CardComponent, RouterLink,
-    IconDirective, InputCurrencyComponent, TreeSelectComponent, ButtonCloseDirective, TableDirective],
+  imports: [FormControlDirective, FormLabelDirective, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalBodyComponent, ButtonDirective, FormDirective, ReactiveFormsModule, FormCheckComponent, FormSelectDirective, CardBodyComponent, CardComponent, RouterLink, IconDirective, InputCurrencyComponent, TreeSelectComponent, ButtonCloseDirective, TableDirective],
   templateUrl: './update-group.component.html',
   styleUrl: './update-group.component.scss'
 })

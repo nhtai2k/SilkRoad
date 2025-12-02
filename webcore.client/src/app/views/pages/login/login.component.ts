@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { IconDirective } from '@coreui/icons-angular';
 import { InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective, FormCheckComponent } from '@coreui/angular';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -16,11 +16,18 @@ import { AuthenticationService } from '@services/system-services/authentication.
   styleUrls: ['./login.component.scss'],
   standalone: true,
   imports: [
-    InputGroupComponent, CommonModule,
-    InputGroupTextDirective, IconDirective, FormCheckComponent,
-    FormControlDirective, ButtonDirective, ParticleCanvasComponent,
-    ReactiveFormsModule, RouterLink, EyeIconComponent, EyeCloseIconComponent
-  ]
+    InputGroupComponent,
+    InputGroupTextDirective,
+    IconDirective,
+    FormCheckComponent,
+    FormControlDirective,
+    ButtonDirective,
+    ParticleCanvasComponent,
+    ReactiveFormsModule,
+    RouterLink,
+    EyeIconComponent,
+    EyeCloseIconComponent
+]
 })
 export class LoginComponent implements OnInit {
   //#region Variables

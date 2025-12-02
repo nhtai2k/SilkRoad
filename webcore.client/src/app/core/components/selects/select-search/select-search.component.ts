@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, input, OnChanges, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { OptionModel } from '@models/option.model';
@@ -6,7 +6,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
   selector: 'app-select-search',
-  imports: [FormsModule, CommonModule, NzSelectModule],
+  imports: [FormsModule, NzSelectModule],
   templateUrl: './select-search.component.html',
   styleUrl: './select-search.component.scss'
 })

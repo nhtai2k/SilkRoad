@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EColors } from '@common/global';
@@ -9,8 +9,7 @@ import { LoadingService } from '@services/helper-services/loading.service';
 import { ToastService } from '@services/helper-services/toast.service';
 @Component({
   selector: 'app-qr-code',
-  imports: [CardComponent, CardBodyComponent, FormDirective, FormLabelDirective, FormSelectDirective,
-     CommonModule, FormControlDirective, ButtonDirective, ReactiveFormsModule],
+  imports: [CardComponent, CardBodyComponent, FormDirective, FormLabelDirective, FormSelectDirective, FormControlDirective, ButtonDirective, ReactiveFormsModule],
   templateUrl: './qr-code.component.html',
   styleUrl: './qr-code.component.scss'
 })

@@ -1,11 +1,11 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ThousandSeparatorDirective } from '@common/directives/thousand-separator.directive';
 
 @Component({
   selector: 'app-input-separator',
-  imports: [ThousandSeparatorDirective, CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [ThousandSeparatorDirective, ReactiveFormsModule, FormsModule],
   templateUrl: './input-separator.component.html',
   styleUrl: './input-separator.component.scss'
 })

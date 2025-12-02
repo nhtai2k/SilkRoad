@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { baseUrl, EColors } from '@common/global';
@@ -16,9 +16,7 @@ import { PageTypeService } from '@services/lipstick-shop-services/page-type.serv
 
 @Component({
   selector: 'app-page-introductions',
-  imports: [ModalBodyComponent, CommonModule, FormControlDirective, FormLabelDirective, IconDirective,
-    ModalComponent, ButtonDirective, FormCheckComponent, FormDirective, ReactiveFormsModule, FormSelectDirective,
-    ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, CkeditorComponent, DataTableComponent],
+  imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective, IconDirective, ModalComponent, ButtonDirective, FormCheckComponent, FormDirective, ReactiveFormsModule, FormSelectDirective, ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, CkeditorComponent, DataTableComponent],
   templateUrl: './page-introductions.component.html',
   styleUrl: './page-introductions.component.scss'
 })

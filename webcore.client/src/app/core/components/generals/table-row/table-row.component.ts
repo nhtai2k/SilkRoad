@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { CommonModule } from "@angular/common";
+
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 interface User {
@@ -11,7 +11,7 @@ interface User {
 
 @Component({
   selector: 'app-table-row',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './table-row.component.html',
   styleUrl: './table-row.component.scss'
 })

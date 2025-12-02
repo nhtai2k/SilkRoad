@@ -1,25 +1,25 @@
 <h1>List Page Introduction</h1>
 <div class="d-flex justify-content-between my-2">
-    <div class="d-flex align-items-center">
-        <span class="me-2">Filter: </span>
-        <select class="form-control" id="slideTheme" cSelect (change)="filter($event)">
-          <option value="-1">All</option>
-          @for (item of pageTypeList; track item.id) {
-          <option [value]="item.id">{{ item.name }}</option>
-          }
-        </select>
-      </div>
-          <div class="justify-content-end d-flex">
-        <button (click)="toggleLiveTrashModal()" class="btn btn-warning me-2">
-            <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Trash Icon"></svg>
-        </button>
-        <button (click)="toggleLiveCreateModel()" class="btn btn-success me-2">
-            <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
-        </button>
-    </div>
+  <div class="d-flex align-items-center">
+    <span class="me-2">Filter: </span>
+    <select class="form-control" id="slideTheme" cSelect (change)="filter($event)">
+      <option value="-1">All</option>
+      @for (item of pageTypeList; track item.id) {
+        <option [value]="item.id">{{ item.name }}</option>
+      }
+    </select>
+  </div>
+  <div class="justify-content-end d-flex">
+    <button (click)="toggleLiveTrashModal()" class="btn btn-warning me-2">
+      <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Trash Icon"></svg>
+    </button>
+    <button (click)="toggleLiveCreateModel()" class="btn btn-success me-2">
+      <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+    </button>
+  </div>
 </div>
 <app-data-table [data]="pageInformation"
-(changePageIndex)="onPageIndexChange($event)" (changePageSize)="onPageSizeChange($event)">
+  (changePageIndex)="onPageIndexChange($event)" (changePageSize)="onPageSizeChange($event)">
   <thead class="text-nowrap text-truncate">
     <tr>
       <th scope="col">STT</th>
@@ -31,201 +31,87 @@
   </thead>
   <tbody>
     @for (item of data.items; track item.id; let i = $index) {
-    <tr>
-          <td>{{ i+1 }}</td>
-          <td>{{ item.titleEN }}</td>
-          <td>{{ item.titleVN }}</td>
-          <td>{{ item.isActive }}</td>
-          <td>
-            <div class="d-flex justify-content-end">
-              <button (click)="updateData(item.id)" class="btn btn-primary me-2">
-                <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Update Icon"></svg>
-              </button>
-              <button (click)="softDeleteData(item.id)" class="btn btn-danger">
-                <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
-              </button>
-            </div>
-          </td>
+      <tr>
+        <td>{{ i+1 }}</td>
+        <td>{{ item.titleEN }}</td>
+        <td>{{ item.titleVN }}</td>
+        <td>{{ item.isActive }}</td>
+        <td>
+          <div class="d-flex justify-content-end">
+            <button (click)="updateData(item.id)" class="btn btn-primary me-2">
+              <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Update Icon"></svg>
+            </button>
+            <button (click)="softDeleteData(item.id)" class="btn btn-danger">
+              <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+            </button>
+          </div>
+        </td>
       </tr>
     }
   </tbody>
 </app-data-table>
 <!-- Trash Modal -->
 <c-modal backdrop="static" [visible]="visibleTrashModal" (visibleChange)="handleLiveTrashModalChange($event)"
-    id="verticallyCenteredTrashModal" size="lg">
+  id="verticallyCenteredTrashModal" size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Trash Bin</h5>
+    <button (click)="toggleLiveTrashModal()" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <app-data-table [data]="trashPageInformation" (changePageIndex)="onTrashPageIndexChange($event)"
+      (changePageSize)="onTrashPageSizeChange($event)">
+      <thead class="text-nowrap text-truncate">
+        <tr>
+          <th scope="col">STT</th>
+          <th scope="col">Image</th>
+          <th scope="col">TitleEN</th>
+          <th scope="col">TitleVN</th>
+          <th scope="col">Active</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of trashData.items; track item.id; let i = $index) {
+          <tr>
+            <td>{{ i+1 }}</td>
+            <td>
+              @if (item.imageUrl) {
+                <img [src]="baseUrl + item.imageUrl" alt="image" class="img-thumbnail"
+                  style="max-width: 150px; height: auto;">
+                }
+              </td>
+              <td>{{ item.titleEN }}</td>
+              <td>{{ item.titleVN }}</td>
+              <td>{{ item.isActive }}</td>
+              <td>
+                <div class="d-flex justify-content-end">
+                  <button (click)="restoreData(item.id)" class="btn btn-success me-2">
+                    <svg [cIcon]="icons.cilLoopCircular" width="25" class="text-white" title="Restore Icon"></svg>
+                  </button>
+                  <button (click)="deleteDataTrash(item.id)" class="btn btn-danger">
+                    <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </app-data-table>
+      <div class="d-flex justify-content-center">
+        @if (trashData.items.length === 0) {
+          <h3 class="opacity-75">No data!</h3>
+        }
+      </div>
+    </c-modal-body>
+  </c-modal>
+  <!-- Create Modal -->
+  <c-modal backdrop="static" [fullscreen]="true"  scrollable [visible]="visibleCreateModal" (visibleChange)="handleLiveCreateModelChange($event)" id="verticallyCenteredCreateModal">
     <c-modal-header>
-        <h5 cModalTitle>Trash Bin</h5>
-        <button (click)="toggleLiveTrashModal()" cButtonClose></button>
+      <h5 cModalTitle>Create page introduction</h5>
+      <button (click)="toggleLiveCreateModel()" cButtonClose></button>
     </c-modal-header>
     <c-modal-body>
-        <app-data-table [data]="trashPageInformation" (changePageIndex)="onTrashPageIndexChange($event)"
-            (changePageSize)="onTrashPageSizeChange($event)">
-                        <thead class="text-nowrap text-truncate">
-                <tr>
-                    <th scope="col">STT</th>
-                    <th scope="col">Image</th>
-                    <th scope="col">TitleEN</th>
-                    <th scope="col">TitleVN</th>
-                    <th scope="col">Active</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (item of trashData.items; track item.id; let i = $index) {
-                <tr>
-                    <td>{{ i+1 }}</td>
-                    <td>
-                        @if (item.imageUrl) {
-                        <img [src]="baseUrl + item.imageUrl" alt="image" class="img-thumbnail"
-                            style="max-width: 150px; height: auto;">
-                        }
-                    </td>
-                    <td>{{ item.titleEN }}</td>
-                    <td>{{ item.titleVN }}</td>
-                    <td>{{ item.isActive }}</td>
-                    <td>
-                        <div class="d-flex justify-content-end">
-                            <button (click)="restoreData(item.id)" class="btn btn-success me-2">
-                                <svg [cIcon]="icons.cilLoopCircular" width="25" class="text-white" title="Restore Icon"></svg>
-                            </button>
-                            <button (click)="deleteDataTrash(item.id)" class="btn btn-danger">
-                                <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                }
-            </tbody>
-        </app-data-table>
-        <div class="d-flex justify-content-center">
-            @if (trashData.items.length === 0) {
-            <h3 class="opacity-75">No data!</h3>
-            }
-        </div>
-    </c-modal-body>
-</c-modal>
-<!-- Create Modal -->
-<c-modal backdrop="static" [fullscreen]="true"  scrollable [visible]="visibleCreateModal" (visibleChange)="handleLiveCreateModelChange($event)" id="verticallyCenteredCreateModal">
-  <c-modal-header>
-    <h5 cModalTitle>Create page introduction</h5>
-    <button (click)="toggleLiveCreateModel()" cButtonClose></button>
-  </c-modal-header>
-  <c-modal-body>
       <form cForm [formGroup]="createForm" (ngSubmit)="onSubmitCreateForm()">
-      <div class="mb-2 d-flex flex-row">
-        <c-form-check class="me-2 d-flex align-items-center">
-          <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
-          <label cFormCheckLabel for="isActive" class="me-2">Active </label>
-        </c-form-check>
-      </div>
-      <div class="mb-2 row">
-        <div class="col-12 col-md-4">
-            <label cLabel for="pageTypeId" class="me-2">Select page type: <span class="text-danger">(*)</span></label>
-                        <select cFormControl formControlName="pageTypeId" cSelect class="me-2">
-                <option value="-1">Select a page type</option>
-              @for (item of pageTypeList; track item.id) {
-              <option [value]="item.id">{{ item.name }}</option>
-              }
-            </select>
-            @if (pageTypeIdCreateForm?.invalid && (pageTypeIdCreateForm?.dirty || pageTypeIdCreateForm?.touched)) {
-            <div class="text-danger">
-              @if (pageTypeIdCreateForm?.hasError('min')) {
-              <div>
-                Please select a page type.
-              </div>
-              }
-            </div>
-            }
-        </div>
-        <div class="col-12 col-md-4">
-          <label cLabel for="titleEN" class="me-2">TitleEn: <span class="text-danger">(*)</span> </label>
-          <input cFormControl formControlName="titleEN">
-          @if (titleENCreateForm?.invalid && (titleENCreateForm?.dirty || titleENCreateForm?.touched)) {
-          <div class="text-danger">
-            @if (titleENCreateForm?.hasError('required')) {
-            <div>
-              TitleEN is required.
-            </div>
-            }
-          </div>
-          }
-        </div>
-        <div class="col-12 col-md-4">
-          <label cLabel for="titleVN">TitleVN: <span class="text-danger">(*)</span></label>
-          <input cFormControl formControlName="titleVN">
-          @if (titleVNCreateForm?.invalid && (titleVNCreateForm?.dirty || titleVNCreateForm?.touched)) {
-          <div class="text-danger">
-            @if (titleVNCreateForm?.hasError('required')) {
-            <div>
-              TitleVN is required.
-            </div>
-            }
-          </div>
-          }
-        </div>  
-      </div>
-      <div class="row">
-          <div class="col-6">
-            <label cLabel for="contentEN" class="me-2">ContentEN: <span class="text-danger">(*)</span> </label>
-            @if (contentENCreateForm?.invalid && (contentENCreateForm?.dirty || contentENCreateForm?.touched)) {
-            <div class="text-danger">
-              @if (contentENCreateForm?.hasError('required')) {
-              <div>
-                ContentEN is required.
-              </div>
-              }
-            </div>
-            }
-            <app-ckeditor (result)="changeContentEN($event,'create')"/>
-          </div>
-          <div class="col-6">
-            <label cLabel for="contentVN" class="me-2">ContentVN: <span class="text-danger">(*)</span> </label>
-            @if (contentVNCreateForm?.invalid && (contentVNCreateForm?.dirty || contentVNCreateForm?.touched)) {
-            <div class="text-danger">
-              @if (contentVNCreateForm?.hasError('required')) {
-              <div>
-                ContentVN is required.
-              </div>
-              }
-            </div>
-            }
-            <app-ckeditor (result)="changeContentVN($event,'create')"/>
-          </div>
-      </div>
-      <div class="row">
-        <div class="col-12 col-md-3">
-            <label cLabel>Upload image: <span class="text-danger">(*)</span></label>
-            <div class="ms-2" (click)="openFileInput('uploadImageCreateForm')">
-                <svg [cIcon]="icons.cilCloudUpload" width="40" title="Shield Icon"></svg>
-            </div>
-            <input class="d-none" id="uploadImageCreateForm" type="file" accept="image/*"
-                (change)="onChangeUploadImageFileCreateForm($event,'avatar')" />
-            <div class="mt-2 reviewImage">
-                @if (reviewUploadImageCreateForm) {
-                <div class="d-flex align-items-center imageReview">
-                    <img [src]="reviewUploadImageCreateForm" alt="Preview" class="img-thumbnail" style="max-width: 200px;">
-                </div>
-                }
-            </div>
-        </div>
-      </div>
-    </form>
-    </c-modal-body>
-      <c-modal-footer>
-        <button (click)="toggleLiveCreateModel()" cButton color="secondary">
-          Close
-        </button>
-        <button cButton (click)="onSubmitCreateForm()" [disabled]="!createForm.valid" color="primary">Save</button>
-      </c-modal-footer>
-</c-modal>
-<!--Update Model-->
-<c-modal backdrop="static" [fullscreen]="true"  scrollable  [visible]="visibleUpdateModal" (visibleChange)="handleLiveUpdateModelChange($event)" id="verticallyCenteredUpdateModal" size="lg">
-  <c-modal-header>
-    <h5 cModalTitle>Update page introduction</h5>
-    <button (click)="toggleLiveUpdateModel()" cButtonClose></button>
-  </c-modal-header>
-  <c-modal-body>
-      <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmitUpdateForm()">
         <div class="mb-2 d-flex flex-row">
           <c-form-check class="me-2 d-flex align-items-center">
             <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
@@ -234,106 +120,222 @@
         </div>
         <div class="mb-2 row">
           <div class="col-12 col-md-4">
-              <label cLabel for="pageTypeId" class="me-2">Select page type: <span class="text-danger">(*)</span></label>
-              <select cFormControl formControlName="pageTypeId" cSelect class="me-2">
-                @for (item of pageTypeList; track item.id) {
+            <label cLabel for="pageTypeId" class="me-2">Select page type: <span class="text-danger">(*)</span></label>
+            <select cFormControl formControlName="pageTypeId" cSelect class="me-2">
+              <option value="-1">Select a page type</option>
+              @for (item of pageTypeList; track item.id) {
                 <option [value]="item.id">{{ item.name }}</option>
+              }
+            </select>
+            @if (pageTypeIdCreateForm?.invalid && (pageTypeIdCreateForm?.dirty || pageTypeIdCreateForm?.touched)) {
+              <div class="text-danger">
+                @if (pageTypeIdCreateForm?.hasError('min')) {
+                  <div>
+                    Please select a page type.
+                  </div>
                 }
-              </select>
+              </div>
+            }
           </div>
           <div class="col-12 col-md-4">
             <label cLabel for="titleEN" class="me-2">TitleEn: <span class="text-danger">(*)</span> </label>
             <input cFormControl formControlName="titleEN">
-            @if (titleENUpdateForm?.invalid && (titleENUpdateForm?.dirty || titleENUpdateForm?.touched)) {
-            <div class="text-danger">
-              @if (titleENUpdateForm?.hasError('required')) {
-              <div>
-                TitleEN is required.
+            @if (titleENCreateForm?.invalid && (titleENCreateForm?.dirty || titleENCreateForm?.touched)) {
+              <div class="text-danger">
+                @if (titleENCreateForm?.hasError('required')) {
+                  <div>
+                    TitleEN is required.
+                  </div>
+                }
               </div>
-              }
-            </div>
             }
           </div>
           <div class="col-12 col-md-4">
             <label cLabel for="titleVN">TitleVN: <span class="text-danger">(*)</span></label>
             <input cFormControl formControlName="titleVN">
-            @if (titleVNUpdateForm?.invalid && (titleVNUpdateForm?.dirty || titleVNUpdateForm?.touched)) {
-            <div class="text-danger">
-              @if (titleVNUpdateForm?.hasError('required')) {
-              <div>
-                TitleVN is required.
+            @if (titleVNCreateForm?.invalid && (titleVNCreateForm?.dirty || titleVNCreateForm?.touched)) {
+              <div class="text-danger">
+                @if (titleVNCreateForm?.hasError('required')) {
+                  <div>
+                    TitleVN is required.
+                  </div>
+                }
               </div>
-              }
-            </div>
             }
           </div>
         </div>
         <div class="row">
+          <div class="col-6">
+            <label cLabel for="contentEN" class="me-2">ContentEN: <span class="text-danger">(*)</span> </label>
+            @if (contentENCreateForm?.invalid && (contentENCreateForm?.dirty || contentENCreateForm?.touched)) {
+              <div class="text-danger">
+                @if (contentENCreateForm?.hasError('required')) {
+                  <div>
+                    ContentEN is required.
+                  </div>
+                }
+              </div>
+            }
+            <app-ckeditor (result)="changeContentEN($event,'create')"/>
+          </div>
+          <div class="col-6">
+            <label cLabel for="contentVN" class="me-2">ContentVN: <span class="text-danger">(*)</span> </label>
+            @if (contentVNCreateForm?.invalid && (contentVNCreateForm?.dirty || contentVNCreateForm?.touched)) {
+              <div class="text-danger">
+                @if (contentVNCreateForm?.hasError('required')) {
+                  <div>
+                    ContentVN is required.
+                  </div>
+                }
+              </div>
+            }
+            <app-ckeditor (result)="changeContentVN($event,'create')"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-3">
+            <label cLabel>Upload image: <span class="text-danger">(*)</span></label>
+            <div class="ms-2" (click)="openFileInput('uploadImageCreateForm')">
+              <svg [cIcon]="icons.cilCloudUpload" width="40" title="Shield Icon"></svg>
+            </div>
+            <input class="d-none" id="uploadImageCreateForm" type="file" accept="image/*"
+              (change)="onChangeUploadImageFileCreateForm($event,'avatar')" />
+              <div class="mt-2 reviewImage">
+                @if (reviewUploadImageCreateForm) {
+                  <div class="d-flex align-items-center imageReview">
+                    <img [src]="reviewUploadImageCreateForm" alt="Preview" class="img-thumbnail" style="max-width: 200px;">
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        </form>
+      </c-modal-body>
+      <c-modal-footer>
+        <button (click)="toggleLiveCreateModel()" cButton color="secondary">
+          Close
+        </button>
+        <button cButton (click)="onSubmitCreateForm()" [disabled]="!createForm.valid" color="primary">Save</button>
+      </c-modal-footer>
+    </c-modal>
+    <!--Update Model-->
+    <c-modal backdrop="static" [fullscreen]="true"  scrollable  [visible]="visibleUpdateModal" (visibleChange)="handleLiveUpdateModelChange($event)" id="verticallyCenteredUpdateModal" size="lg">
+      <c-modal-header>
+        <h5 cModalTitle>Update page introduction</h5>
+        <button (click)="toggleLiveUpdateModel()" cButtonClose></button>
+      </c-modal-header>
+      <c-modal-body>
+        <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmitUpdateForm()">
+          <div class="mb-2 d-flex flex-row">
+            <c-form-check class="me-2 d-flex align-items-center">
+              <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
+              <label cFormCheckLabel for="isActive" class="me-2">Active </label>
+            </c-form-check>
+          </div>
+          <div class="mb-2 row">
+            <div class="col-12 col-md-4">
+              <label cLabel for="pageTypeId" class="me-2">Select page type: <span class="text-danger">(*)</span></label>
+              <select cFormControl formControlName="pageTypeId" cSelect class="me-2">
+                @for (item of pageTypeList; track item.id) {
+                  <option [value]="item.id">{{ item.name }}</option>
+                }
+              </select>
+            </div>
+            <div class="col-12 col-md-4">
+              <label cLabel for="titleEN" class="me-2">TitleEn: <span class="text-danger">(*)</span> </label>
+              <input cFormControl formControlName="titleEN">
+              @if (titleENUpdateForm?.invalid && (titleENUpdateForm?.dirty || titleENUpdateForm?.touched)) {
+                <div class="text-danger">
+                  @if (titleENUpdateForm?.hasError('required')) {
+                    <div>
+                      TitleEN is required.
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+            <div class="col-12 col-md-4">
+              <label cLabel for="titleVN">TitleVN: <span class="text-danger">(*)</span></label>
+              <input cFormControl formControlName="titleVN">
+              @if (titleVNUpdateForm?.invalid && (titleVNUpdateForm?.dirty || titleVNUpdateForm?.touched)) {
+                <div class="text-danger">
+                  @if (titleVNUpdateForm?.hasError('required')) {
+                    <div>
+                      TitleVN is required.
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+          <div class="row">
             <div class="col-6">
               <label cLabel for="contentEN" class="me-2">ContentEN: <span class="text-danger">(*)</span> </label>
               @if (contentENUpdateForm?.invalid && (contentENUpdateForm?.dirty || contentENUpdateForm?.touched)) {
-              <div class="text-danger">
-                @if (contentENUpdateForm?.hasError('required')) {
-                <div>
-                  ContentEN is required.
+                <div class="text-danger">
+                  @if (contentENUpdateForm?.hasError('required')) {
+                    <div>
+                      ContentEN is required.
+                    </div>
+                  }
                 </div>
-                }
-              </div>
               }
               <app-ckeditor (result)="changeContentEN($event,'update')"/>
             </div>
             <div class="col-6">
               <label cLabel for="contentVN" class="me-2">ContentVN: <span class="text-danger">(*)</span> </label>
               @if (contentVNUpdateForm?.invalid && (contentVNUpdateForm?.dirty || contentVNUpdateForm?.touched)) {
-              <div class="text-danger">
-                @if (contentVNUpdateForm?.hasError('required')) {
-                <div>
-                  ContentVN is required.
+                <div class="text-danger">
+                  @if (contentVNUpdateForm?.hasError('required')) {
+                    <div>
+                      ContentVN is required.
+                    </div>
+                  }
                 </div>
-                }
-              </div>
               }
               <app-ckeditor (result)="changeContentVN($event,'update')"/>
             </div>
-        </div>
-      <div class="row">
-        <div class="col-12 col-md-3">
-            <label cLabel>Upload image: <span class="text-danger">(*)</span></label>
-            <div class="ms-2" (click)="openFileInput('uploadImageUpdateForm')">
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-3">
+              <label cLabel>Upload image: <span class="text-danger">(*)</span></label>
+              <div class="ms-2" (click)="openFileInput('uploadImageUpdateForm')">
                 <svg [cIcon]="icons.cilCloudUpload" width="40" title="Shield Icon"></svg>
-            </div>
-            <input class="d-none" id="uploadImageUpdateForm" type="file" accept="image/*"
+              </div>
+              <input class="d-none" id="uploadImageUpdateForm" type="file" accept="image/*"
                 (change)="onChangeUploadImageFileUpdateForm($event,'avatar')" />
-            <div class="mt-2 reviewImage">
-                <div *ngIf="reviewUploadImageUpdateForm"
-                    class="d-flex align-items-center imageReview">
-                    <img [src]="reviewUploadImageUpdateForm" alt="Review Image" />
+                <div class="mt-2 reviewImage">
+                  @if (reviewUploadImageUpdateForm) {
+                    <div
+                      class="d-flex align-items-center imageReview">
+                      <img [src]="reviewUploadImageUpdateForm" alt="Review Image" />
+                    </div>
+                  }
                 </div>
+              </div>
             </div>
-        </div>
-      </div>
-    </form>
-    </c-modal-body>
-    <c-modal-footer>
-      <button (click)="toggleLiveUpdateModel()" cButton color="secondary">
-        Close
-      </button>
-      <button cButton (click)="onSubmitUpdateForm()" [disabled]="!updateForm.valid" color="primary">Save</button>
-    </c-modal-footer>
-</c-modal>
-<!--Delete Model-->
-<c-modal backdrop="static"  [visible]="visibleDelete" (visibleChange)="handleLiveDeleteChange($event)" id="verticallyCenteredDelete">
-  <c-modal-header>
-    <h5 cModalTitle>Confirmation</h5>
-    <button (click)="toggleLiveDelete()" cButtonClose></button>
-  </c-modal-header>
-  <c-modal-body>
-    <p>Are you sure you want to delete this category?</p>
-  </c-modal-body>
-  <c-modal-footer>
-    <button (click)="toggleLiveDelete()" cButton color="secondary">
-      Close
-    </button>
-    <button cButton color="primary">Confirm</button>
-  </c-modal-footer>
-</c-modal>
+          </form>
+        </c-modal-body>
+        <c-modal-footer>
+          <button (click)="toggleLiveUpdateModel()" cButton color="secondary">
+            Close
+          </button>
+          <button cButton (click)="onSubmitUpdateForm()" [disabled]="!updateForm.valid" color="primary">Save</button>
+        </c-modal-footer>
+      </c-modal>
+      <!--Delete Model-->
+      <c-modal backdrop="static"  [visible]="visibleDelete" (visibleChange)="handleLiveDeleteChange($event)" id="verticallyCenteredDelete">
+        <c-modal-header>
+          <h5 cModalTitle>Confirmation</h5>
+          <button (click)="toggleLiveDelete()" cButtonClose></button>
+        </c-modal-header>
+        <c-modal-body>
+          <p>Are you sure you want to delete this category?</p>
+        </c-modal-body>
+        <c-modal-footer>
+          <button (click)="toggleLiveDelete()" cButton color="secondary">
+            Close
+          </button>
+          <button cButton color="primary">Confirm</button>
+        </c-modal-footer>
+      </c-modal>

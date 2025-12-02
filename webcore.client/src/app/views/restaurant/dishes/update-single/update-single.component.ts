@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit, signal, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
@@ -18,9 +18,7 @@ import { InputCurrencyComponent } from "@components/inputs/input-currency/input-
 import { UnitService } from '@services/restaurant-services/unit.service';
 @Component({
   selector: 'app-update-single',
-  imports: [CommonModule, FormControlDirective, FormLabelDirective,
-    ButtonDirective, FormDirective, ReactiveFormsModule, FormCheckComponent, FormSelectDirective,
-    CardBodyComponent, CardComponent, RouterLink, IconDirective, TreeSelectComponent, InputCurrencyComponent],
+  imports: [FormControlDirective, FormLabelDirective, ButtonDirective, FormDirective, ReactiveFormsModule, FormCheckComponent, FormSelectDirective, CardBodyComponent, CardComponent, RouterLink, IconDirective, TreeSelectComponent, InputCurrencyComponent],
   templateUrl: './update-single.component.html',
   styleUrl: './update-single.component.scss'
 })
