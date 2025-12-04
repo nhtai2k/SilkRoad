@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using BusinessLogic.IHelpers.ISystemHelpers;
+using Common.Models;
 using Common.Services.JwtServices;
 using Common.ViewModels.SystemViewModels;
 using DataAccess;
 using DataAccess.DTOs;
+using Google.Apis.Auth;
 using Microsoft.AspNetCore.Identity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -12,13 +14,15 @@ namespace BusinessLogic.Helpers.SystemHelpers
 {
     public class MyAccountHelper : IMyAccountHelper
     {
+        private readonly SignInManager<UserDTO> _signInManager;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly UserManager<UserDTO> _userManager;
         //private readonly RoleManager<RoleDTO> _roleManager;
         private readonly IJwtService _jwtService;
         public MyAccountHelper(IUnitOfWork unitOfWork,
-            IMapper mapper,
+ SignInManager<UserDTO> signInManager,
+        IMapper mapper,
             UserManager<UserDTO> userManager,
             //RoleManager<RoleDTO> roleManager,
             IJwtService jwtService)
@@ -28,6 +32,7 @@ namespace BusinessLogic.Helpers.SystemHelpers
             _userManager = userManager;
             //_roleManager = roleManager;
             _jwtService = jwtService;
+            _signInManager = signInManager;
             //_userInformation = userInformation;
             //_userLogHelper = userLogHelper;
         }
@@ -36,7 +41,7 @@ namespace BusinessLogic.Helpers.SystemHelpers
             return await _userManager.FindByNameAsync(userName);
         }
 
-        public async Task<JwtViewModel> Authenticate(UserDTO user, bool rememberMe)
+        public async Task<JwtViewModel> AuthenticateAsync(UserDTO user, bool rememberMe)
         {
 
             JwtViewModel jwtViewModel = new JwtViewModel();
@@ -80,62 +85,61 @@ namespace BusinessLogic.Helpers.SystemHelpers
 
             return jwtViewModel;
         }
-
-        public async Task<IEnumerable<UserViewModel>> GetAllAsync()
+        public async Task<GoogleJsonWebSignature.Payload> VerifyGoogleTokenAsync(ExternalAuthModel externalAuth)
         {
-            IEnumerable<UserDTO> data = await _unitOfWork.UserSystemRepository.GetAllAsync(s => !s.IsDeleted);
-            return _mapper.Map<IEnumerable<UserViewModel>>(data);
-        }
-        public async Task<JwtViewModel> LoginAsync(LoginViewModel model)
-        {
-
-            JwtViewModel jwtViewModel = new JwtViewModel();
-            var user = await _userManager.FindByNameAsync(model.UserName);
-            var result = await _userManager.CheckPasswordAsync(user, model.Password);
-            if (result)
+            try
             {
-                var userRoles = await _userManager.GetRolesAsync(user);
-                var authClaims = new List<Claim>
+                var settings = new GoogleJsonWebSignature.ValidationSettings()
                 {
-                    new Claim("Id",user.Id.ToString()),
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    Audience = new List<string>() { "1094526113359-1m12npd4537dbullidve99h9pkja38e2.apps.googleusercontent.com" }
                 };
 
-                foreach (var userRole in userRoles)
-                {
-                    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-                }
-                jwtViewModel.Token = _jwtService.CreateToken(authClaims);
-                jwtViewModel.RefreshToken = _jwtService.GenerateRefreshToken();
-                UserTokenDTO userToken = new UserTokenDTO
-                {
-                    UserId = user.Id,
-                    LoginProvider = "Web API",
-                    Name = "RefreshToken",
-                    Value = jwtViewModel.RefreshToken,
-                    ExpirationTime = DateTime.Now.AddDays(1)
-                };
-                if (model.RememberMe)
-                {
-                    userToken.ExpirationTime = DateTime.Now.AddYears(100);
-                }
-                var userTokens = await _unitOfWork.UserTokenRepository.GetAllAsync(s => s.UserId == user.Id);
-                if (userTokens != null)
-                {
-                    foreach (var item in userTokens)
-                    {
-                        _unitOfWork.UserTokenRepository.Delete(item);
-                    }
-                }
-                await _unitOfWork.UserTokenRepository.CreateAsync(userToken);
-                await _unitOfWork.SaveChangesAsync();
-
-                return jwtViewModel;
+                var payload = await GoogleJsonWebSignature.ValidateAsync(externalAuth.IdToken, settings);
+                return payload;
             }
-            return jwtViewModel;
+            catch (Exception ex)
+            {
+                //log an exception
+                return null;
+            }
         }
+        public async Task<string> ExternalLoginAsync(ExternalAuthModel externalAuth)
+        {
+            var payload = await VerifyGoogleTokenAsync(externalAuth);
+            if (payload == null)
+                return null;
 
+            var info = new UserLoginInfo(externalAuth.Provider, payload.Subject, externalAuth.Provider);
+
+            var user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
+            if (user == null)
+            {
+                user = await _userManager.FindByEmailAsync(payload.Email);
+
+                if (user == null)
+                {
+                    user = new UserDTO { Email = payload.Email, UserName = payload.Email };
+                    await _userManager.CreateAsync(user);
+
+                    //prepare and send an email for the email confirmation
+
+                    await _userManager.AddToRoleAsync(user, "Viewer");
+                    await _userManager.AddLoginAsync(user, info);
+                }
+                else
+                {
+                    await _userManager.AddLoginAsync(user, info);
+                }
+            }
+
+            if (user == null)
+                return null;
+
+            //check for the Locked out account
+
+            var token = "";//await _jwtService.GenerateAccessToken(user);
+            return token;
+        }
         public async Task<bool> ValidateRefreshTokenAsync(string refreshToken)
         {
             try
@@ -157,9 +161,8 @@ namespace BusinessLogic.Helpers.SystemHelpers
             }
         }
 
-        public async Task<JwtViewModel> ReNewTokenAsync(string refreshToken, string token)
+        public async Task<string?> ReNewTokenAsync(string refreshToken, string token)
         {
-            JwtViewModel jwtViewModel = new JwtViewModel();
             if (string.IsNullOrEmpty(refreshToken) || string.IsNullOrEmpty(token))
             {
                 return null;
@@ -169,13 +172,34 @@ namespace BusinessLogic.Helpers.SystemHelpers
             {
                 return null;
             }
-            jwtViewModel.RefreshToken = refreshToken;
-            jwtViewModel.Token = _jwtService.RenewToken(token);
-            if (jwtViewModel.Token == null)
+            return _jwtService.RenewToken(token);
+
+        }
+
+        public async Task<string?> RefreshTokenAsync(string refreshToken)
+        {
+            var data = await _unitOfWork.UserTokenRepository.GetUserTokenByRefreshToken(refreshToken);
+            if (data != null && data.ExpirationTime > DateTime.Now)
             {
-                return null;
+                var user = await _userManager.FindByIdAsync(data.UserId.ToString());
+                if (user == null)
+                    return null;
+
+                var userRoles = await _userManager.GetRolesAsync(user);
+                var authClaims = new List<Claim>
+                    {
+                        new Claim("Id",user.Id.ToString()),
+                        new Claim(ClaimTypes.Name, user.UserName ?? ""),
+                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    };
+
+                foreach (var userRole in userRoles)
+                {
+                    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+                }
+                return _jwtService.CreateToken(authClaims);
             }
-            return jwtViewModel;
+            return null;
         }
 
         public async Task<bool> ChangePasswordAsync(ChangePasswordViewModel model)
@@ -230,5 +254,27 @@ namespace BusinessLogic.Helpers.SystemHelpers
             return result.Succeeded;
         }
 
+        public async Task<Microsoft.AspNetCore.Identity.SignInResult> CheckPasswordSignInAsync(UserDTO user, string password)
+        {
+            return await _signInManager.CheckPasswordSignInAsync(user, password, lockoutOnFailure: true);
+        }
+
+        public async Task<bool> RevokeRefreshTokenAsync(string refreshToken)
+        {
+            try
+            {
+                var data = await _unitOfWork.UserTokenRepository.GetUserTokenByRefreshToken(refreshToken);
+                if (data == null)
+                    return false;
+                
+                _unitOfWork.UserTokenRepository.Delete(data);
+                await _unitOfWork.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

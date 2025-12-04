@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
-import { EUrl } from '@common/url-api';
+import { EConvertWordToPdfFeatureUrl } from '@common/url-api';
 
 export interface ConversionProgress {
   progress: number;
@@ -27,7 +27,7 @@ export class WordToPdfService {
     formData.append('file', file);
     formData.append('outputFormat', 'pdf');
 
-    return this.http.post(`${EUrl.convertWordToPdf}`, formData, {
+    return this.http.post(EConvertWordToPdfFeatureUrl.convertWordToPdfUrl, formData, {
       reportProgress: true,
       observe: 'events',
       responseType: 'blob'

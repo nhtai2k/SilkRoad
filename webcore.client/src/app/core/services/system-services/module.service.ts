@@ -1,28 +1,35 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, switchMap, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ModuleModel } from '@models/system-management-models/module.model';
-import { EUrl } from '@common/url-api';
-import { AuthenticationService } from './authentication.service';
+import { EModuleSystemUrl } from '@common/url-api';
+import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModuleService {
 
-  constructor(private http: HttpClient, private authenticationService: AuthenticationService ) { }
+  constructor(private http: HttpClient ) { }
 
+  getAll(): Observable<APIResponse<ModuleModel[]>> {
+    return this.http.get<APIResponse<ModuleModel[]>>(EModuleSystemUrl.getAllUrl);
+  }
+
+  // Alias for backward compatibility
   getModules(): Observable<ModuleModel[]> {
-    return this.http.get<ModuleModel[]>(EUrl.getAllUrlModule, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<ModuleModel[]>(EUrl.getAllUrlModule, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-           return throwError(() => error);
-        }
-      })
-    );
+    return this.http.get<ModuleModel[]>(EModuleSystemUrl.getAllUrl);
+  }
+
+  getById(id: number): Observable<APIResponse<ModuleModel>> {
+    return this.http.get<APIResponse<ModuleModel>>(`${EModuleSystemUrl.getByIdUrl}/${id}`);
+  }
+
+  create(module: ModuleModel): Observable<BaseAPIResponse> {
+    return this.http.post<BaseAPIResponse>(EModuleSystemUrl.createUrl, module);
+  }
+
+  update(module: ModuleModel): Observable<BaseAPIResponse> {
+    return this.http.put<BaseAPIResponse>(EModuleSystemUrl.updateUrl, module);
   }
 }

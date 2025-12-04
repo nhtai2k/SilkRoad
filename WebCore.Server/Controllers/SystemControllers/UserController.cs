@@ -54,6 +54,8 @@ namespace WebCore.Server.Controllers.SystemControllers
         [HttpGet("GetById/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
+            //string? refreshToken = Request.Cookies["refresh_token"];
+
             var data = await _userSystemHelper.GetByIdAsync(id);
             if (data == null)
             {

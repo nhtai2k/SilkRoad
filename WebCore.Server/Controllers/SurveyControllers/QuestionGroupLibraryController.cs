@@ -29,6 +29,7 @@ namespace WebCore.Server.Controllers.SurveyControllers
         [HttpGet("getAll/{pageIndex}/{pageSize}")]
         public async Task<IActionResult> GetAll(int pageIndex, int pageSize)
         {
+            //string? refreshToken = Request.Cookies["refresh_token"];
             if (pageIndex < 1 || pageSize < 1)
             {
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);

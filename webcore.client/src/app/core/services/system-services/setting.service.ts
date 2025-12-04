@@ -1,56 +1,26 @@
 import { Injectable } from '@angular/core';
 import { SettingModel } from '@models/system-management-models/setting.model';
-import { EUrl } from '../../common/url-api';
-import { catchError, Observable, switchMap, throwError } from 'rxjs';
+import { ESettingSystemUrl } from '../../common/url-api';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { AuthenticationService } from './authentication.service';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class SettingService {
 
-  constructor(private http: HttpClient, private authenticationService: AuthenticationService) { }
+  constructor(private http: HttpClient) { }
 
   getAllSettings(): Observable<SettingModel[]> {
-    return this.http.get<SettingModel[]>(EUrl.getAllUrlSetting, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<SettingModel[]>(EUrl.getAllUrlSetting, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-           return throwError(() => error);
-        }
-      })
-    );
+    return this.http.get<SettingModel[]>(ESettingSystemUrl.getAllUrl);
   }
 
   getSettingByKey(key: any): Observable<SettingModel> {
-    return this.http.get<SettingModel>(EUrl.getByKeyUrlSetting + `/${key}`, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<SettingModel>(EUrl.getByKeyUrlSetting + `/${key}`, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-           return throwError(() => error);
-        }
-      })
-    );
+    return this.http.get<SettingModel>(`${ESettingSystemUrl.getByKeyUrl}/${key}`);
   }
 
   updateSetting(setting: SettingModel): Observable<SettingModel> {
-    return this.http.put<SettingModel>(EUrl.updateUrlSetting, setting, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.put<SettingModel>(EUrl.updateUrlSetting, setting, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-           return throwError(() => error);
-        }
-      })
-    );
+    return this.http.put<SettingModel>(ESettingSystemUrl.updateUrl, setting);
   }
 }

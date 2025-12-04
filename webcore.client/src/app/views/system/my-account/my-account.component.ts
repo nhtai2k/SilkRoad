@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '@services/system-services/authentication.service';
+import { AuthService } from '@services/system-services/auth.service';
 import { EyeIconComponent } from '@components/icons/eye-icon.component';
 import { EyeCloseIconComponent } from '@components/icons/eye-close-icon.component';
 import { RoleService } from '@services/system-services/role.service'
@@ -47,7 +47,7 @@ export class MyAccountComponent implements OnInit {
   showOldPassword: boolean = false;
   showNewPassword: boolean = false;
   showConfirmPassword: boolean = false;
-  constructor(private authentication: AuthenticationService,private roleService : RoleService,private accountService : AccountService,
+  constructor(private authentication: AuthService,private roleService : RoleService,private accountService : AccountService,
      private myAccountService: MyAccountService, private router: Router) {
   }
   ngOnInit(): void {
@@ -76,7 +76,7 @@ export class MyAccountComponent implements OnInit {
     let userId = this.authentication.getUserId();
     this.changePasswordForm.value.userId = userId;
     if (this.changePasswordForm.value.newPassword != this.changePasswordForm.value.confirmPassword) {
-      this.changePasswordFormError = $localize`:@@passwordDoesNotMatch:Password does not match`;
+      this.changePasswordFormError = `Password does not match`;
       return;
     }
     this.myAccountService.changePassword(this.changePasswordForm.value).subscribe(() => {
@@ -86,7 +86,7 @@ export class MyAccountComponent implements OnInit {
       this.toggleToast();
     }, (error: any) => {
       console.log(error);
-      this.changePasswordFormError = $localize`:@@oldPasswordIsIncorrect:Old password is incorrect`;
+      this.changePasswordFormError = `Old password is incorrect`;
     });
   }
 

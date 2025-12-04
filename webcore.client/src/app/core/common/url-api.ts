@@ -1,379 +1,474 @@
-export enum EUrl {
+
   //#region StockMarket
   //Company
-  getAllUrlCompany = "/api/company/getAll",
-  getAllActiveUrlCompany = "/api/company/getAllActive",
-  getAllSymbolsUrlCompany = "/api/company/getAllSymbols",
-  getAllDeletedUrlCompany = "/api/company/getAllDeleted",
-  getByIdUrlCompany = "/api/company/getById",
-  createUrlCompany = "/api/company/create",
-  updateUrlCompany = "/api/company/update",
-  softDeleteUrlCompany = "/api/company/softDelete",
-  restoreUrlCompany = "/api/company/restore",
-  deleteUrlCompany = "/api/company/delete",
+  export enum ECompanyStockMarketUrl{
+  getAllUrl = "/api/company/getAll",
+  getAllActiveUrl = "/api/company/getAllActive",
+  getAllSymbolsUrl = "/api/company/getAllSymbols",
+  getAllDeletedUrl = "/api/company/getAllDeleted",
+  getByIdUrl = "/api/company/getById",
+  createUrl = "/api/company/create",
+  updateUrl = "/api/company/update",
+  softDeleteUrl = "/api/company/softDelete",
+  restoreUrl = "/api/company/restore",
+  deleteUrl = "/api/company/delete",
+  }
   //Industry
-  getAllUrlIndustry = "/api/industry/getAll",
-  getAllActiveUrlIndustry = "/api/industry/getAllActive",
-  getAllDeletedUrlIndustry = "/api/industry/getAllDeleted",
-  getByIdUrlIndustry = "/api/industry/getById",
-  createUrlIndustry = "/api/industry/create",
-  updateUrlIndustry = "/api/industry/update",
-  softDeleteUrlIndustry = "/api/industry/softDelete",
-  restoreUrlIndustry = "/api/industry/restore",
-  deleteUrlIndustry = "/api/industry/delete",
-
+  export enum EIndustryStockMarketUrl{
+  getAllUrl = "/api/industry/getAll",
+  getAllActiveUrl = "/api/industry/getAllActive",
+  getAllDeletedUrl = "/api/industry/getAllDeleted",
+  getByIdUrl = "/api/industry/getById",
+  createUrl = "/api/industry/create",
+  updateUrl = "/api/industry/update",
+  softDeleteUrl = "/api/industry/softDelete",
+  restoreUrl = "/api/industry/restore",
+  deleteUrl = "/api/industry/delete",
+  }
 
   //stock-price
-  getAllUrlStockPrice = "/api/stockPrice/getAll",
-  getNewDataUrlStockPrice = "/api/stockPrice/getNewData",
+  export enum EStockPriceStockMarketUrl{
+  getAllUrl = "/api/stockPrice/getAll",
+  getNewDataUrl = "/api/stockPrice/getNewData",
+  }
   //#endregion
 
   //#region PersonalFinance
   //Category
-  getAllUrlCategoryPF = "/api/pf/category/getAll",
-  getAllDeletedUrlCategoryPF = "/api/pf/category/getAllDeleted",
-  getByIdUrlCategoryPF = "/api/pf/category/getById",
-  createUrlCategoryPF = "/api/pf/category/create",
-  updateUrlCategoryPF = "/api/pf/category/update",
-  softDeleteUrlCategoryPF = "/api/pf/category/softDelete",
-  restoreUrlCategoryPF = "/api/pf/category/restore",
-  deleteUrlCategoryPF = "/api/pf/category/delete",
+  export enum ECategoryPersonalFinanceUrl{
+  getAllUrl = "/api/pf/category/getAll",
+  getAllDeletedUrl = "/api/pf/category/getAllDeleted",
+  getByIdUrl = "/api/pf/category/getById",
+  createUrl = "/api/pf/category/create",
+  updateUrl = "/api/pf/category/update",
+  softDeleteUrl = "/api/pf/category/softDelete",
+  restoreUrl = "/api/pf/category/restore",
+  deleteUrl = "/api/pf/category/delete",
+  }
   //SubCategory
-  getAllUrlSubCategoryPF = "/api/pf/subCategory/getAll",
-  getAllDeletedUrlSubCategoryPF = "/api/pf/subCategory/getAllDeleted",
-  getByIdUrlSubCategoryPF = "/api/pf/subCategory/getById",
-  createUrlSubCategoryPF = "/api/pf/subCategory/create",
-  updateUrlSubCategoryPF = "/api/pf/subCategory/update",
-  softDeleteUrlSubCategoryPF = "/api/pf/subCategory/softDelete",
-  restoreUrlSubCategoryPF = "/api/pf/subCategory/restore",
-  deleteUrlSubCategoryPF = "/api/pf/subCategory/delete",
+  export enum ESubCategoryPersonalFinanceUrl{
+  getAllUrl = "/api/pf/subCategory/getAll",
+  getAllDeletedUrl = "/api/pf/subCategory/getAllDeleted",
+  getByIdUrl = "/api/pf/subCategory/getById",
+  createUrl = "/api/pf/subCategory/create",
+  updateUrl = "/api/pf/subCategory/update",
+  softDeleteUrl = "/api/pf/subCategory/softDelete",
+  restoreUrl = "/api/pf/subCategory/restore",
+  deleteUrl = "/api/pf/subCategory/delete",
+  }
   //#endregion
 
   //#region Hubs
   //SignalR
-  chatHubUrl = "/chat",
+  // chatHubUrl = "/chat",
   //#endregion
 
   //#region Feature
   //QRCode
-  generateAQRCode = "/api/qrCode/generateAQRCode",
-  generateListQRCode = "/api/qrCode/generateListQRCode",
-  getAllFonts = "/api/qrCode/getAllFonts",
+  export enum EQRCodeFeatureUrl{
+  generateAQRCodeUrl = "/api/qrCode/generateAQRCode",
+  generateListQRCodeUrl = "/api/qrCode/generateListQRCode",
+  getAllFontsUrl = "/api/qrCode/getAllFonts",
+  }
   //Word to PDF
-  convertWordToPdf = "/api/convertWordToPdf/convertFile",
+  export enum EConvertWordToPdfFeatureUrl{
+  convertWordToPdfUrl = "/api/convertWordToPdf/convertFile",
+  }
   //#endregion
 
   //#region LipstickShop
   //Report
-  getAllUrlReport = "/api/report/getAll",
+  export enum EReportLipstickShopUrl{
+  getAllUrl = "/api/report/getAll",
+  }
   //Order
-  getAllUrlOrder = "/api/order/getAll",
-  getAllDeletedUrlOrder = "/api/order/getAllDeleted",
-  getByIdUrlOrder = "/api/order/getById",
-  createUrlOrder = "/api/order/create",
-  updateUrlOrder = "/api/order/update",
-  softDeleteUrlOrder = "/api/order/softDelete",
-  restoreUrlOrder = "/api/order/restore",
+  export enum EOrderLipstickShopUrl{
+  getAllUrl = "/api/order/getAll",
+  getAllDeletedUrl = "/api/order/getAllDeleted",
+  getByIdUrl = "/api/order/getById",
+  createUrl = "/api/order/create",
+  updateUrl = "/api/order/update",
+  softDeleteUrl = "/api/order/softDelete",
+  restoreUrl = "/api/order/restore",
+  deleteUrl = "/api/order/delete",
+  }
   //Product
-  getAllUrlProduct = "/api/product/getAll",
-  getAllActiveUrlProduct = "/api/product/getAllActive",
-  getByIdUrlProduct = "/api/product/getById",
-  createUrlProduct = "/api/product/create",
-  updateUrlProduct = "/api/product/update",
-  softDeleteUrlProduct = "/api/product/softDelete",
-
-  getBySearchTextUrlProduct = "/api/product/suggestProductBySearchText",
+  export enum EProductLipstickShopUrl{
+  getAllUrl = "/api/product/getAll",
+  getAllActiveUrl = "/api/product/getAllActive",
+  getByIdUrl = "/api/product/getById",
+  createUrl = "/api/product/create",
+  updateUrl = "/api/product/update",
+  softDeleteUrl = "/api/product/softDelete",
+  getBySearchTextUrl = "/api/product/suggestProductBySearchText",
+  restoreUrl = "/api/product/restore",
+  deleteUrl = "/api/product/delete",
+  }
   //Blog
-  getAllUrlBlog = "/api/blog/getAll",
-  getAllActiveUrlBlog = "/api/blog/getAllActive",
-  getAllDeletedUrlBlog = "/api/blog/getAllDeleted",
-  getByIdUrlBlog = "/api/blog/getById",
-  createUrlBlog = "/api/blog/create",
-  updateUrlBlog = "/api/blog/update",
-  restoreUrlBlog = "/api/blog/restore",
-  softDeleteUrlBlog = "/api/blog/softDelete",
+  export enum EBlogLipstickShopUrl{
+  getAllUrl = "/api/blog/getAll",
+  getAllActiveUrl = "/api/blog/getAllActive",
+  getAllDeletedUrl = "/api/blog/getAllDeleted",
+  getByIdUrl = "/api/blog/getById",
+  createUrl = "/api/blog/create",
+  updateUrl = "/api/blog/update",
+  restoreUrl = "/api/blog/restore",
+  softDeleteUrl = "/api/blog/softDelete",
+  }
   //Brand
-  getAllUrlBrand = "/api/brand/getAll",
-  getByIdUrlBrand = "/api/brand/getById",
-  getAllDeletedUrlBrand = "/api/brand/getAllDeleted",
-  createUrlBrand = "/api/brand/create",
-  updateUrlBrand = "/api/brand/update",
-  getAllActiveUrlBrand = "/api/brand/getAllActive",
-  restoreUrlBrand = "/api/brand/restore",
-  softDeleteUrlBrand = "/api/brand/softDelete",
-  deleteUrlBrand = "/api/brand/delete",
+  export enum EBrandLipstickShopUrl{
+  getAllUrl = "/api/brand/getAll",
+  getByIdUrl = "/api/brand/getById",
+  getAllDeletedUrl = "/api/brand/getAllDeleted",
+  createUrl = "/api/brand/create",
+  updateUrl = "/api/brand/update",
+  getAllActiveUrl = "/api/brand/getAllActive",
+  restoreUrl = "/api/brand/restore",
+  softDeleteUrl = "/api/brand/softDelete",
+  deleteUrl = "/api/brand/delete",
+  }
   //Category
-  getAllUrlCategory = "/api/category/getAll",
-  getAllActiveUrlCategory = "/api/category/getAllActive",
-  getAllDeletedUrlCategory = "/api/category/getAllDeleted",
-  getByIdUrlCategory = "/api/category/getById",
-  createUrlCategory = "/api/category/create",
-  updateUrlCategory = "/api/category/update",
-  restoreUrlCategory = "/api/category/restore",
-  softDeleteUrlCategory = "/api/category/softDelete",
-  deleteUrlCategory = "/api/category/delete",
+  export enum ECategoryLipstickShopUrl{
+  getAllUrl = "/api/category/getAll",
+  getAllActiveUrl = "/api/category/getAllActive",
+  getAllDeletedUrl = "/api/category/getAllDeleted",
+  getByIdUrl = "/api/category/getById",
+  createUrl = "/api/category/create",
+  updateUrl = "/api/category/update",
+  restoreUrl = "/api/category/restore",
+  softDeleteUrl = "/api/category/softDelete",
+  deleteUrl = "/api/category/delete",
+  }
   //SubCategory
-  getAllUrlSubCategory = "/api/subcategory/getAll",
-  getAllDeletedUrlSubCategory = "/api/subcategory/getAllDeleted",
-  getAllActiveUrlSubCategory = "/api/subcategory/getAllActive",
-  getByIdUrlSubCategory = "/api/subcategory/getById",
-  createUrlSubCategory = "/api/subcategory/create",
-  updateUrlSubCategory = "/api/subcategory/update",
-  softDeleteUrlSubCategory = "/api/subcategory/softDelete",
-  deleteUrlSubCategory = "/api/subcategory/delete",
-  restoreUrlSubCategory = "/api/subcategory/restore",
-  getByCategoryIdUrlSubCategory = "/api/subcategory/getByCategoryId",
+  export enum ESubCategoryLipstickShopUrl{
+  getAllUrl = "/api/subcategory/getAll",
+  getAllDeletedUrl = "/api/subcategory/getAllDeleted",
+  getAllActiveUrl = "/api/subcategory/getAllActive",
+  getByIdUrl = "/api/subcategory/getById",
+  createUrl = "/api/subcategory/create",
+  updateUrl = "/api/subcategory/update",
+  softDeleteUrl = "/api/subcategory/softDelete",
+  deleteUrl = "/api/subcategory/delete",
+  restoreUrl = "/api/subcategory/restore",
+  getByCategoryIdUrl = "/api/subcategory/getByCategoryId",
+  }
   //Color
-  getAllUrlColor = "/api/color/getAll",
-  getAllActiveUrlColor = "/api/color/getAllActive",
-  getAllDeletedUrlColor = "/api/color/getAllDeleted",
-  getByIdUrlColor = "/api/color/getById",
-  createUrlColor = "/api/color/create",
-  updateUrlColor = "/api/color/update",
-  restoreUrlColor = "/api/color/restore",
-  softDeleteUrlColor = "/api/color/softDelete",
-  deleteUrlColor = "/api/color/delete",
+  export enum EColorLipstickShopUrl{
+  getAllUrl = "/api/color/getAll",
+  getAllActiveUrl = "/api/color/getAllActive",
+  getAllDeletedUrl = "/api/color/getAllDeleted",
+  getByIdUrl = "/api/color/getById",
+  createUrl = "/api/color/create",
+  updateUrl = "/api/color/update",
+  restoreUrl = "/api/color/restore",
+  softDeleteUrl = "/api/color/softDelete",
+  deleteUrl = "/api/color/delete",
+  }
   //Size
-  getAllUrlSize = "/api/size/getAll",
-  getAllActiveUrlSize = "/api/size/getAllActive",
-  getAllDeletedUrlSize = "/api/size/getAllDeleted",
-  getByIdUrlSize = "/api/size/getById",
-  createUrlSize = "/api/size/create",
-  updateUrlSize = "/api/size/update",
-  restoreUrlSize = "/api/size/restore",
-  softDeleteUrlSize = "/api/size/softDelete",
-  deleteUrlSize = "/api/size/delete",
+  export enum ESizeLipstickShopUrl{
+  getAllUrl = "/api/size/getAll",
+  getAllActiveUrl = "/api/size/getAllActive",
+  getAllDeletedUrl = "/api/size/getAllDeleted",
+  getByIdUrl = "/api/size/getById",
+  createUrl = "/api/size/create",
+  updateUrl = "/api/size/update",
+  restoreUrl = "/api/size/restore",
+  softDeleteUrl = "/api/size/softDelete",
+  deleteUrl = "/api/size/delete",
+  }
   //PageType
-  getAllUrlPageType = "/api/pageType/getAll",
-  getAllActiveUrlPageType = "/api/pageType/getAllActive",
-  getAllDeletedUrlPageType = "/api/pageType/getAllDeleted",
-  getByIdUrlPageType = "/api/pageType/getById",
-  createUrlPageType = "/api/pageType/create",
-  updateUrlPageType = "/api/pageType/update",
-  softDeleteUrlPageType = "/api/pageType/softDelete",
-  getEPageTypeUrlPageType = "/api/pageType/getEPageType",
-  restoreUrlPageType = "/api/pageType/restore",
-  deleteUrlPageType = "/api/pageType/delete",
+  export enum EPageTypeLipstickShopUrl{
+  getAllUrl = "/api/pageType/getAll",
+  getAllActiveUrl = "/api/pageType/getAllActive",
+  getAllDeletedUrl = "/api/pageType/getAllDeleted",
+  getByIdUrl = "/api/pageType/getById",
+  createUrl = "/api/pageType/create",
+  updateUrl = "/api/pageType/update",
+  softDeleteUrl = "/api/pageType/softDelete",
+  getEPageTypeUrl = "/api/pageType/getEPageType",
+  restoreUrl = "/api/pageType/restore",
+  deleteUrl = "/api/pageType/delete",
+  }
   //PageContent
-  getAllUrlPageContent = "/api/pageContent/getAll",
-  getAllActiveUrlPageContent = "/api/pageContent/getAllActive",
-  getAllDeletedUrlPageContent = "/api/pageContent/getAllDeleted",
-  getByIdUrlPageContent = "/api/pageContent/getById",
-  createUrlPageContent = "/api/pageContent/create",
-  updateUrlPageContent = "/api/pageContent/update",
-  softDeleteUrlPageContent = "/api/pageContent/softDelete",
-  restoreUrlPageContent = "/api/pageContent/restore",
-  deleteUrlPageContent = "/api/pageContent/delete",
+  export enum EPageContentLipstickShopUrl{
+  getAllUrl = "/api/pageContent/getAll",
+  getAllActiveUrl = "/api/pageContent/getAllActive",
+  getAllDeletedUrl = "/api/pageContent/getAllDeleted",
+  getByIdUrl = "/api/pageContent/getById",
+  createUrl = "/api/pageContent/create",
+  updateUrl = "/api/pageContent/update",
+  softDeleteUrl = "/api/pageContent/softDelete",
+  restoreUrl = "/api/pageContent/restore",
+  deleteUrl = "/api/pageContent/delete",
+  }
   //PageIntroduction
-  getAllUrlPageIntroduction = "/api/pageIntro/getAll",
-  getAllDeletedUrlPageIntroduction = "/api/pageIntro/getAllDeleted",
-  getAllActiveUrlPageIntroduction = "/api/pageIntro/getAllActive",
-  getByIdUrlPageIntroduction = "/api/pageIntro/getById",
-  createUrlPageIntroduction = "/api/pageIntro/create",
-  updateUrlPageIntroduction = "/api/pageIntro/update",
-  softDeleteUrlPageIntroduction = "/api/pageIntro/softDelete",
-  restoreUrlPageIntroduction = "/api/pageIntro/restore",
-  deleteUrlPageIntroduction = "/api/pageIntro/delete",
+  export enum EPageIntroductionLipstickShopUrl{
+  getAllUrl = "/api/pageIntro/getAll",
+  getAllDeletedUrl = "/api/pageIntro/getAllDeleted",
+  getAllActiveUrl = "/api/pageIntro/getAllActive",
+  getByIdUrl = "/api/pageIntro/getById",
+  createUrl = "/api/pageIntro/create",
+  updateUrl = "/api/pageIntro/update",
+  softDeleteUrl = "/api/pageIntro/softDelete",
+  restoreUrl = "/api/pageIntro/restore",
+  deleteUrl = "/api/pageIntro/delete",
+  }
   //Topic
-  getAllUrlTopic = "/api/topic/getAll",
-  getAllActiveUrlTopic = "/api/topic/getAllActive",
-  getAllDeletedUrlTopic = "/api/topic/getAllDeleted",
-  getByIdUrlTopic = "/api/topic/getById",
-  createUrlTopic = "/api/topic/create",
-  updateUrlTopic = "/api/topic/update",
-  softDeleteUrlTopic = "/api/topic/softDelete",
-  deleteUrlTopic = "/api/topic/delete",
-  restoreUrlTopic = "/api/topic/restore",
+  export enum ETopicLipstickShopUrl{
+  getAllUrl = "/api/topic/getAll",
+  getAllActiveUrl = "/api/topic/getAllActive",
+  getAllDeletedUrl = "/api/topic/getAllDeleted",
+  getByIdUrl = "/api/topic/getById",
+  createUrl = "/api/topic/create",
+  updateUrl = "/api/topic/update",
+  softDeleteUrl = "/api/topic/softDelete",
+  deleteUrl = "/api/topic/delete",
+  restoreUrl = "/api/topic/restore",
+  }
   //InforPage
-  getAllPageTypeUrlInforPage = "/api/inforPage/getAllPageType",
-  getAllUrlInforPage = "/api/inforPage/getAll",
-  getAllDeletedUrlInforPage = "/api/inforPage/getAllDeleted",
-  getAllActiveUrlInforPage = "/api/inforPage/getAllActive",
-  getByIdUrlInforPage = "/api/inforPage/getById",
-  createUrlInforPage = "/api/inforPage/create",
-  updateUrlInforPage = "/api/inforPage/update",
-  softDeleteUrlInforPage = "/api/inforPage/softDelete",
+  export enum EInforPageLipstickShopUrl{
+  getAllPageTypeUrl = "/api/inforPage/getAllPageType",
+  getAllUrl = "/api/inforPage/getAll",
+  getAllDeletedUrl = "/api/inforPage/getAllDeleted",
+  getAllActiveUrl = "/api/inforPage/getAllActive",
+  getByIdUrl = "/api/inforPage/getById",
+  createUrl = "/api/inforPage/create",
+  updateUrl = "/api/inforPage/update",
+  softDeleteUrl = "/api/inforPage/softDelete",
   getByPageTypeId = "/api/inforPage/getByPageTypeId",
-  restoreUrlInforPage = "/api/inforPage/restore",
-
+  restoreUrl = "/api/inforPage/restore",
+  }
   //HomeBanner
-  getAllUrlHomeBanner = "/api/HomeBanner/getAll",
-  getAllActiveUrlHomeBanner = "/api/HomeBanner/getAllActive",
-  getAllDeletedUrlHomeBanner = "/api/HomeBanner/getAllDeleted",
-  getByIdUrlHomeBanner = "/api/HomeBanner/getById",
-  createUrlHomeBanner = "/api/HomeBanner/create",
-  updateUrlHomeBanner = "/api/HomeBanner/update",
-  softDeleteUrlHomeBanner = "/api/HomeBanner/softDelete",
-  getByBannerTypeId = "/api/HomeBanner/getByBannerTypeId",
-  restoreUrlHomeBanner = "/api/HomeBanner/restore",
-  deleteUrlHomeBanner = "/api/HomeBanner/delete",
-
+  export enum EHomeBannerLipstickShopUrl{
+  getAllUrl = "/api/HomeBanner/getAll",
+  getAllActiveUrl = "/api/HomeBanner/getAllActive",
+  getAllDeletedUrl = "/api/HomeBanner/getAllDeleted",
+  getByIdUrl = "/api/HomeBanner/getById",
+  createUrl = "/api/HomeBanner/create",
+  updateUrl = "/api/HomeBanner/update",
+  softDeleteUrl = "/api/HomeBanner/softDelete",
+  getByBannerTypeIdUrl = "/api/HomeBanner/getByBannerTypeId",
+  restoreUrl = "/api/HomeBanner/restore",
+  deleteUrl = "/api/HomeBanner/delete",
+  }
   //Member
-  getAllUrlMember = "/api/member/getAll",
+  export enum EMemberLipstickShopUrl{
+  getAllUrl = "/api/member/getAll",
+  }
   //Payment
-  getAllUrlPayment = "/api/payment/getAll",
-  getByIdUrlPayment = "/api/payment/getById",
+  export enum EPaymentLipstickShopUrl{
+  getAllUrl = "/api/payment/getAll",
+  getByIdUrl = "/api/payment/getById",
+  }
   //#endregion
 
   //#region System
 
   //My Account
-  changePasswordUrlMyAccount = "/api/MyAccount/changePassword",
-  loginUrl = "/api/MyAccount/login",
+  export enum EAuthSystemUrl{
+    loginUrl = "/api/auth/login",
+    externalLoginUrl = "/api/auth/externalLogin",
+    validateRefreshTokenUrl = "/api/auth/validateRefreshToken",
+    refreshTokenUrl = "/api/auth/refreshToken",
+    logoutUrl = "/api/auth/logout",
+  }
+
+  export enum EMyAccountSystemUrl{
+  changePasswordUrl = "/api/MyAccount/changePassword",
   recoverPasswordUrl = "/api/MyAccount/recoverPassword",
   resetPasswordUrl = "/api/MyAccount/resetPassword",
-  refreshTokenUrl = "/api/MyAccount/refreshToken",
-  validateRefreshTokenUrl = "/api/MyAccount/validateRefreshToken",
-  reNewToken = "/api/MyAccount/renewToken",
+  }
   //province
-  getAllUrlProvince = "/api/province/getAll",
+  export enum EProvinceSystemUrl{
+  getAllUrl = "/api/province/getAll",
+  }
   //Account
-  getAllUrlAccount = "/api/user/getAll",
-  getByIdUrlAccount = "/api/user/getById/",
-  createUrlAccount = "/api/user/create",
-  updateUrlAccount = "/api/user/update",
-  deactivateUserUrlAccount = "/api/user/deactivateUser/",
-  activateUserUrlAccount = "/api/user/activateUser/",
+  export enum EAccountSystemUrl{
+  getAllUrl = "/api/user/getAll",
+  getByIdUrl = "/api/user/getById/",
+  createUrl = "/api/user/create",
+  updateUrl = "/api/user/update",
+  deactivateUserUrl = "/api/user/deactivateUser/",
+  activateUserUrl = "/api/user/activateUser/",
+  }
   //Role
-  getAllUrlRole = "/api/role/getAll",
-  getOptionListUrlRole = "/api/role/getOptionList",
-  getAllActiveUrlRole = "/api/role/getAllActive",
-  getByIdUrlRole = "/api/role/getById",
-  createUrlRole = "/api/role/create",
-  updateUrlRole = "/api/role/update",
+  export enum ERoleSystemUrl{
+  getAllUrl = "/api/role/getAll",
+  getOptionListUrl = "/api/role/getOptionList",
+  getAllActiveUrl = "/api/role/getAllActive",
+  getByIdUrl = "/api/role/getById",
+  createUrl = "/api/role/create",
+  updateUrl = "/api/role/update",
+  }
   //Module
-  getAllUrlModule = "/api/module/getAll",
-  getByIdUrlModule = "/api/module/getById",
-  createUrlModule = "/api/module/create",
-  updateUrlModule = "/api/module/update",
+  export enum EModuleSystemUrl{
+  getAllUrl = "/api/module/getAll",
+  getByIdUrl = "/api/module/getById",
+  createUrl = "/api/module/create",
+  updateUrl = "/api/module/update",
+  }
   //Action
-  getAllUrlAction = "/api/action/getAll",
-  getAllActiveUrlAction = "/api/action/getAllActive",
-  getEActionUrlAction = "/api/action/getEAction",
-  getByIdUrlAction = "/api/action/getById",
-  createUrlAction = "/api/action/create",
-  updateUrlAction = "/api/action/update",
+  export enum EActionSystemUrl{
+  getAllUrl = "/api/action/getAll",
+  getAllActiveUrl = "/api/action/getAllActive",
+  getEActionUrl = "/api/action/getEAction",
+  getByIdUrl = "/api/action/getById",
+  createUrl = "/api/action/create",
+  updateUrl = "/api/action/update",
+  }
   //Setting
-  getAllUrlSetting = "/api/setting/getAll",
-  getByKeyUrlSetting = "/api/setting/getByKey",
-  updateUrlSetting = "/api/setting/update",
+  export enum ESettingSystemUrl{
+  getAllUrl = "/api/setting/getAll",
+  getByKeyUrl = "/api/setting/getByKey",
+  updateUrl = "/api/setting/update",
+  } 
   //Action logging
-  getAllUrlActionLogging = "/api/ActionLogging/getAll",
-  getByIdUrlActionLogging = "/api/ActionLogging/getById",
+  export enum EActionLoggingSystemUrl{
+  getAllUrl = "/api/ActionLogging/getAll",
+  getByIdUrl = "/api/ActionLogging/getById",
+  }
   //#endregion
 
   //#region Survey
 
   //participant
-  getAllUrlParticipant = "/api/participant/getAll",
-  getByIdUrlParticipant = "/api/participant/getById",
-  exportExcelUrlParticipant = "/api/participant/exportExcel",
-  initParticipantUrlParticipant = "/api/participant/initParticipant",
-  addAnswersUrlParticipant = "/api/participant/addAnswers",
-  filterUrlParticipant = "/api/participant/filter",
-  rejectUrlParticipant = "/api/participant/reject",
-  highlightUrlParticipant = "/api/participant/highlight",
-  removeHighlightUrlParticipant = "/api/participant/removeHighlight",
+  export enum EParticipantSurveyUrl{
+    getAllUrl = "/api/participant/getAll",
+    getByIdUrl = "/api/participant/getById",
+    exportExcelUrl = "/api/participant/exportExcel",
+    initParticipantUrl = "/api/participant/initParticipant",
+    addAnswersUrl = "/api/participant/addAnswers",
+    filterUrl = "/api/participant/filter",
+    rejectUrl = "/api/participant/reject",
+    highlightUrl = "/api/participant/highlight",
+    removeHighlightUrl = "/api/participant/removeHighlight",
+}
 
   //questionGroupLibrary
-  getAllUrlQuestionGroupLibrary = "/api/questionGroupLibrary/getAll",
-  getAllActiveUrlQuestionGroupLibrary = "/api/questionGroupLibrary/getAllActive",
-  getOptionListUrlQuestionGroupLibrary = "/api/questionGroupLibrary/getOptionList",
-  getTreeOptionListUrlQuestionGroupLibrary = "/api/questionGroupLibrary/getTreeOptionList",
-  getAllDeletedUrlQuestionGroupLibrary = "/api/questionGroupLibrary/getAllDeleted",
-  getByIdUrlQuestionGroupLibrary = "/api/questionGroupLibrary/getById",
-  createUrlQuestionGroupLibrary = "/api/questionGroupLibrary/create",
-  updateUrlQuestionGroupLibrary = "/api/questionGroupLibrary/update",
-  softDeleteUrlQuestionGroupLibrary = "/api/questionGroupLibrary/softDelete",
-  restoreUrlQuestionGroupLibrary = "/api/questionGroupLibrary/restore",
-  deleteUrlQuestionGroupLibrary = "/api/questionGroupLibrary/delete",
+  export enum EQuestionGroupLibrarySurveyUrl{
+  getAllUrl = "/api/questionGroupLibrary/getAll",
+  getAllActiveUrl = "/api/questionGroupLibrary/getAllActive",
+  getOptionListUrl = "/api/questionGroupLibrary/getOptionList",
+  getTreeOptionListUrl = "/api/questionGroupLibrary/getTreeOptionList",
+  getAllDeletedUrl = "/api/questionGroupLibrary/getAllDeleted",
+  getByIdUrl = "/api/questionGroupLibrary/getById",
+  createUrl = "/api/questionGroupLibrary/create",
+  updateUrl = "/api/questionGroupLibrary/update",
+  softDeleteUrl = "/api/questionGroupLibrary/softDelete",
+  restoreUrl = "/api/questionGroupLibrary/restore",
+  deleteUrl = "/api/questionGroupLibrary/delete",
+  }
 
   //questionLibrary
-  getAllUrlQuestionLibrary = "/api/questionLibrary/getAll",
-  filterUrlQuestionLibrary = "/api/questionLibrary/getByFilter",
-  getAllDeletedUrlQuestionLibrary = "/api/questionLibrary/getAllDeleted",
-  getEagerLoadingByIdUrlQuestionLibrary = "/api/questionLibrary/getEagerLoadingById",
-  getByIdUrlQuestionLibrary = "/api/questionLibrary/getById",
-  createUrlQuestionLibrary = "/api/questionLibrary/create",
-  updateUrlQuestionLibrary = "/api/questionLibrary/update",
-  softDeleteUrlQuestionLibrary = "/api/questionLibrary/softDelete",
-  restoreUrlQuestionLibrary = "/api/questionLibrary/restore",
-  deleteUrlQuestionLibrary = "/api/questionLibrary/delete",
+  export enum EQuestionLibrarySurveyUrl{
+  getAllUrl = "/api/questionLibrary/getAll",
+  filterUrl = "/api/questionLibrary/getByFilter",
+  getAllDeletedUrl = "/api/questionLibrary/getAllDeleted",
+  getEagerLoadingByIdUrl = "/api/questionLibrary/getEagerLoadingById",
+  getByIdUrl = "/api/questionLibrary/getById",
+  createUrl = "/api/questionLibrary/create",
+  updateUrl = "/api/questionLibrary/update",
+  softDeleteUrl = "/api/questionLibrary/softDelete",
+  restoreUrl = "/api/questionLibrary/restore",
+  deleteUrl = "/api/questionLibrary/delete",
+  }
 
   //PredefinedAnswerLibrary
-  getByQuestionLibraryIdUrlPredefinedAnswerLibrary = "/api/predefinedAnswerLibrary/getByQuestionLibraryId",
-  getByIdUrlPredefinedAnswerLibrary = "/api/predefinedAnswerLibrary/getById",
-  createUrlPredefinedAnswerLibrary = "/api/predefinedAnswerLibrary/create",
-  updateUrlPredefinedAnswerLibrary = "/api/predefinedAnswerLibrary/update",
-  deleteUrlPredefinedAnswerLibrary = "/api/predefinedAnswerLibrary/delete",
+  export enum EPredefinedAnswerLibrarySurveyUrl{
+  getByQuestionLibraryIdUrl = "/api/predefinedAnswerLibrary/getByQuestionLibraryId",
+  getByIdUrl = "/api/predefinedAnswerLibrary/getById",
+  createUrl = "/api/predefinedAnswerLibrary/create",
+  updateUrl = "/api/predefinedAnswerLibrary/update",
+  deleteUrl = "/api/predefinedAnswerLibrary/delete",
+  }
 
   //questionType
-  getAllUrlQuestionType = "/api/questionType/getAll",
-  getOptionListUrlQuestionType = "/api/questionType/getOptionList",
+  export enum EQuestionTypeSurveyUrl{
+  getAllUrl = "/api/questionType/getAll",
+  getOptionListUrl = "/api/questionType/getOptionList",
+  }
 
   //store
-  getAllUrlStore = "/api/store/getAll",
-  getOptionListUrlStore = "/api/store/getOptionList",
-  getByIdUrlStore = "/api/store/getById",
-  createUrlStore = "/api/store/create",
-  updateUrlStore = "/api/store/update",
-  softDeleteUrlStore = "/api/store/softDelete",
-  restoreUrlStore = "/api/store/restore",
-  deleteUrlStore = "/api/store/delete",
-  getAllDeletedUrlStore = "/api/store/getAllDeleted",
-
+  export enum EStoreSurveyUrl{
+  getAllUrl = "/api/store/getAll",
+  getOptionListUrl = "/api/store/getOptionList",
+  getByIdUrl = "/api/store/getById",
+  createUrl = "/api/store/create",
+  updateUrl = "/api/store/update",
+  softDeleteUrl = "/api/store/softDelete",
+  restoreUrl = "/api/store/restore",
+  deleteUrl = "/api/store/delete",
+  getAllDeletedUrl = "/api/store/getAllDeleted",
+  }
   //surveyForm
-  getAllUrlSurveyForm = "/api/surveyForm/getAll",
-  filterUrlSurveyForm = "/api/surveyForm/filter",
-  getAllActiveUrlSurveyForm = "/api/surveyForm/getAllActive",
-  getByIdUrlSurveyForm = "/api/surveyForm/getById",
-  getEagerByIdUrlSurveyForm = "/api/surveyForm/getEagerById",
-  getPublicFormByIdUrlSurveyForm = "/api/surveyForm/getPublicFormById",
-  getReviewFormByIdUrlSurveyForm = "/api/surveyForm/getReviewFormById",
-  // getEagerUIByIdUrlSurveyForm = "/api/surveyForm/getEagerUIById",
-  createUrlSurveyForm = "/api/surveyForm/create",
-  updateUrlSurveyForm = "/api/surveyForm/update",
-  softDeleteUrlSurveyForm = "/api/surveyForm/softDelete",
-  restoreUrlSurveyForm = "/api/surveyForm/restore",
-  deleteUrlSurveyForm = "/api/surveyForm/delete",
-  getAllDeletedUrlSurveyForm = "/api/surveyForm/getAllDeleted",
-  publicUrlSurveyForm = "/api/surveyForm/public",
-  unPublicUrlSurveyForm = "/api/surveyForm/unPublic",
-  deactivateUrlSurveyForm = "/api/surveyForm/deactivate",
-  activateUrlSurveyForm = "/api/surveyForm/activate",
-  checkValidFormUrlSurveyForm = "/api/surveyForm/checkValidForm",
+  export enum ESurveyFormSurveyUrl{
+  getAllUrl = "/api/surveyForm/getAll",
+  filterUrl = "/api/surveyForm/filter",
+  getAllActiveUrl = "/api/surveyForm/getAllActive",
+  getByIdUrl = "/api/surveyForm/getById",
+  getEagerByIdUrl = "/api/surveyForm/getEagerById",
+  getPublicFormByIdUrl = "/api/surveyForm/getPublicFormById",
+  getReviewFormByIdUrl = "/api/surveyForm/getReviewFormById",
+  // getEagerUIByIdUrl = "/api/surveyForm/getEagerUIById",
+  createUrl = "/api/surveyForm/create",
+  updateUrl = "/api/surveyForm/update",
+  softDeleteUrl = "/api/surveyForm/softDelete",
+  restoreUrl = "/api/surveyForm/restore",
+  deleteUrl = "/api/surveyForm/delete",
+  getAllDeletedUrl = "/api/surveyForm/getAllDeleted",
+  publicUrl = "/api/surveyForm/public",
+  unPublicUrl = "/api/surveyForm/unPublic",
+  deactivateUrl = "/api/surveyForm/deactivate",
+  activateUrl = "/api/surveyForm/activate",
+  checkValidFormUrl = "/api/surveyForm/checkValidForm",
+  }
 
   //QuestionGroup
-  getBySurveyFormIdUrlQuestionGroup = "/api/questionGroup/getBySurveyFormId",
-  getByIdUrlQuestionGroup = "/api/questionGroup/getById",
-  createUrlQuestionGroup = "/api/questionGroup/create",
-  updateUrlQuestionGroup = "/api/questionGroup/update",
-  deleteUrlQuestionGroup = "/api/questionGroup/delete",
-
+  export enum EQuestionGroupSurveyUrl{
+  getBySurveyFormIdUrl = "/api/questionGroup/getBySurveyFormId",
+  getByIdUrl = "/api/questionGroup/getById",
+  createUrl = "/api/questionGroup/create",
+  updateUrl = "/api/questionGroup/update",
+  deleteUrl = "/api/questionGroup/delete",
+  }
   //Question
-  getBySurveyFormIdUrlQuestion = "/api/question/getBySurveyFormId",
-  getByQuestionGroupIdUrlQuestion = "/api/question/getByQuestionGroupId",
-  getByIdUrlQuestion = "/api/question/getById",
-  getEagerLoadingByIdUrlQuestion = "/api/question/getEagerLoadingById",
-  createUrlQuestion = "/api/question/create",
-  updateUrlQuestion = "/api/question/update",
-  deleteUrlQuestion = "/api/question/delete",
+  export enum EQuestionSurveyUrl{
+  getBySurveyFormIdUrl = "/api/question/getBySurveyFormId",
+  getByQuestionGroupIdUrl = "/api/question/getByQuestionGroupId",
+  getByIdUrl = "/api/question/getById",
+  getEagerLoadingByIdUrl = "/api/question/getEagerLoadingById",
+  createUrl = "/api/question/create",
+  updateUrl = "/api/question/update",
+  deleteUrl = "/api/question/delete",
+  }
 
   //PredefinedAnswer
-  getByQuestionIdUrlPredefinedAnswer = "/api/predefinedAnswer/getByQuestionId",
-  getByIdUrlPredefinedAnswer = "/api/predefinedAnswer/getById",
-  createUrlPredefinedAnswer = "/api/predefinedAnswer/create",
-  updateUrlPredefinedAnswer = "/api/predefinedAnswer/update",
-  deleteUrlPredefinedAnswer = "/api/predefinedAnswer/delete",
+  export enum EPredefinedAnswerSurveyUrl{
+  getByQuestionIdUrl = "/api/predefinedAnswer/getByQuestionId",
+  getByIdUrl = "/api/predefinedAnswer/getById",
+  createUrl = "/api/predefinedAnswer/create",
+  updateUrl = "/api/predefinedAnswer/update",
+  deleteUrl = "/api/predefinedAnswer/delete",
+  }
 
   //participantInfoConfig
-  getBySurveyFormIdUrlParticipantInfoConfig = "/api/participantInfoConfig/getBySurveyFormId",
-  getByIdUrlParticipantInfoConfig = "/api/participantInfoConfig/getById",
-  createUrlParticipantInfoConfig = "/api/participantInfoConfig/create",
-  updateUrlParticipantInfoConfig = "/api/participantInfoConfig/update",
-  deleteUrlParticipantInfoConfig = "/api/participantInfoConfig/delete",
+  export enum EParticipantInfoConfigSurveyUrl{
+  getBySurveyFormIdUrl = "/api/participantInfoConfig/getBySurveyFormId",
+  getByIdUrl = "/api/participantInfoConfig/getById",
+  createUrl = "/api/participantInfoConfig/create",
+  updateUrl = "/api/participantInfoConfig/update",
+  deleteUrl = "/api/participantInfoConfig/delete",
+  }
 
   //surveyReport
+  export enum ESurveyReportSurveyUrl{
+  getAllUrl = "/api/surveyReport/getAll",
+  getByIdUrl = "/api/surveyReport/getById",
+  getBySurveyFormIdUrl = "/api/surveyReport/getBySurveyFormId",
+  generateReportUrl = "/api/surveyReport/generateReport",
+  exportExcelUrl = "/api/surveyReport/exportExcel",
+  exportPdfUrl = "/api/surveyReport/exportPdf",
+  getStatisticsUrl = "/api/surveyReport/getStatistics",
+  }
 
   //#endregion
-}

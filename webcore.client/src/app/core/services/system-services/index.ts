@@ -8,7 +8,7 @@ export { ActionLoggingService } from './action-logging.service';
 export { ActionService } from './action.service';
 
 // Authentication Services
-export { AuthenticationService } from './authentication.service';
+export { AuthService } from './auth.service';
 
 // Log Services
 export { LogService } from './log.service';
@@ -27,3 +27,6 @@ export { RoleService } from './role.service';
 
 // Setting Services
 export { SettingService } from './setting.service';
+
+//Auth Interceptor Service
+export { authInterceptorService } from './auth-interceptor.service';

@@ -1,11 +1,7 @@
 ﻿using BusinessLogic.IHelpers.ISystemHelpers;
 using Common;
-using Common.Models;
-using Common.Services.ActionLoggingServices;
 using Common.ViewModels.SystemViewModels;
-using DataAccess.DTOs;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using WebCore.Server.Controllers.BaseApiControllers;
@@ -16,71 +12,21 @@ namespace WebCore.Server.Controllers.SystemControllers
     [ApiController]
     public class MyAccountController : BaseApiController
     {
-        private readonly SignInManager<UserDTO> _signInManager;
         private readonly IMyAccountHelper _myAccountHelper;
-        private readonly IActionLoggingService _actionLog;
         public readonly IStringLocalizer<MyAccountController> _localizer;
         public readonly IStringLocalizer<SharedResource> _sharedLocalizer;
-        public MyAccountController(SignInManager<UserDTO> signInManager,
+        public MyAccountController(
+            //SignInManager<UserDTO> signInManager,
             IStringLocalizer<MyAccountController> localizer,
             IStringLocalizer<SharedResource> sharedLocalizer,
-            IActionLoggingService actionLog,
+            //IActionLoggingService actionLog,
             IMyAccountHelper myAccountHelper)
         {
-            _signInManager = signInManager;
+            //_signInManager = signInManager;
             _myAccountHelper = myAccountHelper;
             _localizer = localizer;
             _sharedLocalizer = sharedLocalizer;
-            _actionLog = actionLog;
-        }
-
-        [HttpPost("Login")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody] LoginViewModel model)
-        {
-            string controllerName = ControllerContext.ActionDescriptor.ControllerName;
-            UserActionModel userAction = new UserActionModel()
-            {
-                UserName = model.UserName,
-                ControllerName = controllerName,
-                ActionName = EUserAction.LogIn.ToString(),
-                Status = EUserActionStatus.Failed.ToString(),
-            };
-            if (!ModelState.IsValid)
-            {
-                //await _actionLog.CreateAsync(userAction);
-                return Failed(EStatusCodes.BadRequest, _sharedLocalizer["invalidData"]);
-            }
-            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, lockoutOnFailure: true);
-            if (result.Succeeded)
-            {
-                await _signInManager.SignOutAsync();
-                //JwtViewModel jwt = await _myAccountHelper.LoginAsync(model);
-                //userAction.Status = EUserActionStatus.Successful.ToString();
-                //await _actionLog.CreateAsync(userAction);
-                var user = await _myAccountHelper.FindByNameAsync(model.UserName);
-                if (user == null)
-                {
-                    return Failed(EStatusCodes.BadRequest, _localizer["usernameOrPasswordIncorrect"]);
-                }
-                else if (!user.IsActive)
-                {
-                    return Failed(EStatusCodes.BadRequest, _localizer["deactiveUser"]);
-                }
-                JwtViewModel jwt = await _myAccountHelper.Authenticate(user, model.RememberMe);
-
-                return Succeeded(jwt, _localizer["loginSuccess"]);
-            }
-            else if (result.IsLockedOut)
-            {
-                //await _actionLog.CreateAsync(userAction);
-                return Failed(EStatusCodes.Locked, _localizer["accountLocked"]);
-            }
-            else
-            {
-                //await _actionLog.CreateAsync(userAction);
-                return Failed(EStatusCodes.BadRequest, _localizer["usernameOrPasswordIncorrect"]);
-            }
+            //_actionLog = actionLog;
         }
 
         [HttpPost("RecoverPassword")]
@@ -119,53 +65,6 @@ namespace WebCore.Server.Controllers.SystemControllers
             {
                 return BadRequest(_localizer["resetPasswordFailed"]);
             }
-        }
-
-        [HttpGet("ValidateRefreshToken")]
-        [AllowAnonymous]
-        public async Task<IActionResult> ValidateRefreshToken([FromHeader] string refreshToken)
-        {
-            if (!ModelState.IsValid)
-            {
-                return Failed(EStatusCodes.BadRequest, _sharedLocalizer["invalidData"]);
-            }
-            bool result = await _myAccountHelper.ValidateRefreshTokenAsync(refreshToken);
-            if (result)
-            {
-                return Succeeded(_localizer["refreshTokenValid"]);
-            }
-            else
-            {
-                return Failed(EStatusCodes.BadRequest, _localizer["refreshTokenInvalid"]);
-            }
-        }
-
-        [HttpGet("ReNewToken")]
-        [AllowAnonymous]
-        public async Task<IActionResult> ReNewToken([FromHeader] string refreshToken, [FromHeader] string token)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(refreshToken) || string.IsNullOrEmpty(token))
-                {
-                    return Failed(EStatusCodes.BadRequest, _localizer["renewTokenFailed"]);
-                }
-
-                JwtViewModel jwt = await _myAccountHelper.ReNewTokenAsync(refreshToken, token);
-                if (jwt != null)
-                {
-                    return Succeeded(jwt, _localizer["renewTokenSuccess"]);
-                }
-                else
-                {
-                    return Failed(EStatusCodes.BadRequest, _localizer["renewTokenFailed"]);
-                }
-            }
-            catch
-            {
-                return Failed(EStatusCodes.Unauthorized, _localizer["renewTokenFailed"]);
-            }
-
         }
 
         [HttpPost("ChangePassword")]

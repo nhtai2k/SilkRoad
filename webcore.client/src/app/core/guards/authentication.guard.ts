@@ -20,10 +20,10 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { AuthenticationService } from '../services/system-services/authentication.service';
+import { AuthService } from '../services/system-services/auth.service';
 
 export const authenticationGuard: CanActivateFn = async () => {
-  const auth = inject(AuthenticationService);
+  const auth = inject(AuthService);
   const router = inject(Router);
 
   try {

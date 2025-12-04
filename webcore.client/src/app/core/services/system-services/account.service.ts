@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, switchMap, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AccountModel } from '@models/system-management-models/account.model';
-import { EUrl } from '@common/url-api';
-import { AuthenticationService } from './authentication.service';
+import { EAccountSystemUrl } from '@common/url-api';
+
 import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
 import { Pagination } from '@models/pagination.model';
 
@@ -12,14 +12,14 @@ import { Pagination } from '@models/pagination.model';
 })
 export class AccountService {
 
-  constructor(private http: HttpClient, private authenticationService: AuthenticationService) { }
+  constructor(private http: HttpClient) { }
 
   // getAll(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<AccountModel>>> {
-  //   return this.http.get<APIResponse<Pagination<AccountModel>>>(EUrl.getAllUrlAccount + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.getHeaders() }).pipe(
+  //   return this.http.get<APIResponse<Pagination<AccountModel>>>(EUrl.getAllUrlAccount + `/${pageIndex}/${pageSize}`).pipe(
   //     catchError(error => {
   //       if (error.status === 401) {
   //         return this.authenticationService.reNewToken().pipe(
-  //           switchMap(() => this.http.get<APIResponse<Pagination<AccountModel>>>(EUrl.getAllUrlAccount + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.getHeaders() }))
+  //           switchMap(() => this.http.get<APIResponse<Pagination<AccountModel>>>(EUrl.getAllUrlAccount + `/${pageIndex}/${pageSize}`))
   //         );
   //       } else {
   //          return throwError(() => error);
@@ -28,87 +28,28 @@ export class AccountService {
   //   );
   // }
   getAll(pageIndex: number, pageSize: number, roleId: number, textSearch: string): Observable<APIResponse<Pagination<AccountModel>>> {
-    const url = EUrl.getAllUrlAccount + `/${pageIndex}/${pageSize}` + `?roleId=${roleId}&textSearch=${encodeURIComponent(textSearch)}`;
-    return this.http.get<APIResponse<Pagination<AccountModel>>>(url, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<AccountModel>>>(url, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    const url = `${EAccountSystemUrl.getAllUrl}/${pageIndex}/${pageSize}?roleId=${roleId}&textSearch=${encodeURIComponent(textSearch)}`;
+    return this.http.get<APIResponse<Pagination<AccountModel>>>(url);
   }
+
   getById(id: number): Observable<APIResponse<AccountModel>> {
-    return this.http.get<APIResponse<AccountModel>>(`${EUrl.getByIdUrlAccount}${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<AccountModel>>(`${EUrl.getByIdUrlAccount}${id}`, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-           return throwError(() => error);
-        }
-      })
-    );
+    return this.http.get<APIResponse<AccountModel>>(`${EAccountSystemUrl.getByIdUrl}${id}`);
   }
 
   create(account: AccountModel): Observable<BaseAPIResponse> {
-    return this.http.post<BaseAPIResponse>(EUrl.createUrlAccount, account, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlAccount, account, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-           return throwError(() => error);
-        }
-      })
-    );
+    return this.http.post<BaseAPIResponse>(EAccountSystemUrl.createUrl, account);
   }
 
   update(account: AccountModel): Observable<BaseAPIResponse> {
-    return this.http.put<BaseAPIResponse>(EUrl.updateUrlAccount, account, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlAccount, account, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-           return throwError(() => error);
-        }
-      })
-    );
+    return this.http.put<BaseAPIResponse>(EAccountSystemUrl.updateUrl, account);
   }
+
   deactivateUser(id: number): Observable<BaseAPIResponse> {
-    const url = `${EUrl.deactivateUserUrlAccount}${id}`;
-    return this.http.put<BaseAPIResponse>(url, null, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(url, null, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.put<BaseAPIResponse>(`${EAccountSystemUrl.deactivateUserUrl}${id}`, null);
   }
+
   activateUser(id: number): Observable<BaseAPIResponse> {
-    const url = `${EUrl.activateUserUrlAccount}${id}`;
-    return this.http.put<BaseAPIResponse>(url, null, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(url, null, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.put<BaseAPIResponse>(`${EAccountSystemUrl.activateUserUrl}${id}`, null);
   }
   // deleteAccount(id: number): Observable<any> {
   //   return this.http.delete<any>(EUrl.deleteUrlAccount + id);

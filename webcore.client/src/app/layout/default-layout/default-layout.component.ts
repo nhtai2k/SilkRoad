@@ -27,7 +27,7 @@ import { navItems } from './_nav';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EyeIconComponent } from '@components/icons/eye-icon.component';
 import { EyeCloseIconComponent } from '@components/icons/eye-close-icon.component';
-import { AuthenticationService } from '@services/system-services/authentication.service';
+import { AuthService } from '@services/system-services/auth.service';
 import { ToastService } from '@services/helper-services/toast.service';
 import { MyAccountService } from '@services/system-services/my-account.service';
 import { EColors } from '@common/global';
@@ -79,7 +79,7 @@ export class DefaultLayoutComponent {
   });
   //#endregion
   public navItems = [...navItems];
-    constructor(private authentication: AuthenticationService, private toastService: ToastService,
+    constructor(private authentication: AuthService, private toastService: ToastService,
     private myAccountService: MyAccountService) {
 
   }

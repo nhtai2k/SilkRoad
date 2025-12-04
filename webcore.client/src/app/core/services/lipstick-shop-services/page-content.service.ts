@@ -1,142 +1,52 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EUrl } from '@common/url-api';
+import { EPageContentLipstickShopUrl } from '@common/url-api';
 import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
 import { PageContentViewModel } from '@models/lipstick-shop-models/page-content.model';
 import { Pagination } from '@models/pagination.model';
-import { AuthenticationService } from '@services/system-services/authentication.service';
-import { catchError, Observable, switchMap, throwError } from 'rxjs';
+
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PageContentService {
 
-  constructor(private http: HttpClient,private authenticationService: AuthenticationService) { }
-  getAll(pageIndex: number, pagePageContent: number, pageTypeId : number): Observable<APIResponse<Pagination<PageContentViewModel>>> {
-    return this.http.get<APIResponse<Pagination<PageContentViewModel>>>(EUrl.getAllUrlPageContent + `/${pageIndex}/${pagePageContent}/${pageTypeId}`, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<PageContentViewModel>>>(EUrl.getAllUrlPageContent + `/${pageIndex}/${pagePageContent}/${pageTypeId}`, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+  constructor(private http: HttpClient) { }
+
+  getAll(pageIndex: number, pagePageContent: number, pageTypeId: number): Observable<APIResponse<Pagination<PageContentViewModel>>> {
+    return this.http.get<APIResponse<Pagination<PageContentViewModel>>>(`${EPageContentLipstickShopUrl.getAllUrl}/${pageIndex}/${pagePageContent}/${pageTypeId}`);
   }
+
   getAllActive(): Observable<APIResponse<PageContentViewModel[]>> {
-    return this.http.get<APIResponse<PageContentViewModel[]>>(EUrl.getAllActiveUrlPageContent, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<PageContentViewModel[]>>(EUrl.getAllActiveUrlPageContent, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.get<APIResponse<PageContentViewModel[]>>(EPageContentLipstickShopUrl.getAllActiveUrl);
+  }
+
+  getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<PageContentViewModel>>> {
+    return this.http.get<APIResponse<Pagination<PageContentViewModel>>>(`${EPageContentLipstickShopUrl.getAllDeletedUrl}/${pageIndex}/${pageSize}`);
   }
 
   getById(id: any): Observable<APIResponse<PageContentViewModel>> {
-    return this.http.get<APIResponse<PageContentViewModel>>(EUrl.getByIdUrlPageContent + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<PageContentViewModel>>(EUrl.getByIdUrlPageContent + `/${id}`, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.get<APIResponse<PageContentViewModel>>(`${EPageContentLipstickShopUrl.getByIdUrl}/${id}`);
   }
 
   create(model: PageContentViewModel): Observable<BaseAPIResponse> {
-    return this.http.post<BaseAPIResponse>(EUrl.createUrlPageContent, model, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlPageContent, model, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.post<BaseAPIResponse>(EPageContentLipstickShopUrl.createUrl, model);
   }
 
   update(model: PageContentViewModel): Observable<BaseAPIResponse> {
-    return this.http.put<BaseAPIResponse>(EUrl.updateUrlPageContent, model, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlPageContent, model, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
-  }
-  getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<PageContentViewModel>>> {
-    const url = EUrl.getAllDeletedUrlPageContent.concat(`/${pageIndex}/${pageSize}`);
-    return this.http.get<APIResponse<Pagination<PageContentViewModel>>>(url, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<PageContentViewModel>>>(url, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.put<BaseAPIResponse>(EPageContentLipstickShopUrl.updateUrl, model);
   }
 
-  softDelete(id:number):Observable<BaseAPIResponse>{
-  return this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlPageContent+`/${id}`,{headers:this.authenticationService.getHeaders()}).pipe(
-    catchError(error=>{
-      if(error.status===401){
-        return this.authenticationService.reNewToken().pipe(
-          switchMap(()=>this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlPageContent+`/${id}`,{headers:this.authenticationService.getHeaders()}))
-        );
-      }else{
-        return throwError(() => error);
-      }
-    })
-  );
+  softDelete(id: number): Observable<BaseAPIResponse> {
+    return this.http.delete<BaseAPIResponse>(`${EPageContentLipstickShopUrl.softDeleteUrl}/${id}`);
   }
 
   restore(id: number): Observable<BaseAPIResponse> {
-    const url = EUrl.restoreUrlPageContent.concat('/', id.toString());
-    return this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.put<BaseAPIResponse>(`${EPageContentLipstickShopUrl.restoreUrl}/${id}`, {});
   }
 
   delete(id: number): Observable<BaseAPIResponse> {
-    const url = EUrl.deleteUrlPageContent.concat('/', id.toString());
-    return this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.delete<BaseAPIResponse>(`${EPageContentLipstickShopUrl.deleteUrl}/${id}`);
   }
 }

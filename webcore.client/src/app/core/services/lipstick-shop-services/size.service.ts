@@ -1,142 +1,51 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EUrl } from '@common/url-api';
+import { ESizeLipstickShopUrl } from '@common/url-api';
 import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
 import { SizeViewModel } from '@models/lipstick-shop-models/size.model';
 import { Pagination } from '@models/pagination.model';
-import { AuthenticationService } from '@services/system-services/authentication.service';
-import { catchError, Observable, switchMap, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SizeService {
 
-  constructor(private http: HttpClient,private authenticationService: AuthenticationService) { }
+  constructor(private http: HttpClient) { }
+
   getAll(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<SizeViewModel>>> {
-    return this.http.get<APIResponse<Pagination<SizeViewModel>>>(EUrl.getAllUrlSize + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<SizeViewModel>>>(EUrl.getAllUrlSize + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.get<APIResponse<Pagination<SizeViewModel>>>(`${ESizeLipstickShopUrl.getAllUrl}/${pageIndex}/${pageSize}`);
   }
+
   getAllActive(): Observable<APIResponse<SizeViewModel[]>> {
-    return this.http.get<APIResponse<SizeViewModel[]>>(EUrl.getAllActiveUrlSize, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<SizeViewModel[]>>(EUrl.getAllActiveUrlSize, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.get<APIResponse<SizeViewModel[]>>(ESizeLipstickShopUrl.getAllActiveUrl);
+  }
+
+  getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<SizeViewModel>>> {
+    return this.http.get<APIResponse<Pagination<SizeViewModel>>>(`${ESizeLipstickShopUrl.getAllDeletedUrl}/${pageIndex}/${pageSize}`);
   }
 
   getById(id: any): Observable<APIResponse<SizeViewModel>> {
-    return this.http.get<APIResponse<SizeViewModel>>(EUrl.getByIdUrlSize + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<SizeViewModel>>(EUrl.getByIdUrlSize + `/${id}`, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.get<APIResponse<SizeViewModel>>(`${ESizeLipstickShopUrl.getByIdUrl}/${id}`);
   }
 
   create(model: SizeViewModel): Observable<BaseAPIResponse> {
-    return this.http.post<BaseAPIResponse>(EUrl.createUrlSize, model, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlSize, model, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.post<BaseAPIResponse>(ESizeLipstickShopUrl.createUrl, model);
   }
 
   update(model: SizeViewModel): Observable<BaseAPIResponse> {
-    return this.http.put<BaseAPIResponse>(EUrl.updateUrlSize, model, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlSize, model, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
-  }
-  getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<SizeViewModel>>> {
-    const url = EUrl.getAllDeletedUrlSize.concat(`/${pageIndex}/${pageSize}`);
-    return this.http.get<APIResponse<Pagination<SizeViewModel>>>(url, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<SizeViewModel>>>(url, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.put<BaseAPIResponse>(ESizeLipstickShopUrl.updateUrl, model);
   }
 
-  softDelete(id:number):Observable<BaseAPIResponse>{
-  return this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlSize+`/${id}`,{headers:this.authenticationService.getHeaders()}).pipe(
-    catchError(error=>{
-      if(error.status===401){
-        return this.authenticationService.reNewToken().pipe(
-          switchMap(()=>this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlSize+`/${id}`,{headers:this.authenticationService.getHeaders()}))
-        );
-      }else{
-        return throwError(() => error);
-      }
-    })
-  );
+  softDelete(id: number): Observable<BaseAPIResponse> {
+    return this.http.delete<BaseAPIResponse>(`${ESizeLipstickShopUrl.softDeleteUrl}/${id}`);
   }
 
   restore(id: number): Observable<BaseAPIResponse> {
-    const url = EUrl.restoreUrlSize.concat('/', id.toString());
-    return this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.put<BaseAPIResponse>(`${ESizeLipstickShopUrl.restoreUrl}/${id}`, {});
   }
 
   delete(id: number): Observable<BaseAPIResponse> {
-    const url = EUrl.deleteUrlSize.concat('/', id.toString());
-    return this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.delete<BaseAPIResponse>(`${ESizeLipstickShopUrl.deleteUrl}/${id}`);
   }
 }

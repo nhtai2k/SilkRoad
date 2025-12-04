@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthenticationService } from './authentication.service';
-import { EUrl } from '@common/url-api';
-import { catchError, Observable, switchMap, throwError } from 'rxjs';
+
+import { EActionLoggingSystemUrl } from '@common/url-api';
+import { Observable } from 'rxjs';
 import { APIResponse } from '@models/api-response.model';
 import { Pagination } from '@models/pagination.model';
 import { ActionLoggingModel } from '@models/system-management-models/action-logging.model';
@@ -13,33 +13,13 @@ import { ActionLoggingModel } from '@models/system-management-models/action-logg
 })
 export class ActionLoggingService {
 
-  constructor(private http: HttpClient, private authenticationService: AuthenticationService) { }
+  constructor(private http: HttpClient) { }
 
   getAll(query: any): Observable<APIResponse<Pagination<ActionLoggingModel>>> {
-    return this.http.get<APIResponse<Pagination<ActionLoggingModel>>>(EUrl.getAllUrlActionLogging, { headers: this.authenticationService.getHeaders(), params: query }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<ActionLoggingModel>>>(EUrl.getAllUrlActionLogging, { headers: this.authenticationService.getHeaders(), params: query }))
-          );
-        } else {
-           return throwError(() => error);
-        }
-      })
-    );
+    return this.http.get<APIResponse<Pagination<ActionLoggingModel>>>(EActionLoggingSystemUrl.getAllUrl, { params: query });
   }
 
   getById(id: any): Observable<APIResponse<ActionLoggingModel>> {
-    return this.http.get<APIResponse<ActionLoggingModel>>(EUrl.getByIdUrlActionLogging + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<ActionLoggingModel>>(EUrl.getByIdUrlActionLogging + `/${id}`, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-           return throwError(() => error);
-        }
-      })
-    );
+    return this.http.get<APIResponse<ActionLoggingModel>>(`${EActionLoggingSystemUrl.getByIdUrl}/${id}`);
   }
 }

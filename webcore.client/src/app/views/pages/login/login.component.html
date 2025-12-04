@@ -68,7 +68,7 @@
       <button cButton type="submit" class="px-4 mb-4 w-100 text-uppercase btn btn-submit"
         [disabled]="!loginForm.valid">Login</button>
       <div class="pt-4 googleSignIn">
-        <button cButton type="button" class="px-4 w-100 btn googleBtn">
+        <!-- <button cButton type="button" class="px-4 w-100 btn googleBtn" (click)="signInWithGoogle()">
           <svg width="23px" height="23px" viewBox="-3 0 262 262" xmlns="http://www.w3.org/2000/svg"
             preserveAspectRatio="xMidYMid" fill="#000000">
             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -88,7 +88,13 @@
                 fill="#EB4335"></path>
             </g>
           </svg>
-          Or sign in with Google</button>
+          Or sign in with Google</button> -->
+            <asl-google-signin-button
+      type="standard"
+      size="large"
+      text="signin_with"
+      theme="filled_black">
+    </asl-google-signin-button>
       </div>
     </form>
   </div>

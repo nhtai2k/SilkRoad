@@ -1,84 +1,33 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EUrl } from '@common/url-api';
+import { EPredefinedAnswerSurveyUrl } from '@common/url-api';
 import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
 import { PredefinedAnswerModel } from '@models/survey-models/predefined-answer.model';
-import { AuthenticationService } from '@services/system-services/authentication.service';
-import { Observable, catchError, switchMap, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PredefinedAnswerService {
-  constructor(private http: HttpClient, private authenticationService: AuthenticationService) { }
+  constructor(private http: HttpClient) { }
 
   getByQuestionId(questionId: any): Observable<APIResponse<PredefinedAnswerModel[]>> {
-    return this.http.get<APIResponse<PredefinedAnswerModel[]>>(EUrl.getByQuestionIdUrlPredefinedAnswer + `/${questionId}`, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<PredefinedAnswerModel[]>>(EUrl.getByQuestionIdUrlPredefinedAnswer + `/${questionId}`, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.get<APIResponse<PredefinedAnswerModel[]>>(`${EPredefinedAnswerSurveyUrl.getByQuestionIdUrl}/${questionId}`);
   }
 
   getById(id: any): Observable<APIResponse<PredefinedAnswerModel>> {
-    return this.http.get<APIResponse<PredefinedAnswerModel>>(EUrl.getByIdUrlPredefinedAnswer + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<PredefinedAnswerModel>>(EUrl.getByIdUrlPredefinedAnswer + `/${id}`, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.get<APIResponse<PredefinedAnswerModel>>(`${EPredefinedAnswerSurveyUrl.getByIdUrl}/${id}`);
   }
 
   create(model: PredefinedAnswerModel): Observable<BaseAPIResponse> {
-    return this.http.post<BaseAPIResponse>(EUrl.createUrlPredefinedAnswer, model, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlPredefinedAnswer, model, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.post<BaseAPIResponse>(EPredefinedAnswerSurveyUrl.createUrl, model);
   }
 
   update(model: PredefinedAnswerModel): Observable<BaseAPIResponse> {
-    return this.http.put<BaseAPIResponse>(EUrl.updateUrlPredefinedAnswer, model, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlPredefinedAnswer, model, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.put<BaseAPIResponse>(EPredefinedAnswerSurveyUrl.updateUrl, model);
   }
 
   delete(id: any): Observable<BaseAPIResponse> {
-    return this.http.delete<BaseAPIResponse>(EUrl.deleteUrlPredefinedAnswer + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.delete<BaseAPIResponse>(EUrl.deleteUrlPredefinedAnswer + `/${id}`, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.delete<BaseAPIResponse>(`${EPredefinedAnswerSurveyUrl.deleteUrl}/${id}`);
   }
 }
