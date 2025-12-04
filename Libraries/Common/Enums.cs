@@ -185,8 +185,7 @@
     public enum ERoles
     {
         Admin,
-        User,
-        Guest
+        User
     }
     public enum EToastBackgroundColor
     {

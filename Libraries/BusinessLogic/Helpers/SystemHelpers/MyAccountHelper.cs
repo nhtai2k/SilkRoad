@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BusinessLogic.IHelpers.ISystemHelpers;
+using Common;
 using Common.Models;
 using Common.Services.JwtServices;
 using Common.ViewModels.SystemViewModels;
@@ -20,9 +21,10 @@ namespace BusinessLogic.Helpers.SystemHelpers
         private readonly UserManager<UserDTO> _userManager;
         //private readonly RoleManager<RoleDTO> _roleManager;
         private readonly IJwtService _jwtService;
-        public MyAccountHelper(IUnitOfWork unitOfWork,
- SignInManager<UserDTO> signInManager,
-        IMapper mapper,
+        public MyAccountHelper(
+            IUnitOfWork unitOfWork,
+            SignInManager<UserDTO> signInManager,
+            IMapper mapper,
             UserManager<UserDTO> userManager,
             //RoleManager<RoleDTO> roleManager,
             IJwtService jwtService)
@@ -85,6 +87,7 @@ namespace BusinessLogic.Helpers.SystemHelpers
 
             return jwtViewModel;
         }
+        
         public async Task<GoogleJsonWebSignature.Payload> VerifyGoogleTokenAsync(ExternalAuthModel externalAuth)
         {
             try
@@ -103,7 +106,8 @@ namespace BusinessLogic.Helpers.SystemHelpers
                 return null;
             }
         }
-        public async Task<string> ExternalLoginAsync(ExternalAuthModel externalAuth)
+        
+        public async Task<string?> ExternalLoginAsync(ExternalAuthModel externalAuth)
         {
             var payload = await VerifyGoogleTokenAsync(externalAuth);
             if (payload == null)
@@ -118,12 +122,12 @@ namespace BusinessLogic.Helpers.SystemHelpers
 
                 if (user == null)
                 {
-                    user = new UserDTO { Email = payload.Email, UserName = payload.Email };
+                    user = new UserDTO { Email = payload.Email, UserName = payload.Email, IsActive = true };
                     await _userManager.CreateAsync(user);
 
                     //prepare and send an email for the email confirmation
 
-                    await _userManager.AddToRoleAsync(user, "Viewer");
+                    await _userManager.AddToRoleAsync(user, ERoles.User.ToString());
                     await _userManager.AddLoginAsync(user, info);
                 }
                 else
@@ -136,10 +140,11 @@ namespace BusinessLogic.Helpers.SystemHelpers
                 return null;
 
             //check for the Locked out account
-
-            var token = "";//await _jwtService.GenerateAccessToken(user);
+            UserViewModel userViewModel = _mapper.Map<UserViewModel>(user);
+            string token =  _jwtService.GenerateAccessToken(userViewModel);
             return token;
         }
+        
         public async Task<bool> ValidateRefreshTokenAsync(string refreshToken)
         {
             try
@@ -266,7 +271,7 @@ namespace BusinessLogic.Helpers.SystemHelpers
                 var data = await _unitOfWork.UserTokenRepository.GetUserTokenByRefreshToken(refreshToken);
                 if (data == null)
                     return false;
-                
+
                 _unitOfWork.UserTokenRepository.Delete(data);
                 await _unitOfWork.SaveChangesAsync();
                 return true;

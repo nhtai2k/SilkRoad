@@ -8,7 +8,7 @@ namespace DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<UserLoginDTO> builder)
         {
-            builder.ToTable("TBSytem_UserLogins");
+            builder.ToTable("UserLogins");
         }
     }
 }

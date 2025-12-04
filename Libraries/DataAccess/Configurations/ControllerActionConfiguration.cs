@@ -8,7 +8,7 @@ namespace DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<ControllerActionDTO> builder)
         {
-            builder.ToTable("TBSytem_ControllerActions");
+            builder.ToTable("ControllerActions");
             builder.HasKey(s => new { s.ControllerId, s.ActionId });
             builder.HasOne(s => s.Controller)
                 .WithMany(g => g.ControllerActions)

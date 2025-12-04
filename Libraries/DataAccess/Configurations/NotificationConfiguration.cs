@@ -8,7 +8,7 @@ namespace DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<NotificationDTO> builder)
         {
-            builder.ToTable("TBSytem_Notifications");
+            builder.ToTable("Notifications");
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Id).ValueGeneratedOnAdd();
         }

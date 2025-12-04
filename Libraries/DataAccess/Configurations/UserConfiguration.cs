@@ -8,7 +8,7 @@ namespace DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<UserDTO> builder)
         {
-            builder.ToTable("TBSystem_Users");
+            builder.ToTable("Users");
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Id).ValueGeneratedOnAdd();
             builder.Property(s => s.CreatedOn).IsRequired();

@@ -17,7 +17,7 @@ namespace DataAccess.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.7")
+                .HasAnnotation("ProductVersion", "10.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -55,7 +55,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TBSytem_Actions", (string)null);
+                    b.ToTable("Actions", (string)null);
                 });
 
             modelBuilder.Entity("DataAccess.DTOs.ControllerActionDTO", b =>
@@ -70,7 +70,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("ActionId");
 
-                    b.ToTable("TBSytem_ControllerActions", (string)null);
+                    b.ToTable("ControllerActions", (string)null);
                 });
 
             modelBuilder.Entity("DataAccess.DTOs.ControllerDTO", b =>
@@ -119,7 +119,7 @@ namespace DataAccess.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("TBSytem_Controllers", (string)null);
+                    b.ToTable("Controllers", (string)null);
                 });
 
             modelBuilder.Entity("DataAccess.DTOs.ModuleDTO", b =>
@@ -161,7 +161,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TBSytem_Modules", (string)null);
+                    b.ToTable("Modules", (string)null);
                 });
 
             modelBuilder.Entity("DataAccess.DTOs.NotificationDTO", b =>
@@ -192,7 +192,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("TBSytem_Notifications", (string)null);
+                    b.ToTable("Notifications", (string)null);
                 });
 
             modelBuilder.Entity("DataAccess.DTOs.RoleClaimDTO", b =>
@@ -228,7 +228,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("TBSystem_RoleClaims", (string)null);
+                    b.ToTable("RoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("DataAccess.DTOs.RoleDTO", b =>
@@ -282,22 +282,38 @@ namespace DataAccess.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("TBSytem_Roles", (string)null);
+                    b.ToTable("Roles", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1,
+                            ConcurrencyStamp = "5cf93310-3d15-4f29-911d-ffdb5c7efbc9",
                             CreatedBy = "System",
-                            CreatedOn = new DateTime(2025, 10, 23, 10, 23, 33, 586, DateTimeKind.Local).AddTicks(7202),
+                            CreatedOn = new DateTime(2025, 12, 4, 11, 24, 59, 775, DateTimeKind.Local).AddTicks(7191),
                             Description = "System Admin Role",
                             IsActive = true,
                             IsDeleted = false,
                             IsSystemRole = true,
                             ModifiedBy = "System",
-                            ModifiedOn = new DateTime(2025, 10, 23, 10, 23, 33, 586, DateTimeKind.Local).AddTicks(7437),
+                            ModifiedOn = new DateTime(2025, 12, 4, 11, 24, 59, 775, DateTimeKind.Local).AddTicks(7558),
                             Name = "Admin",
                             NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ConcurrencyStamp = "43867968-3397-4b7f-816a-dd56baa081b9",
+                            CreatedBy = "System",
+                            CreatedOn = new DateTime(2025, 12, 4, 11, 24, 59, 785, DateTimeKind.Local).AddTicks(2898),
+                            Description = "System Admin Role",
+                            IsActive = true,
+                            IsDeleted = false,
+                            IsSystemRole = true,
+                            ModifiedBy = "System",
+                            ModifiedOn = new DateTime(2025, 12, 4, 11, 24, 59, 785, DateTimeKind.Local).AddTicks(2906),
+                            Name = "User",
+                            NormalizedName = "USER"
                         });
                 });
 
@@ -322,7 +338,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("TBSytem_UserClaims", (string)null);
+                    b.ToTable("UserClaims", (string)null);
                 });
 
             modelBuilder.Entity("DataAccess.DTOs.UserDTO", b =>
@@ -412,7 +428,7 @@ namespace DataAccess.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("TBSystem_Users", (string)null);
+                    b.ToTable("Users", (string)null);
 
                     b.HasData(
                         new
@@ -421,14 +437,14 @@ namespace DataAccess.Migrations
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "d80acb9d-e6d1-433f-ae6d-d9be0aa87643",
                             CreatedBy = "System",
-                            CreatedOn = new DateTime(2025, 10, 23, 10, 23, 33, 598, DateTimeKind.Local).AddTicks(2862),
+                            CreatedOn = new DateTime(2025, 12, 4, 11, 24, 59, 787, DateTimeKind.Local).AddTicks(8924),
                             Email = "jsonmasker@gmail.com",
                             EmailConfirmed = false,
                             IsActive = true,
                             IsDeleted = false,
                             LockoutEnabled = false,
                             ModifiedBy = "System",
-                            ModifiedOn = new DateTime(2025, 10, 23, 10, 23, 33, 598, DateTimeKind.Local).AddTicks(2865),
+                            ModifiedOn = new DateTime(2025, 12, 4, 11, 24, 59, 787, DateTimeKind.Local).AddTicks(8927),
                             NormalizedEmail = "JSONMASKER@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
                             PasswordHash = "AQAAAAIAAYagAAAAEBqYupXb3q2vZNJOJJ3n/06IR+gi06F0PPpKg7FYW28k0S9DLN0Ct2nKc95H8ZaWzQ==",
@@ -443,14 +459,14 @@ namespace DataAccess.Migrations
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "3d8f3fdf-c482-4b8b-879e-66ed6e6ba863",
                             CreatedBy = "System",
-                            CreatedOn = new DateTime(2025, 10, 23, 10, 23, 33, 598, DateTimeKind.Local).AddTicks(2906),
+                            CreatedOn = new DateTime(2025, 12, 4, 11, 24, 59, 787, DateTimeKind.Local).AddTicks(8947),
                             Email = "tranthibaongoc779152@gmail.com",
                             EmailConfirmed = false,
                             IsActive = true,
                             IsDeleted = false,
                             LockoutEnabled = false,
                             ModifiedBy = "System",
-                            ModifiedOn = new DateTime(2025, 10, 23, 10, 23, 33, 598, DateTimeKind.Local).AddTicks(2906),
+                            ModifiedOn = new DateTime(2025, 12, 4, 11, 24, 59, 787, DateTimeKind.Local).AddTicks(8948),
                             NormalizedEmail = "TRANTHIBAONGOC779152@GMAIL.COM",
                             NormalizedUserName = "BAONGOC",
                             PasswordHash = "AQAAAAIAAYagAAAAEJQIa+hJeFzLkVaHpmxKMrO4mfQ9867u0fyjan1pdVP5hQMvQd9VcJC0zP0De/FH2w==",
@@ -479,7 +495,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("TBSytem_UserLogins", (string)null);
+                    b.ToTable("UserLogins", (string)null);
                 });
 
             modelBuilder.Entity("DataAccess.DTOs.UserRoleDTO", b =>
@@ -494,7 +510,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("TBSytem_UserRoles", (string)null);
+                    b.ToTable("UserRoles", (string)null);
 
                     b.HasData(
                         new
@@ -528,7 +544,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("TBSytem_UserTokens", (string)null);
+                    b.ToTable("UserTokens", (string)null);
                 });
 
             modelBuilder.Entity("DataAccess.DTOs.ControllerActionDTO", b =>

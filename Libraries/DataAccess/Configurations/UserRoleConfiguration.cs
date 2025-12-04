@@ -8,7 +8,7 @@ namespace DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<UserRoleDTO> builder)
         {
-            builder.ToTable("TBSytem_UserRoles");
+            builder.ToTable("UserRoles");
             builder.HasData([
    new UserRoleDTO
                     {

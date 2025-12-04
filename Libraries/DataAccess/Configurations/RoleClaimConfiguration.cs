@@ -8,7 +8,7 @@ namespace DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<RoleClaimDTO> builder)
         {
-            builder.ToTable("TBSystem_RoleClaims");
+            builder.ToTable("RoleClaims");
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Id).ValueGeneratedOnAdd();
             builder.Property(s => s.RoleClaimId).IsRequired();

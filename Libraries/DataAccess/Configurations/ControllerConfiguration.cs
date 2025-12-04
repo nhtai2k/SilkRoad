@@ -8,7 +8,7 @@ namespace DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<ControllerDTO> builder)
         {
-            builder.ToTable("TBSytem_Controllers");
+            builder.ToTable("Controllers");
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Id).ValueGeneratedOnAdd();
             builder.Property(s => s.Name).IsRequired();

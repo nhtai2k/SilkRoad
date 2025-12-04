@@ -8,11 +8,12 @@ namespace DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<RoleDTO> builder)
         {
-            builder.ToTable("TBSytem_Roles");
+            builder.ToTable("Roles");
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Id).ValueGeneratedOnAdd();
             builder.HasData([
                 new RoleDTO { Id = 1, Name = "Admin", NormalizedName = "Admin".ToUpper(), Description = "System Admin Role",  CreatedBy = "System", ModifiedBy = "System", IsSystemRole = true },
+                new RoleDTO { Id = 2, Name = "User", NormalizedName = "User".ToUpper(), Description = "System Admin Role",  CreatedBy = "System", ModifiedBy = "System", IsSystemRole = true },
                 ]);
         }
     }

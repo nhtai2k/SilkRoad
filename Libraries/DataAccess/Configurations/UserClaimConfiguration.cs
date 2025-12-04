@@ -8,7 +8,7 @@ namespace DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<UserClaimDTO> builder)
         {
-            builder.ToTable("TBSytem_UserClaims");
+            builder.ToTable("UserClaims");
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Id).ValueGeneratedOnAdd();
         }

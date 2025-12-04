@@ -8,7 +8,7 @@ namespace DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<ModuleDTO> builder)
         {
-            builder.ToTable("TBSytem_Modules");
+            builder.ToTable("Modules");
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Id).ValueGeneratedOnAdd();
         }

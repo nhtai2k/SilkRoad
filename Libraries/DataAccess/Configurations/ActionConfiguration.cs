@@ -8,7 +8,7 @@ namespace DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<ActionDTO> builder)
         {
-            builder.ToTable("TBSytem_Actions");
+            builder.ToTable("Actions");
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Name).IsRequired();
         }
