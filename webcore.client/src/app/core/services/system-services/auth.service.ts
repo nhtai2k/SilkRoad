@@ -6,6 +6,7 @@ import { JwtModel } from '@models/system-management-models/jwt.model';
 import { jwtDecode } from 'jwt-decode';
 import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
 import { LoginModel } from '@models/system-management-models/login.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class AuthService {
   accessToken = computed(() => this.accessTokenSignal());
   isLoggedIn = computed(() => !!this.accessTokenSignal());
 
-  constructor(private http: HttpClient) { }
+constructor(private http: HttpClient, private router: Router) { }
 
 
   login(account: LoginModel): Observable<BaseAPIResponse> {
@@ -77,6 +78,7 @@ export class AuthService {
     this.http.get(EAuthSystemUrl.logoutUrl, { withCredentials: true }).subscribe({
       next: () => {
         this.accessTokenSignal.set(null);
+        this.router.navigateByUrl('/login');
       }
     });
   }

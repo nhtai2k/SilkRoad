@@ -134,5 +134,8 @@ export class DefaultLayoutComponent {
   get oldPassword() { return this.changePasswordForm.get('oldPassword'); }
   get newPassword() { return this.changePasswordForm.get('newPassword'); }
   get confirmPassword() { return this.changePasswordForm.get('confirmPassword'); }
+  logout() {
+    this.authentication.logOut();
+  }
   //#endregion
 }
