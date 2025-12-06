@@ -90,7 +90,7 @@ export const authInterceptorService: HttpInterceptorFn = (
 
         catchError((refreshErr) => {
           isRefreshing.set(false);
-          auth.logOut();
+          // auth.logOut();
           refreshQueue.forEach((resume) => resume(null));
           refreshQueue.length = 0;
           return throwError(() => refreshErr);

@@ -17,7 +17,7 @@
                                 </div>
                                 <div class="col-4">
                                     <app-tree-select-v1 [options]="categoryTreeOptions"
-                                        (onChangeValue)="onChangeSelect($event,'filter')"></app-tree-select-v1>
+                                        (onChangeValue)="onChangeSelectOption($event,'filter')"></app-tree-select-v1>
                                 </div>
                                 <div class="col-4">
                                     <input formControlName="searchText" type="text" class="form-control"
@@ -110,7 +110,7 @@
             <div class="mb-2">
                 <label cLabel>Category: <span class="text-danger">(*)</span></label>
                 <app-tree-select-v1 [options]="categoryTreeOptions"
-                    (change)="onChangeSelect($event, 'create')"></app-tree-select-v1>
+                    (onChangeValue)="onChangeSelectOption($event, 'create')"></app-tree-select-v1>
             </div>
             <div class="mb-2 row">
                 <div class="col-6">
@@ -159,7 +159,7 @@
             <div class="mb-2">
                 <label cLabel>Category: <span class="text-danger">(*)</span></label>
                 <app-tree-select-v1 [options]="categoryTreeOptions"
-                    (change)="onChangeSelect($event, 'update')"></app-tree-select-v1>
+                    (onChangeValue)="onChangeSelectOption($event, 'update')"></app-tree-select-v1>
 
             </div>
 

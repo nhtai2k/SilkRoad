@@ -12,6 +12,7 @@ namespace PersonalFinanceBusinessLogic.Helpers
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
         public int? CategoryId { get; set; }
+        public int? SubCategoryId { get; set; }
         public string? SearchText { get; set; }
     }
 }

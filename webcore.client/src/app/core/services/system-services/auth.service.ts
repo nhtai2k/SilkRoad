@@ -85,7 +85,7 @@ constructor(private http: HttpClient, private router: Router) { }
 
   getUserId(): any {
     const token = this.accessTokenSignal();
-    console.log('Access Token:', token);
+    // console.log('Access Token:', token);
     if (token) {
       const claims = jwtDecode<any>(token);
       return claims?.Id;

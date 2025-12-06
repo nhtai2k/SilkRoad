@@ -87,7 +87,6 @@ export class ExpensesComponent implements OnInit {
     const today = new Date().toISOString().split('T')[0];
     // Set userId in create and filter forms
     const currentUserId = this.authService.getUserId();
-    console.log(currentUserId);
     this.createForm.patchValue({ date: today, userId: currentUserId });
     this.filterForm.patchValue({ userId: currentUserId });
   }
@@ -95,8 +94,8 @@ export class ExpensesComponent implements OnInit {
     this.filterForm.patchValue({ pageIndex: this.pageInformation.pageIndex, pageSize: this.pageInformation.pageSize });
     this.getData();
   }
-  onChangeSelect(event: any, formType: string) {
-    console.log(event);
+
+  onChangeSelectOption(event: any, formType: string) {
     if (formType === 'filter') {
         this.filterForm.patchValue({ 
           categoryId: event[0]
