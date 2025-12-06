@@ -281,6 +281,7 @@
     externalLoginUrl = "/api/auth/externalLogin",
     validateRefreshTokenUrl = "/api/auth/validateRefreshToken",
     refreshTokenUrl = "/api/auth/refreshToken",
+    getCurrentUserUrl = "/api/auth/getCurrentUser",
     logoutUrl = "/api/auth/logout",
   }
 

@@ -152,6 +152,23 @@ namespace WebCore.Server.Controllers.SystemControllers
             }
         }
 
+        [HttpGet("GetCurrentUser")]
+        public async Task<IActionResult> GetCurrentUser()
+        {
+            var user = User;
+            //get userid
+            string? userId = user.Claims.FirstOrDefault(c => c.Type == "Id")?.Value;
+            if(!string.IsNullOrEmpty(userId))
+            {
+                var userData = await _myAccountHelper.GetCurrentUserAsync(userId);
+                if(userData != null)
+                {
+                    return Succeeded(userData, _localizer["currentUserFetchedSuccessfully"]);
+                }
+            }       
+            return Failed(EStatusCodes.BadRequest, _localizer["refreshTokenInvalid"]);
+        }
+
         [HttpGet("Logout")]
         public async Task<IActionResult> Logout()
         {

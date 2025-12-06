@@ -52,28 +52,30 @@
     (changePageSize)="onPageSizeChange($event)">
     <thead class="text-nowrap text-truncate">
         <tr>
-            <th scope="col">NO</th>
-            <th scope="col">NameEN</th>
-            <th scope="col">NameVN</th>
-            <th scope="col">Priority</th>
-            <th scope="col">Is Active</th>
-            <th scope="col">Created By</th>
-            <th scope="col">Modified By</th>
+            <th scope="col">No.</th>
+            <th scope="col">Category</th>
+            <th scope="col">SubCategory</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Date</th>
+            <th scope="col">Created At</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @for (item of data.items; track item.id) {
         <tr>
-            <!-- <td>{{ $index+1 }}</td>
-            <td>{{ item.nameEN }}</td>
-            <td>{{ item.nameVN }}</td>
-            <td>{{ item.priority }}</td>
-            <td>
-                <input type="checkbox" [checked]="item.isActive" disabled>
-            </td>
-            <td>{{ item.createdBy }}</td>
-            <td>{{ item.modifiedBy }}</td> -->
+            <td>{{ $index+1 }}</td>
+            <td>{{getCategoryNameById(item.categoryId)}}</td>
+            <td>{{getSubCategoryNameById(item.categoryId, item.subCategoryId)}}</td>
+            <td>{{ item.amount | number}}</td>
+            <td>{{ item.date | date:'MM/dd/yyyy' }}</td>
+            <td>{{ item.createdAt | date:'MM/dd/yyyy' }}</td>
+            <!-- <td> 
+                {{item.note | slice:0:40}}
+                @if (item.note && item.note.length > 40) {
+                <span>...</span>
+                }
+            </td> -->
             <td>
                 <div class="d-flex justify-content-end">
                     <!-- @if((item?.questionLibraries?.length ?? 0) > 0) {
@@ -138,7 +140,7 @@
             <button (click)="toggleLiveCreateModel()" cButton color="secondary">
                 <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Close Icon"></svg>
             </button>
-            <button cButton type="submit"  color="primary">
+            <button cButton type="submit" color="primary" [disabled]="!createForm.valid">
                 <svg [cIcon]="icons.cilSave" width="22" class="text-white" title="Save Icon"></svg>
             </button>
         </c-modal-footer>

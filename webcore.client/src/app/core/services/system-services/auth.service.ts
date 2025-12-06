@@ -7,6 +7,7 @@ import { jwtDecode } from 'jwt-decode';
 import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
 import { LoginModel } from '@models/system-management-models/login.model';
 import { Router } from '@angular/router';
+import { UserLoginInfoModel } from '@models/user-login-info.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,11 @@ import { Router } from '@angular/router';
 export class AuthService {
   private readonly tokenKey = 'token';
   private accessTokenSignal = signal<string | null>(null);
-
+  private currentUserSignal = signal<UserLoginInfoModel | null>(null);
   accessToken = computed(() => this.accessTokenSignal());
   isLoggedIn = computed(() => !!this.accessTokenSignal());
 
-constructor(private http: HttpClient, private router: Router) { }
+ constructor(private http: HttpClient, private router: Router) { }
 
 
   login(account: LoginModel): Observable<BaseAPIResponse> {
@@ -73,6 +74,34 @@ constructor(private http: HttpClient, private router: Router) { }
       });
     });
   }
+  
+  // Async method to fetch and cache current user from server
+  getCurrentUser(): Observable<UserLoginInfoModel | null> {
+    const currentUser = this.currentUserSignal();
+    if (currentUser) {
+      return new Observable<UserLoginInfoModel | null>(observer => {
+        observer.next(currentUser);
+        observer.complete();
+      });
+    }
+
+    return this.http.get<APIResponse<UserLoginInfoModel>>(EAuthSystemUrl.getCurrentUserUrl, { withCredentials: true }).pipe(
+      map((response) => {
+        if (response.success && response.data) {
+          this.currentUserSignal.set(response.data);
+          return response.data;
+        }
+        return null;
+      }),
+      catchError((error) => {
+        console.error('Failed to fetch current user:', error);
+        return new Observable<UserLoginInfoModel | null>(observer => {
+          observer.next(null);
+          observer.complete();
+        });
+      })
+    );
+  }
 
   logOut(): void {
     this.http.get(EAuthSystemUrl.logoutUrl, { withCredentials: true }).subscribe({
@@ -85,18 +114,11 @@ constructor(private http: HttpClient, private router: Router) { }
 
   getUserId(): any {
     const token = this.accessTokenSignal();
-    // console.log('Access Token:', token);
     if (token) {
       const claims = jwtDecode<any>(token);
       return claims?.Id;
     }
     return null;
   }
-  // setToken(token: string): void {
-  //   this.accessTokenSignal.set(token);
-  // }
 
-  // clear(): void {
-  //   this.accessTokenSignal.set(null);
-  // }
 }

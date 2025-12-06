@@ -6,6 +6,7 @@ using Common.Services.JwtServices;
 using Common.ViewModels.SystemViewModels;
 using DataAccess;
 using DataAccess.DTOs;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Google.Apis.Auth;
 using Microsoft.AspNetCore.Identity;
 using System.IdentityModel.Tokens.Jwt;
@@ -280,6 +281,21 @@ namespace BusinessLogic.Helpers.SystemHelpers
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public async Task<UserLoginInfoModel?> GetCurrentUserAsync(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if (user == null)
+                return null;
+            var userRoles = await _userManager.GetRolesAsync(user);
+            return new UserLoginInfoModel
+            {
+                UserId = user.Id,
+                UserName = user.UserName,
+                Email = user.Email,
+                Roles = userRoles.ToList()
+            };
         }
     }
 }

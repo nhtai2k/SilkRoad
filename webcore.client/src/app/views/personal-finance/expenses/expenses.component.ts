@@ -19,6 +19,7 @@ import { TreeSelectV1Component } from "@components/selects/tree-select-v1/tree-s
 import { InputCurrencyComponent } from "@components/inputs/input-currency/input-currency.component";
 import { AuthService } from '@services/system-services';
 import { cos } from '@amcharts/amcharts5/.internal/core/util/Math';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -26,7 +27,7 @@ import { cos } from '@amcharts/amcharts5/.internal/core/util/Math';
   templateUrl: './expenses.component.html',
   styleUrl: './expenses.component.scss',
   imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective, IconDirective, AccordionButtonDirective, AccordionComponent,
-    AccordionItemComponent, ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule, ModalFooterComponent,
+    AccordionItemComponent, ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule, ModalFooterComponent,CommonModule,
     ModalHeaderComponent, DataTableComponent, TemplateIdDirective, RangeDatetimePickerComponent, TreeSelectV1Component, InputCurrencyComponent]
 })
 export class ExpensesComponent implements OnInit {
@@ -79,19 +80,29 @@ export class ExpensesComponent implements OnInit {
   constructor(private expenseService: ExpenseService, private categoryService: CategoryService, private authService: AuthService,
     private toastService: ToastService) { }
   ngOnInit(): void {
-    this.getData();
     this.categoryService.getTreeOptionList().subscribe((res) => {
       this.categoryTreeOptions = res.data;
     });
     // Set default date to today for create form
     const today = new Date().toISOString().split('T')[0];
     // Set userId in create and filter forms
-    const currentUserId = this.authService.getUserId();
-    this.createForm.patchValue({ date: today, userId: currentUserId });
-    this.filterForm.patchValue({ userId: currentUserId });
+    let currentUserId = this.authService.getUserId();
+    if (!currentUserId){
+      this.authService.refreshToken().subscribe((isSuccess) => {
+        if (isSuccess){
+          currentUserId = this.authService.getUserId();
+          this.createForm.patchValue({ date: today, userId: currentUserId });
+          this.filterForm.patchValue({ userId: currentUserId });
+              this.getData();
+        }
+      });
+    }else{
+      this.createForm.patchValue({ date: today, userId: currentUserId });
+      this.filterForm.patchValue({ userId: currentUserId });
+          this.getData();
+    }
   }
   filter() {
-    this.filterForm.patchValue({ pageIndex: this.pageInformation.pageIndex, pageSize: this.pageInformation.pageSize });
     this.getData();
   }
 
@@ -114,6 +125,8 @@ export class ExpensesComponent implements OnInit {
   }
   //#region Main Table
   getData() {
+    this.filterForm.patchValue({ pageIndex: this.pageInformation.pageIndex, pageSize: this.pageInformation.pageSize });
+    console.log(this.filterForm.value);
     this.expenseService.getByFilter(this.filterForm.value).subscribe((res) => {
       this.data = res.data;
       this.pageInformation.currentPage = this.data.currentPage;
@@ -126,10 +139,24 @@ export class ExpensesComponent implements OnInit {
     this.pageInformation.pageIndex = index;
     this.getData();
   }
+  
   onPageSizeChange(size: any) {
     this.pageInformation.pageSize = size;
     this.pageInformation.pageIndex = 1;
     this.getData();
+  }
+
+  getCategoryNameById(id: number): string {
+    const category = this.categoryTreeOptions.find(cat => cat.id === id);
+    return category ? category.name : '###';
+  }
+  getSubCategoryNameById(categoryId: number, subCategoryId: number | undefined): string {
+    const category = this.categoryTreeOptions.find(cat => cat.id === categoryId);
+    if (category && category.children) {
+      const subCategory = category.children.find(subCat => subCat.id === subCategoryId);
+      return subCategory ? subCategory.name : '###';
+    }
+    return '###';
   }
   //#endregion
 
@@ -137,20 +164,20 @@ export class ExpensesComponent implements OnInit {
   //#region Create Form
   onSubmitCreateForm() {
     console.log(this.createForm.value);
-    // if (this.createForm.valid) {
-    //   this.expenseService.create(this.createForm.value).subscribe({
-    //     next: (res) => {
-    //       this.toggleLiveCreateModel();
-    //       this.getData();
-    //       this.toastService.showToast(EColors.success, res.message);
-    //       this.createForm.reset();
-    //       this.createForm.patchValue({ isActive: true, priority: 1 });
-    //     },
-    //     error: (failure) => {
-    //       this.toastService.showToast(EColors.danger, failure.error.message);
-    //     }
-    //   });
-    // }
+    if (this.createForm.valid) {
+      this.expenseService.create(this.createForm.value).subscribe({
+        next: (res) => {
+          this.toggleLiveCreateModel();
+          this.getData();
+          this.toastService.showToast(EColors.success, res.message);
+          this.createForm.reset();
+          this.createForm.patchValue({ isActive: true, priority: 1 });
+        },
+        error: (failure) => {
+          this.toastService.showToast(EColors.danger, failure.error.message);
+        }
+      });
+    }
 
   }
 
