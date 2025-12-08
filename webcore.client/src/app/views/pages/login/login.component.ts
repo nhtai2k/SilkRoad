@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IconDirective } from '@coreui/icons-angular';
 import { InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective, FormCheckComponent } from '@coreui/angular';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -8,7 +8,7 @@ import { EyeCloseIconComponent } from '@components/icons/eye-close-icon.componen
 import { LoadingService } from '@services/helper-services/loading.service';
 import { ParticleCanvasComponent } from '@components/generals/particle-canvas/particle-canvas.component';
 import { AuthService } from '@services/system-services/auth.service';
-import { SocialAuthService, GoogleSigninButtonDirective } from '@abacritt/angularx-social-login';
+import { SocialAuthService, GoogleSigninButtonDirective, SocialUser, GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { ExternalAuthModel } from '@models/external-auth.model';
 
 @Component({
@@ -20,6 +20,8 @@ import { ExternalAuthModel } from '@models/external-auth.model';
 })
 export class LoginComponent implements OnInit {
   //#region Variables
+    user: SocialUser | undefined;
+      GoogleLoginProvider = GoogleLoginProvider;
   showPassword: boolean = false;
   errorMessage: string = '';
   loginForm: FormGroup = new FormGroup({
@@ -76,7 +78,9 @@ export class LoginComponent implements OnInit {
       next: (response) => {
         if (response.success) {
           this.loadingService.showLoadingComponent(false);
-          this.router.navigate(['/introduction']);
+          this.authenticationService.getCurrentUserInfor().subscribe(() => {
+            this.router.navigate(['/introduction']);
+          });
         }
       },
       error: (exception: any) => {

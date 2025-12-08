@@ -18,7 +18,6 @@ import { TreeSelectComponent } from "@components/selects/tree-select/tree-select
 import { TreeSelectV1Component } from "@components/selects/tree-select-v1/tree-select-v1.component";
 import { InputCurrencyComponent } from "@components/inputs/input-currency/input-currency.component";
 import { AuthService } from '@services/system-services';
-import { cos } from '@amcharts/amcharts5/.internal/core/util/Math';
 import { CommonModule } from '@angular/common';
 
 
@@ -86,21 +85,13 @@ export class ExpensesComponent implements OnInit {
     // Set default date to today for create form
     const today = new Date().toISOString().split('T')[0];
     // Set userId in create and filter forms
-    let currentUserId = this.authService.getUserId();
-    if (!currentUserId){
-      this.authService.refreshToken().subscribe((isSuccess) => {
-        if (isSuccess){
-          currentUserId = this.authService.getUserId();
-          this.createForm.patchValue({ date: today, userId: currentUserId });
-          this.filterForm.patchValue({ userId: currentUserId });
-              this.getData();
-        }
-      });
-    }else{
-      this.createForm.patchValue({ date: today, userId: currentUserId });
-      this.filterForm.patchValue({ userId: currentUserId });
-          this.getData();
-    }
+    this.authService.getCurrentUserInfor().subscribe((currentUser) => {
+      if (currentUser && currentUser.userId){
+        this.createForm.patchValue({ date: today, userId: currentUser.userId });
+        this.filterForm.patchValue({ userId: currentUser.userId });
+        this.getData();
+      }
+    });
   }
   filter() {
     this.getData();

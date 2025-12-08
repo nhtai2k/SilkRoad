@@ -1,26 +1,25 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { computed, Injectable, signal } from '@angular/core';
 import { catchError, map, Observable, switchMap } from 'rxjs';
 import { EAuthSystemUrl } from '@common/url-api';
-import { JwtModel } from '@models/system-models/jwt.model';
 import { jwtDecode } from 'jwt-decode';
 import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
 import { LoginModel } from '@models/system-models/login.model';
 import { Router } from '@angular/router';
 import { UserLoginInfoModel } from '@models/user-login-info.model';
 import { ExternalAuthModel } from '@models/external-auth.model';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly tokenKey = 'token';
   private accessTokenSignal = signal<string | null>(null);
   private currentUserSignal = signal<UserLoginInfoModel | null>(null);
   accessToken = computed(() => this.accessTokenSignal());
-  isLoggedIn = computed(() => !!this.accessTokenSignal());
+  // isLoggedIn = computed(() => !!this.accessTokenSignal());
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private socialAuthService: SocialAuthService) { }
 
   externalLogin(externalAuth: ExternalAuthModel): Observable<BaseAPIResponse> {
     return this.http.post<APIResponse<string>>(EAuthSystemUrl.externalLoginUrl, externalAuth).pipe(
@@ -94,10 +93,9 @@ export class AuthService {
       });
     });
   }
-  
 
   // Async method to fetch and cache current user from server
-  getCurrentUser(): Observable<UserLoginInfoModel | null> {
+  getCurrentUserInfor(): Observable<UserLoginInfoModel | null> {
     const currentUser = this.currentUserSignal();
     if (currentUser) {
       return new Observable<UserLoginInfoModel | null>(observer => {
@@ -125,6 +123,7 @@ export class AuthService {
   }
 
   logOut(): void {
+    this.socialAuthService.signOut(); // Ensure social auth state is cleared before login
     this.http.get(EAuthSystemUrl.logoutUrl, { withCredentials: true }).subscribe({
       next: () => {
         this.accessTokenSignal.set(null);
@@ -132,14 +131,4 @@ export class AuthService {
       }
     });
   }
-
-  getUserId(): any {
-    const token = this.accessTokenSignal();
-    if (token) {
-      const claims = jwtDecode<any>(token);
-      return claims?.Id;
-    }
-    return null;
-  }
-
 }

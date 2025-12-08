@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { NgScrollbar } from 'ngx-scrollbar';
 
@@ -31,6 +31,7 @@ import { AuthService } from '@services/system-services/auth.service';
 import { ToastService } from '@services/helper-services/toast.service';
 import { MyAccountService } from '@services/system-services/my-account.service';
 import { EColors } from '@common/global';
+import { UserLoginInfoModel } from '@models/user-login-info.model';
 
 function isOverflown(element: HTMLElement) {
   return (
@@ -51,7 +52,7 @@ function isOverflown(element: HTMLElement) {
     SidebarFooterComponent,
     SidebarToggleDirective,
     SidebarTogglerDirective,
-   // ContainerComponent,
+    // ContainerComponent,
     DefaultFooterComponent,
     DefaultHeaderComponent,
     IconDirective,
@@ -59,12 +60,13 @@ function isOverflown(element: HTMLElement) {
     RouterOutlet,
     RouterLink,
     ShadowOnScrollDirective,
-     ButtonCloseDirective, ModalComponent, ModalFooterComponent, ModalBodyComponent,
+    ButtonCloseDirective, ModalComponent, ModalFooterComponent, ModalBodyComponent,
     ModalHeaderComponent, FormControlDirective, ReactiveFormsModule, ButtonDirective, EyeIconComponent, EyeCloseIconComponent
   ]
 })
-export class DefaultLayoutComponent {
-    //#region Change Password
+export class DefaultLayoutComponent implements OnInit {
+  //#region Change Password
+  currentUser: UserLoginInfoModel | null = null;
   changePasswordFormError: string = '';
   visibleChangePassword: boolean = false;
   showOldPassword: boolean = false;
@@ -79,9 +81,15 @@ export class DefaultLayoutComponent {
   });
   //#endregion
   public navItems = [...navItems];
-    constructor(private authentication: AuthService, private toastService: ToastService,
+  constructor(private authentication: AuthService, private toastService: ToastService,
     private myAccountService: MyAccountService) {
 
+  }
+  ngOnInit(): void {
+    this.authentication.getCurrentUserInfor().subscribe( res =>
+    {
+      this.currentUser = res;
+    });
   }
   //#region Change Password
   toggleChangePassword() {
@@ -93,7 +101,7 @@ export class DefaultLayoutComponent {
   }
 
   onSubmitChangePassword() {
-    let userId = this.authentication.getUserId();
+    let userId = this.currentUser ? this.currentUser.userId : -1;
     this.changePasswordForm.patchValue({ userId: userId });
 
     if (this.changePasswordForm.value.newPassword != this.changePasswordForm.value.confirmPassword) {
@@ -107,7 +115,7 @@ export class DefaultLayoutComponent {
           this.changePasswordForm.reset();
           this.toggleChangePassword();
           this.toastService.showToast(EColors.success, res.message);
-        }, 
+        },
         error: (error: any) => {
           console.log(error);
           this.changePasswordFormError = error.message;

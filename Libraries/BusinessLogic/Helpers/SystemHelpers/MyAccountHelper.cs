@@ -6,6 +6,7 @@ using Common.Services.JwtServices;
 using Common.ViewModels.SystemViewModels;
 using DataAccess;
 using DataAccess.DTOs;
+using DocumentFormat.OpenXml.EMMA;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Google.Apis.Auth;
 using Microsoft.AspNetCore.Identity;
@@ -88,7 +89,7 @@ namespace BusinessLogic.Helpers.SystemHelpers
 
             return jwtViewModel;
         }
-        
+
         public async Task<GoogleJsonWebSignature.Payload> VerifyGoogleTokenAsync(ExternalAuthModel externalAuth)
         {
             try
@@ -107,7 +108,7 @@ namespace BusinessLogic.Helpers.SystemHelpers
                 return null;
             }
         }
-        
+
         public async Task<JwtViewModel?> ExternalLoginAsync(ExternalAuthModel externalAuth)
         {
             var payload = await VerifyGoogleTokenAsync(externalAuth);
@@ -116,10 +117,10 @@ namespace BusinessLogic.Helpers.SystemHelpers
 
             var info = new UserLoginInfo(externalAuth.Provider, payload.Subject, externalAuth.Provider);
 
-            //var user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
-            //if (user == null)
-            //{
-                var user = await _userManager.FindByEmailAsync(payload.Email);
+            var user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
+            if (user == null)
+            {
+                user = await _userManager.FindByEmailAsync(payload.Email);
 
                 if (user == null)
                 {
@@ -129,16 +130,21 @@ namespace BusinessLogic.Helpers.SystemHelpers
                     //prepare and send an email for the email confirmation
 
                     await _userManager.AddToRoleAsync(user, ERoles.User.ToString());
+                    await _userManager.AddLoginAsync(user, info);
                 }
-            //}
+                else
+                {
+                    await _userManager.AddLoginAsync(user, info);
+                }
+            }
 
             if (user == null)
                 return null;
 
-            
+
             return await AuthenticateAsync(user, false);
         }
-        
+
         public async Task<bool> ValidateRefreshTokenAsync(string refreshToken)
         {
             try

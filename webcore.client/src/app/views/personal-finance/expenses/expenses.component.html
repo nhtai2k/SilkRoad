@@ -19,13 +19,13 @@
                                     <app-tree-select-v1 [options]="categoryTreeOptions"
                                         (onChangeValue)="onChangeSelectOption($event,'filter')"></app-tree-select-v1>
                                 </div>
-                                <div class="col-4">
+  
+                            </div>
+                            <div class="row">
+                              <div class="col-4">
                                     <input formControlName="searchText" type="text" class="form-control"
                                         placeholder="Search by name...">
                                 </div>
-                            </div>
-                            <div class="row">
-
                                 <div class="col-4">
                                     <button type="submit" class="btn btn-primary">
                                         <svg [cIcon]="icons.cilSearch" width="20" class="text-white"
