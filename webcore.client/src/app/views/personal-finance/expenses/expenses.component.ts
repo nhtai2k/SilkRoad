@@ -54,6 +54,8 @@ export class ExpensesComponent implements OnInit {
     paymentMethodId: new FormControl(1, Validators.required),
     categoryId: new FormControl('', Validators.required),
     subCategoryId: new FormControl(''),
+    hasRefund: new FormControl(false),
+    refundAmount: new FormControl(null),
     amount: new FormControl('', Validators.required),
     date: new FormControl('', Validators.required),
     note: new FormControl('', Validators.maxLength(500))
@@ -65,6 +67,8 @@ export class ExpensesComponent implements OnInit {
     userId: new FormControl('', Validators.required),
     categoryId: new FormControl('', Validators.required),
     subCategoryId: new FormControl(''),
+    hasRefund: new FormControl(false),
+    refundAmount: new FormControl(null),
     amount: new FormControl('', Validators.required),
     date: new FormControl(null, Validators.required),
     note: new FormControl('', Validators.maxLength(500)),

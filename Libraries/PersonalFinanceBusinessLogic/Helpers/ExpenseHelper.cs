@@ -15,7 +15,7 @@ namespace PersonalFinanceBusinessLogic.Helpers
         }
         public async Task<Pagination<ExpenseDTO>> GetAllAsync(ExpenseFilterModel filter)
         {
-            var query = _unitOfWork.ExpenseRepository.Query(x => x.UserId == filter.UserId);
+            var query = _unitOfWork.ExpenseRepository.Query(x => x.UserId == filter.UserId, orderBy: s => s.OrderByDescending(p => p.CreatedAt));
             if (filter.FromDate != null)
             {
                 query = query.Where(s => s.Date >= filter.FromDate);

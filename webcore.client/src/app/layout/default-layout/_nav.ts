@@ -348,4 +348,4 @@ const systemNavItems: INavData[] = [
 //   }
 // ];
 
-export const navItems: INavData[] = [...personalFinanceNavItems,...systemNavItems];
+export const navItems: INavData[] = [...stockMarketNavItems,...personalFinanceNavItems,...systemNavItems];

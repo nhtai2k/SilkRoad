@@ -6,6 +6,8 @@ export interface ExpenseModel {
     subCategoryId?: number;
     amount: number;
     date: Date;
+    hasRefund: boolean;
+    refundAmount?: number;
     note?: string;
     createdAt?: Date;
     updatedAt?: Date;

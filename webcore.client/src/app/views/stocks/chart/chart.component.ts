@@ -41,6 +41,7 @@ export class ChartComponent implements OnInit, OnDestroy {
   async GetData(symbol: string): Promise<void> {
     this.stockPriceService.getAll(symbol).subscribe(res =>{
       if (res) {
+        console.log(res);
         this.stockHistory = res;
         this.CreateChart();
         this.showChart = true;

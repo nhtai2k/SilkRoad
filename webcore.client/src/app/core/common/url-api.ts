@@ -27,9 +27,9 @@
   }
 
   //stock-price
-  export enum EStockPriceStockMarketUrl{
-  getAllUrl = "/api/stockPrice/getAll",
-  getNewDataUrl = "/api/stockPrice/getNewData",
+  export enum EChartStockMarketUrl{
+  getAllUrl = "/api/chart/getAll",
+  getNewDataUrl = "/api/chart/getNewData",
   }
   //#endregion
 
