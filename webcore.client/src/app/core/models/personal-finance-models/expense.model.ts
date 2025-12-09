@@ -1,5 +1,6 @@
 export interface ExpenseModel {
     id: any;
+    paymentMethodId: number;
     userId: number;
     categoryId: number;
     subCategoryId?: number;

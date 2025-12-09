@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -13,6 +14,7 @@ namespace PersonalFinanceBusinessLogic.Helpers
         public DateTime? ToDate { get; set; }
         public int? CategoryId { get; set; }
         public int? SubCategoryId { get; set; }
+        public int? PaymentMethodId { get; set; }
         public string? SearchText { get; set; }
     }
 }

@@ -36,7 +36,7 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
         }
 
         [HttpGet("getById/{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(Guid id)
         {
             var data = await _helper.GetByIdAsync(id);
             if (data == null)
@@ -67,7 +67,7 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
         }
 
         [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _helper.DeleteAsync(id);
             if (!result)

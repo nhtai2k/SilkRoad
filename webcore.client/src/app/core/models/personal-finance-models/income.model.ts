@@ -1,7 +1,10 @@
 export interface IncomeModel {
-    id: number;
+    id: any;
+    userId: number;
     source: string;
     amount: number;
     date: Date;
     note?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
 }

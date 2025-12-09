@@ -17,27 +17,41 @@
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <app-tree-select-v1 [options]="categoryTreeOptions"
-                                        (onChangeValue)="onChangeSelectOption($event,'filter')"></app-tree-select-v1>
+                                        (onChangeValue)="onChangeCategoryId($event,'filter')"></app-tree-select-v1>
                                 </div>
                             </div>
-                             <div class="row mb-3">
-                                <div class="col-12 col-md-6 mb-2 mb-md-0">
-                                    <input formControlName="searchText" type="text" class="form-control"
-                                        placeholder="Search by name...">
+                            <div class="row mb-3">
+                                <div class="col-12 col-md-6  mb-2 mb-md-0">
+                                    <app-select-search [options]="paymentMethodTreeOptions"
+                                        (onChangeValue)="onChangePaymentMethodId($event, 'filter')"></app-select-search>
                                 </div>
                                 <div class="col-12 col-md-6">
-                                    <button type="submit" class="btn btn-primary w-100">
+                                    <!-- <input formControlName="searchText" type="text" class="form-control"
+                                        placeholder="Search by name..."> -->
+                                          <button type="submit" class="btn btn-primary">
                                         <svg [cIcon]="icons.cilSearch" width="20" class="text-white"
                                             title="Search Icon"></svg>
                                     </button>
                                 </div>
+
                             </div>
+                            <!-- <div class="row mb-3">
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-primary">
+                                        <svg [cIcon]="icons.cilSearch" width="20" class="text-white"
+                                            title="Search Icon"></svg>
+                                    </button>
+                                </div>
+                            </div> -->
                         </form>
                     </div>
                     <div class="col-2 col-md-4">
                         <div class="justify-content-end d-flex">
-                            <button class="btn btn-success" (click)="toggleLiveCreateModel()">
+                            <button class="btn btn-success me-2" (click)="toggleLiveCreateModel()">
                                 <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+                            </button>
+                              <button class="btn btn-info">
+                                <svg [cIcon]="icons.cilCloudDownload" width="25" class="text-white" title="Cloud Download Icon"></svg>
                             </button>
                         </div>
                     </div>
@@ -54,9 +68,10 @@
             <th scope="col">No.</th>
             <th scope="col">Category</th>
             <th scope="col" class="d-none d-md-table-cell">SubCategory</th>
+            <th scope="col">Payment Method</th>
             <th scope="col">Amount</th>
             <th scope="col">Expense Date</th>
-            <th scope="col" class="d-none d-md-table-cell">Created At</th>
+            <!-- <th scope="col" class="d-none d-md-table-cell">Created At</th> -->
             <th></th>
         </tr>
     </thead>
@@ -65,16 +80,11 @@
         <tr>
             <td>{{ $index+1 }}</td>
             <td>{{getCategoryNameById(item.categoryId)}}</td>
-            <td  class="d-none d-md-table-cell">{{getSubCategoryNameById(item.categoryId, item.subCategoryId)}}</td>
-            <td>{{ item.amount | number}}</td>
+            <td class="d-none d-md-table-cell">{{getSubCategoryNameById(item.categoryId, item.subCategoryId)}}</td>
+            <td>{{getPaymentMethodNameById(item.paymentMethodId)}}</td>
+            <td>{{ item.amount | number}} đ</td>
             <td>{{ item.date | date:'MM/dd/yyyy' }}</td>
-            <td class="d-none d-md-table-cell">{{ item.createdAt | date:'MM/dd/yyyy' }}</td>
-            <!-- <td> 
-                {{item.note | slice:0:40}}
-                @if (item.note && item.note.length > 40) {
-                <span>...</span>
-                }
-            </td> -->
+            <!-- <td class="d-none d-md-table-cell">{{ item.createdAt | date:'MM/dd/yyyy' }}</td> -->
             <td>
                 <div class="d-flex justify-content-end">
                     <!-- @if((item?.questionLibraries?.length ?? 0) > 0) {
@@ -108,17 +118,24 @@
     </c-modal-header>
     <form cForm [formGroup]="createForm" (ngSubmit)="onSubmitCreateForm()">
         <c-modal-body>
-            <div class="mb-2">
-                <label cLabel>Category: <span class="text-danger">(*)</span></label>
-                <app-tree-select-v1 [options]="categoryTreeOptions"
-                    (onChangeValue)="onChangeSelectOption($event, 'create')"></app-tree-select-v1>
+            <div class="mb-2 row">
+                <div class="col-12 col-md-6 mb-2 mb-md-0">
+                    <label cLabel>Category: <span class="text-danger">(*)</span></label>
+                    <app-tree-select-v1 [options]="categoryTreeOptions"
+                        (onChangeValue)="onChangeCategoryId($event, 'create')"></app-tree-select-v1>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label cLabel>Payment Method: <span class="text-danger">(*)</span></label>
+                    <app-select-search [options]="paymentMethodTreeOptions" [selectedValue]="1"
+                        (onChangeValue)="onChangePaymentMethodId($event, 'create')"></app-select-search>
+                </div>
             </div>
             <div class="mb-2 row">
-                <div class="col-6">
+                <div class="col-12 col-md-6 mb-2 mb-md-0">
                     <label cLabel>Amount: <span class="text-danger">(*)</span></label>
-                    <app-input-currency (valueChange)="createForm.patchValue({amount: $event})"></app-input-currency>
+                    <app-input-currency [initialValue]="initAmountCreateForm()" (valueChange)="createForm.patchValue({amount: $event})"></app-input-currency>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <label cLabel for="date">Date: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="date" type="date">
                 </div>
@@ -156,19 +173,22 @@
     </c-modal-header>
     <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmitUpdateForm()">
         <c-modal-body>
-
-            <div class="mb-2">
-                <label cLabel>Category: <span class="text-danger">(*)</span></label>
-                <app-tree-select-v1 [options]="categoryTreeOptions"
-                    (onChangeValue)="onChangeSelectOption($event, 'update')"></app-tree-select-v1>
-
+            <div class="mb-2 row">
+                <div class="col-12 col-md-6 mb-2 mb-md-0">
+                    <label cLabel>Category: <span class="text-danger">(*)</span></label>
+                    <app-tree-select-v1 [options]="categoryTreeOptions" [selectedValue]="initSelectedCategoryUpdateForm()"
+                        (onChangeValue)="onChangeCategoryId($event, 'update')"></app-tree-select-v1>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label cLabel>Payment Method: <span class="text-danger">(*)</span></label>
+                    <app-select-search [options]="paymentMethodTreeOptions" [selectedValue]="initExpenseUpdateForm()?.paymentMethodId"
+                        (onChangeValue)="onChangePaymentMethodId($event, 'update')"></app-select-search>
+                </div>
             </div>
-
             <div class="mb-2 row">
                 <div class="col-6">
                     <label cLabel>Amount: <span class="text-danger">(*)</span></label>
-                    <!-- <input cFormControl formControlName="amount"> -->
-                    <app-input-currency></app-input-currency>
+                    <app-input-currency [initialValue]="initExpenseUpdateForm()?.amount || 0" (valueChange)="updateForm.patchValue({amount: $event})" ></app-input-currency>
                 </div>
                 <div class="col-6">
                     <label cLabel for="date">Date: <span class="text-danger">(*)</span></label>

@@ -3,6 +3,7 @@
     public class ExpenseDTO
     {
         public Guid Id { get; set; }
+        public int PaymentMethodId { get; set; }
         public int UserId { get; set; }
         public int CategoryId { get; set; }
         public int? SubCategoryId { get; set; }
