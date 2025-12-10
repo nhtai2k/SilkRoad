@@ -75,6 +75,10 @@
   updateUrl = "/api/pf/income/update",
   deleteUrl = "/api/pf/income/delete",
   }
+  //Report
+  export enum EReportPersonalFinanceUrl{
+  getColoumnChartByMonthUrl = "/api/pf/report/GetColoumnChartByMonth",
+  }
 
   //#endregion
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, input, effect } from '@angular/core';
 import * as am5 from '@amcharts/amcharts5';
 import * as am5xy from '@amcharts/amcharts5/xy';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
@@ -11,9 +11,24 @@ import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 })
 export class ColoumnChartComponent implements OnInit, OnDestroy {
   private root!: am5.Root;
+  private chart!: am5xy.XYChart;
+  private series!: am5xy.ColumnSeries;
+  private xAxis!: am5xy.CategoryAxis<am5xy.AxisRendererX>;
+  
+  data = input<any[]>([]);
+
+  constructor() {
+    // Watch for data changes
+    effect(() => {
+      const currentData = this.data();
+      if (this.root && currentData && currentData.length > 0) {
+        this.updateChartData(currentData);
+      }
+    });
+  }
 
   ngOnInit() {
-    this.createChart();
+    this.initializeChart();
   }
 
   ngOnDestroy() {
@@ -22,7 +37,7 @@ export class ColoumnChartComponent implements OnInit, OnDestroy {
     }
   }
 
-  private createChart() {
+  private initializeChart(): void {
     // Create root element
     this.root = am5.Root.new('columnChartDiv');
 
@@ -32,7 +47,7 @@ export class ColoumnChartComponent implements OnInit, OnDestroy {
     ]);
 
     // Create chart
-    const chart = this.root.container.children.push(
+    this.chart = this.root.container.children.push(
       am5xy.XYChart.new(this.root, {
         panX: false,
         panY: false,
@@ -42,29 +57,13 @@ export class ColoumnChartComponent implements OnInit, OnDestroy {
     );
 
     // Add cursor
-    const cursor = chart.set('cursor', am5xy.XYCursor.new(this.root, {
+    const cursor = this.chart.set('cursor', am5xy.XYCursor.new(this.root, {
       behavior: 'zoomX'
     }));
     cursor.lineY.set('visible', false);
 
-    // Sample data
-    const data = [
-      { category: 'January', value: 100 },
-      { category: 'February', value: 150 },
-      { category: 'March', value: 200 },
-      { category: 'April', value: 180 },
-      { category: 'May', value: 250 },
-      { category: 'June', value: 300 },
-      { category: 'July', value: 280 },
-      { category: 'August', value: 320 },
-      { category: 'September', value: 290 },
-      { category: 'October', value: 350 },
-      { category: 'November', value: 380 },
-      { category: 'December', value: 400 }
-    ];
-
     // Create axes
-    const xAxis = chart.xAxes.push(
+    this.xAxis = this.chart.xAxes.push(
       am5xy.CategoryAxis.new(this.root, {
         categoryField: 'category',
         renderer: am5xy.AxisRendererX.new(this.root, {
@@ -74,17 +73,17 @@ export class ColoumnChartComponent implements OnInit, OnDestroy {
       })
     );
 
-    const yAxis = chart.yAxes.push(
+    const yAxis = this.chart.yAxes.push(
       am5xy.ValueAxis.new(this.root, {
         renderer: am5xy.AxisRendererY.new(this.root, {})
       })
     );
 
     // Add series
-    const series = chart.series.push(
+    this.series = this.chart.series.push(
       am5xy.ColumnSeries.new(this.root, {
-        name: 'Sales',
-        xAxis: xAxis,
+        name: 'Data',
+        xAxis: this.xAxis,
         yAxis: yAxis,
         valueYField: 'value',
         categoryXField: 'category',
@@ -94,17 +93,21 @@ export class ColoumnChartComponent implements OnInit, OnDestroy {
       })
     );
 
-    // Set data
-    xAxis.data.setAll(data);
-    series.data.setAll(data);
+    // Initial chart animation
+    this.series.appear(1000);
+    this.chart.appear(1000, 100);
 
-    // Add scrollbar
-    // chart.set('scrollbarX', am5.Scrollbar.new(this.root, {
-    //   orientation: 'horizontal'
-    // }));
+    // Load initial data if available
+    const initialData = this.data();
+    if (initialData && initialData.length > 0) {
+      this.updateChartData(initialData);
+    }
+  }
 
-    // Make stuff animate on load
-    series.appear(1000);
-    chart.appear(1000, 100);
+  private updateChartData(data: any[]): void {
+    if (this.xAxis && this.series && data) {
+      this.xAxis.data.setAll(data);
+      this.series.data.setAll(data);
+    }
   }
 }

@@ -50,8 +50,15 @@
                             <button class="btn btn-success me-2" (click)="toggleLiveCreateModel()">
                                 <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
                             </button>
-                              <button class="btn btn-info">
+                              <button class="btn btn-info me-2">
                                 <svg [cIcon]="icons.cilCloudDownload" width="25" class="text-white" title="Cloud Download Icon"></svg>
+                            </button>
+                              <button class="btn btn-primary" (click)="showTableorChart()">
+                                @if(showTable) {
+                                    <svg [cIcon]="icons.cilBarChart" width="25" class="text-white" title="Cloud Download Icon"></svg>
+                                }@else {
+                                    <svg [cIcon]="icons.cilListRich" width="25" class="text-white" title="Cloud Download Icon"></svg>
+                                }
                             </button>
                         </div>
                     </div>
@@ -60,52 +67,69 @@
         </ng-template>
     </c-accordion-item>
 </c-accordion>
-
-<app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
-    (changePageSize)="onPageSizeChange($event)">
-    <thead class="text-nowrap text-truncate">
-        <tr>
-            <th scope="col">No.</th>
-            <th scope="col">Category</th>
-            <th scope="col" class="d-none d-md-table-cell">SubCategory</th>
-            <th scope="col">Payment Method</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Expense Date</th>
-            <!-- <th scope="col" class="d-none d-md-table-cell">Created At</th> -->
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @for (item of data.items; track item.id) {
-        <tr>
-            <td>{{ $index+1 }}</td>
-            <td>{{getCategoryNameById(item.categoryId)}}</td>
-            <td class="d-none d-md-table-cell">{{getSubCategoryNameById(item.categoryId, item.subCategoryId)}}</td>
-            <td>{{getPaymentMethodNameById(item.paymentMethodId)}}</td>
-            <td>{{ item.amount | number}} đ</td>
-            <td>{{ item.date | date:'MM/dd/yyyy' }}</td>
-            <!-- <td class="d-none d-md-table-cell">{{ item.createdAt | date:'MM/dd/yyyy' }}</td> -->
-            <td>
-                <div class="d-flex justify-content-end">
-                    <!-- @if((item?.questionLibraries?.length ?? 0) > 0) {
-                        <button (click)="toggleNode(item)" class="btn btn-info me-2">
-                            <app-book-icon [open]="item.expanded"></app-book-icon>
+@if(showTable){
+    <app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
+        (changePageSize)="onPageSizeChange($event)">
+        <thead class="text-nowrap text-truncate">
+            <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Category</th>
+                <th scope="col" class="d-none d-md-table-cell">SubCategory</th>
+                <th scope="col">Payment Method</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Expense Date</th>
+                <!-- <th scope="col" class="d-none d-md-table-cell">Created At</th> -->
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (item of data.items; track item.id) {
+            <tr>
+                <td>{{ $index+1 }}</td>
+                <td>{{getCategoryNameById(item.categoryId)}}</td>
+                <td class="d-none d-md-table-cell">{{getSubCategoryNameById(item.categoryId, item.subCategoryId)}}</td>
+                <td>{{getPaymentMethodNameById(item.paymentMethodId)}}</td>
+                <td>{{ item.amount | number}} đ</td>
+                <td>{{ item.date | date:'MM/dd/yyyy' }}</td>
+                <!-- <td class="d-none d-md-table-cell">{{ item.createdAt | date:'MM/dd/yyyy' }}</td> -->
+                <td>
+                    <div class="d-flex justify-content-end">
+                        <!-- @if((item?.questionLibraries?.length ?? 0) > 0) {
+                            <button (click)="toggleNode(item)" class="btn btn-info me-2">
+                                <app-book-icon [open]="item.expanded"></app-book-icon>
+                            </button>
+                        } -->
+                        <button (click)="updateData(item.id)" class="btn btn-primary me-2">
+                            <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
                         </button>
-                    } -->
-                    <button (click)="updateData(item.id)" class="btn btn-primary me-2">
-                        <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
-                    </button>
-                    <button (click)="deleteData(item.id)" class="btn btn-danger">
-                        <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
-                    </button>
-                </div>
-            </td>
-        </tr>
-        <!-- <ng-container [ngTemplateOutlet]="nodeTemplate"
-            [ngTemplateOutletContext]="{ node: item, level: 1 }"></ng-container> -->
+                        <button (click)="deleteData(item.id)" class="btn btn-danger">
+                            <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            <!-- <ng-container [ngTemplateOutlet]="nodeTemplate"
+                [ngTemplateOutletContext]="{ node: item, level: 1 }"></ng-container> -->
+            }
+        </tbody>
+    </app-data-table>
+}@else {
+    <c-card class="mb-4">
+    <c-card-header>
+        <div class="d-flex justify-content-between align-items-center">
+            <span>
+                Reports
+            </span>
+            <input type="month" [(ngModel)]="selectedDate" (change)="onDateChange($event)" />
+        </div>
+    </c-card-header>
+    <c-card-body>
+        @if(coloumns && coloumns.length > 0){
+        <app-coloumn-chart [data]="coloumns"></app-coloumn-chart>
         }
-    </tbody>
-</app-data-table>
+    </c-card-body>
+</c-card>
+}
 
 <!-- Create Modal -->
 <c-modal backdrop="static" [visible]="visibleCreateModal" (visibleChange)="handleLiveCreateModelChange($event)"

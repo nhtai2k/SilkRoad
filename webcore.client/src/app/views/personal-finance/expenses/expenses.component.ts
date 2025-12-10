@@ -1,8 +1,8 @@
 
 import { Component, OnInit, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, TemplateIdDirective } from '@coreui/angular';
-import { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular, cilCloudUpload, cilCloudDownload, cilX, cilSearch } from '@coreui/icons';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, TemplateIdDirective } from '@coreui/angular';
+import { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular, cilCloudUpload, cilCloudDownload, cilX, cilSearch, cilListRich, cilBarChart } from '@coreui/icons';
 import { IconDirective } from '@coreui/icons-angular';
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { ToastService } from '@services/helper-services/toast.service';
@@ -11,13 +11,14 @@ import { DataTableComponent } from "@components/generals/data-table/data-table.c
 import { RangeDatetimePickerComponent } from "@components/generals/range-datetime-picker/range-datetime-picker.component";
 import { ExpenseService } from '@services/personal-finance-services/expense.service';
 import { ExpenseModel } from '@models/personal-finance-models';
-import { CategoryService } from '@services/personal-finance-services';
+import { CategoryService, ReportService } from '@services/personal-finance-services';
 import { OptionModel } from '@models/option.model';
 import { TreeSelectV1Component } from "@components/selects/tree-select-v1/tree-select-v1.component";
 import { InputCurrencyComponent } from "@components/inputs/input-currency/input-currency.component";
 import { AuthService } from '@services/system-services';
 import { CommonModule } from '@angular/common';
 import { SelectSearchComponent } from "@components/selects/select-search/select-search.component";
+import { ColoumnChartComponent } from '@components/charts/coloumn-chart/coloumn-chart.component';
 
 
 @Component({
@@ -26,7 +27,8 @@ import { SelectSearchComponent } from "@components/selects/select-search/select-
   styleUrl: './expenses.component.scss',
   imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective, IconDirective, AccordionButtonDirective, AccordionComponent,
     AccordionItemComponent, ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule, ModalFooterComponent, CommonModule,
-    ModalHeaderComponent, DataTableComponent, TemplateIdDirective, RangeDatetimePickerComponent, TreeSelectV1Component, InputCurrencyComponent, SelectSearchComponent]
+    ModalHeaderComponent, DataTableComponent, TemplateIdDirective, RangeDatetimePickerComponent, TreeSelectV1Component, InputCurrencyComponent, SelectSearchComponent,
+    ColoumnChartComponent, CardComponent, CardBodyComponent, CardHeaderComponent, FormsModule]
 })
 export class ExpensesComponent implements OnInit {
   //#region Properties
@@ -36,6 +38,7 @@ export class ExpensesComponent implements OnInit {
   visibleUpdateModal: boolean = false;
   visibleDelete: boolean = false;
   deleteById: number = 0;
+  showTable: boolean = true;
   data: Pagination<ExpenseModel> = new Pagination<ExpenseModel>();
   categoryTreeOptions: OptionModel[] = [];
   paymentMethodTreeOptions: OptionModel[] = [
@@ -44,10 +47,12 @@ export class ExpensesComponent implements OnInit {
     { id: 3, name: 'Debit Card' },
     { id: 4, name: 'Bank Transfer' }
   ];
+  coloumns: any[] = [];
+  selectedDate: string = '2025-11';
   initAmountCreateForm = signal<number>(0);
   initSelectedCategoryUpdateForm = signal<any>(null);
   initExpenseUpdateForm = signal<ExpenseModel | null>(null);
-  icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular, cilCloudUpload, cilCloudDownload, cilX, cilSearch };
+  icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular, cilCloudUpload, cilCloudDownload, cilX, cilListRich, cilBarChart, cilSearch };
 
   createForm: FormGroup = new FormGroup({
     userId: new FormControl(-1),
@@ -90,7 +95,7 @@ export class ExpensesComponent implements OnInit {
   //#endregion
   //#region Lifecycle Hooks
   constructor(private expenseService: ExpenseService, private categoryService: CategoryService, private authService: AuthService,
-    private toastService: ToastService) { }
+    private toastService: ToastService, private reportService: ReportService) { }
   ngOnInit(): void {
     this.categoryService.getTreeOptionList().subscribe((res) => {
       this.categoryTreeOptions = res.data;
@@ -99,7 +104,7 @@ export class ExpensesComponent implements OnInit {
     const today = new Date().toISOString().split('T')[0];
     // Set userId in create and filter forms
     this.authService.getCurrentUserInfor().subscribe((currentUser) => {
-      if (currentUser && currentUser.userId){
+      if (currentUser && currentUser.userId) {
         this.createForm.patchValue({ date: today, userId: currentUser.userId });
         this.filterForm.patchValue({ userId: currentUser.userId });
         this.getData();
@@ -112,33 +117,39 @@ export class ExpensesComponent implements OnInit {
 
   onChangeCategoryId(event: any, formType: string) {
     if (formType === 'filter') {
-        this.filterForm.patchValue({ 
-          categoryId: event[0]
-         , subCategoryId: event.length > 1 ? event[1] : null });
+      this.filterForm.patchValue({
+        categoryId: event[0]
+        , subCategoryId: event.length > 1 ? event[1] : null
+      });
     }
     else if (formType === 'create') {
-        this.createForm.patchValue({ 
-          categoryId: event[0]
-         , subCategoryId: event.length > 1 ? event[1] : null });
+      this.createForm.patchValue({
+        categoryId: event[0]
+        , subCategoryId: event.length > 1 ? event[1] : null
+      });
     }
     else if (formType === 'update') {
-        this.updateForm.patchValue({ 
-          categoryId: event[0]
-         , subCategoryId: event.length > 1 ? event[1] : null });
+      this.updateForm.patchValue({
+        categoryId: event[0]
+        , subCategoryId: event.length > 1 ? event[1] : null
+      });
     }
   }
-   onChangePaymentMethodId(event: any, formType: string) {
+  onChangePaymentMethodId(event: any, formType: string) {
     if (formType === 'filter') {
-        this.filterForm.patchValue({ 
-          paymentMethodId: event});
+      this.filterForm.patchValue({
+        paymentMethodId: event
+      });
     }
     else if (formType === 'create') {
-        this.createForm.patchValue({ 
-          paymentMethodId: event});
+      this.createForm.patchValue({
+        paymentMethodId: event
+      });
     }
     else if (formType === 'update') {
-        this.updateForm.patchValue({ 
-          paymentMethodId: event});
+      this.updateForm.patchValue({
+        paymentMethodId: event
+      });
     }
   }
   getPaymentMethodNameById(id: number): string {
@@ -161,7 +172,7 @@ export class ExpensesComponent implements OnInit {
     this.pageInformation.pageIndex = index;
     this.getData();
   }
-  
+
   onPageSizeChange(size: any) {
     this.pageInformation.pageSize = size;
     this.pageInformation.pageIndex = 1;
@@ -180,8 +191,29 @@ export class ExpensesComponent implements OnInit {
     }
     return '###';
   }
+  showTableorChart() {
+    this.showTable = !this.showTable;
+    if (!this.showTable && this.coloumns.length === 0) {
+      this.loadData();
+    }
+  }
+  onDateChange(event: any): void {
+    this.selectedDate = event.target.value;
+    this.loadData();
+  }
+
+  private loadData(): void {
+    this.authService.getCurrentUserInfor().subscribe(user => {
+      const userId = user?.userId;
+      if (userId) {
+        this.reportService.getColoumnChartByMonth(userId, this.selectedDate).subscribe(response => {
+          this.coloumns = response.data;
+        });
+      }
+    });
+  }
   //#endregion
-  
+
   //#region Create Form
   onSubmitCreateForm() {
     // console.log(this.createForm.value);
@@ -223,10 +255,10 @@ export class ExpensesComponent implements OnInit {
   updateData(id: number) {
     this.expenseService.getById(id).subscribe((res) => {
       const data = res.data;
-      if(data.subCategoryId){
+      if (data.subCategoryId) {
         let temp = data.categoryId + '_' + data.subCategoryId;
         this.initSelectedCategoryUpdateForm.set(temp);
-      }else{
+      } else {
         this.initSelectedCategoryUpdateForm.set(data.categoryId);
       }
       this.initExpenseUpdateForm.set(data);
