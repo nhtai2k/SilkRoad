@@ -145,5 +145,15 @@ namespace StockBusinessLogic.Helpers
                 return false;
             }
         }
+
+        public async Task<IEnumerable<OptionModel>> GetOptionListAsync()
+        {
+            var data = await _unitOfWork.IndustryRepository.GetAllAsync(x => !x.IsDeleted && x.IsActive);
+            return data.Select(x => new OptionModel
+            {
+                Id = x.Id,
+                Name = x.Name
+            });
+        }
     }
 }

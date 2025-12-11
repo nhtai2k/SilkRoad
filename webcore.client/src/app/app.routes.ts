@@ -50,6 +50,10 @@ export const routes: Routes = [
         path: 'stock/chart',
         loadChildren: () => import('./views/stocks/chart/routes').then((m) => m.routes)
       },
+      {
+        path: 'stock/trade-histories',
+        loadChildren: () => import('./views/stocks/trade-histories/routes').then((m) => m.routes)
+      },
       //#endregion
       
       //#region Personal Finance

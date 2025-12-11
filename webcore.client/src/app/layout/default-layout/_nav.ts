@@ -1,15 +1,6 @@
 import { INavData } from '@coreui/angular';
 
-export const navItems: INavData[] = [
-  {
-    name: 'Test Component',
-    url: '/test',
-    iconComponent: { name: 'cil-speedometer' },
-    badge: {
-      color: 'info',
-      text: 'NEW'
-    }
-  },
+const featureNavItems: INavData[] = [
   //#region Features
   {
     title: true,
@@ -47,6 +38,9 @@ export const navItems: INavData[] = [
   // },
   //#endregion
 
+];
+
+const stockMarketNavItems: INavData[] = [
   //#region Stock Market
   {
     title: true,
@@ -69,10 +63,14 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Trade Histories',
-    url: '/stock/chart',
+    url: '/stock/trade-histories',
     iconComponent: { name: 'cil-notes' }
   },
   //#endregion
+  
+];
+
+const personalFinanceNavItems: INavData[] = [
   //#region Personal Finance
   {
     title: true,
@@ -100,6 +98,9 @@ export const navItems: INavData[] = [
   },
   //#endregion
 
+];
+
+const restuarantNavItems: INavData[] = [
   //#region Restaurant
   {
     name: 'Restaurant',
@@ -132,6 +133,9 @@ export const navItems: INavData[] = [
   },
   //#endregion
 
+];
+
+const lipstickShopNavItems: INavData[] = [
   //#region Lipstick Shop
   {
     title: true,
@@ -226,6 +230,9 @@ export const navItems: INavData[] = [
   },
   //#endregion
 
+];
+
+const surveyNavItems: INavData[] = [
   //#region Surveys
 
   {
@@ -276,7 +283,10 @@ export const navItems: INavData[] = [
   },
   //#endregion
 
-  //#region System Management
+];
+
+const systemNavItems: INavData[] = [
+ //#region System Management
   {
     name: 'System Management',
     title: true
@@ -286,16 +296,16 @@ export const navItems: INavData[] = [
     url: '/users',
     iconComponent: { name: 'cil-people' }
   },
-  {
-    name: 'Logs',
-    url: '/logs',
-    iconComponent: { name: 'cil-book' }
-  },
-  {
-    name: 'Settings',
-    url: '/settings',
-    iconComponent: { name: 'cil-settings' }
-  },
+  // {
+  //   name: 'Logs',
+  //   url: '/logs',
+  //   iconComponent: { name: 'cil-book' }
+  // },
+  // {
+  //   name: 'Settings',
+  //   url: '/settings',
+  //   iconComponent: { name: 'cil-settings' }
+  // },
   // {
   //   name: 'Extend',
   //   url: '/system-management/extension',
@@ -325,3 +335,17 @@ export const navItems: INavData[] = [
   // },
   //#endregion
 ];
+
+// const testNavItems: INavData[] = [
+//     {
+//     name: 'Test Component',
+//     url: '/test',
+//     iconComponent: { name: 'cil-speedometer' },
+//     badge: {
+//       color: 'info',
+//       text: 'NEW'
+//     }
+//   }
+// ];
+
+export const navItems: INavData[] = [...stockMarketNavItems,...personalFinanceNavItems,...systemNavItems];

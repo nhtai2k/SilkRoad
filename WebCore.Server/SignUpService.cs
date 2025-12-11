@@ -84,6 +84,7 @@ namespace WebCore.Server
             services.AddScoped<PersonalFinanceBusinessLogic.IHelpers.ISubCategoryHelper, PersonalFinanceBusinessLogic.Helpers.SubCategoryHelper>();
             services.AddScoped<PersonalFinanceBusinessLogic.IHelpers.IIncomeHelper, PersonalFinanceBusinessLogic.Helpers.IncomeHelper>();
             services.AddScoped<PersonalFinanceBusinessLogic.IHelpers.IExpenseHelper, PersonalFinanceBusinessLogic.Helpers.ExpenseHelper>();
+            services.AddScoped<PersonalFinanceBusinessLogic.IHelpers.IReportHelper, PersonalFinanceBusinessLogic.Helpers.ReportHelper>();
             #endregion
 
             #region Stock

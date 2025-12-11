@@ -1,4 +1,4 @@
-<h1>Industry List</h1>
+<h3 class="fw-bold">Industry List</h3>
 <div class="d-flex justify-content-end mb-2">
   <button (click)="toggleLiveTrashModal()" class="btn btn-warning me-2">
     <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Trash Icon"></svg>
@@ -15,8 +15,8 @@
     <th scope="col">Name</th>
     <th scope="col">Priority</th>
     <th scope="col">isActive</th>
-    <th scope="col">Created By</th>
-    <th scope="col">Modified By</th>
+    <th scope="col" class="d-none d-md-table-cell">Created By</th>
+    <th scope="col" class="d-none d-md-table-cell">Modified By</th>
     <th></th>
   </tr>
 </thead>
@@ -27,8 +27,8 @@
         <td>{{ item.name }}</td>
         <td>{{ item.priority }}</td>
         <td>{{ item.isActive }}</td>
-        <td>{{ item.createdBy }}</td>
-        <td>{{ item.modifiedBy }}</td>
+        <td class="d-none d-md-table-cell">{{ item.createdBy }}</td>
+        <td class="d-none d-md-table-cell">{{ item.modifiedBy }}</td>
         <td>
           <div class="d-flex justify-content-end">
             <button (click)="updateData(item.id)" class="btn btn-primary me-2">

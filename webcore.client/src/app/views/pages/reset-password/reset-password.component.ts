@@ -5,8 +5,7 @@ import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validatio
 import { ActivatedRoute, Router } from '@angular/router';
 import { MyAccountService } from '@services/system-services/my-account.service';
 import { ToastService } from '@services/helper-services/toast.service';
-import { EyeIconComponent } from '@components/icons/eye-icon.component';
-import { EyeCloseIconComponent } from '@components/icons/eye-close-icon.component';
+import { EyeIconComponent, EyeClosedIconComponent } from '@components/icons';
 import { EColors } from '@common/global';
 import { timer } from 'rxjs';
 import { ParticleCanvasComponent } from '@components/generals/particle-canvas/particle-canvas.component';
@@ -15,7 +14,7 @@ import { ParticleCanvasComponent } from '@components/generals/particle-canvas/pa
   selector: 'app-reset-password',
   standalone: true,
   imports:[InputGroupComponent,
-    InputGroupTextDirective, IconDirective,EyeIconComponent, EyeCloseIconComponent,
+    InputGroupTextDirective, IconDirective,EyeIconComponent, EyeClosedIconComponent,
     FormControlDirective, ButtonDirective, ParticleCanvasComponent,
     ReactiveFormsModule],
   templateUrl: './reset-password.component.html',

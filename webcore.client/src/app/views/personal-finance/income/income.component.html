@@ -1,1 +1,171 @@
-<p>income works!</p>
+<h3 class="fw-bold">Income</h3>
+
+<div class="d-flex justify-content-end mb-2">
+    <button class="btn btn-success me-2" (click)="toggleLiveCreateModel()">
+        <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+    </button>
+    <button class="btn btn-primary me-2" (click)="(showNumber = !showNumber)">
+        @if(showNumber) {
+            <app-eye-closed-icon class="d-flex align-items-center" [color]="'#ffffff'"></app-eye-closed-icon>
+        } @else {
+            <app-eye-icon class="d-flex align-items-center" [color]="'#ffffff'"></app-eye-icon>
+        }
+    </button>
+        <button class="btn btn-info">
+        <svg [cIcon]="icons.cilCloudDownload" width="25" class="text-white" title="Cloud Download Icon"></svg>
+    </button>
+</div>
+
+<app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
+    (changePageSize)="onPageSizeChange($event)">
+    <thead class="text-nowrap text-truncate">
+        <tr>
+            <th scope="col">No.</th>
+            <th scope="col">Source</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Income Date</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (item of data.items; track item.id) {
+        <tr>
+            <td>{{ $index+1 }}</td>
+            <td>{{getSourceNameById(item.sourceId)}}</td>
+            <td>{{ showNumber ? (item.amount | number) : '****' }} đ</td>
+            <td>{{ item.date | date:'MM/dd/yyyy' }}</td>
+            <td>
+                <div class="d-flex justify-content-end">
+                    <button (click)="updateData(item.id)" class="btn btn-primary me-2">
+                        <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
+                    </button>
+                    <button (click)="deleteData(item.id)" class="btn btn-danger">
+                        <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+                    </button>
+                </div>
+            </td>
+        </tr>
+        }
+    </tbody>
+</app-data-table>
+
+<!-- Create Modal -->
+<c-modal backdrop="static" [visible]="visibleCreateModal" (visibleChange)="handleLiveCreateModelChange($event)"
+    id="verticallyCenteredCreateModal" size="lg">
+    <c-modal-header class="bg-success d-flex justify-content-between align-items-center">
+        <h5 cModalTitle class="fw-bold text-white">Add Expense</h5>
+        <button (click)="toggleLiveCreateModel()" class="btn btn-sm btnClose">
+            <svg [cIcon]="icons.cilX" width="22" class="text-white" title="Close Icon"></svg>
+        </button>
+    </c-modal-header>
+    <form cForm [formGroup]="createForm" (ngSubmit)="onSubmitCreateForm()">
+        <c-modal-body>
+            <div class="mb-2 row">
+                <div class="col-12 col-md-6 mb-2 mb-md-0">
+                    <label cLabel>Source: <span class="text-danger">(*)</span></label>
+                    <app-select-search [options]="sourceOptions" [selectedValue]="1"
+                        (onChangeValue)="onChangeSourceId($event, 'create')"></app-select-search>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label cLabel for="date">Income Date: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="date" type="date">
+                </div>
+            </div>
+            <div class="mb-2 row">
+                    <label cLabel>Amount: <span class="text-danger">(*)</span></label>
+                    <app-input-currency [initialValue]="initAmountCreateForm()"
+                        (valueChange)="createForm.patchValue({amount: $event})"></app-input-currency>
+            </div>
+            <div class="mb-2">
+                <label cLabel for="note">Note: </label>
+                <textarea cFormControl formControlName="note" rows="3"></textarea>
+                @if (noteCreateForm?.invalid && (noteCreateForm?.dirty || noteCreateForm?.touched)) {
+                <div class="text-danger">
+                    @if (noteCreateForm?.hasError('maxlength')) {
+                    Maximum 500 characters.
+                    }
+                </div>
+                }
+            </div>
+        </c-modal-body>
+        <c-modal-footer>
+            <button (click)="toggleLiveCreateModel()" cButton color="secondary">
+                <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Close Icon"></svg>
+            </button>
+            <button cButton type="submit" color="primary" [disabled]="!createForm.valid">
+                <svg [cIcon]="icons.cilSave" width="22" class="text-white" title="Save Icon"></svg>
+            </button>
+        </c-modal-footer>
+    </form>
+</c-modal>
+<!--Update Model-->
+<c-modal backdrop="static" [visible]="visibleUpdateModal" (visibleChange)="handleLiveUpdateModelChange($event)"
+    id="verticallyCenteredUpdateModal" size="lg">
+    <c-modal-header class="bg-primary d-flex justify-content-between align-items-center">
+        <h5 cModalTitle class="text-white fw-bold">Update Expense</h5>
+        <button (click)="toggleLiveUpdateModel()" class="btn btn-sm btnClose">
+            <svg [cIcon]="icons.cilX" width="22" class="text-white" title="Close Icon"></svg>
+        </button>
+    </c-modal-header>
+    <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmitUpdateForm()">
+        <c-modal-body>
+                  <div class="mb-2 row">
+                <div class="col-12 col-md-6 mb-2 mb-md-0">
+                    <label cLabel>Source: <span class="text-danger">(*)</span></label>
+                    <app-select-search [options]="sourceOptions" [selectedValue]="initSourceIdUpdateForm()"
+                        (onChangeValue)="onChangeSourceId($event, 'update')"></app-select-search>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label cLabel for="date">Income Date: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="date" type="date">
+                </div>
+            </div>
+            <div class="mb-2 row">
+                    <label cLabel>Amount: <span class="text-danger">(*)</span></label>
+                    <app-input-currency [initialValue]="initAmountUpdateForm()"
+                        (valueChange)="updateForm.patchValue({amount: $event})"></app-input-currency>
+            </div>
+            <div class="mb-2">
+                <label cLabel for="note">Note: </label>
+                <textarea cFormControl formControlName="note" rows="3"></textarea>
+                @if (noteUpdateForm?.invalid && (noteUpdateForm?.dirty || noteUpdateForm?.touched)) {
+                <div class="text-danger">
+                    @if (noteUpdateForm?.hasError('maxlength')) {
+                    Maximum 500 characters.
+                    }
+                </div>
+                }
+            </div>
+
+        </c-modal-body>
+        <c-modal-footer>
+            <button (click)="toggleLiveUpdateModel()" cButton color="secondary">
+                <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Close Icon"></svg>
+            </button>
+            <button cButton type="submit" [disabled]="!updateForm.valid" color="primary">
+                <svg [cIcon]="icons.cilSave" width="22" class="text-white" title="Save Icon"></svg>
+            </button>
+        </c-modal-footer>
+    </form>
+</c-modal>
+<!--Delete Model-->
+<c-modal backdrop="static" [visible]="visibleDelete" (visibleChange)="handleLiveDeleteChange($event)"
+    id="verticallyCenteredDelete">
+    <c-modal-header class="bg-danger d-flex justify-content-between align-items-center">
+        <h5 cModalTitle class="fw-bold text-white">Delete Expense</h5>
+        <button (click)="toggleLiveDelete()" class="btn btn-sm btnClose">
+            <svg [cIcon]="icons.cilX" width="22" class="text-white" title="Close Icon"></svg>
+        </button>
+    </c-modal-header>
+    <c-modal-body>
+        <p>Are you sure you want to delete this expense?</p>
+    </c-modal-body>
+    <c-modal-footer>
+        <button (click)="toggleLiveDelete()" cButton color="secondary">
+            <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Close Icon"></svg>
+        </button>
+        <button (click)="onConfirmDelete()" cButton color="danger">
+            <svg [cIcon]="icons.cilTrash" width="22" class="text-white" title="Delete Icon"></svg>
+        </button>
+    </c-modal-footer>
+</c-modal>

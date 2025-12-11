@@ -1,4 +1,4 @@
-<h3>Category List</h3>
+<h3 class="fw-bold">Categories</h3>
 <div class="d-flex justify-content-end mb-2">
   <button (click)="toggleLiveTrashModal()" class="btn btn-warning me-2">
     <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Trash Icon"></svg>
@@ -16,8 +16,8 @@
       <th scope="col">Name VN</th>
       <th scope="col">Priority</th>
       <th scope="col">Is Active</th>
-      <th scope="col">Created By</th>
-      <th scope="col">Modified By</th>
+      <th class="d-none d-md-table-cell" scope="col">Created By</th>
+      <th class="d-none d-md-table-cell" scope="col">Modified By</th>
       <th></th>
     </tr>
   </thead>
@@ -40,8 +40,8 @@
     <td>{{ node.nameVN }}</td>
     <td>{{ node.priority }}</td>
     <td>{{ node.isActive }}</td>
-    <td>{{ node.createdBy }}</td>
-    <td>{{ node.modifiedBy }}</td>
+    <td class="d-none d-md-table-cell">{{ node.createdBy }}</td>
+    <td class="d-none d-md-table-cell">{{ node.modifiedBy }}</td>
     <td>
       <div class="d-flex justify-content-end">
         @if ((node?.subCategories?.length ?? 0) > 0) {
@@ -83,8 +83,8 @@
     <td>{{ node.nameVN }}</td>
     <td>{{ node.priority }}</td>
     <td>{{ node.isActive }}</td>
-    <td>{{ node.createdBy }}</td>
-    <td>{{ node.modifiedBy }}</td>
+    <td class="d-none d-md-table-cell">{{ node.createdBy }}</td>
+    <td class="d-none d-md-table-cell">{{ node.modifiedBy }}</td>
     <td>
       <div class="d-flex justify-content-end">
         <button (click)="updateSubCategoryData(node.id)" class="btn btn-primary me-2">
@@ -110,10 +110,10 @@
     <c-modal-body>
       <div class="mb-2 d-flex flex-row">
         <c-form-check class="me-2 d-flex align-items-center">
-          <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
-          <label cFormCheckLabel for="isActive" class="me-2">Active </label>
+          <input cFormCheckInput formControlName="isActive" id="isActive1" class="me-2" type="checkbox" />
+          <label cFormCheckLabel for="isActive1" class="me-2">Active </label>
         </c-form-check>
-        <div>
+        <div>1
           <label for="priority" class="me-2">Priority: </label>
           <input formControlName="priority" type="number" class="me-2 number-control ">
           @if (priorityCreateForm?.invalid && (priorityCreateForm?.dirty || priorityCreateForm?.touched)) {
@@ -193,8 +193,8 @@
     <c-modal-body>
       <div class="mb-2 d-flex flex-row">
         <c-form-check class="me-2 d-flex align-items-center">
-          <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
-          <label cFormCheckLabel for="isActive" class="me-2">Active </label>
+          <input cFormCheckInput formControlName="isActive" id="isActive2" class="me-2" type="checkbox" />
+          <label cFormCheckLabel for="isActive2" class="me-2">Active </label>
         </c-form-check>
         <div>
           <label for="priority" class="me-2">Priority: </label>
@@ -341,8 +341,8 @@
     <c-modal-body>
       <div class="mb-2 d-flex flex-row">
         <c-form-check class="me-2 d-flex align-items-center">
-          <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
-          <label cFormCheckLabel for="isActive" class="me-2">Active </label>
+          <input cFormCheckInput formControlName="isActive" id="isActive3" class="me-2" type="checkbox" />
+          <label cFormCheckLabel for="isActive3" class="me-2">Active </label>
         </c-form-check>
         <div>
           <label for="priority" class="me-2">Priority: </label>
@@ -424,8 +424,8 @@
     <c-modal-body>
       <div class="mb-2 d-flex flex-row">
         <c-form-check class="me-2 d-flex align-items-center">
-          <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
-          <label cFormCheckLabel for="isActive" class="me-2">Active </label>
+          <input cFormCheckInput formControlName="isActive" id="isActive5" class="me-2" type="checkbox" />
+          <label cFormCheckLabel for="isActive5" class="me-2">Active </label>
         </c-form-check>
         <div>
           <label for="priority" class="me-2">Priority: </label>

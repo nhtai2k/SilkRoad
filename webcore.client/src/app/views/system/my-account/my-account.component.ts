@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@services/system-services/auth.service';
-import { EyeIconComponent } from '@components/icons/eye-icon.component';
-import { EyeCloseIconComponent } from '@components/icons/eye-close-icon.component';
+import { EyeIconComponent, EyeClosedIconComponent } from '@components/icons';
 import { RoleService } from '@services/system-services/role.service'
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RoleModel } from '@models/system-models/role.model';
@@ -14,7 +13,7 @@ import { AccountService } from '@services/system-services/account.service'
   selector: 'app-my-account',
   standalone: true,
   imports: [ToasterComponent, ToastHeaderComponent, ToastComponent,ButtonCloseDirective,
-     EyeCloseIconComponent, EyeIconComponent, ReactiveFormsModule,FormControlDirective,
+     EyeClosedIconComponent, EyeIconComponent, ReactiveFormsModule,FormControlDirective,
     ModalComponent, ModalFooterComponent, CardBodyComponent,FormSelectDirective,
      CardHeaderComponent, CardComponent, FormDirective, FormLabelDirective,
     ModalHeaderComponent, ModalTitleDirective, ModalBodyComponent, ToastBodyComponent, ButtonDirective],

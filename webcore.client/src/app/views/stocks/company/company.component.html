@@ -1,13 +1,33 @@
-<h1>Company List</h1>
+<h3 class="fw-bold">Company List</h3>
+<c-accordion class="mb-4">
+  <c-accordion-item #item0="cAccordionItem" [visible]="true">
+    <ng-template cTemplateId="accordionHeaderTemplate">
+      <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
+        Filter:
+      </button>
+    </ng-template>
+    <ng-template cTemplateId="accordionBodyTemplate">
+      <div class="accordion-body">
+        <div class="row">
+          <div class="col-8 col-md-6">
+              <app-select-search class="w-100" [options]="industryList" (onChangeValue)="onChangeIndustry($event)" [placeholder]="'All Industry'"></app-select-search>
+          </div>
+          <div class="col-4 col-md-6">
+            <div class="d-flex justify-content-end mb-2">
+              <button (click)="toggleLiveTrashModal()" class="btn btn-warning me-2">
+                <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Trash Icon"></svg>
+              </button>
+              <button (click)="toggleLiveCreateModel()" class="btn btn-success">
+                <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </c-accordion-item>
+</c-accordion>
 
-<div class="d-flex justify-content-end mb-2">
-  <button (click)="toggleLiveTrashModal()" class="btn btn-warning me-2">
-    <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Trash Icon"></svg>
-  </button>
-  <button (click)="toggleLiveCreateModel()" class="btn btn-success">
-    <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
-  </button>
-</div>
 <app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
   (changePageSize)="onPageSizeChange($event)">
   <thead class="text-nowrap text-truncate">
@@ -15,21 +35,21 @@
       <th scope="col">STT</th>
       <th scope="col">Name</th>
       <th scope="col">Symbol</th>
-      <th scope="col">isActive</th>
-      <th scope="col">Created By</th>
-      <th scope="col">Modified By</th>
+      <th scope="col" class="d-none d-md-table-cell">isActive</th>
+      <th scope="col" class="d-none d-md-table-cell">Created By</th>
+      <th scope="col" class="d-none d-md-table-cell">Modified By</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     @for (item of data.items; track item.id; let i = $index) {
-      <tr>
-        <td>{{ i+1 }}</td>
+    <tr>
+      <td>{{ i+1 }}</td>
       <td>{{ item.name }}</td>
       <td>{{ item.symbol }}</td>
-      <td>{{ item.isActive }}</td>
-      <td>{{ item.createdBy }}</td>
-      <td>{{ item.modifiedBy }}</td>
+      <td class="d-none d-md-table-cell">{{ item.isActive }}</td>
+      <td class="d-none d-md-table-cell">{{ item.createdBy }}</td>
+      <td class="d-none d-md-table-cell">{{ item.modifiedBy }}</td>
       <td>
         <div class="d-flex justify-content-end">
           <button (click)="fetchNewData(item.symbol)" class="btn btn-success me-2" [disabled]="!fetchNewDataAllowed">
@@ -43,7 +63,7 @@
           </button>
         </div>
       </td>
-      </tr>
+    </tr>
     }
   </tbody>
 </app-data-table>
@@ -69,13 +89,13 @@
           <select cFormControl formControlName="industryId" cSelect>
             <option value="-1">Select an industry</option>
             @for (item of industryList; track item.id) {
-              <option [value]="item.id">{{ item.name }}</option>
+            <option [value]="item.id">{{ item.name }}</option>
             }
           </select>
         </div>
         <div class="col-6">
           <label cLabel for="ipoDate">IPO Date: <span class="text-danger">(*)</span></label>
-          <input cFormControl formControlName="ipoDate" type="date"/>
+          <input cFormControl formControlName="ipoDate" type="date" />
         </div>
       </div>
       <div class="mb-2 row">
@@ -83,26 +103,26 @@
           <label cLabel for="name">Name: <span class="text-danger">(*)</span></label>
           <input cFormControl formControlName="name">
           @if (nameCreateForm?.invalid && (nameCreateForm?.dirty || nameCreateForm?.touched)) {
-            <div class="text-danger">
-              @if (nameCreateForm?.hasError('required')) {
-                <div>
-                  Name is required.
-                </div>
-              }
+          <div class="text-danger">
+            @if (nameCreateForm?.hasError('required')) {
+            <div>
+              Name is required.
             </div>
+            }
+          </div>
           }
         </div>
         <div class="col-6">
           <label cLabel for="symbol">Symbol: <span class="text-danger">(*)</span></label>
           <input cFormControl formControlName="symbol">
           @if (symbolCreateForm?.invalid && (symbolCreateForm?.dirty || symbolCreateForm?.touched)) {
-            <div class="text-danger">
-              @if (symbolCreateForm?.hasError('required')) {
-                <div>
-                  Symbol is required.
-                </div>
-              }
+          <div class="text-danger">
+            @if (symbolCreateForm?.hasError('required')) {
+            <div>
+              Symbol is required.
             </div>
+            }
+          </div>
           }
         </div>
       </div>
@@ -130,13 +150,13 @@
           <label cFormCheckLabel for="isActive" class="me-2">Active </label>
         </c-form-check>
       </div>
-       <div class="row mb-2">
+      <div class="row mb-2">
         <div class="col-6">
           <label cLabel for="industryId">Select industry: <span class="text-danger">(*)</span></label>
           <select cFormControl formControlName="industryId" cSelect>
             <option value="-1">Select an industry</option>
             @for (item of industryList; track item.id) {
-              <option [value]="item.id">{{ item.name }}</option>
+            <option [value]="item.id">{{ item.name }}</option>
             }
           </select>
         </div>
@@ -150,26 +170,26 @@
           <label cLabel for="name">Name: <span class="text-danger">(*)</span></label>
           <input cFormControl formControlName="name">
           @if (nameUpdateForm?.invalid && (nameUpdateForm?.dirty || nameUpdateForm?.touched)) {
-            <div class="text-danger">
-              @if (nameUpdateForm?.hasError('required')) {
-                <div>
-                  Name is required.
-                </div>
-              }
+          <div class="text-danger">
+            @if (nameUpdateForm?.hasError('required')) {
+            <div>
+              Name is required.
             </div>
+            }
+          </div>
           }
         </div>
         <div class="col-12">
           <label cLabel for="symbol">Symbol: <span class="text-danger">(*)</span></label>
           <input cFormControl formControlName="symbol">
           @if (symbolUpdateForm?.invalid && (symbolUpdateForm?.dirty || symbolUpdateForm?.touched)) {
-            <div class="text-danger">
-              @if (symbolUpdateForm?.hasError('required')) {
-                <div>
-                  Symbol is required.
-                </div>
-              }
+          <div class="text-danger">
+            @if (symbolUpdateForm?.hasError('required')) {
+            <div>
+              Symbol is required.
             </div>
+            }
+          </div>
           }
         </div>
       </div>
@@ -219,8 +239,8 @@
       </thead>
       <tbody>
         @for (item of trashData.items; track item.id; let i = $index) {
-          <tr>
-            <td>{{ i+1 }}</td>
+        <tr>
+          <td>{{ i+1 }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.symbol }}</td>
           <td>
@@ -233,14 +253,14 @@
               </button>
             </div>
           </td>
-          </tr>
+        </tr>
         }
       </tbody>
     </app-data-table>
     @if (trashData.items.length === 0) {
-      <div class="d-flex justify-content-center">
-        <h3 class="opacity-75">No data available!</h3>
-      </div>
+    <div class="d-flex justify-content-center">
+      <h3 class="opacity-75">No data available!</h3>
+    </div>
     }
   </c-modal-body>
 </c-modal>

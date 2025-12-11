@@ -12,15 +12,15 @@ using StockDataAccess;
 namespace StockDataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250622135837_InitialDB")]
-    partial class InitialDB
+    [Migration("20251210162022_InitDB")]
+    partial class InitDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.3")
+                .HasAnnotation("ProductVersion", "10.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -67,7 +67,7 @@ namespace StockDataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Table_Companies", (string)null);
+                    b.ToTable("Companies", (string)null);
                 });
 
             modelBuilder.Entity("StockDataAccess.DTOs.IndustryDTO", b =>
@@ -105,25 +105,19 @@ namespace StockDataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Table_Industries", (string)null);
+                    b.ToTable("Industries", (string)null);
                 });
 
             modelBuilder.Entity("StockDataAccess.DTOs.StockPriceDTO", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<double>("Close")
-                        .HasColumnType("float");
-
                     b.Property<int>("CompanyId")
                         .HasColumnType("int");
 
                     b.Property<long>("Date")
                         .HasColumnType("bigint");
+
+                    b.Property<double>("Close")
+                        .HasColumnType("float");
 
                     b.Property<double>("High")
                         .HasColumnType("float");
@@ -137,11 +131,53 @@ namespace StockDataAccess.Migrations
                     b.Property<double>("Volume")
                         .HasColumnType("float");
 
+                    b.HasKey("CompanyId", "Date");
+
+                    b.ToTable("StockPrices", (string)null);
+                });
+
+            modelBuilder.Entity("StockDataAccess.DTOs.TradeHistoryDTO", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Fees")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("IsBuy")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSell")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("ProfitLoss")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("ProfitLossPercent")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<double>("TotalAmount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("TradeDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyId");
-
-                    b.ToTable("Table_StockPrices", (string)null);
+                    b.ToTable("TradeHistories", (string)null);
                 });
 
             modelBuilder.Entity("StockDataAccess.DTOs.StockPriceDTO", b =>

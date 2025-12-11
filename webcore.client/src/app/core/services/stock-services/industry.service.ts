@@ -5,6 +5,7 @@ import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
 import { Pagination } from '@models/pagination.model';
 import { EIndustryStockMarketUrl } from '@common/url-api';
 import { IndustryModel } from '@models/stock-models/industry.model';
+import { OptionModel } from '@models/option.model';
 
 @Injectable({ providedIn: 'root' })
 export class IndustryService {
@@ -19,6 +20,11 @@ export class IndustryService {
     if (search) url = `${url}/${encodeURIComponent(search)}`;
     return this.http.get<APIResponse<Pagination<IndustryModel>>>(url);
   }
+
+    getOptionList(): Observable<APIResponse<OptionModel[]>> {
+      const url = EIndustryStockMarketUrl.getOptionListUrl;
+      return this.http.get<APIResponse<OptionModel[]>>(url);
+    }
 
   getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<IndustryModel>>> {
     return this.http.get<APIResponse<Pagination<IndustryModel>>>(`${EIndustryStockMarketUrl.getAllDeletedUrl}/${pageIndex}/${pageSize}`);

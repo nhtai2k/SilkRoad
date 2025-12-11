@@ -8,10 +8,9 @@ namespace StockDataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<StockPriceDTO> builder)
         {
-            builder.ToTable("Table_StockPrices" +
-                "");
-            builder.HasKey(s => s.Id);
-            builder.Property(s => s.Id).ValueGeneratedOnAdd();
+            builder.ToTable("StockPrices");
+            //set multiple properties as composite key
+            builder.HasKey(s => new { s.CompanyId, s.Date });
             builder.HasOne(s => s.Company)
                 .WithMany(c => c.StockHistories)
                 .HasForeignKey(s => s.CompanyId);

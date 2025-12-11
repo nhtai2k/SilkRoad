@@ -2,7 +2,7 @@
 {
     public class StockPriceDTO
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public int CompanyId { get; set; }
         public long Date { get; set; }
         public double Open { get; set; }

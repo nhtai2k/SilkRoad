@@ -1,3 +1,4 @@
+using ClosedXML.Excel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -35,6 +36,13 @@ namespace WebCore.Server.Controllers.StockControllers
             if (pageIndex < 1 || pageSize < 1)
                 return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             var data = await _industryHelper.GetAllActiveAsync(pageIndex, pageSize, search);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        }
+
+        [HttpGet("GetOptionList")]
+        public async Task<IActionResult> GetOptionList()
+        {
+            var data = await _industryHelper.GetOptionListAsync();
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 

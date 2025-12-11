@@ -1,0 +1,26 @@
+// Column chart component styles
+.column-chart-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  
+  #columnChartDiv {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background-color: transparent;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .column-chart-container {
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .column-chart-container {
+    height: 250px;
+  }
+}

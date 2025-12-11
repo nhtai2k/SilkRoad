@@ -25,10 +25,12 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   constructor(private stockPriceService : StockPriceService, private companyService: CompanyService){}
 
-  async ngOnInit(): Promise<void> {
-    await this.GetData('TPB');
+   ngOnInit(): void {
     this.companyService.getAllSymbols().subscribe((res) => {
       this.symbols = res.data;
+      if (this.symbols.length > 0) {
+        this.GetData(this.symbols[0]);
+      }
     });
   }
 
@@ -38,27 +40,14 @@ export class ChartComponent implements OnInit, OnDestroy {
     }
   }
 
-  async GetData(symbol: string): Promise<void> {
+  GetData(symbol: string): void {
     this.stockPriceService.getAll(symbol).subscribe(res =>{
-      if (res) {
-        this.stockHistory = res;
+      if (res.success) {
+        this.stockHistory = res.data;
         this.CreateChart();
         this.showChart = true;
       }
     });
-
-    // try {
-    //   debugger;
-    //   const data = await this.stockHistoryService.getAll(symbol).toPromise();
-    //   console.log(data);    
-    //   if (data) {
-    //     this.stockHistory = data;
-    //   }
-    //   this.showChart = this.stockHistory.length > 0;
-    // } catch (error) {
-    //   console.error(error);
-    //   this.showChart = false;
-    // }
   }
 
   CreateChart(): void{
@@ -330,19 +319,18 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   }
 
-  async selectSymbol(event: any): Promise<void> {
+   selectSymbol(event: any): void {
     let symbol = event.target.value;
-
     // Dispose the existing chart to clear it
     if (this.root) {
       this.root.dispose();
     }
 
     // Fetch new data for the selected symbol
-    await this.GetData(symbol);
+    this.GetData(symbol);
 
     // Recreate the chart with the new data
-    this.CreateChart();
+    // this.CreateChart();
   }
 }
 

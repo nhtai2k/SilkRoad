@@ -10,9 +10,7 @@ namespace PersonalFinanceDataAccess.Configurations
         {
             builder.ToTable("Incomes");
             builder.HasKey(i => i.Id);
-            builder.Property(i => i.Source)
-                   .IsRequired()
-                   .HasMaxLength(100);
+            builder.Property(s => s.Id).ValueGeneratedOnAdd();
             builder.Property(i => i.Amount)
                      .IsRequired()
                      .HasColumnType("decimal(18,2)");

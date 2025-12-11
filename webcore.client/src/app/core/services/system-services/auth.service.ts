@@ -113,7 +113,7 @@ export class AuthService {
         return null;
       }),
       catchError((error) => {
-        console.error('Failed to fetch current user:', error);
+        // console.error('Failed to fetch current user:', error);
         return new Observable<UserLoginInfoModel | null>(observer => {
           observer.next(null);
           observer.complete();

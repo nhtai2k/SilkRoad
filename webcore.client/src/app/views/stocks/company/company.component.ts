@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ButtonCloseDirective, ButtonDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, FormControlDirective, FormLabelDirective, FormDirective, FormCheckComponent, FormSelectDirective } from '@coreui/angular';
+import { ButtonCloseDirective, ButtonDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, FormControlDirective, FormLabelDirective, FormDirective, FormCheckComponent, FormSelectDirective, AccordionButtonDirective, AccordionComponent, AccordionItemComponent, TemplateIdDirective } from '@coreui/angular';
 import { cilPlus, cilTrash, cilPen, cilLoopCircular } from '@coreui/icons';
 import { IconDirective } from '@coreui/icons-angular';
 import { PageInformation, Pagination } from '@models/pagination.model';
@@ -13,17 +13,21 @@ import { IndustryService } from '@services/stock-services/industry.service';
 import { IndustryModel } from '@models/stock-models/industry.model';
 import { StockPriceService } from '@services/stock-services/stock-price.service';
 import { DataTableComponent } from '@components/generals/data-table/data-table.component';
+import { TreeSelectV1Component } from "@components/selects/tree-select-v1/tree-select-v1.component";
+import { OptionModel } from '@models/option.model';
+import { SelectSearchComponent } from "@components/selects/select-search/select-search.component";
 
 @Component({
   selector: 'app-company',
-  imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective,
-    FormSelectDirective,
-    ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule,FormCheckComponent,
-    ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, DataTableComponent, IconDirective],
+  imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective, FormSelectDirective, AccordionButtonDirective,
+    AccordionComponent, AccordionItemComponent, TemplateIdDirective, ModalComponent, ButtonDirective, FormDirective,
+    ReactiveFormsModule, FormCheckComponent, ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent,
+    DataTableComponent, IconDirective, SelectSearchComponent],
   templateUrl: './company.component.html',
   styleUrl: './company.component.scss'
 })
-export class CompanyComponent  implements OnInit  {
+export class CompanyComponent implements OnInit {
+
   pageInformation: PageInformation = new PageInformation();
   trashPageInformation: PageInformation = new PageInformation();
   visibleCreateModal: boolean = false;
@@ -31,7 +35,7 @@ export class CompanyComponent  implements OnInit  {
   visibleDelete: boolean = false;
   visibleTrashModal: boolean = false;
   deleteById: number = 0;
-  industryList: IndustryModel[] = [];
+  industryList: OptionModel[] = [];
   data: Pagination<CompanyModel> = new Pagination<CompanyModel>();
   trashData: Pagination<CompanyModel> = new Pagination<CompanyModel>();
   icons: any = { cilPlus, cilTrash, cilPen, cilLoopCircular };
@@ -60,7 +64,7 @@ export class CompanyComponent  implements OnInit  {
   constructor(private companyService: CompanyService,
     private stockPriceService: StockPriceService,
     private industryService: IndustryService,
-     private toastService: ToastService) {}
+    private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.getData();
@@ -68,15 +72,18 @@ export class CompanyComponent  implements OnInit  {
   }
 
   getIndustryList() {
-    this.industryService.getAllActive(1, 100).subscribe((res) => {
-      this.industryList = res.data.items;
-    }, (failure) => {
-      console.error(failure);
-      this.toastService.showToast(EColors.danger, failure.error.message);
+    this.industryService.getOptionList().subscribe((res) => {
+      this.industryList = res.data;
     });
   }
-  getData() {
-    this.companyService.getAll(this.pageInformation.pageIndex, this.pageInformation.pageSize).subscribe((res) => {
+  onChangeIndustry($event: Event) {
+    console.log($event);
+    if ($event) {
+      this.getData($event);
+    }
+  }
+  getData(industryId: any = -1) {
+    this.companyService.getAll(this.pageInformation.pageIndex, this.pageInformation.pageSize, industryId).subscribe((res) => {
       this.data = res.data;
       this.pageInformation.currentPage = this.data.currentPage;
       this.pageInformation.totalItems = this.data.totalItems;
@@ -100,10 +107,10 @@ export class CompanyComponent  implements OnInit  {
       this.toastService.showToast(EColors.success, res.message);
       this.fetchNewDataAllowed = true;
     }, (failure) => {
-        this.fetchNewDataAllowed = true;
-        this.toastService.showToast(EColors.danger, failure.error.message);
-      });
-  } 
+      this.fetchNewDataAllowed = true;
+      this.toastService.showToast(EColors.danger, failure.error.message);
+    });
+  }
 
   //#region Create
   onSubmitCreateForm() {
@@ -114,7 +121,8 @@ export class CompanyComponent  implements OnInit  {
         this.toastService.showToast(EColors.success, res.message);
         this.createForm.reset();
         this.createForm.patchValue({
-          isActive: true})
+          isActive: true
+        })
       }, (failure) => {
         console.error(failure);
         this.toastService.showToast(EColors.danger, failure.error.message);

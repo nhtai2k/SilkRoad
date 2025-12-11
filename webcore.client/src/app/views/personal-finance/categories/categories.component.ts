@@ -184,7 +184,7 @@ export class CategoriesComponent implements OnInit {
         this.createForm.reset();
         this.createForm.patchValue({ isActive: true, priority: 1 });
       }, (failure) => {
-        console.error(failure);
+        // console.error(failure);
         this.toastService.showToast(EColors.danger, failure.error.message);
       });
     }
@@ -282,7 +282,7 @@ export class CategoriesComponent implements OnInit {
           this.createSubCategoryForm.patchValue({ isActive: true, priority: 1 });
         }, 
         error: (failure) => {
-          console.error(failure);
+          // console.error(failure);
           this.toastService.showToast(EColors.danger, failure.error.message);
         }
       });

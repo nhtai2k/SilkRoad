@@ -1,4 +1,5 @@
 ﻿using Common.Models;
+using Microsoft.EntityFrameworkCore;
 using PersonalFinanceBusinessLogic.IHelpers;
 using PersonalFinanceDataAccess;
 using PersonalFinanceDataAccess.DTOs;
@@ -12,44 +13,51 @@ namespace PersonalFinanceBusinessLogic.Helpers
         {
             _unitOfWork = unitOfWork;
         }
-        public Task<bool> CreateAsync(IncomeDTO model, string? userName = null)
+        public async Task<Pagination<IncomeDTO>> GetAllAsync(int pageIndex, int pageSize, int userId)
         {
-            throw new NotImplementedException();
+            var query = _unitOfWork.IncomeRepository.Query(x => x.UserId == userId);
+
+            int totalItems = await query.CountAsync();
+            int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+            if (pageIndex > totalPages)
+                pageIndex = totalPages > 0 ? totalPages : 1;
+            var items = await query.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
+            return new Pagination<IncomeDTO>
+            {
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                CurrentPage = pageIndex,
+                TotalItems = totalItems,
+                TotalPages = totalPages,
+                Items = items
+            };
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> CreateAsync(IncomeDTO model)
         {
-            throw new NotImplementedException();
+            await _unitOfWork.IncomeRepository.CreateAsync(model);
+            await _unitOfWork.SaveChangesAsync();
+            return true;
         }
 
-        public Task<Pagination<IncomeDTO>> GetAllAsync(int pageIndex, int pageSize)
+        public async Task<IncomeDTO?> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _unitOfWork.IncomeRepository.GetByIdAsync(id);
         }
 
-        public Task<Pagination<IncomeDTO>> GetAllDeletedAsync(int pageIndex, int pageSize)
+        public async Task<bool> UpdateAsync(IncomeDTO model)
         {
-            throw new NotImplementedException();
+            model.ModifiedAt = DateTime.UtcNow;
+            await _unitOfWork.IncomeRepository.UpdateAsync(model, model.Id);
+            await _unitOfWork.SaveChangesAsync();
+            return true;
         }
 
-        public Task<IncomeDTO?> GetByIdAsync(int id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> RestoreAsync(int id, string? userName = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> SoftDeleteAsync(int id, string? userName = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> UpdateAsync(IncomeDTO model, string? userName = null)
-        {
-            throw new NotImplementedException();
+            await _unitOfWork.IncomeRepository.DeleteAsync(id);
+            await _unitOfWork.SaveChangesAsync();
+            return true;
         }
     }
 }

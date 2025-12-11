@@ -125,7 +125,7 @@ export class UsersComponent implements OnInit {
   updateData(id: number) {
     this.accountService.getById(id).subscribe((res) => {
       this.updateForm.patchValue(res.data);
-      console.log(this.updateForm.value);
+      // console.log(this.updateForm.value);
       this.toggleLiveUpdateModel();
     });
   }
@@ -139,7 +139,7 @@ export class UsersComponent implements OnInit {
             this.toastService.showToast(EColors.success, res.message);
           },
           error: (failure) => {
-            console.log(failure);
+            // console.log(failure);
             this.toastService.showToast(EColors.danger, failure.error.message);
           }
         }

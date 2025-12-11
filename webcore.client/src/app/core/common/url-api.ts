@@ -5,6 +5,7 @@
   getAllUrl = "/api/company/getAll",
   getAllActiveUrl = "/api/company/getAllActive",
   getAllSymbolsUrl = "/api/company/getAllSymbols",
+  getOptionListUrl = "/api/company/getOptionList",
   getAllDeletedUrl = "/api/company/getAllDeleted",
   getByIdUrl = "/api/company/getById",
   createUrl = "/api/company/create",
@@ -13,10 +14,20 @@
   restoreUrl = "/api/company/restore",
   deleteUrl = "/api/company/delete",
   }
+  //TradeHistory
+  export enum ETradeHistoryStockMarketUrl{
+  getAllUrl = "/api/tradeHistory/getAll",
+  getByIdUrl = "/api/tradeHistory/getById",
+  createUrl = "/api/tradeHistory/create",
+  updateUrl = "/api/tradeHistory/update",
+  deleteUrl = "/api/tradeHistory/delete",
+  }
+
   //Industry
   export enum EIndustryStockMarketUrl{
   getAllUrl = "/api/industry/getAll",
   getAllActiveUrl = "/api/industry/getAllActive",
+  getOptionListUrl = "/api/industry/getOptionList",
   getAllDeletedUrl = "/api/industry/getAllDeleted",
   getByIdUrl = "/api/industry/getById",
   createUrl = "/api/industry/create",
@@ -27,9 +38,9 @@
   }
 
   //stock-price
-  export enum EStockPriceStockMarketUrl{
-  getAllUrl = "/api/stockPrice/getAll",
-  getNewDataUrl = "/api/stockPrice/getNewData",
+  export enum EChartStockMarketUrl{
+  getAllUrl = "/api/chart/getAll",
+  getNewDataUrl = "/api/chart/getNewData",
   }
   //#endregion
 
@@ -60,11 +71,23 @@
   }
   //Expense
   export enum EExpensePersonalFinanceUrl{
-  getByFilter = "/api/pf/expense/getByFilter",
+  getByFilterUrl = "/api/pf/expense/getByFilter",
   getByIdUrl = "/api/pf/expense/getById",
   createUrl = "/api/pf/expense/create",
   updateUrl = "/api/pf/expense/update",
   deleteUrl = "/api/pf/expense/delete",
+  }
+  //Income
+  export enum EIncomePersonalFinanceUrl{
+  getAllUrl = "/api/pf/income/getAll",
+  getByIdUrl = "/api/pf/income/getById",
+  createUrl = "/api/pf/income/create",
+  updateUrl = "/api/pf/income/update",
+  deleteUrl = "/api/pf/income/delete",
+  }
+  //Report
+  export enum EReportPersonalFinanceUrl{
+  getColoumnChartByMonthUrl = "/api/pf/report/GetColoumnChartByMonth",
   }
 
   //#endregion

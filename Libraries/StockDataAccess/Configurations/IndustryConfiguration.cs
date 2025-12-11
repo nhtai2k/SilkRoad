@@ -8,7 +8,7 @@ namespace StockDataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<IndustryDTO> builder)
         {
-            builder.ToTable("Table_Industries");
+            builder.ToTable("Industries");
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Id).ValueGeneratedOnAdd();
         }

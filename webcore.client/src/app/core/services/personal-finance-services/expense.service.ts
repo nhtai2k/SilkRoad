@@ -12,7 +12,7 @@ export class ExpenseService {
   constructor(private http: HttpClient) {}
 
   getByFilter(model: FormData): Observable<APIResponse<Pagination<ExpenseModel>>> {
-    return this.http.post<APIResponse<Pagination<ExpenseModel>>>(EExpensePersonalFinanceUrl.getByFilter, model);
+    return this.http.post<APIResponse<Pagination<ExpenseModel>>>(EExpensePersonalFinanceUrl.getByFilterUrl, model);
   }
 
   getById(id: number): Observable<APIResponse<ExpenseModel>> {

@@ -39,7 +39,7 @@ export class IndustryComponent implements OnInit {
   updateForm: FormGroup = new FormGroup({
     id: new FormControl(0, Validators.required),
     name: new FormControl('', Validators.required),
-    priority: new FormControl(0, Validators.required),
+    priority: new FormControl(1, Validators.required),
     isActive: new FormControl(false),
     isDeleted: new FormControl(false),
     createdBy: new FormControl(''),
@@ -81,7 +81,7 @@ export class IndustryComponent implements OnInit {
         this.getData();
         this.toastService.showToast(EColors.success, res.message);
         this.createForm.reset();
-        this.createForm.patchValue({ isActive: true });
+        this.createForm.patchValue({ isActive: true, priority: 1 });
       }, (failure) => {
         this.toastService.showToast(EColors.danger, failure.error.message);
       });

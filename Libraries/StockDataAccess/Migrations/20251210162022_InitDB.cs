@@ -1,17 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace StockDataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialDB : Migration
+    public partial class InitDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Table_Companies",
+                name: "Companies",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -29,11 +30,11 @@ namespace StockDataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Table_Companies", x => x.Id);
+                    table.PrimaryKey("PK_Companies", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Table_Industries",
+                name: "Industries",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -49,15 +50,35 @@ namespace StockDataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Table_Industries", x => x.Id);
+                    table.PrimaryKey("PK_Industries", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Table_StockPrices",
+                name: "TradeHistories",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    CompanyId = table.Column<int>(type: "int", nullable: false),
+                    TradeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsBuy = table.Column<bool>(type: "bit", nullable: false),
+                    IsSell = table.Column<bool>(type: "bit", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    TotalAmount = table.Column<double>(type: "float", nullable: false),
+                    Fees = table.Column<double>(type: "float", nullable: false),
+                    ProfitLoss = table.Column<double>(type: "float", nullable: true),
+                    ProfitLossPercent = table.Column<double>(type: "float", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TradeHistories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StockPrices",
+                columns: table => new
+                {
                     CompanyId = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<long>(type: "bigint", nullable: false),
                     Open = table.Column<double>(type: "float", nullable: false),
@@ -68,32 +89,30 @@ namespace StockDataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Table_StockPrices", x => x.Id);
+                    table.PrimaryKey("PK_StockPrices", x => new { x.CompanyId, x.Date });
                     table.ForeignKey(
-                        name: "FK_Table_StockPrices_Table_Companies_CompanyId",
+                        name: "FK_StockPrices_Companies_CompanyId",
                         column: x => x.CompanyId,
-                        principalTable: "Table_Companies",
+                        principalTable: "Companies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Table_StockPrices_CompanyId",
-                table: "Table_StockPrices",
-                column: "CompanyId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Table_Industries");
+                name: "Industries");
 
             migrationBuilder.DropTable(
-                name: "Table_StockPrices");
+                name: "StockPrices");
 
             migrationBuilder.DropTable(
-                name: "Table_Companies");
+                name: "TradeHistories");
+
+            migrationBuilder.DropTable(
+                name: "Companies");
         }
     }
 }
