@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
 import { SelectSearchComponent } from "@components/selects/select-search/select-search.component";
 import { IncomeService } from '@services/personal-finance-services/income.service';
 import { AuthService } from '@services/system-services';
+import { EyeClosedIconComponent, EyeIconComponent } from "@components/icons";
 
 
 @Component({
@@ -23,7 +24,7 @@ import { AuthService } from '@services/system-services';
   templateUrl: './income.component.html',
   styleUrl: './income.component.scss',
   imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective, IconDirective, ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule, ModalFooterComponent, CommonModule,
-    ModalHeaderComponent, DataTableComponent, InputCurrencyComponent, SelectSearchComponent]
+    ModalHeaderComponent, DataTableComponent, InputCurrencyComponent, SelectSearchComponent, EyeClosedIconComponent, EyeIconComponent]
 })
 export class IncomeComponent implements OnInit {
   //#region Properties
@@ -38,6 +39,7 @@ export class IncomeComponent implements OnInit {
   initSourceIdUpdateForm = signal<number>(1);
   categoryTreeOptions: OptionModel[] = [];
   userId: number = -1;
+  showNumber: boolean = false;
   sourceOptions: OptionModel[] = [
     { id: 1, name: 'Salary' },
     { id: 2, name: 'Freelance' },

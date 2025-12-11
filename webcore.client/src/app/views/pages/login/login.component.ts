@@ -3,8 +3,7 @@ import { IconDirective } from '@coreui/icons-angular';
 import { InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective, FormCheckComponent } from '@coreui/angular';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { EyeIconComponent } from '@components/icons/eye-icon.component';
-import { EyeCloseIconComponent } from '@components/icons/eye-close-icon.component';
+import { EyeIconComponent , EyeClosedIconComponent} from '@components/icons';
 import { LoadingService } from '@services/helper-services/loading.service';
 import { ParticleCanvasComponent } from '@components/generals/particle-canvas/particle-canvas.component';
 import { AuthService } from '@services/system-services/auth.service';
@@ -16,7 +15,7 @@ import { ExternalAuthModel } from '@models/external-auth.model';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   imports: [InputGroupComponent, InputGroupTextDirective, IconDirective, FormCheckComponent, FormControlDirective, ButtonDirective,
-    ParticleCanvasComponent, ReactiveFormsModule, RouterLink, EyeIconComponent, EyeCloseIconComponent, GoogleSigninButtonDirective]
+    ParticleCanvasComponent, ReactiveFormsModule, RouterLink, EyeIconComponent, EyeClosedIconComponent, GoogleSigninButtonDirective]
 })
 export class LoginComponent implements OnInit {
   //#region Variables

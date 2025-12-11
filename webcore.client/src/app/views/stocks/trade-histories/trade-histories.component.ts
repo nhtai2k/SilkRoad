@@ -1,23 +1,21 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, TemplateIdDirective } from '@coreui/angular';
+import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, TemplateIdDirective, AlignDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective } from '@coreui/angular';
 import { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular, cilCloudUpload, cilCloudDownload, cilX, cilSearch } from '@coreui/icons';
 import { IconDirective } from '@coreui/icons-angular';
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { ToastService } from '@services/helper-services/toast.service';
 import { EColors } from '@common/global';
 import { DataTableComponent } from "@components/generals/data-table/data-table.component";
-import { RangeDatetimePickerComponent } from "@components/generals/range-datetime-picker/range-datetime-picker.component";
-import { ExpenseModel, IncomeModel } from '@models/personal-finance-models';
 import { OptionModel } from '@models/option.model';
-import { TreeSelectV1Component } from "@components/selects/tree-select-v1/tree-select-v1.component";
 import { InputCurrencyComponent } from "@components/inputs/input-currency/input-currency.component";
 import { CommonModule } from '@angular/common';
 import { SelectSearchComponent } from "@components/selects/select-search/select-search.component";
-import { IncomeService } from '@services/personal-finance-services/income.service';
 import { AuthService } from '@services/system-services';
 import { TradeHistoryService } from '@services/stock-services/trade-history.service';
-import { TradeHistoryModel } from '@models/personal-finance-models/trade-history.model';
+import { TradeHistoryModel } from '@models/stock-models/trade-history.model';
+import { CompanyService } from '@services/stock-services';
+import { InputNumberComponent } from "@components/inputs/input-number/input-number.component";
 
 
 @Component({
@@ -25,70 +23,90 @@ import { TradeHistoryModel } from '@models/personal-finance-models/trade-history
   templateUrl: './trade-histories.component.html',
   styleUrl: './trade-histories.component.scss',
   imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective, IconDirective, ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule, ModalFooterComponent, CommonModule,
-    ModalHeaderComponent, DataTableComponent, InputCurrencyComponent, SelectSearchComponent]
+    ModalHeaderComponent, DataTableComponent, InputCurrencyComponent, SelectSearchComponent, InputNumberComponent,
+      FormCheckComponent,
+    FormCheckInputDirective,
+    FormCheckLabelDirective,]
 })
 export class TradeHistoriesComponent implements OnInit {
   //#region Properties
+  data: Pagination<TradeHistoryModel> = new Pagination<TradeHistoryModel>();
   pageInformation: PageInformation = new PageInformation();
   visibleCreateModal: boolean = false;
   visibleUpdateModal: boolean = false;
   visibleDelete: boolean = false;
-  deleteById: number = 0;
-  data: Pagination<TradeHistoryModel> = new Pagination<TradeHistoryModel>();
+  deleteById: any = null;
+  companiesOptionList: OptionModel[] = [];
   initAmountCreateForm = signal<number>(0);
-  initAmountUpdateForm = signal<number>(0);
-  initSourceIdUpdateForm = signal<number>(1);
+  initFeesCreateForm = signal<number>(0);
+  initTotalAmountCreateForm = signal<number>(0);
+  // initAmountUpdateForm = signal<number>(0);
+  // initSourceIdUpdateForm = signal<number>(1);
   userId: number = -1;
   icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular, cilCloudUpload, cilCloudDownload, cilX, cilSearch };
 
   createForm: FormGroup = new FormGroup({
     userId: new FormControl(-1),
-    sourceId: new FormControl(1, Validators.required),
-    amount: new FormControl('', Validators.required),
-    date: new FormControl('', Validators.required),
+    companyId: new FormControl(-1, Validators.required),
+    tradeDate: new FormControl('', Validators.required),
+    isBuy: new FormControl(true),
+    quantity: new FormControl(0, [Validators.required, Validators.min(1)]),
+    price: new FormControl(0, [Validators.required, Validators.min(0)]),
+    totalAmount: new FormControl(0, [Validators.required, Validators.min(0)]),
+    fees: new FormControl(0, [Validators.required, Validators.min(0)]),
+    profitLoss: new FormControl(null),
+    profitLossPercent: new FormControl(null),
     note: new FormControl('', Validators.maxLength(500))
   });
 
   updateForm: FormGroup = new FormGroup({
     id: new FormControl(0, Validators.required),
     userId: new FormControl(-1),
-    sourceId: new FormControl(1, Validators.required),
-    amount: new FormControl('', Validators.required),
-    date: new FormControl('', Validators.required),
-    note: new FormControl('', Validators.maxLength(500)),
-    createdAt: new FormControl(''),
-    updatedAt: new FormControl('')
+    companyId: new FormControl(-1, Validators.required),
+    tradeDate: new FormControl('', Validators.required),
+    isBuy: new FormControl(true),
+    quantity: new FormControl(0, [Validators.required, Validators.min(1)]),
+    price: new FormControl(0, [Validators.required, Validators.min(0)]),
+    totalAmount: new FormControl(0, [Validators.required, Validators.min(0)]),
+    fees: new FormControl(0, [Validators.required, Validators.min(0)]),
+    profitLoss: new FormControl(null),
+    profitLossPercent: new FormControl(null),
+    note: new FormControl('', Validators.maxLength(500))
   });
   //#endregion
 
   //#region Lifecycle Hooks
-  constructor(private tradeHistoryService: TradeHistoryService, private toastService: ToastService, private authService: AuthService) { }
+  constructor(private tradeHistoryService: TradeHistoryService, private companyService: CompanyService,
+    private toastService: ToastService, private authService: AuthService) { }
   ngOnInit(): void {
     const today = new Date().toISOString().split('T')[0];
     this.authService.getCurrentUserInfor().subscribe((currentUser) => {
       if (currentUser && currentUser.userId) {
         this.userId = currentUser.userId;
-        this.createForm.patchValue({ userId: currentUser.userId, date: today });
+        this.createForm.patchValue({ userId: currentUser.userId, tradeDate: today });
         this.getData();
       }
     });
+    this.companyService.getOptionList().subscribe((res) => {
+      this.companiesOptionList = res.data;
+    });
   }
-  onChangeSourceId(event: any, formType: string) {
-    if (formType === 'create') {
-      this.createForm.patchValue({
-        sourceId: event
-      });
-    }
-    else if (formType === 'update') {
-      this.updateForm.patchValue({
-        sourceId: event
-      });
-    }
-  }
+  // onChangeSourceId(event: any, formType: string) {
+  //   if (formType === 'create') {
+  //     this.createForm.patchValue({
+  //       sourceId: event
+  //     });
+  //   }
+  //   else if (formType === 'update') {
+  //     this.updateForm.patchValue({
+  //       sourceId: event
+  //     });
+  //   }
+  // }
 
   getData() {
     this.tradeHistoryService.getAll(this.pageInformation.pageIndex, this.pageInformation.pageSize, this.userId).subscribe((res) => {
-      // this.data = res.data;
+      this.data = res.data;
       this.pageInformation.currentPage = this.data.currentPage;
       this.pageInformation.totalItems = this.data.totalItems;
       this.pageInformation.totalPages = this.data.totalPages;
@@ -114,7 +132,7 @@ export class TradeHistoriesComponent implements OnInit {
         next: (res) => {
           this.toggleLiveCreateModel();
           this.getData();
-          this.initAmountCreateForm.set(-1);
+          // this.initAmountCreateForm.set(-1);
           this.toastService.showToast(EColors.success, res.message);
           this.createForm.patchValue({ amount: 0, note: '' });
         },
@@ -128,18 +146,23 @@ export class TradeHistoriesComponent implements OnInit {
 
   toggleLiveCreateModel() {
     this.visibleCreateModal = !this.visibleCreateModal;
-    this.initAmountCreateForm.set(0);
+    // this.initAmountCreateForm.set(0);
   }
 
   handleLiveCreateModelChange(event: any) {
     this.visibleCreateModal = event;
   }
 
-  get sourceIdCreateForm() { return this.createForm.get('sourceId'); }
-  get amountCreateForm() { return this.createForm.get('amount'); }
-  get dateCreateForm() { return this.createForm.get('date'); }
+  get companyIdCreateForm() { return this.createForm.get('companyId'); }
+  get tradeDateCreateForm() { return this.createForm.get('tradeDate'); }
+  get quantityCreateForm() { return this.createForm.get('quantity'); }
+  get isSellCreateForm() { return this.createForm.get('isSell'); }
+  get priceCreateForm() { return this.createForm.get('price'); }
+  get totalAmountCreateForm() { return this.createForm.get('totalAmount'); }
+  get feesCreateForm() { return this.createForm.get('fees'); }
+  get profitLossCreateForm() { return this.createForm.get('profitLoss'); }
+  get profitLossPercentCreateForm() { return this.createForm.get('profitLossPercent'); }
   get noteCreateForm() { return this.createForm.get('note'); }
-
   //#endregion
 
   //#region Update Form
@@ -173,15 +196,15 @@ export class TradeHistoriesComponent implements OnInit {
     this.visibleUpdateModal = event;
   }
 
-  get sourceIdUpdateForm() { return this.updateForm.get('sourceId'); }
-  get amountUpdateForm() { return this.updateForm.get('amount'); }
-  get dateUpdateForm() { return this.updateForm.get('date'); }
-  get noteUpdateForm() { return this.updateForm.get('note'); }
+  // get sourceIdUpdateForm() { return this.updateForm.get('sourceId'); }
+  // get amountUpdateForm() { return this.updateForm.get('amount'); }
+  // get dateUpdateForm() { return this.updateForm.get('date'); }
+  // get noteUpdateForm() { return this.updateForm.get('note'); }
 
   //#endregion
 
   //#region Delete
-  deleteData(id: number) {
+  deleteData(id: any) {
     this.deleteById = id;
     this.toggleLiveDelete();
   }

@@ -46,29 +46,70 @@
 <c-modal backdrop="static" [visible]="visibleCreateModal" (visibleChange)="handleLiveCreateModelChange($event)"
     id="verticallyCenteredCreateModal" size="lg">
     <c-modal-header class="bg-success d-flex justify-content-between align-items-center">
-        <h5 cModalTitle class="fw-bold text-white">Add Expense</h5>
+        <h5 cModalTitle class="fw-bold text-white">Add Trade History</h5>
         <button (click)="toggleLiveCreateModel()" class="btn btn-sm btnClose">
             <svg [cIcon]="icons.cilX" width="22" class="text-white" title="Close Icon"></svg>
         </button>
     </c-modal-header>
     <form cForm [formGroup]="createForm" (ngSubmit)="onSubmitCreateForm()">
         <c-modal-body>
+            <div class="d-flex mb-2">
+                <c-form-check class="me-2">
+                    <input cFormCheckInput id="radioBuy" type="radio" [value]="true" formControlName="isBuy" />
+                    <label cFormCheckLabel for="radioBuy">Buy</label>
+                </c-form-check>
+                <c-form-check>
+                    <input cFormCheckInput id="radioSell" type="radio" [value]="false" formControlName="isBuy" />
+                    <label cFormCheckLabel for="radioSell">Sell</label>
+                </c-form-check>
+            </div>
             <div class="mb-2 row">
                 <div class="col-12 col-md-6 mb-2 mb-md-0">
-                    <label cLabel>Source: <span class="text-danger">(*)</span></label>
-                    <!-- <app-select-search [options]="sourceOptions" [selectedValue]="1"
-                        (onChangeValue)="onChangeSourceId($event, 'create')"></app-select-search> -->
+                    <label cLabel>Company: <span class="text-danger">(*)</span></label>
+                    <app-select-search [options]="companiesOptionList" placeholder="Select company"
+                        (onChangeValue)="createForm.patchValue({companyId: $event})"></app-select-search>
                 </div>
                 <div class="col-12 col-md-6">
-                    <label cLabel for="date">Income Date: <span class="text-danger">(*)</span></label>
-                    <input cFormControl formControlName="date" type="date">
+                    <label cLabel for="tradeDate">Trade Date: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="tradeDate" type="date">
                 </div>
             </div>
             <div class="mb-2 row">
-                    <label cLabel>Amount: <span class="text-danger">(*)</span></label>
-                    <app-input-currency [initialValue]="initAmountCreateForm()"
-                        (valueChange)="createForm.patchValue({amount: $event})"></app-input-currency>
+                <div class="col-6">
+                    <label cLabel>Quantity: <span class="text-danger">(*)</span></label>
+                    <app-input-number (valueChange)="createForm.patchValue({quantity: $event})"></app-input-number>
+                </div>
+                <div class="col-6">
+                    <label cLabel>Price: <span class="text-danger">(*)</span></label>
+                    <app-input-number (valueChange)="createForm.patchValue({price: $event})"></app-input-number>
+                </div>
             </div>
+            <div class="row mb-2">
+                <div class="col-6">
+                    <label cLabel>Fees: <span class="text-danger">(*)</span></label>
+                    <app-input-currency [initialValue]="initFeesCreateForm()" [disabled]="true"
+                        (valueChange)="createForm.patchValue({fees: $event})"></app-input-currency>
+                </div>
+                <div class="col-6">
+                    <label cLabel>Total Amount: <span class="text-danger">(*)</span></label>
+                    <app-input-currency [initialValue]="initTotalAmountCreateForm()" [disabled]="true"
+                        (valueChange)="createForm.patchValue({totalAmount: $event})"></app-input-currency>
+                </div>
+            </div>
+            @if(!createForm.value.isBuy) {
+            <div class="row mb-2">
+                <div class="col-6">
+                    <label cLabel>Profit Loss Percent: <span class="text-danger">(*)</span></label>
+                    <app-input-currency [initialValue]="initFeesCreateForm()" [disabled]="true"
+                        (valueChange)="createForm.patchValue({fees: $event})"></app-input-currency>
+                </div>
+                <div class="col-6">
+                    <label cLabel>Profit Loss: <span class="text-danger">(*)</span></label>
+                    <app-input-currency [initialValue]="initTotalAmountCreateForm()" [disabled]="true"
+                        (valueChange)="createForm.patchValue({totalAmount: $event})"></app-input-currency>
+                </div>
+            </div>
+            }
             <div class="mb-2">
                 <label cLabel for="note">Note: </label>
                 <textarea cFormControl formControlName="note" rows="3"></textarea>
@@ -102,7 +143,7 @@
     </c-modal-header>
     <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmitUpdateForm()">
         <c-modal-body>
-                  <div class="mb-2 row">
+            <div class="mb-2 row">
                 <div class="col-12 col-md-6 mb-2 mb-md-0">
                     <label cLabel>Source: <span class="text-danger">(*)</span></label>
                     <!-- <app-select-search [options]="sourceOptions" [selectedValue]="initSourceIdUpdateForm()"
@@ -113,10 +154,10 @@
                     <input cFormControl formControlName="date" type="date">
                 </div>
             </div>
-            <div class="mb-2 row">
-                    <label cLabel>Amount: <span class="text-danger">(*)</span></label>
-                    <app-input-currency [initialValue]="initAmountUpdateForm()"
-                        (valueChange)="updateForm.patchValue({amount: $event})"></app-input-currency>
+            <!-- <div class="mb-2 row">
+                <label cLabel>Amount: <span class="text-danger">(*)</span></label>
+                <app-input-currency [initialValue]="initAmountUpdateForm()"
+                    (valueChange)="updateForm.patchValue({amount: $event})"></app-input-currency>
             </div>
             <div class="mb-2">
                 <label cLabel for="note">Note: </label>
@@ -128,7 +169,7 @@
                     }
                 </div>
                 }
-            </div>
+            </div> -->
 
         </c-modal-body>
         <c-modal-footer>

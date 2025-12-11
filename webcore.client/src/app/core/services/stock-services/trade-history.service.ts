@@ -4,28 +4,28 @@ import { Observable } from 'rxjs';
 import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
 import { Pagination } from '@models/pagination.model';
 import { ETradeHistoryStockMarketUrl } from '@common/url-api';
-import { CompanyModel } from '@models/stock-models/company.model';
+import { TradeHistoryModel } from '@models/stock-models';
 
 @Injectable({ providedIn: 'root' })
 export class TradeHistoryService {
   constructor(private http: HttpClient) {}
 
-  getAll(pageIndex: number, pageSize: number, userId: number): Observable<APIResponse<Pagination<CompanyModel>>> {
+  getAll(pageIndex: number, pageSize: number, userId: number): Observable<APIResponse<Pagination<TradeHistoryModel>>> {
     const url = `${ETradeHistoryStockMarketUrl.getAllUrl}/${pageIndex}/${pageSize}/${userId}`;
-    return this.http.get<APIResponse<Pagination<CompanyModel>>>(url);
+    return this.http.get<APIResponse<Pagination<TradeHistoryModel>>>(url);
   }
 
-  getById(id: number): Observable<APIResponse<CompanyModel>> {
+  getById(id: number): Observable<APIResponse<TradeHistoryModel>> {
     const url = `${ETradeHistoryStockMarketUrl.getByIdUrl}/${id}`;
-    return this.http.get<APIResponse<CompanyModel>>(url);
+    return this.http.get<APIResponse<TradeHistoryModel>>(url);
   }
 
-  create(model: CompanyModel): Observable<BaseAPIResponse> {
+  create(model: TradeHistoryModel): Observable<BaseAPIResponse> {
     const url = ETradeHistoryStockMarketUrl.createUrl;
     return this.http.post<BaseAPIResponse>(url, model);
   }
 
-  update(model: CompanyModel): Observable<BaseAPIResponse> {
+  update(model: TradeHistoryModel): Observable<BaseAPIResponse> {
     const url = ETradeHistoryStockMarketUrl.updateUrl;
     return this.http.put<BaseAPIResponse>(url, model);
   }

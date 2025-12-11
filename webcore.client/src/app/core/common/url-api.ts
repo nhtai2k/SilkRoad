@@ -5,6 +5,7 @@
   getAllUrl = "/api/company/getAll",
   getAllActiveUrl = "/api/company/getAllActive",
   getAllSymbolsUrl = "/api/company/getAllSymbols",
+  getOptionListUrl = "/api/company/getOptionList",
   getAllDeletedUrl = "/api/company/getAllDeleted",
   getByIdUrl = "/api/company/getById",
   createUrl = "/api/company/create",

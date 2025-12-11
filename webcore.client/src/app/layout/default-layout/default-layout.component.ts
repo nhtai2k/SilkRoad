@@ -25,8 +25,7 @@ import {
 import { DefaultFooterComponent, DefaultHeaderComponent } from './';
 import { navItems } from './_nav';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { EyeIconComponent } from '@components/icons/eye-icon.component';
-import { EyeCloseIconComponent } from '@components/icons/eye-close-icon.component';
+import { EyeIconComponent, EyeClosedIconComponent } from '@components/icons';
 import { AuthService } from '@services/system-services/auth.service';
 import { ToastService } from '@services/helper-services/toast.service';
 import { MyAccountService } from '@services/system-services/my-account.service';
@@ -61,7 +60,7 @@ function isOverflown(element: HTMLElement) {
     RouterLink,
     ShadowOnScrollDirective,
     ButtonCloseDirective, ModalComponent, ModalFooterComponent, ModalBodyComponent,
-    ModalHeaderComponent, FormControlDirective, ReactiveFormsModule, ButtonDirective, EyeIconComponent, EyeCloseIconComponent
+    ModalHeaderComponent, FormControlDirective, ReactiveFormsModule, ButtonDirective, EyeIconComponent, EyeClosedIconComponent
   ]
 })
 export class DefaultLayoutComponent implements OnInit {

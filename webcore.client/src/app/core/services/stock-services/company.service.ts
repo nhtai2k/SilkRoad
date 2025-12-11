@@ -5,6 +5,7 @@ import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
 import { Pagination } from '@models/pagination.model';
 import { ECompanyStockMarketUrl } from '@common/url-api';
 import { CompanyModel } from '@models/stock-models/company.model';
+import { OptionModel } from '@models/option.model';
 
 @Injectable({ providedIn: 'root' })
 export class CompanyService {
@@ -22,6 +23,10 @@ export class CompanyService {
   getAllSymbols(): Observable<APIResponse<string[]>> {
     return this.http.get<APIResponse<string[]>>(ECompanyStockMarketUrl.getAllSymbolsUrl);
   }
+
+    getOptionList(): Observable<APIResponse<OptionModel[]>> {
+      return this.http.get<APIResponse<OptionModel[]>>(ECompanyStockMarketUrl.getOptionListUrl);
+    }
 
   getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<CompanyModel>>> {
     return this.http.get<APIResponse<Pagination<CompanyModel>>>(`${ECompanyStockMarketUrl.getAllDeletedUrl}/${pageIndex}/${pageSize}`);

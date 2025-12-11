@@ -1,5 +1,5 @@
 export interface TradeHistoryModel {
-    id: string;
+    id: any;
     userId: number;
     companyId: number;
     tradeDate: Date;
@@ -11,4 +11,5 @@ export interface TradeHistoryModel {
     fees: number;
     profitLoss?: number;
     profitLossPercent?: number;
+    note?: string;
 }

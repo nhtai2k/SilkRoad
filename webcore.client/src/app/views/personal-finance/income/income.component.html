@@ -4,7 +4,14 @@
     <button class="btn btn-success me-2" (click)="toggleLiveCreateModel()">
         <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
     </button>
-    <button class="btn btn-info">
+    <button class="btn btn-primary me-2" (click)="(showNumber = !showNumber)">
+        @if(showNumber) {
+            <app-eye-closed-icon class="d-flex align-items-center" [color]="'#ffffff'"></app-eye-closed-icon>
+        } @else {
+            <app-eye-icon class="d-flex align-items-center" [color]="'#ffffff'"></app-eye-icon>
+        }
+    </button>
+        <button class="btn btn-info">
         <svg [cIcon]="icons.cilCloudDownload" width="25" class="text-white" title="Cloud Download Icon"></svg>
     </button>
 </div>
@@ -25,7 +32,7 @@
         <tr>
             <td>{{ $index+1 }}</td>
             <td>{{getSourceNameById(item.sourceId)}}</td>
-            <td>{{ item.amount | number}} đ</td>
+            <td>{{ showNumber ? (item.amount | number) : '****' }} đ</td>
             <td>{{ item.date | date:'MM/dd/yyyy' }}</td>
             <td>
                 <div class="d-flex justify-content-end">
