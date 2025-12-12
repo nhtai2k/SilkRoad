@@ -93,6 +93,7 @@ namespace WebCore.Server
             services.AddScoped<ICompanyHelper, CompanyHelper>();
             services.AddScoped<IStockPriceHelper, StockPriceHelper>();
             services.AddScoped<IIndustryHelper, IndustryHelper>();
+            services.AddScoped<ITradeHistoryHelper, TradeHistoryHelper>();
             #endregion
 
             #region System Database

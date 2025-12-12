@@ -123,6 +123,10 @@ export class TradeHistoriesComponent implements OnInit {
     this.pageInformation.pageIndex = 1;
     this.getData();
   }
+  getCompanyNameById(id: number): string {
+    const company = this.companiesOptionList.find(c => c.id === id);
+    return company ? company.name : '###';
+  }
   //#endregion
 
   //#region Create Form
@@ -163,6 +167,40 @@ export class TradeHistoriesComponent implements OnInit {
   get profitLossCreateForm() { return this.createForm.get('profitLoss'); }
   get profitLossPercentCreateForm() { return this.createForm.get('profitLossPercent'); }
   get noteCreateForm() { return this.createForm.get('note'); }
+  onchangePriceCreateForm(event: any){
+    const quantity = this.createForm.value.quantity;
+    const price = event;
+    this.createForm.patchValue({price: price});
+    if (price && quantity && price > 0 && quantity > 0) {
+      const totalAmount = Math.round(price * quantity * 1000);
+      const fees = Math.round(totalAmount * 0.00097);
+      this.initTotalAmountCreateForm.set(totalAmount);
+      this.initFeesCreateForm.set(fees);
+      this.createForm.patchValue({ totalAmount: totalAmount, fees: fees});
+
+    }else{
+      this.initTotalAmountCreateForm.set(0)
+      this.initFeesCreateForm.set(0);
+      this.createForm.patchValue({ totalAmount: 0, fees: 0 });
+    }
+  }
+  onchangeQuantityCreateForm(event: any) {
+    const price = this.createForm.value.price;
+    const quantity = event;
+    this.createForm.patchValue({quantity: quantity});
+    if (price && quantity && price > 0 && quantity > 0) {
+      const totalAmount = Math.round(price * quantity * 1000);
+      const fees = Math.round(totalAmount * 0.00097);
+      this.initTotalAmountCreateForm.set(totalAmount);
+      this.initFeesCreateForm.set(fees);
+            this.createForm.patchValue({ totalAmount: totalAmount, fees: fees});
+
+    }else{
+      this.initTotalAmountCreateForm.set(0)
+      this.initFeesCreateForm.set(0);
+            this.createForm.patchValue({ totalAmount: 0, fees: 0 });
+    }
+  }
   //#endregion
 
   //#region Update Form

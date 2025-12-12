@@ -23,10 +23,10 @@
     <tbody>
         @for (item of data.items; track item.id) {
         <tr>
-            <!-- <td>{{ $index+1 }}</td>
-            <td>{{getSourceNameById(item.sourceId)}}</td>
-            <td>{{ item.amount | number}} đ</td>
-            <td>{{ item.date | date:'MM/dd/yyyy' }}</td>
+            <td>{{ $index+1 }}</td>
+            <td>{{getCompanyNameById(item.companyId)}}</td>
+            <td>{{ item.totalAmount| number}} đ</td>
+            <td>{{ item.tradeDate| date:'MM/dd/yyyy' }}</td>
             <td>
                 <div class="d-flex justify-content-end">
                     <button (click)="updateData(item.id)" class="btn btn-primary me-2">
@@ -36,7 +36,7 @@
                         <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
                     </button>
                 </div>
-            </td> -->
+            </td>
         </tr>
         }
     </tbody>
@@ -77,11 +77,11 @@
             <div class="mb-2 row">
                 <div class="col-6">
                     <label cLabel>Quantity: <span class="text-danger">(*)</span></label>
-                    <app-input-number (valueChange)="createForm.patchValue({quantity: $event})"></app-input-number>
+                    <app-input-number (valueChange)="onchangeQuantityCreateForm($event)"></app-input-number>
                 </div>
                 <div class="col-6">
                     <label cLabel>Price: <span class="text-danger">(*)</span></label>
-                    <app-input-number (valueChange)="createForm.patchValue({price: $event})"></app-input-number>
+                    <app-input-number (valueChange)="onchangePriceCreateForm($event)"></app-input-number>
                 </div>
             </div>
             <div class="row mb-2">
@@ -150,8 +150,8 @@
                         (onChangeValue)="onChangeSourceId($event, 'update')"></app-select-search> -->
                 </div>
                 <div class="col-12 col-md-6">
-                    <label cLabel for="date">Income Date: <span class="text-danger">(*)</span></label>
-                    <input cFormControl formControlName="date" type="date">
+                    <label cLabel for="tradeDate">Income Date: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="tradeDate" type="date">
                 </div>
             </div>
             <!-- <div class="mb-2 row">
