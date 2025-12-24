@@ -87,13 +87,11 @@
             <div class="row mb-2">
                 <div class="col-6">
                     <label cLabel>Fees: <span class="text-danger">(*)</span></label>
-                    <app-input-currency [initialValue]="initFeesCreateForm()" [disabled]="true"
-                        (valueChange)="createForm.patchValue({fees: $event})"></app-input-currency>
+                    <app-input-currency [initialValue]="initFeesCreateForm()" [disabled]="true"></app-input-currency>
                 </div>
                 <div class="col-6">
                     <label cLabel>Total Amount: <span class="text-danger">(*)</span></label>
-                    <app-input-currency [initialValue]="initTotalAmountCreateForm()" [disabled]="true"
-                        (valueChange)="createForm.patchValue({totalAmount: $event})"></app-input-currency>
+                    <app-input-currency [initialValue]="initTotalAmountCreateForm()" [disabled]="true"></app-input-currency>
                 </div>
             </div>
             @if(!createForm.value.isBuy) {

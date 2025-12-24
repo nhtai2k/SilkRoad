@@ -195,7 +195,7 @@ namespace WebCore.Server
                 #endregion
                 builder.Services.SignUp();
                 builder.Services.AddControllers().AddJsonOptions(options =>
-options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
                 var app = builder.Build();
                 app.UseSerilogRequestLogging();
                 #region Add Localization
