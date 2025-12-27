@@ -31,7 +31,7 @@ namespace WebCore.Server.Controllers.StockControllers
 
 
         [HttpGet("GetById/{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(Guid id)
         {
             var data = await _helper.GetByIdAsync(id);
             if (data == null)
@@ -65,7 +65,7 @@ namespace WebCore.Server.Controllers.StockControllers
 
 
         [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _helper.DeleteAsync(id);
             if (!result)

@@ -8,12 +8,13 @@ import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TreeSelectV1Component } from "@components/selects/tree-select-v1/tree-select-v1.component";
+import { InputCurrencyComponent } from "@components/inputs/input-currency/input-currency.component";
 
 @Component({
     selector: 'app-test',
     templateUrl: './test.component.html',
     styleUrl: './test.component.scss',
-    imports: [ CommonModule, FormsModule, TreeSelectV1Component]
+    imports: [CommonModule, FormsModule, TreeSelectV1Component, InputCurrencyComponent]
 })
 export class TestComponent implements OnInit {
 

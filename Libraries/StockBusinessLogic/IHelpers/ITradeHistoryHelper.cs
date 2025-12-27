@@ -9,9 +9,9 @@ namespace StockBusinessLogic.IHelpers
     public interface ITradeHistoryHelper
     {
         public Task<Pagination<TradeHistoryDTO>> GetAllAsync(int pageIndex, int pageSize, int userId);
-        public Task<TradeHistoryDTO?> GetByIdAsync(int id);
+        public Task<TradeHistoryDTO?> GetByIdAsync(Guid id);
         public Task<bool> CreateAsync(TradeHistoryDTO model);
         public Task<bool> UpdateAsync(TradeHistoryDTO model);
-        public Task<bool> DeleteAsync(int id);
+        public Task<bool> DeleteAsync(Guid id);
     }
 }

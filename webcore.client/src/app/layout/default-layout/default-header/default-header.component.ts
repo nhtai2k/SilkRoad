@@ -30,7 +30,7 @@ import { AuthService } from '@services/system-services';
     selector: 'app-default-header',
     templateUrl: './default-header.component.html',
   imports: [ContainerComponent, HeaderTogglerDirective, SidebarToggleDirective, IconDirective, HeaderNavComponent,
-    NavLinkDirective, NgTemplateOutlet, BreadcrumbRouterComponent, DropdownComponent, DropdownToggleDirective, AvatarComponent, DropdownMenuDirective,
+    NavLinkDirective, NgTemplateOutlet, DropdownComponent, DropdownToggleDirective, AvatarComponent, DropdownMenuDirective,
     DropdownItemDirective,
     // DropdownHeaderDirective, NavItemComponent, RouterLink, RouterLinkActive,BadgeComponent, DropdownDividerDirective
   ]

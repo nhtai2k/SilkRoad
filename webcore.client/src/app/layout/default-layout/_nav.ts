@@ -67,7 +67,7 @@ const stockMarketNavItems: INavData[] = [
     iconComponent: { name: 'cil-notes' }
   },
   //#endregion
-  
+
 ];
 
 const personalFinanceNavItems: INavData[] = [
@@ -286,7 +286,7 @@ const surveyNavItems: INavData[] = [
 ];
 
 const systemNavItems: INavData[] = [
- //#region System Management
+  //#region System Management
   {
     name: 'System Management',
     title: true
@@ -336,16 +336,40 @@ const systemNavItems: INavData[] = [
   //#endregion
 ];
 
-// const testNavItems: INavData[] = [
-//     {
-//     name: 'Test Component',
-//     url: '/test',
-//     iconComponent: { name: 'cil-speedometer' },
-//     badge: {
-//       color: 'info',
-//       text: 'NEW'
-//     }
-//   }
-// ];
+const testNavItems: INavData[] = [
+    {
+    name: 'Test Component',
+    url: '/test',
+    iconComponent: { name: 'cil-speedometer' },
+    badge: {
+      color: 'info',
+      text: 'NEW'
+    }
+  }
+];
 
-export const navItems: INavData[] = [...stockMarketNavItems,...personalFinanceNavItems,...systemNavItems];
+const mindMapNavItems: INavData[] = [
+  //#region Mind Maps
+  {
+    title: true,
+    name: 'Mind Map'
+  },
+  {
+    name: 'Mind Maps',
+    url: '/mind-maps',
+    iconComponent: { name: 'cil-vector' }
+  },
+  //#endregion
+];
+
+export const navItems: INavData[] = [
+  ...testNavItems,
+  ...mindMapNavItems,
+  ...featureNavItems,
+  ...stockMarketNavItems,
+  ...personalFinanceNavItems,
+  ...restuarantNavItems,
+  ...lipstickShopNavItems,
+  ...surveyNavItems,
+  ...systemNavItems
+];
