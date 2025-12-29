@@ -2,7 +2,6 @@
 using Common;
 using Common.Models;
 using Common.ViewModels.SystemViewModels;
-using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -170,14 +169,14 @@ namespace WebCore.Server.Controllers.SystemControllers
             var user = User;
             //get userid
             string? userId = user.Claims.FirstOrDefault(c => c.Type == "Id")?.Value;
-            if(!string.IsNullOrEmpty(userId))
+            if (!string.IsNullOrEmpty(userId))
             {
                 var userData = await _myAccountHelper.GetCurrentUserAsync(userId);
-                if(userData != null)
+                if (userData != null)
                 {
                     return Succeeded(userData, _localizer["currentUserFetchedSuccessfully"]);
                 }
-            }       
+            }
             return Failed(EStatusCodes.BadRequest, _localizer["refreshTokenInvalid"]);
         }
 

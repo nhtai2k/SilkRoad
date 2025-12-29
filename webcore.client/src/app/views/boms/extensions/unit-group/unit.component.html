@@ -1,0 +1,152 @@
+<!-- Create Modal -->
+<c-modal backdrop="static" [visible]="visibleCreateModal" (visibleChange)="handleLiveCreateModelChange($event)"
+  id="verticallyCenteredCreateModal" size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Thêm Đơn Vị Tính</h5>
+    <button (click)="toggleLiveCreateModel()" cButtonClose></button>
+  </c-modal-header>
+  <form cForm [formGroup]="createForm" (ngSubmit)="onSubmitCreateForm()">
+    <c-modal-body>
+      <div class="mb-2 d-flex flex-row">
+        <c-form-check class="me-2 d-flex align-items-center">
+          <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
+          <label cFormCheckLabel for="isActive" class="me-2" i18n="@@active">Active </label>
+        </c-form-check>
+      </div>
+      <div class="mb-2 row">
+        <div class="col-4">
+          <label cLabel>Chọn Nhóm Đơn Vị Tính:</label>
+          <select cFormControl formControlName="unitGroupId" cSelect>
+            <option *ngFor="let item of unitGroupList" [value]="item.id">{{ item.name }}</option>
+          </select>
+        </div>
+        <div class="col-4">
+          <label for="index" cLabel>Vị Trí:</label>
+          <input cFormControl formControlName="index" type="number" min="0">
+
+        </div>
+        <div class="col-4">
+          <label cLabel for="coefficient">Hệ Số:</label>
+          <input cFormControl formControlName="coefficient" type="number" min="0">
+        </div>
+      </div>
+      <div class="mb-2 row">
+        <div class="col-6">
+          <label cLabel for="name">Tên: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="name">
+          <div *ngIf="nameCreateForm?.invalid && (nameCreateForm?.dirty || nameCreateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="nameCreateForm?.hasError('required')">
+              Name is required.
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <label cLabel for="symbol">Symbol: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="symbol">
+          <div *ngIf="symbolCreateForm?.invalid && (symbolCreateForm?.dirty || symbolCreateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="symbolCreateForm?.hasError('required')">
+              Name is required.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-2">
+        <label cLabel for="note">Ghi chú:</label>
+        <textarea cFormControl formControlName="note" rows="3"></textarea>
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button (click)="toggleLiveCreateModel()" cButton color="secondary">
+        Đóng
+      </button>
+      <button cButton type="submit" [disabled]="!createForm.valid" color="primary">Lưu</button>
+    </c-modal-footer>
+  </form>
+</c-modal>
+<!-- Update Modal -->
+<c-modal backdrop="static" [visible]="visibleUpdateModal" (visibleChange)="handleLiveUpdateModelChange($event)"
+  id="verticallyCenteredUpdateModal" size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Cập Nhật Đơn Vị Tính</h5>
+    <button (click)="toggleLiveUpdateModel()" cButtonClose></button>
+  </c-modal-header>
+  <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmitUpdateForm()">
+    <c-modal-body>
+      <div class="mb-2 d-flex flex-row">
+        <c-form-check class="me-2 d-flex align-items-center">
+          <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
+          <label cFormCheckLabel for="isActive" class="me-2" i18n="@@active">Active </label>
+        </c-form-check>
+      </div>
+      <div class="mb-2 row">
+        <div class="col-4">
+          <label cLabel>Chọn Nhóm Đơn Vị Tính:</label>
+          <select cFormControl formControlName="unitGroupId" cSelect>
+            <option *ngFor="let item of unitGroupList" [value]="item.id">{{ item.name }}</option>
+          </select>
+        </div>
+
+        <div class="col-4">
+          <label for="index" cLabel>Vị Trí:</label>
+          <input cFormControl formControlName="index" type="number" min="0">
+
+        </div>
+        <div class="col-4">
+          <label cLabel for="coefficient">Hệ Số:</label>
+          <input cFormControl formControlName="coefficient" type="number" min="0">
+        </div>
+      </div>
+      <div class="mb-2 row">
+        <div class="col-6">
+          <label cLabel for="name">Tên: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="name">
+          <div *ngIf="nameUpdateForm?.invalid && (nameUpdateForm?.dirty || nameUpdateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="nameUpdateForm?.hasError('required')">
+              Name is required.
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <label cLabel for="symbol">Symbol: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="symbol">
+          <div *ngIf="symbolUpdateForm?.invalid && (symbolUpdateForm?.dirty || symbolUpdateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="symbolUpdateForm?.hasError('required')">
+              Symbol is required.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-2">
+        <label cLabel for="note">Ghi Chú:</label>
+        <textarea cFormControl formControlName="note" rows="3"></textarea>
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button (click)="toggleLiveUpdateModel()" cButton color="secondary">
+        Đóng
+      </button>
+      <button cButton type="submit" [disabled]="!updateForm.valid" color="primary">Lưu</button>
+    </c-modal-footer>
+  </form>
+</c-modal>
+<!--Delete Model-->
+<c-modal backdrop="static" [visible]="visibleDelete" (visibleChange)="handleLiveDeleteChange($event)"
+  id="verticallyCenteredDelete">
+  <c-modal-header>
+    <h5 cModalTitle>Xác Nhận</h5>
+    <button (click)="toggleLiveDelete()" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <p>Bạn có chắc là muốn xóa đơn vị tính này?</p>
+  </c-modal-body>
+  <c-modal-footer>
+    <button (click)="toggleLiveDelete()" cButton color="secondary">
+      Đóng
+    </button>
+    <button cButton (click)="onConfirmDelete()" color="primary">Xác Nhận</button>
+  </c-modal-footer>
+</c-modal>

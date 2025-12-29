@@ -1,0 +1,85 @@
+<!-- Add BOM Property Model -->
+<c-modal backdrop="static" [visible]="visiblePropertyModal"
+  (visibleChange)="handleLivePropertyModelChange($event)" id="visiblePropertyModal" size="xl">
+  <c-modal-header>
+    <h5 cModalTitle>Tài Sản - CCDC</h5>
+    <button (click)="toggleLivePropertyModel()" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body class="min-vh-75">
+<c-accordion class="mb-4">
+  <c-accordion-item #item0="cAccordionItem" [visible]="true">
+    <ng-template cTemplateId="accordionHeaderTemplate">
+      <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
+        Bộ Lọc:
+      </button>
+    </ng-template>
+    <ng-template cTemplateId="accordionBodyTemplate">
+      <div class="accordion-body">
+       <form cForm [formGroup]="filterForm" (ngSubmit)="onSubmitFilter()">
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-3">
+          <label cLabel for="propertyTypeId">Chọn Loại Tài Sản - CCDC</label>
+          <app-select-search [options]="propertyTypeOptionList" placeholder="Tất cả tài sản - CCDC"
+            (onChangeValue)="onPropertyChange($event)"></app-select-search>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+          <label cLabel for="unitId">Đơn Vị Tính: </label>
+          <app-select-search [options]="unitOptionList" placeholder="Tất cả đơn vị tính"
+            (onChangeValue)="onUnitChange($event)"></app-select-search>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+          <label cLabel for="departmentId">Chọn Phòng Ban: </label>
+           <app-select-search [options]="departmentOptionList" placeholder="Tất cả phòng ban"
+            (onChangeValue)="onDepartmentChange($event)"></app-select-search>
+        </div>
+      </div>
+      <div class="row">
+      </div>
+      <div class="d-flex justify-content-end my-2">
+        <button cButton type="submit" color="primary">Lọc</button>
+      </div>
+    </form>
+      </div>
+    </ng-template>
+  </c-accordion-item>
+</c-accordion>
+    <h5 class="mt-2">Danh Sách Tài Sản - CCDC</h5>
+        <app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
+      (changePageSize)="onPageSizeChange($event)">
+      <thead class="text-nowrap text-truncate">
+        <tr>
+          <th scope="col">STT</th>
+          <th scope="col">Hình Ảnh</th>
+          <th scope="col">Mã</th>
+          <th scope="col">Tên</th>
+          <th scope="col">Giá Thành (VND)</th>
+          <th scope="col">Đơn Vị Tính</th>
+          <th scope="col">Tên Loại TS - CCDC</th>
+          <th scope="col">Tên Bộ Phận</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of data.items; index as i ">
+          <td>{{ i+1 }}</td>
+          <td>
+            <ng-container *ngIf="item.imagePath">
+              <img [src]="baseUrl + item.imagePath" alt="Logo" class="img-thumbnail">
+            </ng-container>
+          </td>
+          <td>{{ item.code }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.price | number }}</td>
+          <td>{{ getUnitNameById(item.unitId) }}</td>
+          <td>{{ getPropertyTypeNameById(item.propertyGroupId) }}</td>
+          <td>{{ getDepartmentNameById(item.departmentId) }}</td>
+          <td>
+            <button cButton color="success" (click)="addBONProperty(item)">
+              <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </app-data-table>
+  </c-modal-body>
+</c-modal>

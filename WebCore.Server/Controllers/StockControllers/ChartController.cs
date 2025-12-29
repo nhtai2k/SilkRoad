@@ -1,8 +1,5 @@
 ﻿using Common;
-using Common.Models;
 using Common.Services.ActionLoggingServices;
-using DocumentFormat.OpenXml.Spreadsheet;
-using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -31,7 +28,7 @@ namespace WebCore.Server.Controllers.StockControllers
         public async Task<IActionResult> GetAll(string symbol)
         {
             var data = await _helper.GetAllAsync(symbol);
-            if(data == null)
+            if (data == null)
                 return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }

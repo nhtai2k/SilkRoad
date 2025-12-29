@@ -1,0 +1,180 @@
+<h1>Tạo BOM V1</h1>
+<div class="d-flex justify-content-end mb-2">
+  <button cButton type="button" routerLink="/boms" class="me-2 btn-info">Trở Về</button>
+</div>
+<c-card class="createBomContainer">
+  <c-card-body>
+    <form cForm [formGroup]="createForm" class="mb-4">
+      <div class="mb-2 row">
+        <div class="col-4">
+          <label cLabel>Chọn Món : <span class="text-danger">(*)</span></label>
+          <app-select-search [selectedValue]="currentDishId" [options]="dishList"></app-select-search>
+        </div>
+        <div class="col-4">
+          <label cLabel for="code">Mã: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="code">
+          <div *ngIf="codeCreateForm?.invalid && (codeCreateForm?.dirty || codeCreateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="codeCreateForm?.hasError('required')">
+              Code is required.
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <label cLabel for="name">Tên: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="name">
+          <div *ngIf="nameCreateForm?.invalid && (nameCreateForm?.dirty || nameCreateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="nameCreateForm?.hasError('required')">
+              Name is required.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-2">
+        <label cLabel for="note">Ghi Chú: </label>
+        <textarea cFormControl formControlName="note" rows="3"></textarea>
+        <div *ngIf="noteCreateForm?.invalid && (noteCreateForm?.dirty || noteCreateForm?.touched)" class="text-danger">
+          <div *ngIf="noteCreateForm?.hasError('maxlength')">
+            Maximum 500 characters.
+          </div>
+        </div>
+      </div>
+    </form>
+    <ng-content *ngFor="let item of bomCategories; let i = index">
+      <div class="bomCategoryList mb-2">
+        <span class="categoryName ms-2">{{ (i+1)+ ". " + item.name + " - " + item.code}}</span>
+        <div class="d-flex flex-row">
+          <button (click)="showBOMCategoryItem(i)" cButton color="info"
+            *ngIf="((item?.children?.length ?? 0) > 0 || item.tag)">
+            <svg [cIcon]="icons.cilBook" width="25" class="text-white" title="Plus Icon"></svg>
+          </button>
+          <button (click)="toggleMaterialModel(item.id, item.bomId)" *ngIf="showMaterialBtn(item.tag)"
+            class="ms-2 text-white d-flex align-items-center" cButton color="success">
+            <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+          </button>
+          <button (click)="toggleLiveAddBomPropertyModel(item.id,item.bomId)" *ngIf="showPropertyBtn(item.tag)"
+            class="ms-2 text-white d-flex align-items-center" cButton color="success">
+            <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+          </button>
+        </div>
+      </div>
+      <div [visible]="visibleBOMCategoryLinks()[i]" cCollapse>
+        <ng-content *ngFor="let subitem of item.children; let j = index">
+          <div class="d-flex align-items-center justify-content-between mb-2 border-bottom-1">
+            <h5 class="ms-4">
+              {{(i+1)+ "." + (j+1) +". " + subitem.name + " - " + subitem.code }}
+            </h5>
+            <div class="d-flex align-items-center">
+              <button (click)="toggleMaterialModel(subitem.id, subitem.bomId)" *ngIf="showMaterialBtn(subitem.tag)"
+                class="ms-2 text-white d-flex align-items-center" cButton color="success">
+                <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+              </button>
+              <button (click)="toggleLiveAddBomPropertyModel(item.id,item.bomId)" *ngIf="showPropertyBtn(subitem.tag)"
+                class="ms-2 text-white d-flex align-items-center" cButton color="success">
+                <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+              </button>
+            </div>
+          </div>
+          <table cTable *ngIf="(subitem.bomMaterialLinks?.length ?? 0) > 0">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Material</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Unit</th>
+                <th scope="col">Price</th>
+                <th scope="col">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let material of subitem.bomMaterialLinks; let i = index">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ material.materialName }}</td>
+                <td>{{ material.quantity }}</td>
+                <td>{{ material.unitName }}</td>
+                <td>{{ material.price | number }}</td>
+                <td>{{ material.amount | number }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <table cTable *ngIf="(subitem.bomPropertyLinks?.length ?? 0) > 0">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Property</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Unit</th>
+                <th scope="col">Price</th>
+                <th scope="col">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let property of subitem?.bomPropertyLinks; let i = index">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ property.propertyName }}</td>
+                <td>{{ property.quantity }}</td>
+                <td>{{ property.unitName }}</td>
+                <td>{{ property.price }}</td>
+                <td>{{ property.amount }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-content>
+        <table cTable *ngIf="(item.bomMaterialLinks?.length ?? 0) > 0">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Material</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Unit</th>
+              <th scope="col">Price</th>
+              <th scope="col">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let material of item.bomMaterialLinks; let i = index">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{ material.materialName }}</td>
+              <td>{{ material.quantity }}</td>
+              <td>{{ material.unitName }}</td>
+              <td>{{ material.price | number }}</td>
+              <td>{{ material.amount | number }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <table cTable *ngIf="(item.bomPropertyLinks?.length ?? 0) > 0">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Property</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Unit</th>
+              <th scope="col">Price</th>
+              <th scope="col">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let property of item?.bomPropertyLinks; let i = index">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{ property.propertyName }}</td>
+              <td>{{ property.quantity }}</td>
+              <td>{{ property.unitName }}</td>
+              <td>{{ property.price }}</td>
+              <td>{{ property.amount }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-content>
+
+  </c-card-body>
+</c-card>
+<!-- material -->
+<app-add-bom-material #addBomMaterialComponent [unitOptionList]="unitOptionList"
+  [materialCatagoryOptionList]="materialCatagoryOptionList" [materialGroupOptionList]="materialGroupOptionList">
+</app-add-bom-material>
+<!-- property -->
+<app-add-bom-property #addBomPropertyComponent [unitOptionList]="unitOptionList"
+  [departmentOptionList]="departmentOptionList" [propertyTypeOptionList]="propertyTypeOptionList">
+</app-add-bom-property>

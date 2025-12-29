@@ -1,0 +1,40 @@
+<table cTable class="w-100">
+  <thead>
+    <tr cTableColor="info">
+      <th scope="col">STT</th>
+      <th scope="col">Hình Ảnh</th>
+      <th scope="col">Mã</th>
+      <th scope="col">Tên</th>
+      <th scope="col">Hoạt Động</th>
+      <th scope="col">Tạo Bởi</th>
+      <th scope="col">Cập Nhật Bởi</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr  *ngFor="let item of data; index as i">
+        <td>{{ i+1 }}</td>
+                <td>
+        <ng-container *ngIf="item.imagePath">
+          <img [src]="baseUrl + item.imagePath" alt="Logo" class="img-thumbnail">
+        </ng-container>
+      </td>
+        <td>{{ item.code }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.isActive }}</td>
+        <td>{{ item.createdBy }}</td>
+        <td>{{ item.modifiedBy }}</td>
+
+        <td>
+          <div class="d-flex justify-content-end">
+            <button (click)="updateData(item.id,'area')" class="btn btn-primary me-2">
+              <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
+            </button>
+            <button (click)="softDeleteData(item.id,'area')" class="btn btn-danger">
+              <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+  </tbody>
+</table>

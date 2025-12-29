@@ -1,0 +1,250 @@
+<!-- Create Modal -->
+<c-modal backdrop="static" [visible]="visibleCreateModal" (visibleChange)="handleLiveCreateModelChange($event)"
+  id="verticallyCenteredCreateModal" size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Thêm Tài Sản - CCDC Tiêu Thụ Năng Lượng</h5>
+    <button (click)="toggleLiveCreateModel()" cButtonClose></button>
+  </c-modal-header>
+  <form cForm [formGroup]="createForm" (ngSubmit)="onSubmitCreateForm()">
+    <c-modal-body>
+      <div class="mb-2 d-flex flex-row">
+        <c-form-check class="me-2 d-flex align-items-center">
+          <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
+          <label cFormCheckLabel for="isActive" class="me-2">Hoạt Động </label>
+        </c-form-check>
+      </div>
+      <div class="mb-2 row">
+        <div class="col-6">
+          <label cLabel>Chọn Phòng Ban:</label>
+          <select cFormControl formControlName="departmentId" cSelect>
+            <option value="-1">Chọn phòng ban</option>
+            <option *ngFor="let item of departmentList" [value]="item.id">{{ item.name }}
+            </option>
+          </select>
+        </div>
+        <div class="col-6">
+          <label cLabel for="code">Mã: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="code" placeholder="Nhập mã tài sản...">
+          <div *ngIf="codeCreateForm?.invalid && (codeCreateForm?.dirty || codeCreateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="codeCreateForm?.hasError('required')">
+              Code is required.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-2 row">
+
+        <div class="col-12">
+          <label cLabel for="name">Tên: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="name" placeholder="Nhập tên tài sản...">
+          <div *ngIf="nameCreateForm?.invalid && (nameCreateForm?.dirty || nameCreateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="nameCreateForm?.hasError('required')">
+              Name is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-2 row">
+        <div class="col-6">
+          <label cLabel >Gía Thành: <span class="text-danger">(*)</span></label>
+          <app-input-separator placeholder="Nhập giá..." (onChangeValue)="onChangePrice($event,'create')"></app-input-separator>
+        </div>
+        <div class="col-6">
+          <label cLabel>Chọn Đơn Vị Tính: <span class="text-danger">(*)</span></label>
+                <app-select-search [options]="unitList" (onChangeValue)="onChangeUnit($event,'create')" 
+                    placeholder="Chọn đơn vị tính"></app-select-search>
+        </div>
+
+      </div>
+      <div class="mb-2 row">
+        <div class="col-4">
+          <label cLabel >Khấu Hao: <span class="text-danger">(*)</span></label>
+          <app-input-separator placeholder="Khấu hao..." (onChangeValue)="onChangeDepreciation($event,'create')"></app-input-separator>
+
+        </div>
+        <div class="col-4">
+          <label cLabel for="depreciationTypeId">Chọn Đơn Vị Khấu Hao: <span class="text-danger">(*)</span></label>
+          <select cFormControl formControlName="depreciationTypeId" cSelect>
+            <option *ngFor="let item of depreciationTypes" [value]="item.id">{{ item.name }}
+            </option>
+          </select>
+        </div>
+        <!-- <div class="col-4">
+          <label cLabel for="startDepreciation">Thời Gian Khấu Hao: <span class="text-danger">(*)</span></label>
+         <app-date-range-picker (startTimeOutput)="onChangeStartDepreciation($event,'create')" 
+         (endTimeOutput)="onChangeEndDepreciation($event,'create')"></app-date-range-picker>
+       </div> -->
+      </div>
+      <div class="mb-2 row">
+        <div class="col-4">
+          <label cLabel>Chọn năng lượng: <span class="text-danger">(*)</span></label>
+          <select cFormControl formControlName="energyId" cSelect>
+            <option value="-1">Chọn năng lượng</option>
+            <option *ngFor="let item of energyList" [value]="item.id">{{ item.name }}
+            </option>
+          </select>
+        </div>
+        <div class="col-4">
+          <label cLabel for="energyConsumption">Công Suất: <span class="text-danger">(*)</span></label>
+          <app-input-separator placeholder="Nhập công suất..." (onChangeValue)="onChangeEnergyConsumption($event,'create')"></app-input-separator>
+        </div>
+        <div class="col-4">
+          <label cLabel>Chọn Vị Công Suất: <span class="text-danger">(*)</span></label>
+          <app-select-search [options]="unitList" (onChangeValue)="onChangeEnergyConsumptionUnit($event,'create')" 
+            placeholder="Chọn đơn vị công suất"></app-select-search>
+        </div>
+
+      </div>
+      <div class="mb-2">
+        <label cLabel for="note">Ghi Chú:</label>
+        <textarea cFormControl formControlName="note" rows="3" placeholder="Nhập ghi chú..."></textarea>
+      </div>
+      <div class="mb-2">
+        <label cLabel for="note">Hình Ảnh:</label>
+        <input class="d-none" id="createUploadImage" type="file" accept="image/*"
+          (change)="onChangeUploadImage($event,'create')" />
+        <div class="mt-2 reviewImage" (click)="openFileInput('create')">
+          <ng-container *ngIf="!reviewCreateUploadImage">
+            <svg [cIcon]="icons.cilCloudUpload" width="140" title="Shield Icon"></svg>
+          </ng-container>
+          <div *ngIf="reviewCreateUploadImage" [innerHTML]="reviewCreateUploadImage"
+            class="w-100 h-100 d-flex justify-content-center align-items-center"></div>
+        </div>
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button (click)="toggleLiveCreateModel()" cButton color="secondary">
+        Đóng
+      </button>
+      <button cButton type="submit" [disabled]="!createForm.valid" color="primary">Lưu</button>
+    </c-modal-footer>
+  </form>
+</c-modal>
+<!-- Update Modal -->
+<c-modal backdrop="static" [visible]="visibleUpdateModal" (visibleChange)="handleLiveUpdateModelChange($event)"
+  id="verticallyCenteredUpdateModal" size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Cập Nhật</h5>
+    <button (click)="toggleLiveUpdateModel()" cButtonClose></button>
+  </c-modal-header>
+  <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmitUpdateForm()">
+    <c-modal-body>
+      <div class="mb-2 d-flex flex-row">
+        <c-form-check class="me-2 d-flex align-items-center">
+          <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
+          <label cFormCheckLabel for="isActive" class="me-2">Hoạt Động </label>
+        </c-form-check>
+      </div>
+      <div class="mb-2 row">
+        <div class="col-6">
+          <label cLabel>Chọn Phòng Ban:</label>
+          <select cFormControl formControlName="departmentId" cSelect>
+            <option value="-1">Chọn phòng ban</option>
+            <option *ngFor="let item of departmentList" [value]="item.id">{{ item.name }}
+            </option>
+          </select>
+        </div>
+        <div class="col-6">
+          <label cLabel for="code">Mã: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="code" placeholder="Nhập mã tài sản...">
+          <div *ngIf="codeUpdateForm?.invalid && (codeUpdateForm?.dirty || codeUpdateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="codeUpdateForm?.hasError('required')">
+              Code is required.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-2 row">
+
+        <div class="col-12">
+          <label cLabel for="name">Tên: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="name" placeholder="Nhập tên tài sản...">
+          <div *ngIf="nameUpdateForm?.invalid && (nameUpdateForm?.dirty || nameUpdateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="nameUpdateForm?.hasError('required')">
+              Name is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-2 row">
+        <div class="col-6">
+          <label cLabel >Gía Thành: <span class="text-danger">(*)</span></label>
+          <app-input-separator placeholder="Nhập giá..." (onChangeValue)="onChangePrice($event,'update')"></app-input-separator>
+        </div>
+        <div class="col-6">
+          <label cLabel>Chọn Đơn Vị Tính: <span class="text-danger">(*)</span></label>
+                <app-select-search [options]="unitList" (onChangeValue)="onChangeUnit($event,'update')" 
+                    placeholder="Chọn đơn vị tính"></app-select-search>
+        </div>
+
+      </div>
+      <div class="mb-2 row">
+        <div class="col-4">
+          <label cLabel >Khấu Hao: <span class="text-danger">(*)</span></label>
+          <app-input-separator placeholder="Khấu hao..." (onChangeValue)="onChangeDepreciation($event,'update')"></app-input-separator>
+
+        </div>
+        <div class="col-4">
+          <label cLabel for="depreciationTypeId">Chọn Đơn Vị Khấu Hao: <span class="text-danger">(*)</span></label>
+          <select cFormControl formControlName="depreciationTypeId" cSelect>
+            <option *ngFor="let item of depreciationTypes" [value]="item.id">{{ item.name }}
+            </option>
+          </select>
+        </div>
+        <!-- <div class="col-4">
+          <label cLabel for="startDepreciation">Thời Gian Khấu Hao: <span class="text-danger">(*)</span></label>
+         <app-date-range-picker (startTimeOutput)="onChangeStartDepreciation($event,'update')" 
+         (endTimeOutput)="onChangeEndDepreciation($event,'update')"></app-date-range-picker>
+       </div> -->
+      </div>
+      <div class="mb-2 row">
+        <div class="col-4">
+          <label cLabel>Chọn năng lượng: <span class="text-danger">(*)</span></label>
+          <select cFormControl formControlName="energyId" cSelect>
+            <option value="-1">Chọn năng lượng</option>
+            <option *ngFor="let item of energyList" [value]="item.id">{{ item.name }}
+            </option>
+          </select>
+        </div>
+        <div class="col-4">
+          <label cLabel for="energyConsumption">Công Suất: <span class="text-danger">(*)</span></label>
+          <app-input-separator placeholder="Nhập công suất..." (onChangeValue)="onChangeEnergyConsumption($event,'update')"></app-input-separator>
+        </div>
+        <div class="col-4">
+          <label cLabel>Chọn Vị Công Suất: <span class="text-danger">(*)</span></label>
+          <app-select-search [options]="unitList" (onChangeValue)="onChangeEnergyConsumptionUnit($event,'update')" 
+            placeholder="Chọn đơn vị công suất"></app-select-search>
+        </div>
+
+      </div>
+      <div class="mb-2">
+        <label cLabel for="note">Ghi Chú:</label>
+        <textarea cFormControl formControlName="note" rows="3" placeholder="Nhập ghi chú..."></textarea>
+      </div>
+      <div class="mb-2">
+        <label cLabel for="note">Hình Ảnh:</label>
+        <input class="d-none" id="updateUploadImage" type="file" accept="image/*"
+          (change)="onChangeUploadImage($event,'update')" />
+        <div class="mt-2 reviewImage" (click)="openFileInput('update')">
+          <ng-container *ngIf="!reviewUpdateUploadImage">
+            <svg [cIcon]="icons.cilCloudUpload" width="140" title="Shield Icon"></svg>
+          </ng-container>
+          <div *ngIf="reviewUpdateUploadImage" [innerHTML]="reviewUpdateUploadImage"
+            class="w-100 h-100 d-flex justify-content-center align-items-center"></div>
+        </div>
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button (click)="toggleLiveUpdateModel()" cButton color="secondary">
+        Đóng
+      </button>
+      <button cButton type="submit" [disabled]="!updateForm.valid" color="primary">Lưu</button>
+    </c-modal-footer>
+  </form>
+</c-modal>

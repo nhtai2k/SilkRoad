@@ -1,3 +1,5 @@
+import { OptionModel } from "@models/option.model";
+
 export const baseUrl = "https://dev.thiso.vn/#/";
 
 export const chatbotHubUrl = baseUrl + "chat";
@@ -124,6 +126,25 @@ export enum ELanguages
     English = 'EN',
     Vietnamese = 'VN'
 }
+
+
+export const BOMCategoryTags: string[] = ["Nguyên Vật Liệu", "Công Cụ Dụng Cụ", "Cấp Bậc", "Năng Lượng", "Tùy Chỉnh"];
+
+export const timeUnitList: OptionModel[] = [
+    { id: 1, name: 'Theo phút' },
+    { id: 2, name: 'Theo giờ' },
+    // { id: 3, name: 'Theo ngày' },
+    // { id: 4, name: 'Theo tuần' },
+    // { id: 5, name: 'Theo tháng' },
+    // { id: 6, name: 'Theo quý' },
+    // { id: 7, name: 'Theo năm' },
+];
+
+export const propertyGroups: OptionModel[] = [
+{ id: 1, name: 'Nhóm tiêu hao' },
+{ id: 2, name: 'Nhóm tiêu thụ năng lượng' },
+{ id: 3, name: 'Nhóm không tiêu thụ năng lượng' }
+];
 
 export function numberEnumToArray(enumObj: any): { key: string, value: number }[] {
     return Object.keys(enumObj)

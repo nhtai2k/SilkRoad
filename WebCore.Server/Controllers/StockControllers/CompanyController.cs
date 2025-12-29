@@ -1,5 +1,4 @@
-﻿using ClosedXML.Excel;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using StockBusinessLogic.IHelpers;

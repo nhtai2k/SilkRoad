@@ -1,0 +1,174 @@
+<h3 cModalTitle>Cập Nhật Nguyên Vật Liệu</h3>
+<c-card>
+  <c-card-body>
+    <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmitUpdateForm()">
+      <div class="mb-2 d-flex flex-row">
+        <c-form-check class="me-2 d-flex align-items-center">
+          <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
+          <label cFormCheckLabel for="isActive" class="me-2" i18n="@@active">Hoạt Động </label>
+        </c-form-check>
+      </div>
+      <div class="mb-2 row">
+        <div class="col-4">
+          <label cLabel>Chọn Nhóm Nguyên Vật liệu: <span class="text-danger">(*)</span></label>
+          <app-select-search [options]="materialGroupList" [selectedValue]="materialGroupId()" placeholder="Chọn nhóm nguyên vật liệu"
+            (onChangeValue)="updateForm.patchValue({materialGroupId: $event})">
+          </app-select-search>
+        </div>
+        <div class="col-4">
+          <label cLabel>Chọn DM Nguyên Vật Liệu: <span class="text-danger">(*)</span></label>
+          <app-select-search [options]="materialCategoryList" [selectedValue]="materialCategoryId()" placeholder="Chọn danh mục nguyên vật liệu"
+            (onChangeValue)="updateForm.patchValue({materialCategoryId: $event})">
+          </app-select-search>
+        </div>
+        <div class="col-4">
+          <label cLabel>Chọn Đơn Vị Tính: <span class="text-danger">(*)</span></label>
+          <app-tree-select [options]="unitTreeList" [selectedValue]="baseUnitId()" [expandKeys]="expandKeys()" (onChangeValue)="onChangeUnit($event)"></app-tree-select>
+        </div>
+      </div>
+      <div class="mb-2 row">
+        <div class="col-4">
+          <label cLabel>Mã: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="code">
+          <div *ngIf="codeUpdateForm?.invalid && (codeUpdateForm?.dirty || codeUpdateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="codeUpdateForm?.hasError('required')">
+              Code is required.
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <label cLabel for="name">Tên: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="name">
+          <div *ngIf="nameUpdateForm?.invalid && (nameUpdateForm?.dirty || nameUpdateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="nameUpdateForm?.hasError('required')">
+              Name is required.
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <label cLabel>Giá Thành:</label>
+          <app-input-currency [initialValue]="price()" (valueChange)="updateForm.patchValue({price: $event})"></app-input-currency>
+        </div>
+      </div>
+      <div class="mb-2" *ngIf="unitConversion">
+        <h5>Bảng Quy Đổi Đơn Vị Tính</h5>
+        <table cTable hover>
+          <thead>
+            <tr cTableColor="dark">
+              <th scope="col">Cấp Bậc</th>
+              <th scope="col">Hệ Số</th>
+              <th scope="col">Đơn Vị</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <span class="fw-bold">
+                  {{ unitConversion.level }}
+                </span>
+              </td>
+              <td>
+                {{unitConversion.factor}}
+              </td>
+              <td>{{ getUnitName(unitConversion.unitId) }}</td>
+              <td class="text-end">
+                <button cButton color="success" (click)="toggleLiveDemo(0, unitConversion.level)">
+                  <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Add Icon"></svg>
+                </button>
+              </td>
+            </tr>
+            <ng-container *ngFor="let node of unitConversion.children; index as i">
+              <ng-container [ngTemplateOutlet]="nodeTemplate"
+                [ngTemplateOutletContext]="{ node: node, index: i, level: 1 }"></ng-container>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+      <div class="mb-2 row">
+        <div class="col-12">
+          <label cLabel for="note">Ghi Chú:</label>
+          <textarea cFormControl formControlName="note" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="mb-2">
+        <label cLabel for="note">Hình Ảnh:</label>
+        <input class="d-none" id="updateUploadImage" type="file" accept="image/*"
+          (change)="onChangeUploadImage($event,'update')" />
+        <div class="mt-2 reviewImage" (click)="openFileInput('update')">
+          <ng-container *ngIf="!reviewUpdateUploadImage">
+            <svg [cIcon]="icons.cilCloudUpload" width="140" title="Shield Icon"></svg>
+          </ng-container>
+          <div *ngIf="reviewUpdateUploadImage" [innerHTML]="reviewUpdateUploadImage"
+            class="w-100 h-100 d-flex justify-content-center align-items-center"></div>
+        </div>
+      </div>
+    </form>
+    <div class="d-flex justify-content-end">
+      <button cButton type="button" (click)="onSubmitUpdateForm()" [disabled]="!updateForm.valid">
+        <svg [cIcon]="icons.cilSave" width="25" class="text-white" title="Save Icon"></svg>
+      </button>
+      <a type="button" routerLink="/materials" class="ms-2 btn btn-info">
+        <svg [cIcon]="icons.cilExitToApp" width="25" class="text-white" title="Exit Icon"></svg>
+      </a>
+    </div>
+  </c-card-body>
+</c-card>
+
+
+<ng-template #nodeTemplate let-node="node" let-level="level" let-index="index">
+  <tr>
+    <td>
+      <span class="fw-bold" [ngStyle]="{'margin-left.px': level * 30}">
+        {{ node.level }}
+      </span>
+    </td>
+    <td>
+      {{node.factor}}
+    </td>
+    <td>{{ getUnitName(node.unitId) }}</td>
+    <td class="text-end">
+      <button cButton color="success" (click)="toggleLiveDemo(index, node.level)">
+        <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Add Icon"></svg>
+      </button>
+    </td>
+  </tr>
+
+  <ng-container *ngIf="node.expanded && (node?.children?.length ?? 0) > 0">
+    <ng-container *ngFor="let child of node.children; index as i">
+      <ng-container [ngTemplateOutlet]="nodeTemplate"
+        [ngTemplateOutletContext]="{ node: child, index: i, level: level + 1 }"></ng-container>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<!-- Create Modal -->
+<c-modal backdrop="static" id="liveDemoModal" [visible]="visible" (visibleChange)="handleLiveDemoChange($event)"
+  size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Thêm Đơn Vị Quy Đổi</h5>
+    <button (click)="toggleLiveDemo()" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <form cForm [formGroup]="unitConversionForm" (ngSubmit)="onSubmitUnitConversionForm()">
+      <div class="mb-2 row">
+        <div class="col-6">
+          <label cLabel>Hệ Số Quy Đổi: <span class="text-danger">(*)</span></label>
+          <app-input-number #inputNumber  (valueChange)="unitConversionForm.patchValue({factor: $event})"></app-input-number>
+        </div>
+        <div class="col-6">
+          <label cLabel>Đơn Vị Chuyển Đổi: <span class="text-danger">(*)</span></label>
+          <app-tree-select #treeSelect [options]="unitTreeList" 
+            (onChangeValue)="unitConversionForm.patchValue({unitId: $event})"></app-tree-select>
+        </div>
+      </div>
+    </form>
+  </c-modal-body>
+  <c-modal-footer>
+    <button (click)="toggleLiveDemo()" cButton color="secondary">Đóng</button>
+    <button cButton color="primary" (click)="onSubmitUnitConversionForm()"
+      [disabled]="!unitConversionForm.valid">Lưu</button>
+  </c-modal-footer>
+</c-modal>

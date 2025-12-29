@@ -1,0 +1,137 @@
+<!--Material Model -->
+<c-modal backdrop="static" [visible]="visibleMaterialModal" (visibleChange)="handleLiveMaterialModelChange($event)"
+  id="visibleMaterialModal" size="xl">
+  <c-modal-header>
+    <h5 cModalTitle>Nguyên Vật Liệu</h5>
+    <button (click)="toggleLiveMaterialModel()" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body class="min-vh-75">
+    <c-accordion class="mb-4">
+      <c-accordion-item #item0="cAccordionItem" [visible]="true">
+        <ng-template cTemplateId="accordionHeaderTemplate">
+          <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
+            Bộ Lọc:
+          </button>
+        </ng-template>
+        <ng-template cTemplateId="accordionBodyTemplate">
+          <div class="accordion-body">
+            <form cForm [formGroup]="filterForm" (ngSubmit)="onSubmitFilter()">
+              <div class="row">
+                <div class="col-12 col-md-6 col-lg-3">
+                  <label cLabel for="materialId">Nhóm Nguyên Vật Liệu:</label>
+                  <app-select-search [options]="materialGroupOptionList" placeholder="Tất cả nguyên vật liệu"
+                    (onChangeValue)="onMaterialGroupChange($event)"></app-select-search>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                  <label cLabel for="materialCategoryId">Danh Mục Nguyên Vật Liệu:</label>
+                  <app-select-search [options]="materialCatagoryOptionList"
+                    placeholder="Tất cả danh mục nguyên vật liệu"
+                    (onChangeValue)="onMaterialCategoryChange($event)"></app-select-search>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                  <label cLabel for="unitId">Đơn Vị Tính:</label>
+                  <app-select-search [options]="unitOptionList" placeholder="Tất cả đơn vị tính"
+                    (onChangeValue)="onUnitChange($event)"></app-select-search>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                  <label cLabel for="searchText">Mã hoặc Tên:</label>
+                  <input cFormControl formControlName="searchText" placeholder="Nhập mã hoặc tên...">
+                </div>
+              </div>
+              <div class="d-flex justify-content-end my-2">
+                <button cButton type="submit" color="primary">Lọc</button>
+              </div>
+            </form>
+          </div>
+        </ng-template>
+      </c-accordion-item>
+    </c-accordion>
+
+    <h5 class="mt-2">Danh Sách Nguyên Vật Liệu</h5>
+    <app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
+      (changePageSize)="onPageSizeChange($event)">
+      <thead class="text-nowrap text-truncate">
+        <tr>
+          <th scope="col">STT</th>
+          <th scope="col">Hình Ảnh</th>
+          <th scope="col">Mã</th>
+          <th scope="col">Tên</th>
+          <th scope="col">Giá Thành (VND)</th>
+          <th scope="col">Đơn Vị Tính</th>
+          <th scope="col">Tên Nhóm</th>
+          <th scope="col">Tên Danh Mục</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of data.items; index as i ">
+          <td>{{ i+1 }}</td>
+          <td>
+            <ng-container *ngIf="item.imagePath">
+              <img [src]="baseUrl + item.imagePath" alt="Logo" class="img-thumbnail">
+            </ng-container>
+          </td>
+          <td>{{ item.code }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.price | number }}</td>
+          <td>{{ getUnitNameById(item.baseUnitId) }}</td>
+          <td>{{ getMaterialGroupNameById(item.materialCategoryId) }}</td>
+          <td>{{ getMaterialCategoryNameById(item.materialCategoryId) }}</td>
+          <td>
+            <button cButton color="success" (click)="addBONMaterial(item)">
+              <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </app-data-table>
+  </c-modal-body>
+</c-modal>
+
+
+<c-modal backdrop="static" [visible]="visibleAddMaterialModal"
+  (visibleChange)="handleLiveAddMaterialModelChange($event)" id="visibleAddBomMaterialModal">
+  <c-modal-header>
+    <h5 cModalTitle>Thêm Nguyên Vật Liệu Vào BOM</h5>
+    <button (click)="toggleLiveAddMaterialModel()" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <form cForm [formGroup]="addBomMaterialForm" (ngSubmit)="onSubmitAddBomMaterialForm()">
+      <div class="row">
+        <div class="col-6 mb-2">
+          <label cLabel>Tên Nguyên Vật Liệu:</label>
+          <input cFormControl class="disabled" type="text" value="{{ addBomMaterialForm.value.materialName }}" readonly>
+        </div>
+        <div class="col-6">
+          <label cLabel for="quantity">Số Lượng: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="quantity" type="number" min="0">
+          <div
+            *ngIf="quantityAddBomMaterialForm?.invalid && (quantityAddBomMaterialForm?.dirty || quantityAddBomMaterialForm?.touched)"
+            class="text-danger">
+            <div *ngIf="quantityAddBomMaterialForm?.hasError('min')">
+              Quantity must be greater than 0.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-6">
+          <label cLabel>Đơn Vị Tính:</label>
+          <input cFormControl class="disabled" type="text" value="{{ addBomMaterialForm.value.unitName }}" readonly>
+        </div>
+        <div class="col-6">
+          <label cLabel>Gía Thành:</label>
+          <input cFormControl class="disabled" type="text" value="{{ addBomMaterialForm.value.price | number }}"
+            readonly>
+        </div>
+      </div>
+      <div class="mb-2">
+          <label cLabel>Ghi Chú:</label>
+          <textarea cFormControl formControlName="note" type="text" rows="3"></textarea>
+        </div>
+      <div class="d-flex justify-content-end my-2">
+        <button cButton type="submit" [disabled]="!addBomMaterialForm.valid" color="primary">Thêm</button>
+      </div>
+    </form>
+  </c-modal-body>
+</c-modal>

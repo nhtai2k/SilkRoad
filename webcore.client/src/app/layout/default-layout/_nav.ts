@@ -285,6 +285,90 @@ const surveyNavItems: INavData[] = [
 
 ];
 
+const bomNavItems: INavData[] = [
+    {
+    name: 'Bill of Materials',
+    title: true
+  },
+  {
+    name: 'Report',
+    url: '/dashboard',
+    iconComponent: { name: 'cil-speedometer' },
+  },
+  {
+    name: 'BOM Structure',
+    url: '/boms',
+    iconComponent: { name: 'cil-book' }
+  },
+  {
+    name: 'Properties',
+    url: '/properties',
+    iconComponent: { name: 'cil-line-weight' }
+  },
+  {
+    name: 'Materials',
+    url: '/materials',
+    iconComponent: { name: 'cil-line-style' }
+  },
+  {
+    name: 'Extend',
+    url: '/boms/extensions',
+    iconComponent: { name: 'cil-puzzle' },
+    children: [
+      {
+        name: 'Config Categories',
+        url: '/boms/extensions/bom-configurations',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: 'Material Groups',
+        url: '/boms/extensions/material-groups',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: 'Material Categories',
+        url: '/boms/extensions/material-categories',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: 'Unit Groups',
+        url: '/boms/extensions/unit-groups',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: 'Kitchens',
+        url: '/boms/extensions/kitchens',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: 'Ranks',
+        url: '/boms/extensions/ranks',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: 'Departments',
+        url: '/boms/extensions/departments',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: 'Dish Groups',
+        url: '/boms/extensions/dish-groups',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: 'Dishes',
+        url: '/boms/extensions/dishes',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: 'Energies',
+        url: '/boms/extensions/energies',
+        icon: 'nav-icon-bullet'
+      }
+    ]
+  },
+];
+
 const systemNavItems: INavData[] = [
   //#region System Management
   {
@@ -371,5 +455,6 @@ export const navItems: INavData[] = [
   ...restuarantNavItems,
   ...lipstickShopNavItems,
   ...surveyNavItems,
+  ...bomNavItems,
   ...systemNavItems
 ];

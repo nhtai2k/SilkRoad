@@ -184,6 +184,45 @@ const mindMapChildrenRoutes: Routes = [
   }
 ];
 
+const bomChildrenRoutes: Routes = [
+    {
+        path: 'boms',
+        loadChildren: () => import('./views/boms/bom/index/routes').then((m) => m.routes)
+      },
+      // {
+      //   path: 'boms/create',
+      //   loadChildren: () => import('./views/boms/bom/create-v1/routes').then((m) => m.routes)
+      // },
+      {
+        path: 'boms/update/:id',
+        loadChildren: () => import('./views/boms/bom/update/routes').then((m) => m.routes)
+      },
+      {
+        path: 'boms/view/:id',
+        loadChildren: () => import('./views/boms/bom/view/routes').then((m) => m.routes)
+      },
+      {
+        path: "properties",
+        loadChildren: () => import('./views/boms/property/routes').then((m) => m.routes)
+      },
+      {
+        path: "materials",
+        loadChildren: () => import('./views/boms/material/routes').then((m) => m.routes)
+      },
+      {
+        path: "materials/create",
+        loadChildren: () => import('./views/boms/material/create-material/routes').then((m) => m.routes)
+      },
+      {
+        path: "materials/update/:id",
+        loadChildren: () => import('./views/boms/material/update-material/routes').then((m) => m.routes)
+      },
+      {
+        path: 'boms/extensions',
+        loadChildren: () => import('./views/boms/extensions/routes').then((m) => m.routes)
+      },
+];
+
 const systemChildrenRoutes: Routes = [
   //account management
   {
@@ -256,6 +295,10 @@ export const routes: Routes = [
 
       //#region Mind Map
       ...mindMapChildrenRoutes,
+      //#endregion
+
+      //#region BOM
+      ...bomChildrenRoutes,
       //#endregion
 
       //#region System Management

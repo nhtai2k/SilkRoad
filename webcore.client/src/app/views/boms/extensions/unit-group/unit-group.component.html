@@ -1,0 +1,294 @@
+<h3>Danh Sách Nhóm Đơn Vị Tính</h3>
+<div class="d-flex justify-content-end mb-2">
+  <button (click)="toggleLiveTrashModal()" class="btn btn-warning me-2">
+    <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Trash Icon"></svg>
+  </button>
+  <button (click)="toggleLiveCreateModel()" class="btn btn-success">
+    <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+  </button>
+</div>
+<app-data-table [data]="pageInformation" [striped]="false" (changePageIndex)="onPageIndexChange($event)"
+  (changePageSize)="onPageSizeChange($event)">
+  <thead class="text-nowrap text-truncate">
+    <tr>
+      <th scope="col">STT</th>
+      <th scope="col">Tên</th>
+      <th scope="col">Ưu Tiên</th>
+      <th scope="col">Hoạt Động</th>
+      <th scope="col">Tạo Bởi</th>
+      <th scope="col">Chỉnh Sửa Bởi</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let node of data.items; index as i">
+      <tr class="tree-row" [class.expanded]="node.expanded">
+        <td>
+          <span>
+            {{ i + 1 }}
+          </span>
+        </td>
+        <td>{{ node.name }}</td>
+        <td>{{ node.priority }}</td>
+        <td>{{ node.isActive }}</td>
+        <td>{{ node.createdBy }}</td>
+        <td>{{ node.modifiedBy }}</td>
+        <td>
+          <div class="d-flex justify-content-end">
+            <button (click)="toggleNode(node)" class="btn btn-info me-2" *ngIf="(node?.children?.length ?? 0) > 0">
+              <app-book-icon [open]="node?.expanded ?? false"></app-book-icon>
+            </button>
+            <button (click)="createUnitModel(node.id)" class="btn btn-success me-2">
+              <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+            </button>
+            <button (click)="updateData(node.id)"
+              class="btn btn-primary {{ (node?.children?.length ?? 0) <= 0 ? 'me-2' : '' }}">
+              <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
+            </button>
+            <button (click)="softDeleteData(node.id)" class="btn btn-danger" *ngIf="(node?.children?.length ?? 0) <= 0">
+              <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+      <tr *ngIf="node?.expanded && (node?.children?.length ?? 0) > 0">
+        <td colspan="7" class="tdChildren p-0 ps-4 pt-2">
+          <table cTable hover class="m-0 tableChildren">
+            <thead>
+              <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Tên</th>
+                <th scope="col">Symbol</th>
+                <th scope="col">Vị Trí</th>
+                <th scope="col">Hệ Số</th>
+                <th scope="col">Hoạt Động</th>
+                <th scope="col">Tạo Bởi</th>
+                <th scope="col">Chỉnh Sửa Bởi</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let child of node.children; index as childIndex">
+                <tr class="tree-row">
+                  <td>{{ childIndex + 1 }}</td>
+                  <td>{{ child.name }}</td> 
+                  <td>{{ child.symbol }}</td> 
+                    <td>{{ child.index ?? "###" }}</td>
+                    <td>{{ child.coefficient ?? "###" }}</td>
+                  <td>{{ child.isActive }}</td>
+                  <td>{{ child.createdBy }}</td>
+                  <td>{{ child.modifiedBy }}</td>
+                  <td>
+                    <div class="d-flex justify-content-end">
+                      <button (click)="updateUnitModel(child.id)"
+                        class="btn btn-primary me-2">
+                        <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
+                      </button>
+                      <button (click)="deleteUnitModel(child.id)" class="btn btn-danger">
+                        <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <!-- <ng-container [ngTemplateOutlet]="nodeTemplate"
+        [ngTemplateOutletContext]="{ node: node, index: i, level: 0 }"></ng-container> -->
+    </ng-container>
+  </tbody>
+</app-data-table>
+
+<!-- <ng-template #nodeTemplate let-node="node" let-level="level" let-index="index">
+  <tr class="tree-row" [class.expanded]="node.expanded" [class.children]="level > 0">
+    <td>
+      <span [ngStyle]="{'margin-left.px': level * 30}">
+        {{ index + 1 }}
+      </span>
+    </td>
+    <td>{{ node.name }}</td>
+    <td>{{ node.priority }}</td>
+    <td>{{ node.isActive }}</td>
+    <td>{{ node.createdBy }}</td>
+    <td>{{ node.modifiedBy }}</td>
+    <td>
+      <div class="d-flex justify-content-end">
+                   <button (click)="toggleNode(node)" class="btn btn-info me-2" *ngIf="(node?.children?.length ?? 0) > 0">
+              <app-book-icon [open]="node.expanded"></app-book-icon>
+            </button>
+        <button (click)="createUnitModel(node.id)" class="btn btn-success me-2">
+          <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+        </button>
+        <button (click)="updateData(node.id)"
+          class="btn btn-primary {{ (node?.children?.length ?? 0) <= 0 ? 'me-2' : '' }}">
+          <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
+        </button>
+        <button (click)="softDeleteData(node.id)" class="btn btn-danger" *ngIf="(node?.children?.length ?? 0) <= 0">
+          <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+        </button>
+      </div>
+    </td>
+  </tr>
+</ng-template> -->
+
+
+<!-- Create Modal -->
+<c-modal backdrop="static" [visible]="visibleCreateModal" (visibleChange)="handleLiveCreateModelChange($event)"
+  id="verticallyCenteredCreateModal" size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Thêm Nhóm Đơn Vị Tính</h5>
+    <button (click)="toggleLiveCreateModel()" cButtonClose></button>
+  </c-modal-header>
+  <form cForm [formGroup]="createForm" (ngSubmit)="onSubmitCreateForm()">
+    <c-modal-body>
+      <div class="mb-2 d-flex flex-row">
+        <c-form-check class="me-2 d-flex align-items-center">
+          <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
+          <label cFormCheckLabel for="isActive" class="me-2" i18n="@@active">Active </label>
+        </c-form-check>
+        <div>
+          <label for="priority" class="me-2">Ưu Tiên: </label>
+          <input formControlName="priority" type="number" class="me-2 priorityInput">
+          <div *ngIf="priorityCreateForm?.invalid && (priorityCreateForm?.dirty || priorityCreateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="priorityCreateForm?.hasError('min') || priorityCreateForm?.hasError('max')">
+              Priority must be between 1 and 255.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-2 row">
+        <div class="col-12">
+          <label cLabel for="name">Tên: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="name">
+          <div *ngIf="nameCreateForm?.invalid && (nameCreateForm?.dirty || nameCreateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="nameCreateForm?.hasError('required')">
+              Name is required.
+            </div>
+          </div>
+        </div>
+        <div class="col-12 mt-2">
+          <label cLabel for="note">Ghi chú:</label>
+          <textarea cFormControl formControlName="note" rows="3"></textarea>
+        </div>
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button (click)="toggleLiveCreateModel()" cButton color="secondary">
+        Đóng
+      </button>
+      <button cButton type="submit" [disabled]="!createForm.valid" color="primary">Lưu</button>
+    </c-modal-footer>
+  </form>
+</c-modal>
+<!-- Update Modal -->
+<c-modal backdrop="static" [visible]="visibleUpdateModal" (visibleChange)="handleLiveUpdateModelChange($event)"
+  id="verticallyCenteredUpdateModal" size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Cập Nhật Đơn Vị Tính</h5>
+    <button (click)="toggleLiveUpdateModel()" cButtonClose></button>
+  </c-modal-header>
+  <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmitUpdateForm()">
+    <c-modal-body>
+      <div class="mb-2 d-flex flex-row">
+        <c-form-check class="me-2 d-flex align-items-center">
+          <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
+          <label cFormCheckLabel for="isActive" class="me-2" i18n="@@active">Active </label>
+        </c-form-check>
+        <div>
+          <label for="priority" class="me-2">Ưu Tiên: </label>
+          <input formControlName="priority" type="number" class="me-2 priorityInput">
+          <div *ngIf="priorityUpdateForm?.invalid && (priorityUpdateForm?.dirty || priorityUpdateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="priorityUpdateForm?.hasError('min') || priorityUpdateForm?.hasError('max')">
+              Priority must be between 1 and 255.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-2 row">
+        <div class="col-12">
+          <label cLabel for="name">Tên: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="name">
+          <div *ngIf="nameUpdateForm?.invalid && (nameUpdateForm?.dirty || nameUpdateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="nameUpdateForm?.hasError('required')">
+              Name is required.
+            </div>
+          </div>
+        </div>
+        <div class="col-12 mt-2">
+          <label cLabel for="note">Ghi Chú:</label>
+          <textarea cFormControl formControlName="note" rows="3"></textarea>
+        </div>
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button (click)="toggleLiveUpdateModel()" cButton color="secondary">
+        Đóng
+      </button>
+      <button cButton type="submit" [disabled]="!updateForm.valid" color="primary">Lưu</button>
+    </c-modal-footer>
+  </form>
+</c-modal>
+<!--Delete Model-->
+<c-modal backdrop="static" [visible]="visibleDelete" (visibleChange)="handleLiveDeleteChange($event)"
+  id="verticallyCenteredDelete">
+  <c-modal-header>
+    <h5 cModalTitle>Xác Nhận</h5>
+    <button (click)="toggleLiveDelete()" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <p>Bạn có chắc là muốn xóa nhóm đơn vị tính này?</p>
+  </c-modal-body>
+  <c-modal-footer>
+    <button (click)="toggleLiveDelete()" cButton color="secondary">
+      Đóng
+    </button>
+    <button cButton (click)="onConfirmDelete()" color="primary">Xác Nhận</button>
+  </c-modal-footer>
+</c-modal>
+<!-- Trash Modal -->
+<c-modal backdrop="static" [visible]="visibleTrashModal" (visibleChange)="handleLiveTrashModalChange($event)"
+  id="verticallyCenteredTrashModal" size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Thùng Rác</h5>
+    <button (click)="toggleLiveTrashModal()" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <app-data-table [data]="trashPageInformation" (changePageIndex)="onTrashPageIndexChange($event)"
+      (changePageSize)="onTrashPageSizeChange($event)">
+      <thead class="text-nowrap text-truncate">
+        <tr>
+          <th scope="col">STT</th>
+          <th scope="col">Tên</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of trashData.items; index as i ">
+          <td>{{ i+1 }}</td>
+          <td>{{ item.name }}</td>
+          <td>
+            <div class="d-flex justify-content-end">
+              <button (click)="restoreData(item.id)" class="btn btn-success me-2">
+                <svg [cIcon]="icons.cilLoopCircular" width="25" class="text-white" title="Restore Icon"></svg>
+              </button>
+              <button (click)="deleteData(item.id)" class="btn btn-danger">
+                <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </app-data-table>
+    <div class="d-flex justify-content-center" *ngIf="trashData.items.length === 0">
+      <h3 class="opacity-75">Không có dữ liệu!</h3>
+    </div>
+  </c-modal-body>
+</c-modal>
+
+<app-unit #unitComponent [unitGroupList]="unitGroupList" [reloadData]="reloadData"></app-unit>

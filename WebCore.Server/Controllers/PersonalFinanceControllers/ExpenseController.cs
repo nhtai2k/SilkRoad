@@ -1,6 +1,5 @@
 ﻿using Common;
 using Common.Models;
-using Common.Services.ActionLoggingServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;

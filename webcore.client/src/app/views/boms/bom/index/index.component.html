@@ -1,0 +1,137 @@
+<h3>Danh Sách Cấu Trúc Gía Thành</h3>
+<c-accordion class="mb-4">
+  <c-accordion-item #item0="cAccordionItem" [visible]="true">
+    <ng-template cTemplateId="accordionHeaderTemplate">
+      <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
+        Bộ Lọc:
+      </button>
+    </ng-template>
+    <ng-template cTemplateId="accordionBodyTemplate">
+      <div class="accordion-body">
+        <div class="row">
+          <div class="col-8">
+            <form cForm class="w-100" [formGroup]="filterForm" (ngSubmit)="onSubmitFilterForm()">
+              <div class="row">
+                <div cFormFloating class="mb-2 col-6">
+                   <app-select-search [options]="dishOptionList" placeholder="Tất cả món" (onChangeValue)="onChangeDishFilter($event)"></app-select-search>
+                </div>
+                <div cFormFloating class="mb-2 col-6">
+                  <input cInput type="text" formControlName="searchText" class="form-control" placeholder="Enter Code or name...">
+                </div>
+                <div class="mb-2 col-6 d-flex align-items-end">
+                  <button type="submit" class="btn btn-primary w-100">Lọc</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="col-4 ">
+            <div class="justify-content-end d-flex">
+              <button (click)="toggleLiveCreateModel()" class="btn btn-success">
+                <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </c-accordion-item>
+</c-accordion>
+<app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
+  (changePageSize)="onPageSizeChange($event)">
+  <thead class="text-nowrap text-truncate">
+    <tr>
+      <th scope="col">STT</th>
+      <th scope="col">Mã</th>
+      <th scope="col">Tên</th>
+      <th scope="col">Hoạt Động</th>
+      <th scope="col">Tạo Bởi</th>
+      <th scope="col">Cập Nhật Bởi</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of data.items; index as i ">
+      <td>{{ i+1 }}</td>
+      <td>{{ item.code }}</td>
+      <td>{{ item.name }}</td>
+      <td>{{ item.isActive }}</td>
+      <td>{{ item.createdBy }}</td>
+      <td>{{ item.modifiedBy }}</td>
+      <td>
+        <div class="d-flex justify-content-end">
+          <button routerLink="./view/{{ item.id }}" class="btn btn-info me-2">
+            <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12 16.01C14.2091 16.01 16 14.2191 16 12.01C16 9.80087 14.2091 8.01001 12 8.01001C9.79086 8.01001 8 9.80087 8 12.01C8 14.2191 9.79086 16.01 12 16.01Z"
+                stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M2 11.98C8.09 1.31996 15.91 1.32996 22 11.98" stroke="#fff" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M22 12.01C15.91 22.67 8.09 22.66 2 12.01" stroke="#fff" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </button>
+          <button routerLink="./update/{{ item.id }}" class="btn btn-primary me-2">
+            <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
+          </button>
+          <button class="btn btn-success">
+            <svg [cIcon]="icons.cilDataTransferDown" width="25" class="text-white" title="Edit Icon"></svg>
+          </button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</app-data-table>
+
+<!-- Create Modal -->
+<c-modal backdrop="static" [visible]="visibleCreateModal" (visibleChange)="handleLiveCreateModelChange($event)"
+  id="verticallyCenteredCreateModal" size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Thêm Cấu Trúc Gía Thành</h5>
+    <button (click)="toggleLiveCreateModel()" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <form cForm [formGroup]="createForm" (ngSubmit)="onSubmitCreateForm()">
+      <div class="mb-2 row">
+        <div class="col-6">
+          <label cLabel>Chọn Món : <span class="text-danger">(*)</span></label>
+          <app-select-search [options]="dishOptionList" (onChangeValue)="onChangeCreateDish($event)"></app-select-search>
+        </div>
+        <div class="col-6">
+          <label cLabel for="code">Mã: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="code">
+          <div *ngIf="codeCreateForm?.invalid && (codeCreateForm?.dirty || codeCreateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="codeCreateForm?.hasError('required')">
+              Code is required.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-2">
+        <label cLabel for="name">Tên: <span class="text-danger">(*)</span></label>
+        <input cFormControl formControlName="name">
+        <div *ngIf="nameCreateForm?.invalid && (nameCreateForm?.dirty || nameCreateForm?.touched)"
+          class="text-danger">
+          <div *ngIf="nameCreateForm?.hasError('required')">
+            Name is required.
+          </div>
+        </div>
+      </div>
+      <div class="mb-2">
+        <label cLabel for="note">Ghi Chú: </label>
+        <textarea cFormControl formControlName="note" rows="3"></textarea>
+        <div *ngIf="noteCreateForm?.invalid && (noteCreateForm?.dirty || noteCreateForm?.touched)" class="text-danger">
+          <div *ngIf="noteCreateForm?.hasError('maxlength')">
+            Maximum 500 characters.
+          </div>
+        </div>
+      </div>
+    </form>
+  </c-modal-body>
+      <c-modal-footer>
+      <button (click)="toggleLiveCreateModel()" cButton color="secondary">
+        Đóng
+      </button>
+      <button cButton type="submit" [disabled]="!createForm.valid" (click)="onSubmitCreateForm()" color="primary">Lưu</button>
+    </c-modal-footer>
+</c-modal>

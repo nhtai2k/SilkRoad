@@ -1,0 +1,255 @@
+<!-- Create Modal -->
+<c-modal backdrop="static" [visible]="visibleCreateModal" (visibleChange)="handleLiveCreateModelChange($event)"
+  id="verticallyCenteredCreateModal" size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Thêm Tài Sản - CCDC Bền</h5>
+    <button (click)="toggleLiveCreateModel()" cButtonClose></button>
+  </c-modal-header>
+  <form cForm [formGroup]="createForm" (ngSubmit)="onSubmitCreateForm()">
+    <c-modal-body>
+      <div class="mb-2 d-flex flex-row">
+        <c-form-check class="me-2 d-flex align-items-center">
+          <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
+          <label cFormCheckLabel for="isActive" class="me-2">Hoạt Động </label>
+        </c-form-check>
+      </div>
+      <div class="mb-2 row">
+        <div class="col-6">
+          <label cLabel>Chọn Loại Tài Sản: <span class="text-danger">(*)</span></label>
+          <select cFormControl formControlName="propertyTypeId" cSelect>
+            <option value="-1">Chọn loại tài sản</option>
+            <option *ngFor="let item of propertyTypeList" [value]="item.id">{{ item.name }}
+            </option>
+          </select>
+        </div>
+        <div class="col-6">
+          <label cLabel>Chọn Phòng Ban:</label>
+          <select cFormControl formControlName="departmentId" cSelect>
+            <option value="-1">Chọn phòng ban</option>
+            <option *ngFor="let item of departmentList" [value]="item.id">{{ item.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="mb-2 row">
+        <div class="col-6">
+          <label cLabel for="code">Mã: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="code">
+          <div *ngIf="codeCreateForm?.invalid && (codeCreateForm?.dirty || codeCreateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="codeCreateForm?.hasError('required')">
+              Code is required.
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <label cLabel for="name">Tên: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="name">
+          <div *ngIf="nameCreateForm?.invalid && (nameCreateForm?.dirty || nameCreateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="nameCreateForm?.hasError('required')">
+              Name is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-2 row">
+        <div class="col-4">
+          <label cLabel for="quantity">Số Lượng: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="quantity">
+          <div *ngIf="quantityCreateForm?.invalid && (quantityCreateForm?.dirty || quantityCreateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="quantityCreateForm?.hasError('required')">
+              Quantity is required.
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <label cLabel>Chọn Đơn Vị Tính: <span class="text-danger">(*)</span></label>
+          <select cFormControl formControlName="unitId" cSelect>
+            <option value="-1">Chọn đơn vị tính</option>
+            <option *ngFor="let item of unitList" [value]="item.id">{{ item.name }}
+            </option>
+          </select>
+        </div>
+        <div class="col-4">
+          <label cLabel for="price">Gía Thành: </label>
+          <input cFormControl formControlName="price">
+          <div *ngIf="priceCreateForm?.invalid && (priceCreateForm?.dirty || priceCreateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="priceCreateForm?.hasError('required')">
+              Price is required.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-2 row">
+
+        <div class="col-6">
+          <label cLabel for="depreciationPeriod">Số Thời Gian Khấu Hao:</label>
+          <input cFormControl formControlName="depreciationPeriod">
+        </div>
+        <div class="col-6">
+          <label cLabel for="depreciationTypeId">Chọn Đơn Vị Khấu Hao: </label>
+          <select cFormControl formControlName="depreciationTypeId" cSelect>
+            <option *ngFor="let item of depreciationTypes" [value]="item.id">{{ item.name }}
+            </option>
+          </select>
+        </div>
+
+      </div>
+      <div class="mb-2">
+        <label cLabel for="note">Ghi Chú:</label>
+        <textarea cFormControl formControlName="note" rows="3"></textarea>
+      </div>
+      <div class="mb-2">
+        <label cLabel for="note">Hình Ảnh:</label>
+        <input class="d-none" id="createUploadImage" type="file" accept="image/*"
+          (change)="onChangeUploadImage($event,'create')" />
+        <div class="mt-2 reviewImage" (click)="openFileInput('create')">
+          <ng-container *ngIf="!reviewCreateUploadImage">
+            <svg [cIcon]="icons.cilCloudUpload" width="140" title="Shield Icon"></svg>
+          </ng-container>
+          <div *ngIf="reviewCreateUploadImage" [innerHTML]="reviewCreateUploadImage"
+            class="w-100 h-100 d-flex justify-content-center align-items-center"></div>
+        </div>
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button (click)="toggleLiveCreateModel()" cButton color="secondary">
+        Đóng
+      </button>
+      <button cButton type="submit" [disabled]="!createForm.valid" color="primary">Lưu</button>
+    </c-modal-footer>
+  </form>
+</c-modal>
+<!-- Update Modal -->
+<c-modal backdrop="static" [visible]="visibleUpdateModal" (visibleChange)="handleLiveUpdateModelChange($event)"
+  id="verticallyCenteredUpdateModal" size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Cập Nhật</h5>
+    <button (click)="toggleLiveUpdateModel()" cButtonClose></button>
+  </c-modal-header>
+  <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmitUpdateForm()">
+    <c-modal-body>
+      <div class="mb-2 d-flex flex-row">
+        <c-form-check class="me-2 d-flex align-items-center">
+          <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
+          <label cFormCheckLabel for="isActive" class="me-2" i18n="@@active">Hoạt Động </label>
+        </c-form-check>
+      </div>
+      <div class="mb-2 row">
+        <div class="col-6">
+          <label cLabel>Chọn Loại Tài Sản: <span class="text-danger">(*)</span></label>
+          <select cFormControl formControlName="propertyTypeId" cSelect>
+            <option value="-1">Chọn loại tài sản</option>
+            <option *ngFor="let item of propertyTypeList" [value]="item.id">{{ item.name }}
+            </option>
+          </select>
+        </div>
+        <div class="col-6">
+          <label cLabel>Chọn Phòng Ban:</label>
+          <select cFormControl formControlName="departmentId" cSelect>
+            <option value="-1">Chọn phòng ban</option>
+            <option *ngFor="let item of departmentList" [value]="item.id">{{ item.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="mb-2 row">
+        <div class="col-6">
+          <label cLabel for="code">Mã: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="code">
+          <div *ngIf="codeUpdateForm?.invalid && (codeUpdateForm?.dirty || codeUpdateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="codeUpdateForm?.hasError('required')">
+              Code is required.
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <label cLabel for="name">Tên: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="name">
+          <div *ngIf="nameUpdateForm?.invalid && (nameUpdateForm?.dirty || nameUpdateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="nameUpdateForm?.hasError('required')">
+              Name is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-2 row">
+        <div class="col-4">
+          <label cLabel for="quantity">Số Lượng: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="quantity">
+          <div *ngIf="quantityUpdateForm?.invalid && (quantityUpdateForm?.dirty || quantityUpdateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="quantityUpdateForm?.hasError('required')">
+              Quantity is required.
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <label cLabel>Chọn Đơn Vị Tính: <span class="text-danger">(*)</span></label>
+          <select cFormControl formControlName="unitId" cSelect>
+            <option value="-1">Chọn đơn vị tính</option>
+            <option *ngFor="let item of unitList" [value]="item.id">{{ item.name }}
+            </option>
+          </select>
+        </div>
+        <div class="col-4">
+          <label cLabel for="price">Gía Thành: </label>
+          <input cFormControl formControlName="price">
+          <div *ngIf="priceUpdateForm?.invalid && (priceUpdateForm?.dirty || priceUpdateForm?.touched)"
+            class="text-danger">
+            <div *ngIf="priceUpdateForm?.hasError('required')">
+              Price is required.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-2 row">
+
+        <div class="col-4">
+          <label cLabel for="depreciationPeriod">Số Thời Gian Khấu Hao:</label>
+          <input cFormControl formControlName="depreciationPeriod">
+        </div>
+        <div class="col-4">
+          <label cLabel for="depreciationTypeId">Chọn Đơn Vị Khấu Hao: </label>
+          <select cFormControl formControlName="depreciationTypeId" cSelect>
+            <option *ngFor="let item of depreciationTypes" [value]="item.id">{{ item.name }}
+            </option>
+          </select>
+        </div>
+        <div class="col-4">
+          <label cLabel >Gía Trị Khấu Hao:</label>
+          <input cFormControl readonly [value]="updateForm.value.depreciationValue | number" />
+        </div>
+      </div>
+      <div class="mb-2">
+        <label cLabel for="note">Ghi Chú:</label>
+        <textarea cFormControl formControlName="note" rows="3"></textarea>
+      </div>
+      <div class="mb-2">
+        <label cLabel for="note">Hình Ảnh:</label>
+        <input class="d-none" id="updateUploadImage" type="file" accept="image/*"
+          (change)="onChangeUploadImage($event,'update')" />
+        <div class="mt-2 reviewImage" (click)="openFileInput('update')">
+          <ng-container *ngIf="!reviewUpdateUploadImage">
+            <svg [cIcon]="icons.cilCloudUpload" width="140" title="Shield Icon"></svg>
+          </ng-container>
+          <div *ngIf="reviewUpdateUploadImage" [innerHTML]="reviewUpdateUploadImage"
+            class="w-100 h-100 d-flex justify-content-center align-items-center"></div>
+        </div>
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button (click)="toggleLiveUpdateModel()" cButton color="secondary">
+        Đóng
+      </button>
+      <button cButton type="submit" [disabled]="!updateForm.valid" color="primary">Lưu</button>
+    </c-modal-footer>
+  </form>
+</c-modal>
