@@ -1,4 +1,6 @@
-﻿using BusinessLogic.Helpers.FeatureHelpers;
+﻿using BOMBusinessLogic.BOMHelpers;
+using BOMBusinessLogic.IBOMHelpers;
+using BusinessLogic.Helpers.FeatureHelpers;
 using BusinessLogic.Helpers.SystemHelpers;
 using BusinessLogic.IHelpers.IFeatureHelper;
 using BusinessLogic.IHelpers.ISystemHelpers;
@@ -60,6 +62,36 @@ namespace WebCore.Server
             services.AddTransient<ICartClientHelper, CartClientHelper>();
             services.AddTransient<IWebhookHelper, WebhookHelper>();
             //services.AddScoped<IOrderHelper>
+            #endregion
+
+            #region BOM Helpers
+            //BOM
+            services.AddScoped<IBOMConfigurationHelper, BOMConfigurationHelper>();
+            //services.AddScoped<IEmployeeHelper, EmployeeHelper>();
+            services.AddScoped<IKitchenHelper, KitchenHelper>();
+            services.AddScoped<IBOMConfigurationHelper, BOMConfigurationHelper>();
+            services.AddScoped<IBOMQueryHelper, BOMQueryHelper>();
+            services.AddScoped<IBOMCommandHelper, BOMCommandHelper>();
+            //services.AddScoped<IEmployeeHelper, EmployeeHelper>();
+            services.AddScoped<IKitchenHelper, KitchenHelper>();
+            //services.AddScoped<IMallHelper, MallHelper>();
+            //services.AddScoped<ILocationHelper, LocationHelper>();
+            //services.AddScoped<IAreaHelper, AreaHelper>();
+            services.AddScoped<IMaterialGroupHelper, MaterialGroupHelper>();
+            services.AddScoped<IMaterialHelper, MaterialHelper>();
+            //services.AddScoped<IProcedureHelper, ProcedureHelper>();
+            services.AddScoped<IPropertyHelper, PropertyHelper>();
+            services.AddScoped<IPropertyTypeHelper, PropertyTypeHelper>();
+            services.AddScoped<IRankHelper, RankHelper>();
+            //services.AddScoped<IRentalHelper, RentalHelper>();
+            services.AddScoped<IUnitHelper, UnitHelper>();
+            services.AddScoped<IUnitGroupHelper, UnitGroupHelper>();
+            services.AddScoped<IDishGroupHelper, DishGroupHelper>();
+            services.AddScoped<IDishHelper, DishHelper>();
+            services.AddScoped<IDepartmentHelper, DepartmentHelper>();
+            services.AddScoped<IMaterialCategoryHelper, MaterialCategoryHelper>();
+            services.AddScoped<IEnergyHelper, EnergyHelper>();
+            //services.AddScoped<InitialDB>();
             #endregion
 
             #region Survey

@@ -108,7 +108,22 @@
         ReportFiles,
         QRCodes,
         PageIntros,
-        Dishes
+        Dishes,
+    }
+    public enum EBOMFolders
+    {
+        Kitchens,
+        Malls,
+        DishGroups,
+        MaterialGroups,
+        MaterialCategories,
+        Materials,
+        Dishes,
+        Locations,
+        Areas,
+        QRCodes,
+        Properties,
+        Templates
     }
     public enum EActions
     {

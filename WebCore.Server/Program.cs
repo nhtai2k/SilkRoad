@@ -55,6 +55,9 @@ namespace WebCore.Server
                 // Add services to the container.
                 #region add database context
                 builder.Services.Configure<UserActionLoggingDatabaseSettings>(builder.Configuration.GetSection("UserActionLogging"));
+                //BOM DB
+                builder.Services.AddDbContext<BOMDataAccess.ApplicationContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("BOMSqlConnection")));
                 //Survey DB
                 builder.Services.AddDbContext<SurveyDataAccess.ApplicationContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("SurveySqlConnection")));
