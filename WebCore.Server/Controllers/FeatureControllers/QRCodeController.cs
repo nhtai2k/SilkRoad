@@ -9,7 +9,7 @@ using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.FeatureControllers
 {
-    [Route("api/[controller]")]
+    [Route("api/feature/[controller]")]
     [ApiController]
     [Authorize]
     public class QRCodeController : BaseApiController

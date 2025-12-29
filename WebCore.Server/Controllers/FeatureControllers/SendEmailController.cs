@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebCore.Server.Controllers.FeatureControllers
 {
-    [Route("api/[controller]")]
+    [Route("api/feature/[controller]")]
     [ApiController]
     public class SendEmailController : ControllerBase
     {

@@ -6,7 +6,7 @@ using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.SystemControllers
 {
-    [Route("api/[controller]")]
+    [Route("api/system/[controller]")]
     [ApiController]
     //[Authorize]
     public class ModuleController : BaseApiController

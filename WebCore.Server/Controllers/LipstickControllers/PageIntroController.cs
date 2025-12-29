@@ -10,7 +10,7 @@ using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.LipstickControllers
 {
-    [Route("api/[controller]")]
+    [Route("api/lipstick/[controller]")]
     [ApiController]
     [Authorize]
     public class PageIntroController : BaseApiController

@@ -8,7 +8,7 @@ using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.StockControllers
 {
-    [Route("api/[controller]")]
+    [Route("api/stock/[controller]")]
     [ApiController]
     [Authorize]
     public class ChartController : BaseApiController

@@ -5,7 +5,7 @@ using OpenAI.Chat;
 
 namespace WebCore.Server.Controllers.FeatureControllers
 {
-    [Route("api/[controller]")]
+    [Route("api/feature/[controller]")]
     [ApiController]
     public class ChatGPTController : ControllerBase
     {

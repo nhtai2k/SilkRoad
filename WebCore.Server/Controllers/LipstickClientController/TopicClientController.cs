@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebCore.Server.Controllers.LipstickClientController
 {
-    [Route("api/[controller]")]
+    [Route("api/lipstick/[controller]")]
     [ApiController]
     [ApiKey]
     public class TopicClientController : ControllerBase

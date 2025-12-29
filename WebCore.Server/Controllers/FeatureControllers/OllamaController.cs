@@ -5,7 +5,7 @@ using WebCore.Server._Convergence.Services;
 
 namespace WebCore.Server.Controllers.FeatureControllers
 {
-    [Route("api/[controller]")]
+    [Route("api/feature/[controller]")]
     [ApiController]
     public class OllamaController : ControllerBase
     {

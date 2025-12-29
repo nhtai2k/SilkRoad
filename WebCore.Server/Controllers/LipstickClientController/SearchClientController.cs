@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebCore.Server.Controllers.LipstickClientController
 {
-    [Route("api/[controller]")]
+    [Route("api/lipstick/[controller]")]
     [ApiController]
     public class SearchClientController : ControllerBase
     {

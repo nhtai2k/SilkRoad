@@ -8,7 +8,7 @@ using WebCore.Server.Controllers.BaseApiControllers;
 namespace WebCore.Server.Controllers.StockControllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/stock/[controller]")]
     [Authorize]
     public class CompanyController : BaseApiController // Inherit from your base controller if available
     {

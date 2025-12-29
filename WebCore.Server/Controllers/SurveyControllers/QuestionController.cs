@@ -9,7 +9,7 @@ using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.SurveyControllers
 {
-    [Route("api/[controller]")]
+    [Route("api/survey/[controller]")]
     [ApiController]
     [Authorize]
     public class QuestionController : BaseApiController

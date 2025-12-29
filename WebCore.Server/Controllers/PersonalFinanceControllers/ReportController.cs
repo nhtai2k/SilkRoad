@@ -8,7 +8,7 @@ using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.PersonalFinanceControllers
 {
-    [Route("api/pf/[controller]")]
+    [Route("api/personalFinance/[controller]")]
     [ApiController]
     [Authorize]
     public class ReportController : BaseApiController
