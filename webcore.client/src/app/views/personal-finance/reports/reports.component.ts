@@ -1,7 +1,7 @@
 
 import { FormsModule } from '@angular/forms';
 import { ColoumnChartComponent } from "@components/charts/coloumn-chart/coloumn-chart.component";
-import { CardBodyComponent, CardComponent, CardHeaderComponent } from '@coreui/angular';
+import { CardBodyComponent, CardComponent, CardHeaderComponent, FormSelectDirective } from '@coreui/angular';
 import { ReportService } from '@services/personal-finance-services';
 import { AuthService } from '@services/system-services';
 
@@ -32,196 +32,68 @@ import { WidgetsDropdownComponent } from '../../widgets/widgets-dropdown/widgets
 import { DashboardChartsData, IChartProps } from './dashboard-charts-data';
 
 
-interface IUser {
-  name: string;
-  state: string;
-  registered: string;
-  country: string;
-  usage: number;
-  period: string;
-  payment: string;
-  activity: string;
-  avatar: string;
-  status: string;
-  color: string;
-}
-
 @Component({
   selector: 'app-reports',
   imports: [ColoumnChartComponent, CardComponent, CardBodyComponent, CardHeaderComponent, FormsModule,
-    WidgetsDropdownComponent, TextColorDirective, RowComponent, ColComponent, ButtonDirective, IconDirective, ReactiveFormsModule,
-    ButtonGroupComponent, FormCheckLabelDirective, ChartjsComponent, NgStyle, CardFooterComponent, GutterDirective,
-    ProgressBarDirective, ProgressComponent, WidgetsBrandComponent, TableDirective, AvatarComponent
-  ],
+    WidgetsDropdownComponent, TextColorDirective, ButtonDirective, IconDirective, ButtonGroupComponent,
+    //RowComponent, ColComponent, , ,
+    ReactiveFormsModule, FormCheckLabelDirective, FormSelectDirective],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.scss'
 })
 export class ReportsComponent implements OnInit {
   data: any[] = [];
-  selectedDate: string = '2025-11';
-
+  years: number[] = [];
+  selectedDate!: string;
+  selectedYear!: number;
+  
+  reportForm = new FormGroup({
+    type: new FormControl('month')
+  });
   constructor(private reportService: ReportService, private auth: AuthService) { }
 
   ngOnInit(): void {
-    this.loadData();
-    this.initCharts();
-    this.updateChartOnColorModeChange();
+     // Set default date to today for create form
+    const today = new Date();
+    const year = today.getFullYear();
+    for (let i = year; i >= year - 4; i--) {
+      this.years.push(i);
+    }
     
+    today.setMonth(today.getMonth() - 1);
+    this.selectedDate = today.toISOString().substring(0, 7);
+    this.selectedYear = year;
+    this.loadChart('month');
   }
 
-  onDateChange(event: any): void {
-    this.selectedDate = event.target.value;
-    console.log('Selected date:', this.selectedDate);
-    // this.loadData();
-  }
-
-  private loadData(): void {
+  private loadChart(type: string): void {
     this.auth.getCurrentUserInfor().subscribe(user => {
-      const userId = user?.userId;
-      if (userId) {
-        this.reportService.getColoumnChartByMonth(userId, this.selectedDate).subscribe(response => {
-          this.data = response.data;
-        });
+      if (user) {
+        if (type === 'year') {
+          this.reportService.getColoumnChartByYear(user.userId, this.selectedYear).subscribe(response => {
+            this.data = response.data;
+          });
+        } else {
+          this.reportService.getColoumnChartByMonth(user.userId, this.selectedDate).subscribe(response => {
+            this.data = response.data;
+          });
+        }
       }
     });
   }
-
-  // Additional methods for handling chart options and data can be added here
-
-  readonly #destroyRef: DestroyRef = inject(DestroyRef);
-  readonly #document: Document = inject(DOCUMENT);
-  readonly #renderer: Renderer2 = inject(Renderer2);
-  readonly #chartsData: DashboardChartsData = inject(DashboardChartsData);
-
-  public users: IUser[] = [
-    {
-      name: 'Yiorgos Avraamu',
-      state: 'New',
-      registered: 'Jan 1, 2021',
-      country: 'Us',
-      usage: 50,
-      period: 'Jun 11, 2021 - Jul 10, 2021',
-      payment: 'Mastercard',
-      activity: '10 sec ago',
-      avatar: './assets/images/avatars/1.jpg',
-      status: 'success',
-      color: 'success'
-    },
-    {
-      name: 'Avram Tarasios',
-      state: 'Recurring ',
-      registered: 'Jan 1, 2021',
-      country: 'Br',
-      usage: 10,
-      period: 'Jun 11, 2021 - Jul 10, 2021',
-      payment: 'Visa',
-      activity: '5 minutes ago',
-      avatar: './assets/images/avatars/2.jpg',
-      status: 'danger',
-      color: 'info'
-    },
-    {
-      name: 'Quintin Ed',
-      state: 'New',
-      registered: 'Jan 1, 2021',
-      country: 'In',
-      usage: 74,
-      period: 'Jun 11, 2021 - Jul 10, 2021',
-      payment: 'Stripe',
-      activity: '1 hour ago',
-      avatar: './assets/images/avatars/3.jpg',
-      status: 'warning',
-      color: 'warning'
-    },
-    {
-      name: 'Enéas Kwadwo',
-      state: 'Sleep',
-      registered: 'Jan 1, 2021',
-      country: 'Fr',
-      usage: 98,
-      period: 'Jun 11, 2021 - Jul 10, 2021',
-      payment: 'Paypal',
-      activity: 'Last month',
-      avatar: './assets/images/avatars/4.jpg',
-      status: 'secondary',
-      color: 'danger'
-    },
-    {
-      name: 'Agapetus Tadeáš',
-      state: 'New',
-      registered: 'Jan 1, 2021',
-      country: 'Es',
-      usage: 22,
-      period: 'Jun 11, 2021 - Jul 10, 2021',
-      payment: 'ApplePay',
-      activity: 'Last week',
-      avatar: './assets/images/avatars/5.jpg',
-      status: 'success',
-      color: 'primary'
-    },
-    {
-      name: 'Friderik Dávid',
-      state: 'New',
-      registered: 'Jan 1, 2021',
-      country: 'Pl',
-      usage: 43,
-      period: 'Jun 11, 2021 - Jul 10, 2021',
-      payment: 'Amex',
-      activity: 'Yesterday',
-      avatar: './assets/images/avatars/6.jpg',
-      status: 'info',
-      color: 'dark'
-    }
-  ];
-
-  public mainChart: IChartProps = { type: 'line' };
-  public mainChartRef: WritableSignal<any> = signal(undefined);
-  #mainChartRefEffect = effect(() => {
-    if (this.mainChartRef()) {
-      this.setChartStyles();
-    }
-  });
-  public chart: Array<IChartProps> = [];
-  public trafficRadioGroup = new FormGroup({
-    trafficRadio: new FormControl('Month')
-  });
-
-
-  initCharts(): void {
-    this.mainChart = this.#chartsData.mainChart;
+  onDateChange(event: any): void {
+    this.selectedDate = event.target.value;
+    this.loadChart('month');
   }
 
-  setTrafficPeriod(value: string): void {
-    this.trafficRadioGroup.setValue({ trafficRadio: value });
-    this.#chartsData.initMainChart(value);
-    this.initCharts();
+  onYearChange(event: any): void {
+    this.selectedYear = event.target.value;
+    this.loadChart('year');
   }
 
-  handleChartRef($chartRef: any) {
-    if ($chartRef) {
-      this.mainChartRef.set($chartRef);
-    }
-  }
-
-  updateChartOnColorModeChange() {
-    const unListen = this.#renderer.listen(this.#document.documentElement, 'ColorSchemeChange', () => {
-      this.setChartStyles();
-    });
-
-    this.#destroyRef.onDestroy(() => {
-      unListen();
-    });
-  }
-
-  setChartStyles() {
-    if (this.mainChartRef()) {
-      setTimeout(() => {
-        const options: ChartOptions = { ...this.mainChart.options };
-        const scales = this.#chartsData.getScales();
-        this.mainChartRef().options.scales = { ...options.scales, ...scales };
-        this.mainChartRef().update();
-      });
-    }
+  setRadioValue(value: string): void {
+    this.reportForm.setValue({ type: value });
+    this.loadChart(value);
   }
 
 }

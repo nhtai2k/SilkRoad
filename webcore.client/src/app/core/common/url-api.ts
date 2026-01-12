@@ -87,6 +87,7 @@ export enum EIncomePersonalFinanceUrl {
 //Report
 export enum EReportPersonalFinanceUrl {
   getColoumnChartByMonthUrl = "/api/personalFinance/report/GetColoumnChartByMonth",
+  getColoumnChartByYearUrl = "/api/personalFinance/report/GetColoumnChartByYear",
 }
 
 //#endregion

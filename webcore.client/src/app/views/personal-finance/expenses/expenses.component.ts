@@ -48,7 +48,7 @@ export class ExpensesComponent implements OnInit {
     { id: 4, name: 'Bank Transfer' }
   ];
   coloumns: any[] = [];
-  selectedDate: string = '2025-11';
+  selectedDate!: string;
   initAmountCreateForm = signal<number>(0);
   initSelectedCategoryUpdateForm = signal<any>(null);
   initExpenseUpdateForm = signal<ExpenseModel | null>(null);
@@ -102,6 +102,7 @@ export class ExpensesComponent implements OnInit {
     });
     // Set default date to today for create form
     const today = new Date().toISOString().split('T')[0];
+    this.selectedDate = today.substring(0, 7);
     // Set userId in create and filter forms
     this.authService.getCurrentUserInfor().subscribe((currentUser) => {
       if (currentUser && currentUser.userId) {
@@ -204,9 +205,8 @@ export class ExpensesComponent implements OnInit {
 
   private loadData(): void {
     this.authService.getCurrentUserInfor().subscribe(user => {
-      const userId = user?.userId;
-      if (userId) {
-        this.reportService.getColoumnChartByMonth(userId, this.selectedDate).subscribe(response => {
+      if (user) {
+        this.reportService.getColoumnChartByMonth(user.userId, this.selectedDate).subscribe(response => {
           this.coloumns = response.data;
         });
       }

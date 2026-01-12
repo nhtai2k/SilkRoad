@@ -36,9 +36,10 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
-        [HttpGet("GetColoumnChartByYear/{userId}/{month}")]
+        [HttpGet("GetColoumnChartByYear/{userId}/{year}")]
         public async Task<IActionResult> GetColoumnChartByMonth(int userId, int year)
         {
+            
             var data = await _helper.GetColoumnChartByMonth(year, userId);
             if (data == null || data.Count == 0)
             {

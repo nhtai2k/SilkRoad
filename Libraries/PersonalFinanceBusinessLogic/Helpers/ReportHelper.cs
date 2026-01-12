@@ -50,6 +50,7 @@ namespace PersonalFinanceBusinessLogic.Helpers
         public async Task<ICollection<ColoumnModel>> GetColoumnChartByMonth(int year, int userId)
         {
             List<ColoumnModel> coloumns = new List<ColoumnModel>();
+            List<string> labels = new List<string>() { "Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
             //Render months
             for (int month = 1; month <= 12; month++)
             {
@@ -62,7 +63,7 @@ namespace PersonalFinanceBusinessLogic.Helpers
                 {
                     ColoumnModel coloumnEmpty = new ColoumnModel()
                     {
-                        Category = start.ToString("dd/MM/yyyy"),
+                        Category = labels[month-1],
                         Value = 0
                     };
                     coloumns.Add(coloumnEmpty);
@@ -72,7 +73,7 @@ namespace PersonalFinanceBusinessLogic.Helpers
                 double sumAmount = (double)data.Sum(s => s.Amount) - (double)temp2.Sum(s => s.RefundAmount ?? 0);
                 ColoumnModel coloumn = new ColoumnModel()
                 {
-                    Category = start.ToString("dd/MM/yyyy"),
+                    Category = labels[month-1],
                     Value = sumAmount
                 };
                 coloumns.Add(coloumn);
