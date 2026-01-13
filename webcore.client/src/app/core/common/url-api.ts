@@ -128,7 +128,7 @@ export enum EOrderLipstickShopUrl {
 }
 //Product
 export enum EProductLipstickShopUrl {
-  getAllUrl = "/api/lipstick/product/getAll",
+  getByFilterUrl = "/api/lipstick/product/getByFilter",
   getAllActiveUrl = "/api/lipstick/product/getAllActive",
   getByIdUrl = "/api/lipstick/product/getById",
   createUrl = "/api/lipstick/product/create",

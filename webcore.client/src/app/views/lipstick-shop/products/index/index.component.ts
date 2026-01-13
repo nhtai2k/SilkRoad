@@ -47,8 +47,10 @@ export class IndexComponent {
     brandId: new FormControl(-1),
     sizeId: new FormControl(-1),
     colorId: new FormControl(-1),
-    nameEN: new FormControl(''),
-    nameVN: new FormControl(''),
+    nameEN: new FormControl(null),
+    nameVN: new FormControl(null),
+    pageSize: new FormControl(10),
+    pageIndex: new FormControl(1)
   });
   constructor(
       private subCategoryService: SubCategoryService, 
@@ -77,19 +79,11 @@ export class IndexComponent {
     this.getData();
   }
   getData(){
-    const query : Params = {
-      nameEN: this.filterForm.value.nameEN,
-      nameVN: this.filterForm.value.nameVN,
-      categoryId: this.filterForm.value.categoryId,
-      subCategoryId: this.filterForm.value.subCategoryId,
-      brandId: this.filterForm.value.brandId,
-      sizeId: this.filterForm.value.sizeId,
-      colorId: this.filterForm.value.colorId,
+    this.filterForm.patchValue({
       pageIndex: this.pageInformation.pageIndex,
-      pageSize: this.pageInformation.pageSize,
-    }
-    console.log(query);
-    this.productService.getAllByFilter(query).subscribe((res) => {
+      pageSize: this.pageInformation.pageSize
+    });
+    this.productService.getAllByFilter(this.filterForm.value).subscribe((res) => {
       this.data = res.data;
       this.pageInformation.totalItems = res.data.totalItems;
       this.pageInformation.totalPages = res.data.totalPages;

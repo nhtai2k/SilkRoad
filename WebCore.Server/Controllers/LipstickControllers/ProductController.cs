@@ -24,20 +24,17 @@ namespace WebCore.Server.Controllers.LipstickControllers
             _localizer = localizer;
             _actionLog = actionLog;
         }
-        [HttpGet]
-        [Route("getAll")]
-        public async Task<IActionResult> GetAll(string? nameVN, string? nameEN,
-            int categoryId, int subCategoryId, int brandId,
-            int sizeId, int colorId, int pageIndex = 1, int pageSize = 10)
+        [HttpPost("getByFilter")]
+        public async Task<IActionResult> GetByFilter(ProductFilterModel filter)
         {
             string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
             string controllerName = ControllerContext.ActionDescriptor.ControllerName;
-            if (pageIndex < 1)
+            if (filter.PageIndex < 1)
             {
                 //_actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Failed);
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             }
-            Pagination<ProductViewModel> data = await _productHelper.GetAllAsync(nameVN, nameEN, categoryId, subCategoryId, brandId, sizeId, colorId, pageIndex, pageSize);
+            Pagination<ProductViewModel> data = await _productHelper.GetByFilterAsync(filter);
             //_actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Successful);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
