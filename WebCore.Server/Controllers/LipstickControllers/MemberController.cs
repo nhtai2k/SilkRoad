@@ -31,11 +31,11 @@ namespace WebCore.Server.Controllers.LipstickControllers
             string controllerName = ControllerContext.ActionDescriptor.ControllerName;
             if (pageIndex < 1)
             {
-                _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Failed);
+                //_actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Failed);
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             }
             Pagination<MemberViewModel> data = _memberHelper.GetAll(phoneNumber, email, pageIndex, pageSize);
-            _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Successful);
+            //_actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Successful);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
     }

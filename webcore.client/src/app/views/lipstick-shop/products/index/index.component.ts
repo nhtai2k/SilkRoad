@@ -88,6 +88,7 @@ export class IndexComponent {
       pageIndex: this.pageInformation.pageIndex,
       pageSize: this.pageInformation.pageSize,
     }
+    console.log(query);
     this.productService.getAllByFilter(query).subscribe((res) => {
       this.data = res.data;
       this.pageInformation.totalItems = res.data.totalItems;
