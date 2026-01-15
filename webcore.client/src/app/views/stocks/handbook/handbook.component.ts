@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonCloseDirective, ButtonDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, FormControlDirective, FormLabelDirective, FormDirective, FormCheckComponent, FormSelectDirective, AccordionButtonDirective, AccordionComponent, AccordionItemComponent, TemplateIdDirective } from '@coreui/angular';
@@ -8,19 +7,15 @@ import { PageInformation, Pagination } from '@models/pagination.model';
 import { ToastService } from '@services/helper-services/toast.service';
 import { EColors } from '@common/global';
 import { DataTableComponent } from '@components/generals/data-table/data-table.component';
-import { TreeSelectV1Component } from "@components/selects/tree-select-v1/tree-select-v1.component";
-import { OptionModel } from '@models/option.model';
-import { SelectSearchComponent } from "@components/selects/select-search/select-search.component";
 import { HandbookModel } from '@models/stock-models/handbook.model';
 import { HandbookService } from '@services/stock-services';
 import { TextEditorComponent } from "@components/text-editor/text-editor.component";
 
 @Component({
   selector: 'app-handbook',
-  imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective, FormSelectDirective, AccordionButtonDirective,
-    AccordionComponent, AccordionItemComponent, TemplateIdDirective, ModalComponent, ButtonDirective, FormDirective,
-    ReactiveFormsModule, FormCheckComponent, ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent,
-    DataTableComponent, IconDirective, SelectSearchComponent, TextEditorComponent],
+  imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective, ModalComponent, ButtonDirective, FormDirective,
+    ReactiveFormsModule, ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent,
+    DataTableComponent, IconDirective, TextEditorComponent],
   templateUrl: './handbook.component.html',
   styleUrl: './handbook.component.scss',
 })
