@@ -36,6 +36,14 @@ const stockMarketChildrenRoutes: Routes = [
   {
     path: 'stock/trade-histories',
     loadChildren: () => import('./views/stocks/trade-histories/routes').then((m) => m.routes)
+  },
+    {
+    path: 'stock/handbook',
+    loadChildren: () => import('./views/stocks/handbook/routes').then((m) => m.routes)
+  },
+  {
+    path: 'stock/trading-bot',
+    loadChildren: () => import('./views/stocks/trading-bot/routes').then((m) => m.routes)
   }
 ];
 

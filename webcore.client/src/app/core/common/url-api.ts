@@ -1,4 +1,14 @@
 //#region StockMarket
+//Handbook
+export enum EHandbookStockMarketUrl {
+  getAllUrl = "/api/stock/handbook/getAll",
+  getByIdUrl = "/api/stock/handbook/getById",
+  createUrl = "/api/stock/handbook/create",
+  updateUrl = "/api/stock/handbook/update",
+  softDeleteUrl = "/api/stock/handbook/softDelete",
+  restoreUrl = "/api/stock/handbook/restore",
+  deleteUrl = "/api/stock/handbook/delete",
+}
 //Company
 export enum ECompanyStockMarketUrl {
   getAllUrl = "/api/stock/company/getAll",
