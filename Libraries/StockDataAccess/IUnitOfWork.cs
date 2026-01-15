@@ -9,6 +9,7 @@ namespace StockDataAccess
         IStockPriceRepository StockPriceRepository { get; }
         IIndustryRepository IndustryRepository { get; }
         ITradeHistoryRepository TradeHistoryRepository { get; }
+        IHandbookRepository HandbookRepository { get; }
         IDbContextTransaction BeginTransaction();
         void Commit();
         void Rollback();

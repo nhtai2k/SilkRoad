@@ -1,15 +1,37 @@
-<c-card class="mb-4">
-    <c-card-header>
-        <div class="d-flex justify-content-between align-items-center">
-            <span>
-                Reports
-            </span>
-            <input type="month" [(ngModel)]="selectedDate" (change)="onDateChange($event)" />
-        </div>
-    </c-card-header>
-    <c-card-body>
-        @if(data && data.length > 0){
-        <app-coloumn-chart [data]="data"></app-coloumn-chart>
+<app-widgets-dropdown />
+
+<c-card class="my-4">
+  <c-card-header class="bg-dark">
+    <div class="d-flex justify-content-between align-items-center">
+      <span class="fw-bold text-white">
+        Reports
+      </span>
+      @if(reportForm.value.type === 'month') {
+      <input class="form-control w-25" type="month" [(ngModel)]="selectedDate" (change)="onDateChange($event)" />
+      }
+      @else{
+      <select class="form-select w-25" [(ngModel)]="selectedYear" cSelect (change)="onYearChange($event)">
+        @for(year of years; track year) {
+        <option [value]="year">{{ year }}</option>
         }
-    </c-card-body>
+      </select>
+      }
+      <form [formGroup]="reportForm">
+        <c-button-group aria-label="Basic radio toggle button group" role="group" class="me-2">
+          <input class="btn-check" formControlName="type" type="radio" value="month" />
+          <label (click)="setRadioValue('month')" cButton cFormCheckLabel variant="outline">Month</label>
+          <input class="btn-check" formControlName="type" type="radio" value="year" />
+          <label (click)="setRadioValue('year')" cButton cFormCheckLabel variant="outline">Year</label>
+        </c-button-group>
+        <button type="button" cButton class="float-end" color="primary" aria-label="Download">
+          <svg cIcon name="cilCloudDownload"></svg>
+        </button>
+      </form>
+    </div>
+  </c-card-header>
+  <c-card-body>
+    @if(data && data.length > 0){
+    <app-coloumn-chart [data]="data"></app-coloumn-chart>
+    }
+  </c-card-body>
 </c-card>

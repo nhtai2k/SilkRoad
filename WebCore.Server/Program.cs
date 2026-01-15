@@ -54,7 +54,7 @@ namespace WebCore.Server
                 });
                 // Add services to the container.
                 #region add database context
-                builder.Services.Configure<UserActionLoggingDatabaseSettings>(builder.Configuration.GetSection("UserActionLogging"));
+                builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDBSettings"));
                 //BOM DB
                 builder.Services.AddDbContext<BOMDataAccess.ApplicationContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("BOMSqlConnection")));

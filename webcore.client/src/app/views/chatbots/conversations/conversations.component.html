@@ -1,0 +1,77 @@
+<h3 class="fw-bold">Conversations</h3>
+<c-accordion class="mb-4">
+    <c-accordion-item #item0="cAccordionItem" [visible]="true">
+        <ng-template cTemplateId="accordionHeaderTemplate">
+            <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
+                Filter:
+            </button>
+        </ng-template>
+        <ng-template cTemplateId="accordionBodyTemplate">
+            <div class="accordion-body">
+                <div class="row">
+                    <div class="col-8">
+                        <form cForm [formGroup]="filterForm" (ngSubmit)="filter()">
+                            <div class="row">
+                                <div class="col-auto">
+                                    <select cFormControl formControlName="source" class="form-select">
+                                        <option value="">All Sources</option>
+                                        <option value="ChatGPT">ChatGPT</option>
+                                        <option value="AzureOpenAI">Azure OpenAI</option>
+                                        <option value="CustomAI">Custom AI</option>
+                                    </select>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="date" cFormControl formControlName="startDate"
+                                        class="form-control" placeholder="Start Date" />
+                                </div>
+                                <div class="col-auto">
+                                    <input type="date" cFormControl formControlName="endDate"
+                                        class="form-control" placeholder="End Date" />
+                                </div>
+                                <div class="col-auto">
+                                    <input type="text" cFormControl formControlName="searchText"
+                                        class="form-control" placeholder="Search..." />
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary">Apply</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </c-accordion-item>
+</c-accordion>
+
+<app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
+  (changePageSize)="onPageSizeChange($event)">
+  <thead class="text-nowrap text-truncate">
+    <tr>
+      <th scope="col">No</th>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Created At</th>
+      <!-- <th scope="col">createdBy</th>
+      <th scope="col">modifiedBy</th> -->
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (item of data.items; track item.id; let i = $index) {
+    <tr>
+      <td>{{ i+1 }}</td>
+      <td>{{ item.id }}</td>
+      <td>{{ item.name ? item.name : '###' }}</td>
+      <td>{{ item.timestamp }}</td>
+      <td>
+        <div class="d-flex justify-content-end">
+          <a class="btn btn-primary me-2" routerLink="/messages/{{item.id}}">
+            <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
+          </a>
+        </div>
+      </td>
+    </tr>
+    }
+  </tbody>
+</app-data-table>

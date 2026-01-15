@@ -11,15 +11,15 @@ namespace Common.Services.ActionLoggingServices
         private readonly IJwtService _jwtService;
         public ActionLoggingService(
             IJwtService jwtService,
-            IOptions<UserActionLoggingDatabaseSettings> userActionDatabaseSettings)
+            IOptions<MongoDBSettings> userActionDatabaseSettings)
         {
             var mongoClient = new MongoClient(
                 userActionDatabaseSettings.Value.ConnectionString);
 
             var mongoDatabase = mongoClient.GetDatabase(
-                userActionDatabaseSettings.Value.DatabaseName);
+                userActionDatabaseSettings.Value.LoggingDatabaseName);
             _userActionsCollection = mongoDatabase.GetCollection<UserActionModel>(
-                userActionDatabaseSettings.Value.UserActionsCollectionName);
+                userActionDatabaseSettings.Value.LoggingCollectionName);
             _jwtService = jwtService;
         }
 

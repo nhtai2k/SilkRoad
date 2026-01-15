@@ -66,6 +66,16 @@ const stockMarketNavItems: INavData[] = [
     url: '/stock/trade-histories',
     iconComponent: { name: 'cil-notes' }
   },
+  {
+    name: 'Handbook',
+    url: '/stock/handbook',
+    iconComponent: { name: 'cil-book' }
+  },
+  {
+    name: 'Trading Bot',
+    url: '/stock/trading-bot',
+    iconComponent: { name: 'cil-baby' }
+  }
   //#endregion
 
 ];
@@ -372,7 +382,7 @@ const bomNavItems: INavData[] = [
 const systemNavItems: INavData[] = [
   //#region System Management
   {
-    name: 'System Management',
+    name: 'System',
     title: true
   },
   {
@@ -385,11 +395,11 @@ const systemNavItems: INavData[] = [
   //   url: '/logs',
   //   iconComponent: { name: 'cil-book' }
   // },
-  // {
-  //   name: 'Settings',
-  //   url: '/settings',
-  //   iconComponent: { name: 'cil-settings' }
-  // },
+  {
+    name: 'Settings',
+    url: '/settings',
+    iconComponent: { name: 'cil-settings' }
+  },
   // {
   //   name: 'Extend',
   //   url: '/system-management/extension',
@@ -446,12 +456,36 @@ const mindMapNavItems: INavData[] = [
   //#endregion
 ];
 
+const chatbotNavItems: INavData[] = [
+  //#region Chat Bot
+    {
+    name: 'Chat Bot',
+    title: true
+  },
+  // {
+  //   name: 'Beebot',
+  //   url: '/beebot',
+  //   iconComponent: { name: 'cil-speedometer' }
+  // },
+    {
+    name: 'prompts',
+    url: '/prompts',
+    iconComponent: { name: 'cil-speedometer' }
+  },
+  {
+    name: 'Conversations',
+    url: '/conversations',
+    iconComponent: { name: 'cil-chat-bubble' }
+  },
+  //#endregion
+];
+
 export const navItems: INavData[] = [
-  ...testNavItems,
   ...mindMapNavItems,
   ...featureNavItems,
   ...stockMarketNavItems,
   ...personalFinanceNavItems,
+  ...chatbotNavItems,
   ...restuarantNavItems,
   ...lipstickShopNavItems,
   ...surveyNavItems,

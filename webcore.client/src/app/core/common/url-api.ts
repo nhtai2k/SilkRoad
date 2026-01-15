@@ -1,4 +1,57 @@
+//#region BeeBot
+//BeeBot
+export const enum EBeeBotUrl {
+  sendMessageUrl = "/api/chatbot/beeBot/sendMessage",
+  getVoidUrl = "/api/chatbot/beeBot/getVoid",
+  getMusicUrl = "/api/chatbot/beeBot/getMusic",
+}
+
+//Ollama
+export const enum EOllamaUrl {
+  completeChatUrl = "/api/chatbot/ollama/completeChat",
+  completeChatStreamingUrl = "/api/chatbot/ollama/completeChatStreaming",
+  getModelsUrl = "/api/chatbot/ollama/getModels",
+}
+//ChatGPT
+export const enum EChatGPTUrl {
+  completeChatUrl = "/api/chatbot/chatgpt/completeChat",
+  getModelsUrl = "/api/chatbot/chatgpt/getModels",
+}
+//Prompt
+export const enum EPromptUrl {
+  getAllUrl = "/api/chatbot/prompt/getall",
+  getOptionListUrl = "/api/chatbot/prompt/getOptionList",
+  getByIdUrl = "/api/chatbot/prompt/getById",
+  createUrl = "/api/chatbot/prompt/create",
+  updateUrl = "/api/chatbot/prompt/update",
+  softDeleteUrl = "/api/chatbot/prompt/softDelete",
+  getAllActiveUrl = "/api/chatbot/prompt/getAllActive",
+  getAllDeletedUrl = "/api/chatbot/prompt/getAllDeleted",
+  restoreUrl = "/api/chatbot/prompt/restore",
+  deleteUrl = "/api/chatbot/prompt/delete",
+}
+//Conversation
+export const enum EConversationUrl {
+  getByFilterUrl = "/api/chatbot/conversation/getByFilter",
+}
+//Voice
+export const enum EVoiceUrl {
+  getVoiceFromChatGPTUrl = "/api/chatbot/voice/getVoiceFromChatGPT",
+  getVoiceFromElevenlabsUrl = "/api/chatbot/voice/getVoiceFromElevenlabs",
+}
+//#endregion
+
 //#region StockMarket
+//Handbook
+export enum EHandbookStockMarketUrl {
+  getAllUrl = "/api/stock/handbook/getAll",
+  getByIdUrl = "/api/stock/handbook/getById",
+  createUrl = "/api/stock/handbook/create",
+  updateUrl = "/api/stock/handbook/update",
+  softDeleteUrl = "/api/stock/handbook/softDelete",
+  restoreUrl = "/api/stock/handbook/restore",
+  deleteUrl = "/api/stock/handbook/delete",
+}
 //Company
 export enum ECompanyStockMarketUrl {
   getAllUrl = "/api/stock/company/getAll",
@@ -87,6 +140,7 @@ export enum EIncomePersonalFinanceUrl {
 //Report
 export enum EReportPersonalFinanceUrl {
   getColoumnChartByMonthUrl = "/api/personalFinance/report/GetColoumnChartByMonth",
+  getColoumnChartByYearUrl = "/api/personalFinance/report/GetColoumnChartByYear",
 }
 
 //#endregion
@@ -127,7 +181,7 @@ export enum EOrderLipstickShopUrl {
 }
 //Product
 export enum EProductLipstickShopUrl {
-  getAllUrl = "/api/lipstick/product/getAll",
+  getByFilterUrl = "/api/lipstick/product/getByFilter",
   getAllActiveUrl = "/api/lipstick/product/getAllActive",
   getByIdUrl = "/api/lipstick/product/getById",
   createUrl = "/api/lipstick/product/create",

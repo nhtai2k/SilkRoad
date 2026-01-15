@@ -1,40 +1,99 @@
-import { Component, OnInit } from '@angular/core';
+
 import { FormsModule } from '@angular/forms';
 import { ColoumnChartComponent } from "@components/charts/coloumn-chart/coloumn-chart.component";
-import { CardBodyComponent, CardComponent, CardHeaderComponent } from '@coreui/angular';
+import { CardBodyComponent, CardComponent, CardHeaderComponent, FormSelectDirective } from '@coreui/angular';
 import { ReportService } from '@services/personal-finance-services';
 import { AuthService } from '@services/system-services';
 
+
+import { DOCUMENT, NgStyle } from '@angular/common';
+import { Component, DestroyRef, effect, inject, OnInit, Renderer2, signal, WritableSignal } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ChartOptions } from 'chart.js';
+import {
+  AvatarComponent,
+  ButtonDirective,
+  ButtonGroupComponent,
+  CardFooterComponent,
+  ColComponent,
+  FormCheckLabelDirective,
+  GutterDirective,
+  ProgressBarDirective,
+  ProgressComponent,
+  RowComponent,
+  TableDirective,
+  TextColorDirective
+} from '@coreui/angular';
+import { ChartjsComponent } from '@coreui/angular-chartjs';
+import { IconDirective } from '@coreui/icons-angular';
+
+import { WidgetsBrandComponent } from '../../widgets/widgets-brand/widgets-brand.component';
+import { WidgetsDropdownComponent } from '../../widgets/widgets-dropdown/widgets-dropdown.component';
+import { DashboardChartsData, IChartProps } from './dashboard-charts-data';
+
+
 @Component({
   selector: 'app-reports',
-  imports: [ColoumnChartComponent, CardComponent, CardBodyComponent, CardHeaderComponent, FormsModule],
+  imports: [ColoumnChartComponent, CardComponent, CardBodyComponent, CardHeaderComponent, FormsModule,
+    WidgetsDropdownComponent, TextColorDirective, ButtonDirective, IconDirective, ButtonGroupComponent,
+    //RowComponent, ColComponent, , ,
+    ReactiveFormsModule, FormCheckLabelDirective, FormSelectDirective],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.scss'
 })
 export class ReportsComponent implements OnInit {
   data: any[] = [];
-  selectedDate: string = '2025-11';
+  years: number[] = [];
+  selectedDate!: string;
+  selectedYear!: number;
   
-  constructor(private reportService: ReportService, private auth: AuthService) {}
-  
+  reportForm = new FormGroup({
+    type: new FormControl('month')
+  });
+  constructor(private reportService: ReportService, private auth: AuthService) { }
+
   ngOnInit(): void {
-    this.loadData();
+     // Set default date to today for create form
+    const today = new Date();
+    const year = today.getFullYear();
+    for (let i = year; i >= year - 4; i--) {
+      this.years.push(i);
+    }
+    
+    today.setMonth(today.getMonth() - 1);
+    this.selectedDate = today.toISOString().substring(0, 7);
+    this.selectedYear = year;
+    this.loadChart('month');
   }
 
-  onDateChange(event: any): void {
-    this.selectedDate = event.target.value;
-    this.loadData();
-  }
-
-  private loadData(): void {
+  private loadChart(type: string): void {
     this.auth.getCurrentUserInfor().subscribe(user => {
-      const userId = user?.userId;
-      if (userId) {
-        this.reportService.getColoumnChartByMonth(userId, this.selectedDate).subscribe(response => {
-          this.data = response.data;
-          console.log('Column Chart Data:', this.data);
-        });
+      if (user) {
+        if (type === 'year') {
+          this.reportService.getColoumnChartByYear(user.userId, this.selectedYear).subscribe(response => {
+            this.data = response.data;
+          });
+        } else {
+          this.reportService.getColoumnChartByMonth(user.userId, this.selectedDate).subscribe(response => {
+            this.data = response.data;
+          });
+        }
       }
     });
   }
+  onDateChange(event: any): void {
+    this.selectedDate = event.target.value;
+    this.loadChart('month');
+  }
+
+  onYearChange(event: any): void {
+    this.selectedYear = event.target.value;
+    this.loadChart('year');
+  }
+
+  setRadioValue(value: string): void {
+    this.reportForm.setValue({ type: value });
+    this.loadChart(value);
+  }
+
 }

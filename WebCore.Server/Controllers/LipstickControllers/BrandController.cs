@@ -33,16 +33,16 @@ namespace WebCore.Server.Controllers.LipstickControllers
             string controllerName = ControllerContext.ActionDescriptor.ControllerName;
             if (pageIndex < 1)
             {
-                _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Failed);
+                //_actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Failed);
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             }
             Pagination<BrandViewModel> data = await _brandHelper.GetAllAsync(pageIndex, pageSize);
             if (data == null)
             {
-                _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Failed);
+                //_actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Failed);
                 return Failed(EStatusCodes.NotFound, _localizer["dataNotFound"]);
             }
-            _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Successful);
+            //_actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Successful);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
@@ -52,7 +52,7 @@ namespace WebCore.Server.Controllers.LipstickControllers
         {
             string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
             IEnumerable<BrandViewModel> data = _brandHelper.GetAllActive();
-            _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.View, EUserActionStatus.Successful);
+            //_actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.View, EUserActionStatus.Successful);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
@@ -65,10 +65,10 @@ namespace WebCore.Server.Controllers.LipstickControllers
             var data = _brandHelper.GetById(Id);
             if (data == null)
             {
-                _actionLog.CreateAsync(token, controllerName, EUserAction.ViewDetails, EUserActionStatus.Failed);
+                //_actionLog.CreateAsync(token, controllerName, EUserAction.ViewDetails, EUserActionStatus.Failed);
                 return Failed(EStatusCodes.NotFound, _localizer["dataNotFound"]);
             }
-            _actionLog.CreateAsync(token, controllerName, EUserAction.ViewDetails, EUserActionStatus.Successful);
+            //_actionLog.CreateAsync(token, controllerName, EUserAction.ViewDetails, EUserActionStatus.Successful);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
@@ -81,16 +81,16 @@ namespace WebCore.Server.Controllers.LipstickControllers
             string controllerName = ControllerContext.ActionDescriptor.ControllerName;
             if (!ModelState.IsValid)
             {
-                _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Failed, model);
+                //_actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Failed, model);
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             }
             var result = _brandHelper.Create(model);
             if (!result)
             {
-                _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Failed, model);
+                //_actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Failed, model);
                 return Failed(EStatusCodes.BadRequest, _localizer["dataCreationFailed"]);
             }
-            _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Successful, model);
+            //_actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Successful, model);
             return Succeeded(_localizer["dataCreatedSuccessfully"]);
         }
 
@@ -103,13 +103,13 @@ namespace WebCore.Server.Controllers.LipstickControllers
             string controllerName = ControllerContext.ActionDescriptor.ControllerName;
             if (!ModelState.IsValid)
             {
-                _actionLog.CreateAsync(token, controllerName, EUserAction.Update, EUserActionStatus.Failed, model);
+                //_actionLog.CreateAsync(token, controllerName, EUserAction.Update, EUserActionStatus.Failed, model);
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             }
             var result = _brandHelper.Update(model);
             if (!result)
             {
-                _actionLog.CreateAsync(token, controllerName, EUserAction.Update, EUserActionStatus.Failed, model);
+                //_actionLog.CreateAsync(token, controllerName, EUserAction.Update, EUserActionStatus.Failed, model);
                 return Failed(EStatusCodes.BadRequest, _localizer["dataUpdateFailed"]);
             }
 
@@ -127,10 +127,10 @@ namespace WebCore.Server.Controllers.LipstickControllers
             var result = _brandHelper.Delete(Id);
             if (!result)
             {
-                _actionLog.CreateAsync(token, controllerName, EUserAction.Delete, EUserActionStatus.Failed, Id);
+                //_actionLog.CreateAsync(token, controllerName, EUserAction.Delete, EUserActionStatus.Failed, Id);
                 return Failed(EStatusCodes.BadRequest, _localizer["dataDeletionFailed"]);
             }
-            _actionLog.CreateAsync(token, controllerName, EUserAction.Delete, EUserActionStatus.Successful, Id);
+            //_actionLog.CreateAsync(token, controllerName, EUserAction.Delete, EUserActionStatus.Successful, Id);
             return Succeeded(_localizer["dataDeletedSuccessfully"]);
         }
         //[HttpGet]

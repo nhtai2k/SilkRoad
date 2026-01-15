@@ -1,6 +1,6 @@
 import { OptionModel } from "@models/option.model";
 
-export const baseUrl = "https://dev.thiso.vn/#/";
+export const baseUrl = "https://localhost:7185/";
 
 export const chatbotHubUrl = baseUrl + "chat";
 export const ollamaUrl = baseUrl + "api/Ollama/GetResponse";

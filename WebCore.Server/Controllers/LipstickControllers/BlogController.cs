@@ -32,11 +32,11 @@ namespace WebCore.Server.Controllers.LipstickControllers
             string controllerName = ControllerContext.ActionDescriptor.ControllerName;
             if (pageIndex < 1)
             {
-                _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Failed);
+                //_actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Failed);
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             }
             Pagination<BlogViewModel> data = await _blogHelper.GetAllAsync(pageIndex, pageSize, topicId);
-            _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Successful);
+            //_actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Successful);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
         [HttpGet]
@@ -45,7 +45,7 @@ namespace WebCore.Server.Controllers.LipstickControllers
         {
             string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
             IEnumerable<BlogViewModel> data = _blogHelper.GetAllActive();
-            _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.View, EUserActionStatus.Successful);
+            //_actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.View, EUserActionStatus.Successful);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
@@ -58,10 +58,10 @@ namespace WebCore.Server.Controllers.LipstickControllers
             BlogViewModel data = _blogHelper.GetById(Id);
             if (data == null)
             {
-                _actionLog.CreateAsync(token, controllerName, EUserAction.ViewDetails, EUserActionStatus.Failed);
+                //_actionLog.CreateAsync(token, controllerName, EUserAction.ViewDetails, EUserActionStatus.Failed);
                 return Failed(EStatusCodes.NotFound, _localizer["dataNotFound"]);
             }
-            _actionLog.CreateAsync(token, controllerName, EUserAction.ViewDetails, EUserActionStatus.Successful);
+            //_actionLog.CreateAsync(token, controllerName, EUserAction.ViewDetails, EUserActionStatus.Successful);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
         [HttpPost]
@@ -73,16 +73,16 @@ namespace WebCore.Server.Controllers.LipstickControllers
             string controllerName = ControllerContext.ActionDescriptor.ControllerName;
             if (!ModelState.IsValid)
             {
-                _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Failed, model);
+                //_actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Failed, model);
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             }
             var result = _blogHelper.Create(model);
             if (!result)
             {
-                _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Failed, model);
+                //_actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Failed, model);
                 return Failed(EStatusCodes.BadRequest, _localizer["dataCreationFailed"]);
             }
-            _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Successful, model);
+            //_actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Successful, model);
             return Succeeded(_localizer["dataCreatedSuccessfully"]);
         }
         [HttpPut]
@@ -94,16 +94,16 @@ namespace WebCore.Server.Controllers.LipstickControllers
             string controllerName = ControllerContext.ActionDescriptor.ControllerName;
             if (!ModelState.IsValid)
             {
-                _actionLog.CreateAsync(token, controllerName, EUserAction.Update, EUserActionStatus.Failed, model);
+                //_actionLog.CreateAsync(token, controllerName, EUserAction.Update, EUserActionStatus.Failed, model);
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             }
             var result = _blogHelper.Update(model);
             if (!result)
             {
-                _actionLog.CreateAsync(token, controllerName, EUserAction.Update, EUserActionStatus.Failed, model);
+                //_actionLog.CreateAsync(token, controllerName, EUserAction.Update, EUserActionStatus.Failed, model);
                 return Failed(EStatusCodes.BadRequest, _localizer["dataUpdateFailed"]);
             }
-            _actionLog.CreateAsync(token, controllerName, EUserAction.Update, EUserActionStatus.Successful, model);
+            //_actionLog.CreateAsync(token, controllerName, EUserAction.Update, EUserActionStatus.Successful, model);
             return Succeeded(_localizer["dataUpdatedSuccessfully"]);
         }
         //[HttpDelete]

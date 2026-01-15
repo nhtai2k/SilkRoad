@@ -14,6 +14,7 @@ namespace StockDataAccess
         public IStockPriceRepository StockPriceRepository { private set; get; }
         public IIndustryRepository IndustryRepository { private set; get; }
         public ITradeHistoryRepository TradeHistoryRepository { private set; get; }
+        public IHandbookRepository HandbookRepository { private set; get; }
 
         public UnitOfWork(ApplicationContext databaseContext)
         {
@@ -22,6 +23,7 @@ namespace StockDataAccess
             StockPriceRepository = new StockPriceRepository(context);
             IndustryRepository = new IndustryRepository(context);
             TradeHistoryRepository = new TradeHistoryRepository(context);
+            HandbookRepository = new HandbookRepository(context);
         }
 
         public void SaveChanges()

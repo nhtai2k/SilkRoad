@@ -13,4 +13,8 @@ export class ReportService {
     const url = `${EReportPersonalFinanceUrl.getColoumnChartByMonthUrl}/${userId}/${month}`;
     return this.http.get<APIResponse<ColoumnModel[]>>(url);
   }
+    getColoumnChartByYear(userId: number, year: number): Observable<APIResponse<ColoumnModel[]>> {
+    const url = `${EReportPersonalFinanceUrl.getColoumnChartByYearUrl}/${userId}/${year}`;
+    return this.http.get<APIResponse<ColoumnModel[]>>(url);
+  }
 }

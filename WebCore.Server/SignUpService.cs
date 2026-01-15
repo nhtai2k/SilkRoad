@@ -4,6 +4,11 @@ using BusinessLogic.Helpers.FeatureHelpers;
 using BusinessLogic.Helpers.SystemHelpers;
 using BusinessLogic.IHelpers.IFeatureHelper;
 using BusinessLogic.IHelpers.ISystemHelpers;
+using ChatBot;
+using ChatBot.Helpers;
+using ChatBot.IHelpers;
+using ChatBot.IServices;
+using ChatBot.Services;
 using Common.Custom.ApiKey;
 using Common.Services.ActionLoggingServices;
 using Common.Services.ConvertWordToPdfServices;
@@ -19,7 +24,6 @@ using StockBusinessLogic.Helpers;
 using StockBusinessLogic.IHelpers;
 using SurveyBusinessLogic.Helpers;
 using SurveyBusinessLogic.IHelpers;
-using WebCore.Server._Convergence.Services;
 
 namespace WebCore.Server
 {
@@ -27,6 +31,21 @@ namespace WebCore.Server
     {
         public static IServiceCollection SignUp(this IServiceCollection services)
         {
+            #region Chatbot
+            services.AddScoped<IBeeBotHelper, BeeBotHelper>();
+            services.AddScoped<IPromptHelper, PromptHelper>();
+            services.AddScoped<IChatGPTHelper, ChatGPTHelper>();
+            services.AddScoped<IOllamaHelper, OllamaHelper>();
+            services.AddScoped<IVoiceHelper, VoiceHelper>();
+            services.AddScoped<IMessageHelper, MessageHelper>();
+            services.AddScoped<IConversationHelper, ConversationHelper>();
+            // database
+            services.AddSingleton<ApplicationConnection>();
+            services.AddScoped<IMessageService, MessageService>();
+            services.AddScoped<IConversationService, ConversationService>();
+            services.AddScoped<IPromptService, PromptService>();
+            #endregion
+
             #region Lipstick
             services.AddScoped<LipstickDataAccess.IUnitOfWork, LipstickDataAccess.UnitOfWork>();
             //lipstick
@@ -127,6 +146,7 @@ namespace WebCore.Server
             services.AddScoped<IStockPriceHelper, StockPriceHelper>();
             services.AddScoped<IIndustryHelper, IndustryHelper>();
             services.AddScoped<ITradeHistoryHelper, TradeHistoryHelper>();
+            services.AddScoped<IHandbookHelper, HandbookHelper>();
             #endregion
 
             #region System Database
@@ -153,7 +173,6 @@ namespace WebCore.Server
             services.AddTransient<IApiKeyValidation, ApiKeyValidation>();
             services.AddScoped<ApiKeyAuthFilter>();
             services.AddAutoMapper(typeof(Program));
-            services.AddScoped<ChatService>();
             #endregion
             return services;
         }

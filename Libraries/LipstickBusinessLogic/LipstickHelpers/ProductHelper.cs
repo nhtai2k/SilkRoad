@@ -79,40 +79,38 @@ namespace LipstickBusinessLogic.LipstickHelpers
             return model;
         }
 
-        public async Task<Pagination<ProductViewModel>> GetAllAsync(string? nameVN, string? nameEN,
-      int categoryId, int subCategoryId, int brandId, int sizeId,
-      int colorId, int pageIndex, int pageSize)
+        public async Task<Pagination<ProductViewModel>> GetByFilterAsync(ProductFilterModel filter)
         {
             var model = new Pagination<ProductViewModel>();
 
-            if (pageSize > 0)
-                model.PageSize = pageSize;
+            if (filter.PageSize > 0)
+                model.PageSize = filter.PageSize;
 
             // Start the query
             var query = _unitOfWork.ProductRepository.Query(s => !s.IsDeleted && s.IsActive);
 
             // Apply dynamic filters
-            if (!string.IsNullOrEmpty(nameVN))
-                query = query.Where(s => s.NameVN.Contains(nameVN));
-            if (!string.IsNullOrEmpty(nameEN))
-                query = query.Where(s => s.NameEN.Contains(nameEN));
-            if (categoryId != -1)
-                query = query.Where(s => s.CategoryId == categoryId);
-            if (subCategoryId != -1)
-                query = query.Where(s => s.SubCategoryId == subCategoryId);
-            if (brandId != -1)
-                query = query.Where(s => s.BrandId == brandId);
-            if (sizeId != -1)
-                query = query.Where(s => s.SizeId == sizeId);
-            if (colorId != -1)
-                query = query.Where(s => s.ColorId == colorId);
+            if (!string.IsNullOrEmpty(filter.NameVN))
+                query = query.Where(s => s.NameVN.Contains(filter.NameVN));
+            if (!string.IsNullOrEmpty(filter.NameEN))
+                query = query.Where(s => s.NameEN.Contains(filter.NameEN));
+            if (filter.CategoryId != -1)
+                query = query.Where(s => s.CategoryId == filter.CategoryId);
+            if (filter.SubCategoryId != -1)
+                query = query.Where(s => s.SubCategoryId == filter.SubCategoryId);
+            if (filter.BrandId != -1)
+                query = query.Where(s => s.BrandId == filter.BrandId);
+            if (filter.SizeId != -1)
+                query = query.Where(s => s.SizeId == filter.SizeId);
+            if (filter.ColorId != -1)
+                query = query.Where(s => s.ColorId == filter.ColorId);
 
             // Count total items
             model.TotalItems = await query.CountAsync();
-            model.CurrentPage = pageIndex;
+            model.CurrentPage = filter.PageIndex;
             model.TotalPages = (int)Math.Ceiling(model.TotalItems / (double)model.PageSize);
             // Apply pagination
-            var data = await query.Skip((pageIndex - 1) * model.PageSize)
+            var data = await query.Skip((filter.PageIndex - 1) * model.PageSize)
                                   .Take(model.PageSize)
                                   .ToListAsync();
             // Map to view models

@@ -14,18 +14,19 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
     public class ReportController : BaseApiController
     {
         private readonly IReportHelper _helper;
-        private readonly IActionLoggingService _actionLog;
+        //private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
         public ReportController(IReportHelper helper,
-        IActionLoggingService actionLog, IStringLocalizer<SharedResource> localizer)
+        //IActionLoggingService actionLog, 
+        IStringLocalizer<SharedResource> localizer)
         {
             _helper = helper;
-            _actionLog = actionLog;
+            //_actionLog = actionLog;
             _localizer = localizer;
         }
 
         [HttpGet("GetColoumnChartByMonth/{userId}/{month}")]
-        public async Task<IActionResult> GetColoumnChartByMonth(int userId, string month)
+        public async Task<IActionResult> GetColoumnChartByMonth(int userId, DateTime month)
         {
             var data = await _helper.GetColoumnChartByMonth(month, userId);
             if (data == null || data.Count == 0)
@@ -35,5 +36,16 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
+        [HttpGet("GetColoumnChartByYear/{userId}/{year}")]
+        public async Task<IActionResult> GetColoumnChartByMonth(int userId, int year)
+        {
+            
+            var data = await _helper.GetColoumnChartByMonth(year, userId);
+            if (data == null || data.Count == 0)
+            {
+                return Failed(EStatusCodes.BadRequest, _localizer["noDataFound"]);
+            }
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        }
     }
 }

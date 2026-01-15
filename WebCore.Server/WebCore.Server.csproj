@@ -18,7 +18,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="OpenAI" Version="2.7.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
@@ -29,6 +28,7 @@
     <ProjectReference Include="..\Libraries\BOMBusinessLogic\BOMBusinessLogic.csproj" />
     <ProjectReference Include="..\Libraries\BOMDataAccess\BOMDataAccess.csproj" />
     <ProjectReference Include="..\Libraries\BusinessLogic\BusinessLogic.csproj" />
+    <ProjectReference Include="..\Libraries\ChatBot\ChatBot.csproj" />
     <ProjectReference Include="..\Libraries\Common\Common.csproj" />
     <ProjectReference Include="..\Libraries\DataAccess\DataAccess.csproj" />
     <ProjectReference Include="..\Libraries\LipstickBusinessLogic\LipstickBusinessLogic.csproj" />

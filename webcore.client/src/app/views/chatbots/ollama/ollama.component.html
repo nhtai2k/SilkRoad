@@ -1,0 +1,132 @@
+<div class="chatbot-container position-relative">
+  <!-- Header -->
+  <div class="chatbot-header">
+    <div class="header-content">
+      <div class="title-section">
+        <h1>Ollama</h1>
+        <div class="connection-status" [class.connected]="isConnected()" [class.disconnected]="!isConnected()">
+          <span class="status-dot"></span>
+          <span class="status-text">{{ isConnected() ? 'Connected' : 'Disconnected' }}</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-secondary" (click)="toggleSettings()">
+          <span class="">⚙️</span>
+          Settings
+        </button>
+        <button class="btn btn-secondary" (click)="clearChat()">
+          <span class="">🗑️</span>
+          Clear Chat
+        </button>
+         <button class="btn btn-secondary" (click)="speech()">
+          <span class="">  {{ isSpeech() ? '🔊' : '🔇' }}</span>
+          Speech
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Panel -->
+  <div class="settings-panel" [class.show]="showSettings()">
+    <div class="settings-content">
+      <h3>Configuration</h3>
+      <div class="row">
+        <div class="col-6">
+          <label for="selectModel" class="form-label">Select Model:</label>
+          <select id="selectModel" [(ngModel)]="selectedModel" class="form-control">
+            @for (model of models; track model) {
+              <option [value]="model">{{ model }}</option>
+            }
+          </select>
+        </div>
+        <div class="col-6">
+          <label for="promptSelect" class="form-label">Select Prompt:</label>
+          <select id="promptSelect" [(ngModel)]="selectedPromptId" class="form-control">
+            @for (option of options; track option.id) {
+              <option [value]="option.id">{{ option.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Messages Container -->
+  <div class="messages-container" #messagesContainer>
+    <div class="messages-content">
+      @if (messages().length === 0) {
+      <div class="empty-state">
+        <div class="empty-icon">💬</div>
+        <h3>No messages yet</h3>
+        <p>Start a conversation with the AI chatbot!</p>
+      </div>
+      }
+
+      @for (message of messages(); track message.id) {
+      <div class="message" [class.user-message]="message.sender === 'user'"
+        [class.bot-message]="message.sender === 'bot'" [class.typing-message]="message.isTyping">
+
+        <div class="message-avatar">
+          @if (message.sender === 'user') {
+          <span class="avatar user-avatar">👤</span>
+          } @else {
+          <span class="avatar bot-avatar">🤖</span>
+          }
+        </div>
+
+        <div class="message-content">
+          <div class="message-header">
+            <span class="sender-name">
+              {{ message.sender === 'user' ? 'You' : 'Beebot' }}
+            </span>
+            <span class="message-time">
+              {{ message.timestamp | date:'short' }}
+            </span>
+          </div>
+
+          <div class="message-text" [class.typing-animation]="message.isTyping">
+            @if (message.isTyping) {
+            <div class="typing-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            } @else {
+            {{ message.content }}
+            }
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+
+  <!-- Input Area -->
+  <div class="input-container">
+    <div class="input-wrapper">
+      <textarea #messageInput [(ngModel)]="currentMessage" (keydown)="onKeyPress($event)"
+        placeholder="Type your message here... (Press Enter to send, Shift+Enter for new line)" class="message-input"
+        rows="1" [disabled]="isLoading()"></textarea>
+
+      <button class="send-button" (click)="sendMessage()" [disabled]="!currentMessage().trim() || isLoading()"
+        [class.loading]="isLoading()">
+        @if (isLoading()) {
+        <span class="loading-spinner"></span>
+        } @else {
+        <span class="send-icon">📤</span>
+        }
+      </button>
+    </div>
+
+    <div class="input-footer">
+      <div class="message-count">
+        Messages: {{ messagesCount() }}
+      </div>
+      <div class="tips">
+        Press Enter to send • Shift+Enter for new line
+      </div>
+    </div>
+  </div>
+  <!-- 3D Model Canvas -->
+  <canvas #modelCanvas class="model-canvas"></canvas>
+</div>

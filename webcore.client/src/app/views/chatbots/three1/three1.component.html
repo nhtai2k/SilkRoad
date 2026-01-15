@@ -1,0 +1,21 @@
+<div class="three-container">
+  <div #canvasContainer class="canvas-container"></div>
+  
+  <!-- Audio control button as fallback -->
+  @if (audioLoaded && !userInteracted) {
+    <div class="audio-controls">
+      <button class="play-button" (click)="enableAudio()">
+        <span>🔊 Click to enable audio</span>
+      </button>
+    </div>
+  }
+  
+  <!-- Optional: Audio toggle for user control -->
+  @if (audioLoaded && userInteracted) {
+    <div class="audio-toggle">
+      <button class="toggle-button" (click)="toggleAudio()">
+        {{ isAudioPlaying ? '🔇 Mute' : '🔊 Unmute' }}
+      </button>
+    </div>
+  }
+</div>

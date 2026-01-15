@@ -88,7 +88,7 @@ export class DefaultLayoutComponent implements OnInit {
     this.authentication.getCurrentUserInfor().subscribe( res =>
     {
       this.currentUser = res;
-      console.log(this.currentUser);
+      // console.log(this.currentUser);
     });
   }
   //#region Change Password

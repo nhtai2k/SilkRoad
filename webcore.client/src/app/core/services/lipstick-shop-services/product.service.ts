@@ -13,9 +13,9 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<APIResponse<Pagination<ProductViewModel>>> {
-    return this.http.get<APIResponse<Pagination<ProductViewModel>>>(EProductLipstickShopUrl.getAllUrl);
-  }
+  // getAll(): Observable<APIResponse<Pagination<ProductViewModel>>> {
+  //   return this.http.get<APIResponse<Pagination<ProductViewModel>>>(EProductLipstickShopUrl.getAllUrl);
+  // }
 
   getAllActive(): Observable<APIResponse<ProductViewModel[]>> {
     return this.http.get<APIResponse<ProductViewModel[]>>(EProductLipstickShopUrl.getAllActiveUrl);
@@ -25,8 +25,8 @@ export class ProductService {
     return this.http.get<APIResponse<ProductViewModel>>(`${EProductLipstickShopUrl.getByIdUrl}/${id}`);
   }
 
-  getAllByFilter(query: any): Observable<APIResponse<Pagination<ProductViewModel>>> {
-    return this.http.get<APIResponse<Pagination<ProductViewModel>>>(EProductLipstickShopUrl.getAllUrl);
+  getAllByFilter(filter: FormData): Observable<APIResponse<Pagination<ProductViewModel>>> {
+    return this.http.post<APIResponse<Pagination<ProductViewModel>>>(EProductLipstickShopUrl.getByFilterUrl, filter);
   }
 
   getBySearchText(searchText: any): Observable<APIResponse<ProductViewModel[]>> {
