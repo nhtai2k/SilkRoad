@@ -137,6 +137,15 @@ export enum EResourcePersonalFinanceUrl {
   updateUrl = "/api/personalFinance/resource/update",
   deleteUrl = "/api/personalFinance/resource/delete",
 }
+//Asset
+export enum EAssetPersonalFinanceUrl {
+  getAllUrl = "/api/personalFinance/asset/getAll",
+  getByIdUrl = "/api/personalFinance/asset/getById",
+  createUrl = "/api/personalFinance/asset/create",
+  updateUrl = "/api/personalFinance/asset/update",
+  deleteUrl = "/api/personalFinance/asset/delete",
+}
+
 //ResourceType
 export enum EResourceTypePersonalFinanceUrl {
   getAllUrl = "/api/personalFinance/resourceType/getAll",
@@ -149,6 +158,20 @@ export enum EResourceTypePersonalFinanceUrl {
   restoreUrl = "/api/personalFinance/resourceType/restore",
   deleteUrl = "/api/personalFinance/resourceType/delete",
 }
+//AssetType
+export enum EAssetTypePersonalFinanceUrl {
+  getAllUrl = "/api/personalFinance/assetType/getAll",
+  getAllDeletedUrl = "/api/personalFinance/assetType/getAllDeleted",
+  getOptionListUrl = "/api/personalFinance/assetType/getOptionList",
+  getByIdUrl = "/api/personalFinance/assetType/getById",
+  createUrl = "/api/personalFinance/assetType/create",
+  updateUrl = "/api/personalFinance/assetType/update",
+  softDeleteUrl = "/api/personalFinance/assetType/softDelete",
+  restoreUrl = "/api/personalFinance/assetType/restore",
+  deleteUrl = "/api/personalFinance/assetType/delete",
+}
+
+
 //Report
 export enum EReportPersonalFinanceUrl {
   getColoumnChartByMonthUrl = "/api/personalFinance/report/GetColoumnChartByMonth",

@@ -17,6 +17,8 @@ namespace PersonalFinanceDataAccess
         public IResourceRepository ResourceRepository { get; private set; }
 
         public IResourceTypeRepository ResourceTypeRepository { get; private set; }
+        public IAssetRepository AssetRepository { get; private set; }
+        public IAssetTypeRepository AssetTypeRepository { get; private set; }
 
         public IExpenseRepository ExpenseRepository { get; private set; }
 
@@ -28,6 +30,8 @@ namespace PersonalFinanceDataAccess
             ResourceRepository = new ResourceRepository(context);
             ResourceTypeRepository = new ResourceTypeRepository(context);
             ExpenseRepository = new ExpenseRepository(context);
+            AssetRepository = new AssetRepository(context);
+            AssetTypeRepository = new AssetTypeRepository(context);
         }
         public void SaveChanges()
         {

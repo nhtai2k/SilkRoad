@@ -91,10 +91,15 @@ const personalFinanceNavItems: INavData[] = [
     url: '/personal-finance/reports',
     iconComponent: { name: 'cil-speedometer' }
   },
-  {
+    {
     name: 'Resources',
     url: '/personal-finance/resources',
     iconComponent: { name: 'cil-bar-chart' }
+  },
+  {
+    name: 'Assets',
+    url: '/personal-finance/assets',
+    iconComponent: { name: 'cil-library-building' }
   },
   {
     name: 'Expenses',
@@ -114,6 +119,11 @@ const personalFinanceNavItems: INavData[] = [
       {
         name: 'Resource Types',
         url: '/personal-finance/extensions/resource-types',
+        icon: 'nav-icon-bullet'
+      },
+         {
+        name: 'Asset Types',
+        url: '/personal-finance/extensions/asset-types',
         icon: 'nav-icon-bullet'
       }
     ]

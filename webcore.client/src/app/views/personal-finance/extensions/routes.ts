@@ -25,6 +25,13 @@ export const routes: Routes = [
         data: {
           title: 'Resource Types'
         }
+      },
+      {
+        path: 'asset-types',
+        loadComponent: () => import('./asset-types/asset-types.component').then(m => m.AssetTypesComponent),
+        data: {
+          title: 'Asset Types'
+        }
       }
     ]
   }

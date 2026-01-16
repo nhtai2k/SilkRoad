@@ -65,6 +65,10 @@ const personalFinanceChildrenRoutes: Routes = [
     loadChildren: () => import('./views/personal-finance/reports/routes').then((m) => m.routes)
   },
     {
+    path: 'personal-finance/assets',
+    loadChildren: () => import('./views/personal-finance/assets/routes').then((m) => m.routes)
+  },
+    {
     path: 'personal-finance/extensions',
     loadChildren: () => import('./views/personal-finance/extensions/routes').then((m) => m.routes)
   },
