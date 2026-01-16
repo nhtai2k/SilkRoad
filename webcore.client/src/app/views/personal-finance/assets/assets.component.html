@@ -24,6 +24,7 @@
             <th scope="col">Name</th>
             <th scope="col">Type</th>
             <th scope="col">Amount</th>
+            <th scope="col">Has Loan</th>
             <th scope="col">Date</th>
             <th></th>
         </tr>
@@ -35,6 +36,9 @@
             <td>{{ item.name }}</td>
             <td>{{getSourceNameById(item.typeId)}}</td>
             <td>{{ showNumber ? (item.amount | number) : '****' }} đ</td>
+            <td>
+                <input type="checkbox" [checked]="item.hasLoan" disabled />
+            </td>
             <td>{{ item.date | date:'MM/dd/yyyy' }}</td>
             <td>
                 <div class="d-flex justify-content-end">
