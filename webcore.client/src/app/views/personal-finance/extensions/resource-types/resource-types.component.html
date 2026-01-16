@@ -1,1 +1,517 @@
-<p>resource-types works!</p>
+<h3 class="fw-bold">Categories</h3>
+<div class="d-flex justify-content-end mb-2">
+  <button (click)="toggleLiveTrashModal()" class="btn btn-warning me-2">
+    <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Trash Icon"></svg>
+  </button>
+  <button (click)="toggleLiveCreateModel()" class="btn btn-success">
+    <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+  </button>
+</div>
+<app-data-table [data]="pageInformation" [striped]="false" (changePageIndex)="onPageIndexChange($event)"
+  (changePageSize)="onPageSizeChange($event)">
+  <thead class="text-nowrap text-truncate">
+    <tr>
+      <th scope="col">No</th>
+      <th scope="col">Name EN</th>
+      <th scope="col">Name VN</th>
+      <th scope="col">Priority</th>
+      <th scope="col">Is Active</th>
+      <th class="d-none d-md-table-cell" scope="col">Created By</th>
+      <th class="d-none d-md-table-cell" scope="col">Modified By</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (node of data.items; track node.id; let i = $index) {
+    <ng-container [ngTemplateOutlet]="nodeTemplate"
+      [ngTemplateOutletContext]="{ node: node, index: i, level: 0 }"></ng-container>
+    }
+  </tbody>
+</app-data-table>
+
+<ng-template #nodeTemplate let-node="node" let-level="level" let-index="index">
+  <tr class="tree-row" [class.expanded]="node.expanded" [class.children]="level > 0">
+    <td>
+      <span [ngStyle]="{'margin-left.px': level * 30}">
+        {{ index + 1 }}
+      </span>
+    </td>
+    <td>{{ node.nameEN }}</td>
+    <td>{{ node.nameVN }}</td>
+    <td>{{ node.priority }}</td>
+    <td>{{ node.isActive }}</td>
+    <td class="d-none d-md-table-cell">{{ node.createdBy }}</td>
+    <td class="d-none d-md-table-cell">{{ node.modifiedBy }}</td>
+    <td>
+      <div class="d-flex justify-content-end">
+        @if ((node?.subCategories?.length ?? 0) > 0) {
+        <button (click)="toggleNode(node)" class="btn btn-info me-2">
+          <app-book-icon [open]="node.expanded"></app-book-icon>
+        </button>
+        }
+        <button (click)="toggleLiveCreateSubCategoryModel(node.id)" class="btn btn-success me-2">
+          <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+        </button>
+        <button (click)="updateData(node.id)"
+          class="btn btn-primary {{ (node?.subCategories?.length ?? 0) <= 0 ? 'me-2' : '' }}">
+          <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
+        </button>
+        @if ((node?.subCategories?.length ?? 0) <= 0) { <button (click)="softDeleteData(node.id)" class="btn btn-danger">
+          <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+          </button>
+          }
+      </div>
+    </td>
+  </tr>
+
+  @if (node.expanded && (node?.subCategories?.length ?? 0) > 0) {
+  @for (child of node.subCategories; track child.id; let i = $index) {
+  <ng-container [ngTemplateOutlet]="nodeSubTemplate"
+    [ngTemplateOutletContext]="{ node: child, index: i, level: level + 1 }"></ng-container>
+  }
+  }
+</ng-template>
+
+<ng-template #nodeSubTemplate let-node="node" let-level="level" let-index="index">
+  <tr class="tree-row" [class.expanded]="node.expanded" [class.children]="level > 0">
+    <td>
+      <span [ngStyle]="{'margin-left.px': level * 30}">
+        {{ index + 1 }}
+      </span>
+    </td>
+    <td>{{ node.nameEN }}</td>
+    <td>{{ node.nameVN }}</td>
+    <td>{{ node.priority }}</td>
+    <td>{{ node.isActive }}</td>
+    <td class="d-none d-md-table-cell">{{ node.createdBy }}</td>
+    <td class="d-none d-md-table-cell">{{ node.modifiedBy }}</td>
+    <td>
+      <div class="d-flex justify-content-end">
+        <button (click)="updateSubCategoryData(node.id)" class="btn btn-primary me-2">
+          <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
+        </button>
+        <button (click)="softDeleteSubCategory(node.id)" class="btn btn-danger">
+          <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+          </button>
+          
+      </div>
+    </td>
+  </tr>
+</ng-template>
+
+<!-- Create Modal -->
+<c-modal backdrop="static" [visible]="visibleCreateModal" (visibleChange)="handleLiveCreateModelChange($event)"
+  id="verticallyCenteredCreateModal" size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Create Category</h5>
+    <button (click)="toggleLiveCreateModel()" cButtonClose></button>
+  </c-modal-header>
+  <form cForm [formGroup]="createForm" (ngSubmit)="onSubmitCreateForm()">
+    <c-modal-body>
+      <div class="mb-2 d-flex flex-row">
+        <c-form-check class="me-2 d-flex align-items-center">
+          <input cFormCheckInput formControlName="isActive" id="isActive1" class="me-2" type="checkbox" />
+          <label cFormCheckLabel for="isActive1" class="me-2">Active </label>
+        </c-form-check>
+        <div>1
+          <label for="priority" class="me-2">Priority: </label>
+          <input formControlName="priority" type="number" class="me-2 number-control ">
+          @if (priorityCreateForm?.invalid && (priorityCreateForm?.dirty || priorityCreateForm?.touched)) {
+          <div class="text-danger">
+            @if (priorityCreateForm?.hasError('min') || priorityCreateForm?.hasError('max')) {
+            <div>
+              Priority must be between 1 and 9999.
+            </div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+      <div class="mb-2 row">
+       
+          <div class="col-6">
+            <label cLabel for="nameEN">Name EN: <span class="text-danger">(*)</span></label>
+            <input cFormControl formControlName="nameEN">
+            @if (nameENCreateForm?.invalid && (nameENCreateForm?.dirty || nameENCreateForm?.touched)) {
+            <div class="text-danger">
+              @if (nameENCreateForm?.hasError('required')) {
+              <div>
+                Name is required.
+              </div>
+              }
+            </div>
+            }
+          </div>
+        <div class="col-6">
+          <label cLabel for="nameVN">Name VN: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="nameVN">
+          @if (nameVNCreateForm?.invalid && (nameVNCreateForm?.dirty || nameVNCreateForm?.touched)) {
+          <div class="text-danger">
+            @if (nameVNCreateForm?.hasError('required')) {
+            <div>
+              Name is required.
+            </div>
+            }
+          </div>
+          }
+        </div>
+
+
+      </div>
+      <div class="mb-2">
+        <label cLabel for="note">Note: </label>
+        <textarea cFormControl formControlName="note" rows="3"></textarea>
+        @if (noteCreateForm?.invalid && (noteCreateForm?.dirty || noteCreateForm?.touched)) {
+        <div class="text-danger">
+          @if (noteCreateForm?.hasError('maxlength')) {
+          <div>
+            Maximum 500 characters.
+          </div>
+          }
+        </div>
+        }
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button (click)="toggleLiveCreateModel()" cButton color="secondary">
+        <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Close Icon"></svg>
+      </button>
+      <button cButton type="submit" [disabled]="!createForm.valid" color="primary">
+        <svg [cIcon]="icons.cilSave" width="22" class="text-white" title="Save Icon"></svg>
+      </button>
+    </c-modal-footer>
+  </form>
+</c-modal>
+<!--Update Modal-->
+<c-modal backdrop="static" [visible]="visibleUpdateModal" (visibleChange)="handleLiveUpdateModelChange($event)"
+  id="verticallyCenteredUpdateModal" size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Update Category</h5>
+    <button (click)="toggleLiveUpdateModel()" cButtonClose></button>
+  </c-modal-header>
+  <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmitUpdateForm()">
+    <c-modal-body>
+      <div class="mb-2 d-flex flex-row">
+        <c-form-check class="me-2 d-flex align-items-center">
+          <input cFormCheckInput formControlName="isActive" id="isActive2" class="me-2" type="checkbox" />
+          <label cFormCheckLabel for="isActive2" class="me-2">Active </label>
+        </c-form-check>
+        <div>
+          <label for="priority" class="me-2">Priority: </label>
+          <input formControlName="priority" type="number" class="me-2 number-control">
+          @if (priorityUpdateForm?.invalid && (priorityUpdateForm?.dirty || priorityUpdateForm?.touched)) {
+          <div class="text-danger">
+            @if (priorityUpdateForm?.hasError('min') || priorityUpdateForm?.hasError('max')) {
+            <div>
+              Priority must be between 1 and 9999.
+            </div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+
+      <div class="mb-2 row">
+        <div class="col-6">
+          <label cLabel for="nameEN">Name EN: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="nameEN">
+          @if (nameENUpdateForm?.invalid && (nameENUpdateForm?.dirty || nameENUpdateForm?.touched)) {
+          <div class="text-danger">
+            @if (nameENUpdateForm?.hasError('required')) {
+            <div>
+              Name EN is required.
+            </div>
+            }
+          </div>
+          }
+        </div>
+
+          <div class="col-6">
+            <label cLabel for="nameVN">Name VN: <span class="text-danger">(*)</span></label>
+            <input cFormControl formControlName="nameVN">
+            @if (nameVNUpdateForm?.invalid && (nameVNUpdateForm?.dirty || nameVNUpdateForm?.touched)) {
+            <div class="text-danger">
+              @if (nameVNUpdateForm?.hasError('required')) {
+              <div>
+                Name VN is required.
+              </div>
+              }
+            </div>
+            }
+          </div>
+
+      </div>
+      <div class="mb-2">
+        <label cLabel for="note">Note: </label>
+        <textarea cFormControl formControlName="note" rows="3"></textarea>
+        @if (noteUpdateForm?.invalid && (noteUpdateForm?.dirty || noteUpdateForm?.touched)) {
+        <div class="text-danger">
+          @if (noteUpdateForm?.hasError('maxlength')) {
+          <div>
+            Maximum 500 characters.
+          </div>
+          }
+        </div>
+        }
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button (click)="toggleLiveUpdateModel()" cButton color="secondary">
+        <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Close Icon"></svg>
+      </button>
+      <button cButton type="submit" [disabled]="!updateForm.valid" color="primary">
+        <svg [cIcon]="icons.cilSave" width="22" class="text-white" title="Save Icon"></svg>
+      </button>
+    </c-modal-footer>
+  </form>
+</c-modal>
+<!--Delete Modal-->
+<c-modal backdrop="static" [visible]="visibleDelete" (visibleChange)="handleLiveDeleteChange($event)"
+  id="verticallyCenteredDelete">
+  <c-modal-header>
+    <h5 cModalTitle>Confirm Delete Category</h5>
+    <button (click)="toggleLiveDelete()" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <p>Are you sure you want to delete this category?</p>
+  </c-modal-body>
+  <c-modal-footer>
+    <button (click)="toggleLiveDelete()" cButton color="secondary">
+      <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Close Icon"></svg>
+
+    </button>
+    <button (click)="onConfirmDelete()" cButton color="primary">
+      <svg [cIcon]="icons.cilTrash" width="22" class="text-white" title="Delete Icon"></svg>
+    </button>
+  </c-modal-footer>
+</c-modal>
+<!-- Trash Modal -->
+<c-modal backdrop="static" [visible]="visibleTrashModal" (visibleChange)="handleLiveTrashModalChange($event)"
+  id="verticallyCenteredTrashModal" size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Trash</h5>
+    <button (click)="toggleLiveTrashModal()" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <app-data-table [data]="trashPageInformation" (changePageIndex)="onTrashPageIndexChange($event)"
+      (changePageSize)="onTrashPageSizeChange($event)">
+      <thead class="text-nowrap text-truncate">
+        <tr>
+          <th scope="col">No.</th>
+          <th scope="col">Name VN</th>
+          <th scope="col">Name EN</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of trashData.items; track item.id; let i = $index) {
+        <tr>
+          <td>{{ i+1 }}</td>
+          <td>{{ item.nameVN }}</td>
+          <td>{{ item.nameEN }}</td>
+          <td>
+            <div class="d-flex justify-content-end">
+              <button (click)="restoreData(item.id)" class="btn btn-success me-2">
+                <svg [cIcon]="icons.cilLoopCircular" width="25" class="text-white" title="Restore Icon"></svg>
+              </button>
+              <button (click)="deleteData(item.id)" class="btn btn-danger">
+                <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+              </button>
+            </div>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </app-data-table>
+    @if (trashData.items.length === 0) {
+    <div class="d-flex justify-content-center">
+      <h3 class="opacity-75">No data!</h3>
+    </div>
+    }
+  </c-modal-body>
+</c-modal>
+<!-- Create Sub Category Modal -->
+<c-modal backdrop="static" [visible]="visibleCreateSubCategoryModal" (visibleChange)="handleLiveCreateSubCategoryModelChange($event)"
+  id="verticallyCenteredCreateSubCategoryModal" size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Create Sub Category</h5>
+    <button (click)="toggleLiveCreateSubCategoryModel()" cButtonClose></button>
+  </c-modal-header>
+  <form cForm [formGroup]="createSubCategoryForm" (ngSubmit)="onSubmitCreateSubCategoryForm()">
+    <c-modal-body>
+      <div class="mb-2 d-flex flex-row">
+        <c-form-check class="me-2 d-flex align-items-center">
+          <input cFormCheckInput formControlName="isActive" id="isActive3" class="me-2" type="checkbox" />
+          <label cFormCheckLabel for="isActive3" class="me-2">Active </label>
+        </c-form-check>
+        <div>
+          <label for="priority" class="me-2">Priority: </label>
+          <input formControlName="priority" type="number" class="me-2 number-control ">
+          @if (priorityCreateForm?.invalid && (priorityCreateForm?.dirty || priorityCreateForm?.touched)) {
+          <div class="text-danger">
+            @if (priorityCreateForm?.hasError('min') || priorityCreateForm?.hasError('max')) {
+            <div>
+              Priority must be between 1 and 9999.
+            </div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+      <div class="mb-2 row">
+       
+          <div class="col-6">
+            <label cLabel for="nameEN">Name EN: <span class="text-danger">(*)</span></label>
+            <input cFormControl formControlName="nameEN">
+            @if (nameENCreateForm?.invalid && (nameENCreateForm?.dirty || nameENCreateForm?.touched)) {
+            <div class="text-danger">
+              @if (nameENCreateForm?.hasError('required')) {
+              <div>
+                Name is required.
+              </div>
+              }
+            </div>
+            }
+          </div>
+        <div class="col-6">
+          <label cLabel for="nameVN">Name VN: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="nameVN">
+          @if (nameVNCreateForm?.invalid && (nameVNCreateForm?.dirty || nameVNCreateForm?.touched)) {
+          <div class="text-danger">
+            @if (nameVNCreateForm?.hasError('required')) {
+            <div>
+              Name is required.
+            </div>
+            }
+          </div>
+          }
+        </div>
+
+
+      </div>
+      <div class="mb-2">
+        <label cLabel for="note">Note: </label>
+        <textarea cFormControl formControlName="note" rows="3"></textarea>
+        @if (noteCreateForm?.invalid && (noteCreateForm?.dirty || noteCreateForm?.touched)) {
+        <div class="text-danger">
+          @if (noteCreateForm?.hasError('maxlength')) {
+          <div>
+            Maximum 500 characters.
+          </div>
+          }
+        </div>
+        }
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button (click)="toggleLiveCreateModel()" cButton color="secondary">
+        <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Close Icon"></svg>
+      </button>
+      <button cButton type="submit" [disabled]="!createSubCategoryForm.valid" color="primary">
+        <svg [cIcon]="icons.cilSave" width="22" class="text-white" title="Save Icon"></svg>
+      </button>
+    </c-modal-footer>
+  </form>
+</c-modal>
+<!--Update Sub Category Modal-->
+<c-modal backdrop="static" [visible]="visibleUpdateSubCategoryModal" (visibleChange)="handleLiveUpdateSubCategoryModelChange($event)"
+  id="verticallyCenteredUpdateSubCategoryModal" size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Update Sub Category</h5>
+    <button (click)="toggleLiveUpdateSubCategoryModel()" cButtonClose></button>
+  </c-modal-header>
+  <form cForm [formGroup]="updateSubCategoryForm" (ngSubmit)="onSubmitUpdateSubCategoryForm()">
+    <c-modal-body>
+      <div class="mb-2 d-flex flex-row">
+        <c-form-check class="me-2 d-flex align-items-center">
+          <input cFormCheckInput formControlName="isActive" id="isActive5" class="me-2" type="checkbox" />
+          <label cFormCheckLabel for="isActive5" class="me-2">Active </label>
+        </c-form-check>
+        <div>
+          <label for="priority" class="me-2">Priority: </label>
+          <input formControlName="priority" type="number" class="me-2 number-control">
+          @if (priorityUpdateForm?.invalid && (priorityUpdateForm?.dirty || priorityUpdateForm?.touched)) {
+          <div class="text-danger">
+            @if (priorityUpdateForm?.hasError('min') || priorityUpdateForm?.hasError('max')) {
+            <div>
+              Priority must be between 1 and 9999.
+            </div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+
+      <div class="mb-2 row">
+        <div class="col-6">
+          <label cLabel for="nameEN">Name EN: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="nameEN">
+          @if (nameENUpdateForm?.invalid && (nameENUpdateForm?.dirty || nameENUpdateForm?.touched)) {
+          <div class="text-danger">
+            @if (nameENUpdateForm?.hasError('required')) {
+            <div>
+              Name EN is required.
+            </div>
+            }
+          </div>
+          }
+        </div>
+
+          <div class="col-6">
+            <label cLabel for="nameVN">Name VN: <span class="text-danger">(*)</span></label>
+            <input cFormControl formControlName="nameVN">
+            @if (nameVNUpdateForm?.invalid && (nameVNUpdateForm?.dirty || nameVNUpdateForm?.touched)) {
+            <div class="text-danger">
+              @if (nameVNUpdateForm?.hasError('required')) {
+              <div>
+                Name VN is required.
+              </div>
+              }
+            </div>
+            }
+          </div>
+      </div>
+      <div class="mb-2">
+        <label cLabel for="note">Note: </label>
+        <textarea cFormControl formControlName="note" rows="3"></textarea>
+        @if (noteUpdateForm?.invalid && (noteUpdateForm?.dirty || noteUpdateForm?.touched)) {
+        <div class="text-danger">
+          @if (noteUpdateForm?.hasError('maxlength')) {
+          <div>
+            Maximum 500 characters.
+          </div>
+          }
+        </div>
+        }
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button (click)="toggleLiveUpdateSubCategoryModel()" cButton color="secondary">
+        <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Close Icon"></svg>
+      </button>
+      <button cButton type="submit" [disabled]="!updateSubCategoryForm.valid" color="primary">
+        <svg [cIcon]="icons.cilSave" width="22" class="text-white" title="Save Icon"></svg>
+      </button>
+    </c-modal-footer>
+  </form>
+</c-modal>
+<!--Delete Sub Category Modal-->
+<c-modal backdrop="static" [visible]="visibleDeleteSubCategory" (visibleChange)="handleLiveDeleteSubCategoryChange($event)"
+  id="verticallyCenteredDeleteSubCategory">
+  <c-modal-header>
+    <h5 cModalTitle>Confirm Delete Sub Category</h5>
+    <button (click)="toggleLiveDeleteSubCategory()" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <p>Are you sure you want to delete this sub category?</p>
+  </c-modal-body>
+  <c-modal-footer>
+    <button (click)="toggleLiveDeleteSubCategory()" cButton color="secondary">
+      <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Close Icon"></svg>
+
+    </button>
+    <button (click)="onConfirmDeleteSubCategory()" cButton color="primary">
+      <svg [cIcon]="icons.cilTrash" width="22" class="text-white" title="Delete Icon"></svg>
+    </button>
+  </c-modal-footer>
+</c-modal>

@@ -31,7 +31,7 @@
         @for (item of data.items; track item.id) {
         <tr>
             <td>{{ $index+1 }}</td>
-            <td>{{getSourceNameById(item.sourceId)}}</td>
+            <td>{{getSourceNameById(item.typeId)}}</td>
             <td>{{ showNumber ? (item.amount | number) : '****' }} đ</td>
             <td>{{ item.date | date:'MM/dd/yyyy' }}</td>
             <td>

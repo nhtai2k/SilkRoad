@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, delay, catchError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ChatMessageDto, ChatModel } from '@models/chatbot-models/message.model';
-import { EBeeBotUrl } from '@common/url-api';
+import { EBeeBotChatbotUrl } from '@common/url-api';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class ChatbotService {
       mod: chatbotMode,
       contextMessages: contextMessages
     };
-    const apiChatbotUrl = EBeeBotUrl.sendMessageUrl;
+    const apiChatbotUrl = EBeeBotChatbotUrl.sendMessageUrl;
 
     return this.http.post<ChatModel>(apiChatbotUrl, payload, { headers: this.headers })
       .pipe(
@@ -36,7 +36,7 @@ export class ChatbotService {
   }
 
   getVoid(message: string): Observable<Blob> {
-    const apiVoidUrl = EBeeBotUrl.getVoidUrl;
+    const apiVoidUrl = EBeeBotChatbotUrl.getVoidUrl;
     return this.http.post(apiVoidUrl, JSON.stringify(message), { 
       headers: this.headers,
       responseType: 'blob' 
@@ -51,7 +51,7 @@ export class ChatbotService {
   }
 
   getMusic(): Observable<Blob> {
-    const apiMusicUrl = EBeeBotUrl.getMusicUrl;
+    const apiMusicUrl = EBeeBotChatbotUrl.getMusicUrl;
     return this.http.get(apiMusicUrl, { responseType: 'blob' });
   }
 

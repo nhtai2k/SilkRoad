@@ -1,24 +1,24 @@
 //#region BeeBot
 //BeeBot
-export const enum EBeeBotUrl {
+export const enum EBeeBotChatbotUrl {
   sendMessageUrl = "/api/chatbot/beeBot/sendMessage",
   getVoidUrl = "/api/chatbot/beeBot/getVoid",
   getMusicUrl = "/api/chatbot/beeBot/getMusic",
 }
 
 //Ollama
-export const enum EOllamaUrl {
+export const enum EOllamaChatbotUrl {
   completeChatUrl = "/api/chatbot/ollama/completeChat",
   completeChatStreamingUrl = "/api/chatbot/ollama/completeChatStreaming",
   getModelsUrl = "/api/chatbot/ollama/getModels",
 }
 //ChatGPT
-export const enum EChatGPTUrl {
+export const enum EChatGPTChatbotUrl {
   completeChatUrl = "/api/chatbot/chatgpt/completeChat",
   getModelsUrl = "/api/chatbot/chatgpt/getModels",
 }
 //Prompt
-export const enum EPromptUrl {
+export const enum EPromptChatbotUrl {
   getAllUrl = "/api/chatbot/prompt/getall",
   getOptionListUrl = "/api/chatbot/prompt/getOptionList",
   getByIdUrl = "/api/chatbot/prompt/getById",
@@ -31,11 +31,11 @@ export const enum EPromptUrl {
   deleteUrl = "/api/chatbot/prompt/delete",
 }
 //Conversation
-export const enum EConversationUrl {
+export const enum EConversationChatbotUrl {
   getByFilterUrl = "/api/chatbot/conversation/getByFilter",
 }
 //Voice
-export const enum EVoiceUrl {
+export const enum EVoiceChatbotUrl {
   getVoiceFromChatGPTUrl = "/api/chatbot/voice/getVoiceFromChatGPT",
   getVoiceFromElevenlabsUrl = "/api/chatbot/voice/getVoiceFromElevenlabs",
 }
@@ -129,13 +129,24 @@ export enum EExpensePersonalFinanceUrl {
   updateUrl = "/api/personalFinance/expense/update",
   deleteUrl = "/api/personalFinance/expense/delete",
 }
-//Income
-export enum EIncomePersonalFinanceUrl {
-  getAllUrl = "/api/personalFinance/income/getAll",
-  getByIdUrl = "/api/personalFinance/income/getById",
-  createUrl = "/api/personalFinance/income/create",
-  updateUrl = "/api/personalFinance/income/update",
-  deleteUrl = "/api/personalFinance/income/delete",
+//Resource
+export enum EResourcePersonalFinanceUrl {
+  getAllUrl = "/api/personalFinance/resource/getAll",
+  getByIdUrl = "/api/personalFinance/resource/getById",
+  createUrl = "/api/personalFinance/resource/create",
+  updateUrl = "/api/personalFinance/resource/update",
+  deleteUrl = "/api/personalFinance/resource/delete",
+}
+//ResourceType
+export enum EResourceTypePersonalFinanceUrl {
+  getAllUrl = "/api/personalFinance/resourceType/getAll",
+  getOptionListUrl = "/api/personalFinance/resourceType/getOptionList",
+  getByIdUrl = "/api/personalFinance/resourceType/getById",
+  createUrl = "/api/personalFinance/resourceType/create",
+  updateUrl = "/api/personalFinance/resourceType/update",
+  softDeleteUrl = "/api/personalFinance/resourceType/softDelete",
+  restoreUrl = "/api/personalFinance/resourceType/restore",
+  deleteUrl = "/api/personalFinance/resourceType/delete",
 }
 //Report
 export enum EReportPersonalFinanceUrl {

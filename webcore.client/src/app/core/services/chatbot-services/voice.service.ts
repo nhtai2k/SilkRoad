@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, delay, catchError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ChatMessageDto, ChatModel } from '@models/chatbot-models/message.model';
-import { EVoiceUrl } from '@common/url-api';
+import { EVoiceChatbotUrl } from '@common/url-api';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class VoiceService {
 
 
   getVoiceFromChatGPT(message: string): Observable<Blob> {
-    const url = EVoiceUrl.getVoiceFromChatGPTUrl;
+    const url = EVoiceChatbotUrl.getVoiceFromChatGPTUrl;
     return this.http.post(url, JSON.stringify(message), { 
       headers: this.headers,
       responseType: 'blob' 
@@ -31,7 +31,7 @@ export class VoiceService {
   }
 
     getVoiceFromElevenlabs(message: string): Observable<Blob> {
-        const url = EVoiceUrl.getVoiceFromElevenlabsUrl;
+        const url = EVoiceChatbotUrl.getVoiceFromElevenlabsUrl;
         return this.http.post(url, JSON.stringify(message), { 
         headers: this.headers,
         responseType: 'blob' 

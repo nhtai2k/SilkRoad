@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, delay, catchError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ChatMessageDto, ChatModel } from '@models/chatbot-models/message.model';
-import { EOllamaUrl } from '@common/url-api';
+import { EOllamaChatbotUrl } from '@common/url-api';
 import { ResponseModel } from '@models/chatbot-models/response.model';
 import { APIResponse } from '@models/api-response.model';
 import { RequestModel } from '@models/chatbot-models/request.model';
@@ -17,7 +17,7 @@ export class OllamaService {
 
   constructor(private http: HttpClient) { }
   completeChat(model : RequestModel): Observable<APIResponse<ResponseModel>> {
-    const url = EOllamaUrl.completeChatUrl;
+    const url = EOllamaChatbotUrl.completeChatUrl;
     return this.http.post<APIResponse<ResponseModel>>(url, model, { headers: this.headers })
       .pipe(
         catchError(error => {
@@ -35,7 +35,7 @@ export class OllamaService {
   }
 
   getModels(): Observable<APIResponse<string[]>> {
-    const apiModelsUrl = EOllamaUrl.getModelsUrl;
+    const apiModelsUrl = EOllamaChatbotUrl.getModelsUrl;
     return this.http.get<APIResponse<string[]>>(apiModelsUrl, { headers: this.headers })
       .pipe(
         catchError(error => {

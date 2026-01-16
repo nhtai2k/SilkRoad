@@ -1,9 +1,10 @@
-export interface IncomeModel {
+export interface ResourceModel {
     id: any;
     userId: number;
-    sourceId: number;
+    typeId: number;
     amount: number;
     date: Date;
+    inflow: boolean;
     note?: string;
     createdAt?: Date;
     updatedAt?: Date;

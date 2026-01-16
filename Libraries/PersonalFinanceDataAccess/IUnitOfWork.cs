@@ -9,6 +9,7 @@ namespace PersonalFinanceDataAccess
         public ICategoryRepository CategoryRepository { get; }
         public ISubCategoryRepository SubCategoryRepository { get; }
         public IResourceRepository ResourceRepository { get; }
+        public IResourceTypeRepository ResourceTypeRepository { get; }
         public IExpenseRepository ExpenseRepository { get; }
         IDbContextTransaction BeginTransaction();
         void Commit();

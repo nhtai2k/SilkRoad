@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, delay, catchError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ChatMessageDto, ChatModel } from '@models/chatbot-models/message.model';
-import { EChatGPTUrl } from '@common/url-api';
+import { EChatGPTChatbotUrl } from '@common/url-api';
 import { ResponseModel } from '@models/chatbot-models/response.model';
 import { APIResponse } from '@models/api-response.model';
 import { RequestModel } from '@models/chatbot-models/request.model';
@@ -17,7 +17,7 @@ export class ChatGPTService {
 
   constructor(private http: HttpClient) { }
   completeChat(model : RequestModel): Observable<APIResponse<ResponseModel>> {
-    const url = EChatGPTUrl.completeChatUrl;
+    const url = EChatGPTChatbotUrl.completeChatUrl;
     return this.http.post<APIResponse<ResponseModel>>(url, model, { headers: this.headers })
       .pipe(
         catchError(error => {
@@ -35,7 +35,7 @@ export class ChatGPTService {
   }
 
   getModels(): Observable<APIResponse<string[]>> {
-    const url = EChatGPTUrl.getModelsUrl;
+    const url = EChatGPTChatbotUrl.getModelsUrl;
     return this.http.get<APIResponse<string[]>>(url, { headers: this.headers })
       .pipe(
         catchError(error => {

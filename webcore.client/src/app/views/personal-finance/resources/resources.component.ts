@@ -8,13 +8,13 @@ import { ToastService } from '@services/helper-services/toast.service';
 import { EColors } from '@common/global';
 import { DataTableComponent } from "@components/generals/data-table/data-table.component";
 import { RangeDatetimePickerComponent } from "@components/generals/range-datetime-picker/range-datetime-picker.component";
-import { ExpenseModel, IncomeModel } from '@models/personal-finance-models';
+import { ExpenseModel, ResourceModel } from '@models/personal-finance-models';
 import { OptionModel } from '@models/option.model';
 import { TreeSelectV1Component } from "@components/selects/tree-select-v1/tree-select-v1.component";
 import { InputCurrencyComponent } from "@components/inputs/input-currency/input-currency.component";
 import { CommonModule } from '@angular/common';
 import { SelectSearchComponent } from "@components/selects/select-search/select-search.component";
-import { IncomeService } from '@services/personal-finance-services/income.service';
+import { ResourceService } from '@services/personal-finance-services/resource.service';
 import { AuthService } from '@services/system-services';
 import { EyeClosedIconComponent, EyeIconComponent } from "@components/icons";
 
@@ -33,7 +33,7 @@ export class ResourcesComponent implements OnInit {
   visibleUpdateModal: boolean = false;
   visibleDelete: boolean = false;
   deleteById: number = 0;
-  data: Pagination<IncomeModel> = new Pagination<IncomeModel>();
+  data: Pagination<ResourceModel> = new Pagination<ResourceModel>();
   initAmountCreateForm = signal<number>(0);
   initAmountUpdateForm = signal<number>(0);
   initSourceIdUpdateForm = signal<number>(1);
@@ -70,7 +70,7 @@ export class ResourcesComponent implements OnInit {
   //#endregion
 
   //#region Lifecycle Hooks
-  constructor(private incomeService: IncomeService, private toastService: ToastService, private authService: AuthService) { }
+  constructor(private resourceService: ResourceService, private toastService: ToastService, private authService: AuthService) { }
   ngOnInit(): void {
     const today = new Date().toISOString().split('T')[0];
     this.authService.getCurrentUserInfor().subscribe((currentUser) => {
@@ -98,7 +98,7 @@ export class ResourcesComponent implements OnInit {
       return source ? source.name : 'Unknown';
     }
   getData() {
-    this.incomeService.getAll(this.pageInformation.pageIndex, this.pageInformation.pageSize, this.userId).subscribe((res) => {
+    this.resourceService.getAll(this.pageInformation.pageIndex, this.pageInformation.pageSize, this.userId).subscribe((res) => {
       this.data = res.data;
       this.pageInformation.currentPage = this.data.currentPage;
       this.pageInformation.totalItems = this.data.totalItems;
@@ -121,7 +121,7 @@ export class ResourcesComponent implements OnInit {
   //#region Create Form
   onSubmitCreateForm() {
     if (this.createForm.valid) {
-      this.incomeService.create(this.createForm.value).subscribe({
+      this.resourceService.create(this.createForm.value).subscribe({
         next: (res) => {
           this.toggleLiveCreateModel();
           this.getData();
@@ -155,18 +155,18 @@ export class ResourcesComponent implements OnInit {
 
   //#region Update Form
   updateData(id: number) {
-    this.incomeService.getById(id).subscribe((res) => {
+    this.resourceService.getById(id).subscribe((res) => {
       const data = res.data;
       this.updateForm.patchValue(data);
       this.updateForm.patchValue({ date: data.date.toString().split('T')[0] });
       this.initAmountUpdateForm.set(data.amount);
-      this.initSourceIdUpdateForm.set(data.sourceId);
+      this.initSourceIdUpdateForm.set(data.typeId);
       this.toggleLiveUpdateModel();
     });
   }
   onSubmitUpdateForm() {
     if (this.updateForm.valid) {
-      this.incomeService.update(this.updateForm.value).subscribe((res) => {
+      this.resourceService.update(this.updateForm.value).subscribe((res) => {
         this.toggleLiveUpdateModel();
         this.getData();
         this.toastService.showToast(EColors.success, res.message);
@@ -197,7 +197,7 @@ export class ResourcesComponent implements OnInit {
     this.toggleLiveDelete();
   }
   onConfirmDelete() {
-    this.incomeService.delete(this.deleteById).subscribe((res) => {
+    this.resourceService.delete(this.deleteById).subscribe((res) => {
       this.toggleLiveDelete();
       this.getData();
       this.toastService.showToast(EColors.success, res.message);
