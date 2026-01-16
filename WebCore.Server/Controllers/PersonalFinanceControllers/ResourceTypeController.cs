@@ -13,12 +13,12 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
     [Route("api/personalFinance/[controller]")]
     [ApiController]
     [Authorize]
-    public class IncomeController : BaseApiController
+    public class ResourceTypeController : BaseApiController
     {
-        private readonly IIncomeHelper _helper;
+        private readonly IResourceTypeHelper _helper;
         private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public IncomeController(IIncomeHelper helper,
+        public ResourceTypeController(IResourceTypeHelper helper,
         IActionLoggingService actionLog, IStringLocalizer<SharedResource> localizer)
         {
             _helper = helper;
@@ -26,21 +26,21 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
             _localizer = localizer;
         }
 
-        [HttpGet("getAll/{pageIndex}/{pageSize}/{userId}")]
-        public async Task<IActionResult> GetAll(int pageIndex, int pageSize, int userId)
+        [HttpGet("getAll/{pageIndex}/{pageSize}")]
+        public async Task<IActionResult> GetAll(int pageIndex, int pageSize)
         {
             if (pageIndex < 1 || pageSize < 1)
             {
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             }
-            Pagination<IncomeDTO> data = await _helper.GetAllAsync(pageIndex, pageSize, userId);
+            var data = await _helper.GetAllAsync(pageIndex, pageSize);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
 
 
         [HttpGet("getById/{id}")]
-        public async Task<IActionResult> GetById(Guid id)
+        public async Task<IActionResult> GetById(int id)
         {
             var data = await _helper.GetByIdAsync(id);
             if (data == null)
@@ -50,7 +50,7 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
 
 
         [HttpPost("create")]
-        public async Task<IActionResult> Create([FromBody] IncomeDTO model)
+        public async Task<IActionResult> Create([FromBody] ResourceTypeDTO model)
         {
             if (model == null || !ModelState.IsValid)
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
@@ -61,7 +61,7 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> Update([FromBody] IncomeDTO model)
+        public async Task<IActionResult> Update([FromBody] ResourceTypeDTO model)
         {
             if (model == null || !ModelState.IsValid)
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
@@ -72,7 +72,7 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
         }
 
         [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(int id)
         {
             var result = await _helper.DeleteAsync(id);
             if (!result)

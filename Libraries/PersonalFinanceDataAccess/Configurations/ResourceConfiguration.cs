@@ -4,11 +4,11 @@ using PersonalFinanceDataAccess.DTOs;
 
 namespace PersonalFinanceDataAccess.Configurations
 {
-    public class IncomeConfiguration : IEntityTypeConfiguration<IncomeDTO>
+    public class ResourceConfiguration : IEntityTypeConfiguration<ResourceDTO>
     {
-        public void Configure(EntityTypeBuilder<IncomeDTO> builder)
+        public void Configure(EntityTypeBuilder<ResourceDTO> builder)
         {
-            builder.ToTable("Incomes");
+            builder.ToTable("Resources");
             builder.HasKey(i => i.Id);
             builder.Property(s => s.Id).ValueGeneratedOnAdd();
             builder.Property(i => i.Amount)

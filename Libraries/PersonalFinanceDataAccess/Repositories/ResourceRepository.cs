@@ -3,9 +3,9 @@ using PersonalFinanceDataAccess.IRepositories;
 
 namespace PersonalFinanceDataAccess.Repositories
 {
-    public class IncomeRepository : GenericRepository<IncomeDTO>, IIncomeRepository
+    public class ResourceRepository : GenericRepository<ResourceDTO>, IResourceRepository
     {
-        public IncomeRepository(ApplicationContext context) : base(context)
+        public ResourceRepository(ApplicationContext context) : base(context)
         {
         }
     }

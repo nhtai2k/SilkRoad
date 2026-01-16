@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PersonalFinanceDataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class initalDB : Migration
+    public partial class InitDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -45,6 +45,8 @@ namespace PersonalFinanceDataAccess.Migrations
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    HasRefund = table.Column<bool>(type: "bit", nullable: false),
+                    RefundAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -54,21 +56,36 @@ namespace PersonalFinanceDataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Incomes",
+                name: "Resources",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    Source = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    TypeId = table.Column<int>(type: "int", nullable: false),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    Inflow = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Incomes", x => x.Id);
+                    table.PrimaryKey("PK_Resources", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ResourceTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Priority = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ResourceTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -113,7 +130,10 @@ namespace PersonalFinanceDataAccess.Migrations
                 name: "Expenses");
 
             migrationBuilder.DropTable(
-                name: "Incomes");
+                name: "Resources");
+
+            migrationBuilder.DropTable(
+                name: "ResourceTypes");
 
             migrationBuilder.DropTable(
                 name: "SubCategories");

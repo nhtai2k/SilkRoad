@@ -117,7 +117,7 @@ namespace PersonalFinanceDataAccess.Migrations
                     b.ToTable("Expenses", (string)null);
                 });
 
-            modelBuilder.Entity("PersonalFinanceDataAccess.DTOs.IncomeDTO", b =>
+            modelBuilder.Entity("PersonalFinanceDataAccess.DTOs.ResourceDTO", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -132,6 +132,9 @@ namespace PersonalFinanceDataAccess.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("Inflow")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
@@ -139,7 +142,7 @@ namespace PersonalFinanceDataAccess.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int>("SourceId")
+                    b.Property<int>("TypeId")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
@@ -147,7 +150,28 @@ namespace PersonalFinanceDataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Incomes", (string)null);
+                    b.ToTable("Resources", (string)null);
+                });
+
+            modelBuilder.Entity("PersonalFinanceDataAccess.DTOs.ResourceTypeDTO", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ResourceTypes", (string)null);
                 });
 
             modelBuilder.Entity("PersonalFinanceDataAccess.DTOs.SubCategoryDTO", b =>

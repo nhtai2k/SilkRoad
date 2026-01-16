@@ -2,7 +2,7 @@
 
 namespace PersonalFinanceDataAccess.IRepositories
 {
-    public interface IIncomeRepository : IGenericRepository<IncomeDTO>
+    public interface IResourceRepository : IGenericRepository<ResourceDTO>
     {
     }
 }
