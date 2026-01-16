@@ -19,6 +19,11 @@ namespace PersonalFinanceDataAccess.Configurations
             builder.Property(i => i.Note)
                            .HasMaxLength(500);
 
+            builder.HasOne(i => i.ResourceType)
+                .WithMany()
+                   .HasForeignKey(i => i.TypeId)
+                   .OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }

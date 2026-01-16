@@ -11,6 +11,7 @@
         public bool Inflow { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
+        public ResourceTypeDTO? ResourceType { get; set; }
         public ResourceDTO()
         {
             CreatedAt = DateTime.Now;

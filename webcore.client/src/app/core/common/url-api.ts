@@ -140,6 +140,7 @@ export enum EResourcePersonalFinanceUrl {
 //ResourceType
 export enum EResourceTypePersonalFinanceUrl {
   getAllUrl = "/api/personalFinance/resourceType/getAll",
+  getAllDeletedUrl = "/api/personalFinance/resourceType/getAllDeleted",
   getOptionListUrl = "/api/personalFinance/resourceType/getOptionList",
   getByIdUrl = "/api/personalFinance/resourceType/getById",
   createUrl = "/api/personalFinance/resourceType/create",

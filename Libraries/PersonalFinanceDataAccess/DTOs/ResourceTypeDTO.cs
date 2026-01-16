@@ -1,5 +1,4 @@
 ﻿
-
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,5 +10,6 @@ namespace PersonalFinanceDataAccess.DTOs
         public int Id { get; set; }
         public int Priority { get; set; }
         public required string Name { get; set; }
+        public ICollection<ResourceDTO>? Resources { get; set; }
     }
 }

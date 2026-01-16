@@ -15,6 +15,10 @@ export class ResourceTypeService {
     return this.http.get<APIResponse<Pagination<ResourceTypeModel>>>(`${EResourceTypePersonalFinanceUrl.getAllUrl}/${pageIndex}/${pageSize}`);
   }
 
+  getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<ResourceTypeModel>>> {
+    return this.http.get<APIResponse<Pagination<ResourceTypeModel>>>(`${EResourceTypePersonalFinanceUrl.getAllDeletedUrl}/${pageIndex}/${pageSize}`);
+  }
+
   getOptionList(): Observable<APIResponse<OptionModel[]>> {
     const url = EResourceTypePersonalFinanceUrl.getOptionListUrl;
     return this.http.get<APIResponse<OptionModel[]>>(url);
