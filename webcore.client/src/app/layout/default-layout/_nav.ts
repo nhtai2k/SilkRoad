@@ -92,8 +92,8 @@ const personalFinanceNavItems: INavData[] = [
     iconComponent: { name: 'cil-speedometer' }
   },
   {
-    name: 'Income',
-    url: '/personal-finance/income',
+    name: 'Resources',
+    url: '/personal-finance/resources',
     iconComponent: { name: 'cil-bar-chart' }
   },
   {
@@ -102,9 +102,21 @@ const personalFinanceNavItems: INavData[] = [
     iconComponent: { name: 'cil-notes' }
   },
   {
-    name: 'Categories',
-    url: '/personal-finance/categories',
-    iconComponent: { name: 'cil-notes' }
+    name: 'Extend',
+    url: '/personal-finance/extensions',
+    iconComponent: { name: 'cil-puzzle' },
+    children: [
+      {
+        name: 'Categories',
+        url: '/personal-finance/extensions/categories',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: 'Resource Types',
+        url: '/personal-finance/extensions/resource-types',
+        icon: 'nav-icon-bullet'
+      }
+    ]
   },
   //#endregion
 

@@ -48,22 +48,26 @@ const stockMarketChildrenRoutes: Routes = [
 ];
 
 const personalFinanceChildrenRoutes: Routes = [
-  {
-    path: 'personal-finance/categories',
-    loadChildren: () => import('./views/personal-finance/categories/routes').then((m) => m.routes)
-  },
+  // {
+  //   path: 'personal-finance/categories',
+  //   loadChildren: () => import('./views/personal-finance/extensions/categories/routes').then((m) => m.routes)
+  // },
   {
     path: 'personal-finance/expenses',
     loadChildren: () => import('./views/personal-finance/expenses/routes').then((m) => m.routes)
   },
   {
-    path: 'personal-finance/income',
-    loadChildren: () => import('./views/personal-finance/income/routes').then((m) => m.routes)
+    path: 'personal-finance/resources',
+    loadChildren: () => import('./views/personal-finance/resources/routes').then((m) => m.routes)
   },
   {
     path: 'personal-finance/reports',
     loadChildren: () => import('./views/personal-finance/reports/routes').then((m) => m.routes)
-  }
+  },
+    {
+    path: 'personal-finance/extensions',
+    loadChildren: () => import('./views/personal-finance/extensions/routes').then((m) => m.routes)
+  },
 ];
 
 const featureChildrenRoutes: Routes = [

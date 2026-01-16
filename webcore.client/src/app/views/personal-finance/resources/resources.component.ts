@@ -20,13 +20,13 @@ import { EyeClosedIconComponent, EyeIconComponent } from "@components/icons";
 
 
 @Component({
-  selector: 'app-income',
-  templateUrl: './income.component.html',
-  styleUrl: './income.component.scss',
+  selector: 'app-resources',
+  templateUrl: './resources.component.html',
+  styleUrl: './resources.component.scss',
   imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective, IconDirective, ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule, ModalFooterComponent, CommonModule,
     ModalHeaderComponent, DataTableComponent, InputCurrencyComponent, SelectSearchComponent, EyeClosedIconComponent, EyeIconComponent]
 })
-export class IncomeComponent implements OnInit {
+export class ResourcesComponent implements OnInit {
   //#region Properties
   pageInformation: PageInformation = new PageInformation();
   visibleCreateModal: boolean = false;
