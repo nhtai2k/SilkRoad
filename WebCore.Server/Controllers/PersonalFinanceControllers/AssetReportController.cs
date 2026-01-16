@@ -1,5 +1,6 @@
 ﻿using Common;
 using Common.Services.ActionLoggingServices;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -11,24 +12,21 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
     [Route("api/personalFinance/[controller]")]
     [ApiController]
     [Authorize]
-    public class ReportController : BaseApiController
+    public class AssetReportController : BaseApiController
     {
-        private readonly IReportHelper _helper;
-        //private readonly IActionLoggingService _actionLog;
+        private readonly IAssetReportHelper _helper;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public ReportController(IReportHelper helper,
-        //IActionLoggingService actionLog, 
+        public AssetReportController(IAssetReportHelper helper,
         IStringLocalizer<SharedResource> localizer)
         {
             _helper = helper;
-            //_actionLog = actionLog;
             _localizer = localizer;
         }
 
-        [HttpGet("GetColoumnChartByMonth/{userId}/{month}")]
-        public async Task<IActionResult> GetColoumnChartByMonth(int userId, DateTime month)
+        [HttpGet("GetColoumnChart/{userId}")]
+        public async Task<IActionResult> GetColoumnChart(int userId)
         {
-            var data = await _helper.GetColoumnChartByMonth(month, userId);
+            var data = await _helper.GetColoumnChartAsync(userId);
             if (data == null || data.Count == 0)
             {
                 return Failed(EStatusCodes.BadRequest, _localizer["noDataFound"]);
@@ -36,11 +34,11 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
-        [HttpGet("GetColoumnChartByYear/{userId}/{year}")]
-        public async Task<IActionResult> GetColoumnChartByMonth(int userId, int year)
+        [HttpGet("GetPieChart/{userId}")]
+        public async Task<IActionResult> GetPieChart(int userId)
         {
             
-            var data = await _helper.GetColoumnChartByMonth(year, userId);
+            var data = await _helper.GetPieChartAsync(userId);
             if (data == null || data.Count == 0)
             {
                 return Failed(EStatusCodes.BadRequest, _localizer["noDataFound"]);

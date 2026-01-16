@@ -172,10 +172,15 @@ export enum EAssetTypePersonalFinanceUrl {
 }
 
 
-//Report
-export enum EReportPersonalFinanceUrl {
-  getColoumnChartByMonthUrl = "/api/personalFinance/report/GetColoumnChartByMonth",
-  getColoumnChartByYearUrl = "/api/personalFinance/report/GetColoumnChartByYear",
+//Expense Report
+export enum EExpenseReportPersonalFinanceUrl {
+  getColoumnChartByMonthUrl = "/api/personalFinance/expenseReport/GetColoumnChartByMonth",
+  getColoumnChartByYearUrl = "/api/personalFinance/expenseReport/GetColoumnChartByYear",
+}
+//Asset Report
+export enum EAssetReportPersonalFinanceUrl {
+  getColoumnChartUrl = "/api/personalFinance/assetReport/GetColoumnChart",
+  getPieChartUrl = "/api/personalFinance/assetReport/GetPieChart",
 }
 
 //#endregion

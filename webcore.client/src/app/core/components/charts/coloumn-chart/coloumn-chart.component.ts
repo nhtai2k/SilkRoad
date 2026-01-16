@@ -16,6 +16,7 @@ export class ColoumnChartComponent implements OnInit, OnDestroy {
   private xAxis!: am5xy.CategoryAxis<am5xy.AxisRendererX>;
   
   data = input<any[]>([]);
+  // id = input<string>('0');
 
   constructor() {
     // Watch for data changes
@@ -39,7 +40,8 @@ export class ColoumnChartComponent implements OnInit, OnDestroy {
 
   private initializeChart(): void {
     // Create root element
-    this.root = am5.Root.new('columnChartDiv');
+    // const name = "columnChartDiv" ;
+    this.root = am5.Root.new("columnChartDiv");
 
     // Set themes
     this.root.setThemes([

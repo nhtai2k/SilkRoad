@@ -11,7 +11,7 @@ import { DataTableComponent } from "@components/generals/data-table/data-table.c
 import { RangeDatetimePickerComponent } from "@components/generals/range-datetime-picker/range-datetime-picker.component";
 import { ExpenseService } from '@services/personal-finance-services/expense.service';
 import { ExpenseModel } from '@models/personal-finance-models';
-import { CategoryService, ReportService } from '@services/personal-finance-services';
+import { CategoryService, ExpenseReportService } from '@services/personal-finance-services';
 import { OptionModel } from '@models/option.model';
 import { TreeSelectV1Component } from "@components/selects/tree-select-v1/tree-select-v1.component";
 import { InputCurrencyComponent } from "@components/inputs/input-currency/input-currency.component";
@@ -95,7 +95,7 @@ export class ExpensesComponent implements OnInit {
   //#endregion
   //#region Lifecycle Hooks
   constructor(private expenseService: ExpenseService, private categoryService: CategoryService, private authService: AuthService,
-    private toastService: ToastService, private reportService: ReportService) { }
+    private toastService: ToastService, private reportService: ExpenseReportService) { }
   ngOnInit(): void {
     this.categoryService.getTreeOptionList().subscribe((res) => {
       this.categoryTreeOptions = res.data;

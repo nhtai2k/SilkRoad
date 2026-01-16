@@ -137,10 +137,10 @@ namespace WebCore.Server
             services.AddScoped<PersonalFinanceBusinessLogic.IHelpers.IResourceHelper, PersonalFinanceBusinessLogic.Helpers.ResourceHelper>();
             services.AddScoped<PersonalFinanceBusinessLogic.IHelpers.IResourceTypeHelper, PersonalFinanceBusinessLogic.Helpers.ResourceTypeHelper>();
             services.AddScoped<PersonalFinanceBusinessLogic.IHelpers.IExpenseHelper, PersonalFinanceBusinessLogic.Helpers.ExpenseHelper>();
-            services.AddScoped<PersonalFinanceBusinessLogic.IHelpers.IReportHelper, PersonalFinanceBusinessLogic.Helpers.ReportHelper>();
+            services.AddScoped<PersonalFinanceBusinessLogic.IHelpers.IExpenseReportHelper, PersonalFinanceBusinessLogic.Helpers.ExpenseReportHelper>();
+            services.AddScoped<PersonalFinanceBusinessLogic.IHelpers.IAssetReportHelper, PersonalFinanceBusinessLogic.Helpers.AssetReportHelper>();
             services.AddScoped<PersonalFinanceBusinessLogic.IHelpers.IAssetTypeHelper, PersonalFinanceBusinessLogic.Helpers.AssetTypeHelper>();
-            services.AddScoped<PersonalFinanceBusinessLogic.IHelpers.IAssetHelper, PersonalFinanceBusinessLogic.Helpers.AssetHelper>();
-            
+            services.AddScoped<PersonalFinanceBusinessLogic.IHelpers.IAssetHelper, PersonalFinanceBusinessLogic.Helpers.AssetHelper>();     
             #endregion
 
             #region Stock

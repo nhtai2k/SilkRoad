@@ -5,5 +5,8 @@ export { SubCategoryService } from './sub-category.service';
 // Income Personal Finance Services
 export { ResourceService } from './resource.service';
 // Resource Type Personal Finance Services
+export { ExpenseReportService  } from './expense-report.service';
+
 export { ResourceTypeService } from './resourse-type.service';
-export { ReportService } from './report.service';
+
+export { AssetReportService } from './asset-report.service';

@@ -9,10 +9,10 @@ using System.Text;
 
 namespace PersonalFinanceBusinessLogic.Helpers
 {
-    public class ReportHelper : IReportHelper
+    public class ExpenseReportHelper : IExpenseReportHelper
     {
         private readonly IUnitOfWork _unitOfWork;
-        public ReportHelper(IUnitOfWork unitOfWork)
+        public ExpenseReportHelper(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
