@@ -15,8 +15,7 @@ namespace ChatBot.Helpers
         {
             _promptService = promptService;
             //using (StreamReader reader = new StreamReader(configFilePath))
-            //{
-            //    string json = reader.ReadToEnd();
+            //{            //    string json = reader.ReadToEnd();
             //    _beeConfigs = JsonConvert.DeserializeObject<List<PromptModel>>(json);
 
             //}
@@ -38,6 +37,7 @@ namespace ChatBot.Helpers
 
         public async Task<Pagination<PromptModel>> GetAllAsync(int pageIndex, int pageSize)
         {
+            //await InitialDB();
             var allItems = await _promptService.GetAllAsync();
             var filteredItems = allItems.Where(x => x.GetType().GetProperty("IsDeleted") != null ? !(bool)x.GetType().GetProperty("IsDeleted")!.GetValue(x)! : true)
                                         .Where(x => x.GetType().GetProperty("ParentId") == null || x.GetType().GetProperty("ParentId")!.GetValue(x) == null)

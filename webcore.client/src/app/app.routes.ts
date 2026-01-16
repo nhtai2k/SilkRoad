@@ -37,7 +37,7 @@ const stockMarketChildrenRoutes: Routes = [
     path: 'stock/trade-histories',
     loadChildren: () => import('./views/stocks/trade-histories/routes').then((m) => m.routes)
   },
-    {
+  {
     path: 'stock/handbook',
     loadChildren: () => import('./views/stocks/handbook/routes').then((m) => m.routes)
   },
@@ -193,42 +193,42 @@ const mindMapChildrenRoutes: Routes = [
 ];
 
 const bomChildrenRoutes: Routes = [
-    {
-        path: 'boms',
-        loadChildren: () => import('./views/boms/bom/index/routes').then((m) => m.routes)
-      },
-      // {
-      //   path: 'boms/create',
-      //   loadChildren: () => import('./views/boms/bom/create-v1/routes').then((m) => m.routes)
-      // },
-      {
-        path: 'boms/update/:id',
-        loadChildren: () => import('./views/boms/bom/update/routes').then((m) => m.routes)
-      },
-      {
-        path: 'boms/view/:id',
-        loadChildren: () => import('./views/boms/bom/view/routes').then((m) => m.routes)
-      },
-      {
-        path: "properties",
-        loadChildren: () => import('./views/boms/property/routes').then((m) => m.routes)
-      },
-      {
-        path: "materials",
-        loadChildren: () => import('./views/boms/material/routes').then((m) => m.routes)
-      },
-      {
-        path: "materials/create",
-        loadChildren: () => import('./views/boms/material/create-material/routes').then((m) => m.routes)
-      },
-      {
-        path: "materials/update/:id",
-        loadChildren: () => import('./views/boms/material/update-material/routes').then((m) => m.routes)
-      },
-      {
-        path: 'boms/extensions',
-        loadChildren: () => import('./views/boms/extensions/routes').then((m) => m.routes)
-      },
+  {
+    path: 'boms',
+    loadChildren: () => import('./views/boms/bom/index/routes').then((m) => m.routes)
+  },
+  // {
+  //   path: 'boms/create',
+  //   loadChildren: () => import('./views/boms/bom/create-v1/routes').then((m) => m.routes)
+  // },
+  {
+    path: 'boms/update/:id',
+    loadChildren: () => import('./views/boms/bom/update/routes').then((m) => m.routes)
+  },
+  {
+    path: 'boms/view/:id',
+    loadChildren: () => import('./views/boms/bom/view/routes').then((m) => m.routes)
+  },
+  {
+    path: "properties",
+    loadChildren: () => import('./views/boms/property/routes').then((m) => m.routes)
+  },
+  {
+    path: "materials",
+    loadChildren: () => import('./views/boms/material/routes').then((m) => m.routes)
+  },
+  {
+    path: "materials/create",
+    loadChildren: () => import('./views/boms/material/create-material/routes').then((m) => m.routes)
+  },
+  {
+    path: "materials/update/:id",
+    loadChildren: () => import('./views/boms/material/update-material/routes').then((m) => m.routes)
+  },
+  {
+    path: 'boms/extensions',
+    loadChildren: () => import('./views/boms/extensions/routes').then((m) => m.routes)
+  },
 ];
 
 const systemChildrenRoutes: Routes = [
@@ -264,18 +264,18 @@ const systemChildrenRoutes: Routes = [
 ];
 
 const chatbotChildrenRoutes: Routes = [
-        {
-        path: 'prompts',
-        loadChildren: () => import('./views/chatbots/prompts/routes').then((m) => m.routes)
-      },
-      {
-        path: 'conversations',
-        loadChildren: () => import('./views/chatbots/conversations/routes').then((m) => m.routes)
-      },
-      {
-        path: 'messages/:id',
-        loadChildren: () => import('./views/chatbots/messages/routes').then((m) => m.routes)
-      },
+  {
+    path: 'prompts',
+    loadChildren: () => import('./views/chatbots/prompts/routes').then((m) => m.routes)
+  },
+  {
+    path: 'conversations',
+    loadChildren: () => import('./views/chatbots/conversations/routes').then((m) => m.routes)
+  },
+  {
+    path: 'messages/:id',
+    loadChildren: () => import('./views/chatbots/messages/routes').then((m) => m.routes)
+  },
 ];
 
 
@@ -304,8 +304,8 @@ export const routes: Routes = [
       ...personalFinanceChildrenRoutes,
       //#endregion
 
-            //#region Chat Bot
-     ...chatbotChildrenRoutes,
+      //#region Chat Bot
+      ...chatbotChildrenRoutes,
       //#endregion
 
       //#region Features
@@ -333,7 +333,7 @@ export const routes: Routes = [
       //#endregion
     ]
   },
-    {
+  {
     path: 'three1',
     loadChildren: () => import('./views/chatbots/three1/routes').then(m => m.routes)
   },
@@ -346,14 +346,6 @@ export const routes: Routes = [
     loadChildren: () => import('./views/chatbots/three3/routes').then(m => m.routes)
   },
   {
-    path: 'three4',
-    loadChildren: () => import('./views/chatbots/three4/routes').then(m => m.routes)
-  },
-  {
-    path: 'three5',
-    loadChildren: () => import('./views/chatbots/three5/routes').then(m => m.routes)
-  },
-    {
     path: 'beebot',
     loadChildren: () => import('./views/chatbots/beebot/routes').then(m => m.routes)
   },

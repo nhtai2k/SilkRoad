@@ -16,7 +16,7 @@ import { LoadingComponent } from '@components/generals/loading/loading.component
     imports: [RouterOutlet, ToastNotificationComponent, LoadingComponent]
 })
 export class AppComponent implements OnInit {
-  title = 'Admin Template';
+  title = 'Silk Road';
 
   readonly #destroyRef: DestroyRef = inject(DestroyRef);
   readonly #activatedRoute: ActivatedRoute = inject(ActivatedRoute);
@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
     this.#titleService.setTitle(this.title);
     // iconSet singleton
     this.#iconSetService.icons = { ...freeSet };
-    this.#colorModeService.localStorageItemName.set('coreui-free-angular-admin-template-theme-default');
+    this.#colorModeService.localStorageItemName.set('silk-road');
     this.#colorModeService.eventName.set('ColorSchemeChange');
   }
 
