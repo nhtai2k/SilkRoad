@@ -342,28 +342,8 @@ export const routes: Routes = [
     ]
   },
   {
-    path: 'three1',
-    loadChildren: () => import('./views/chatbots/three1/routes').then(m => m.routes)
-  },
-  {
-    path: 'three2',
-    loadChildren: () => import('./views/chatbots/three2/routes').then(m => m.routes)
-  },
-  {
-    path: 'three3',
-    loadChildren: () => import('./views/chatbots/three3/routes').then(m => m.routes)
-  },
-  {
     path: 'beebot',
     loadChildren: () => import('./views/chatbots/beebot/routes').then(m => m.routes)
-  },
-  {
-    path: 'beebot1',
-    loadChildren: () => import('./views/chatbots/beebot-v1/routes').then(m => m.routes)
-  },
-  {
-    path: 'beebot2',
-    loadChildren: () => import('./views/chatbots/beebot-v2/routes').then(m => m.routes)
   },
   {
     path: 'chatgpt',
