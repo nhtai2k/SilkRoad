@@ -6,17 +6,22 @@ const featureNavItems: INavData[] = [
     title: true,
     name: 'Features'
   },
-      {
-    name: 'Beebot',
-    url: '/beebot',
-    iconComponent: { name: 'cil-baby' }
+  {
+    name: 'prompts',
+    url: '/prompts',
+    iconComponent: { name: 'cil-speedometer' }
+  },
+  {
+    name: 'Conversations',
+    url: '/conversations',
+    iconComponent: { name: 'cil-chat-bubble' }
   },
   {
     name: 'ChatGPT',
     url: '/chatgpt',
     iconComponent: { name: 'cil-baby' }
   },
-    {
+  {
     name: 'Ollama',
     url: '/ollama',
     iconComponent: { name: 'cil-baby' }
@@ -96,7 +101,7 @@ const personalFinanceNavItems: INavData[] = [
     url: '/personal-finance/reports',
     iconComponent: { name: 'cil-speedometer' }
   },
-    {
+  {
     name: 'Resources',
     url: '/personal-finance/resources',
     iconComponent: { name: 'cil-bar-chart' }
@@ -126,7 +131,7 @@ const personalFinanceNavItems: INavData[] = [
         url: '/personal-finance/extensions/resource-types',
         icon: 'nav-icon-bullet'
       },
-         {
+      {
         name: 'Asset Types',
         url: '/personal-finance/extensions/asset-types',
         icon: 'nav-icon-bullet'
@@ -323,7 +328,7 @@ const surveyNavItems: INavData[] = [
 ];
 
 const bomNavItems: INavData[] = [
-    {
+  {
     name: 'Bill of Materials',
     title: true
   },
@@ -458,7 +463,7 @@ const systemNavItems: INavData[] = [
 ];
 
 const testNavItems: INavData[] = [
-    {
+  {
     name: 'Test Component',
     url: '/test',
     iconComponent: { name: 'cil-speedometer' },
@@ -483,36 +488,31 @@ const mindMapNavItems: INavData[] = [
   //#endregion
 ];
 
-const chatbotNavItems: INavData[] = [
-  //#region Chat Bot
-    {
-    name: 'Chat Bot',
-    title: true
-  },
-  // {
-  //   name: 'Beebot',
-  //   url: '/beebot',
-  //   iconComponent: { name: 'cil-speedometer' }
-  // },
-    {
-    name: 'prompts',
-    url: '/prompts',
-    iconComponent: { name: 'cil-speedometer' }
-  },
-  {
-    name: 'Conversations',
-    url: '/conversations',
-    iconComponent: { name: 'cil-chat-bubble' }
-  },
-  //#endregion
-];
+// const chatbotNavItems: INavData[] = [
+//   //#region Chat Bot
+//     {
+//     name: 'Chat Bot',
+//     title: true
+//   },
+//     {
+//     name: 'prompts',
+//     url: '/prompts',
+//     iconComponent: { name: 'cil-speedometer' }
+//   },
+//   {
+//     name: 'Conversations',
+//     url: '/conversations',
+//     iconComponent: { name: 'cil-chat-bubble' }
+//   },
+//   //#endregion
+// ];
 
 export const navItems: INavData[] = [
   ...mindMapNavItems,
   ...featureNavItems,
   ...stockMarketNavItems,
   ...personalFinanceNavItems,
-  ...chatbotNavItems,
+  // ...chatbotNavItems,
   ...restuarantNavItems,
   ...lipstickShopNavItems,
   ...surveyNavItems,

@@ -335,10 +335,6 @@ export const routes: Routes = [
     ]
   },
   {
-    path: 'beebot',
-    loadChildren: () => import('./views/chatbots/beebot/routes').then(m => m.routes)
-  },
-  {
     path: 'chatgpt',
     loadChildren: () => import('./views/chatbots/chatgpt/routes').then(m => m.routes)
   },
