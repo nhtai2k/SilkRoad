@@ -76,18 +76,10 @@ const personalFinanceChildrenRoutes: Routes = [
 ];
 //Feature Routes
 const featureChildrenRoutes: Routes = [
-  // {
-  //   path: 'features/chatgpt',
-  //  loadChildren: () => import('./views/features/gpt/routes').then((m) => m.routes)
-  // },
-  // {
-  //   path: 'features/ollama',
-  //   loadChildren: () => import('./views/features/ollama/routes').then((m) => m.routes)
-  // },
-  // {
-  //   path: 'features/stream-ollama',
-  //   loadChildren: () => import('./views/features/stream-ollama/routes').then((m) => m.routes)
-  // },
+  {
+    path: 'features/stream-ollama',
+    loadChildren: () => import('./views/features/stream-ollama/routes').then((m) => m.routes)
+  },
   {
     path: 'features/qr-code',
     loadChildren: () => import('./views/features/qr-code/routes').then((m) => m.routes)

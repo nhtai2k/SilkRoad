@@ -6,21 +6,26 @@ const featureNavItems: INavData[] = [
     title: true,
     name: 'Features'
   },
-  // {
-  //   name: 'ChatGPT',
-  //   url: '/features/chatgpt',
-  //   iconComponent: { name: 'cil-baby' }
-  // },
-  //   {
-  //   name: 'Ollama',
-  //   url: '/features/ollama',
-  //   iconComponent: { name: 'cil-baby' }
-  // },
-  // {
-  //   name: 'Streaming Ollama',
-  //   url: '/features/stream-ollama',
-  //   iconComponent: { name: 'cil-baby' }
-  // },
+      {
+    name: 'Beebot',
+    url: '/beebot',
+    iconComponent: { name: 'cil-baby' }
+  },
+  {
+    name: 'ChatGPT',
+    url: '/chatgpt',
+    iconComponent: { name: 'cil-baby' }
+  },
+    {
+    name: 'Ollama',
+    url: '/ollama',
+    iconComponent: { name: 'cil-baby' }
+  },
+  {
+    name: 'Streaming Ollama',
+    url: '/features/stream-ollama',
+    iconComponent: { name: 'cil-baby' }
+  },
   {
     name: 'Qr Code',
     url: '/features/qr-code',
