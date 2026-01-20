@@ -1,3 +1,74 @@
-<!-- Galaxy Background Layer -->
-<div class="galaxy-background" #galaxyContainer></div>
+<app-background-galaxy></app-background-galaxy>
+<form [formGroup]="loginForm" class="fromContainer" (ngSubmit)="onSubmit()">
+  <h3 class="text-center title">
+    Sign In
+  </h3>
+  @if (errorMessage) {
+  <div class="text-danger mb-2">
+    {{ errorMessage }}
+  </div>
+  }
 
+  <c-input-group>
+    <span cInputGroupText>
+      <svg cIcon name="cilUser"></svg>
+    </span>
+    <input formControlName="username" cFormControl placeholder="Enter username..." />
+  </c-input-group>
+  @if (username?.invalid && (username?.dirty || username?.touched)) {
+  <div class="text-danger">
+    @if (username?.hasError('required')) {
+    <div>
+      Enter UserName, please!
+    </div>
+    }
+  </div>
+  }
+
+  <c-input-group class="position-relative mt-4">
+    <span cInputGroupText>
+      <svg cIcon name="cilLockLocked"></svg>
+    </span>
+    <div style="z-index: 10;" (click)="ShowPassword()">
+      @if (showPassword) {
+      <app-eye-icon class="eyeIcon" color="#ffffff"></app-eye-icon>
+      }
+      @if (!showPassword) {
+      <app-eye-closed-icon class="eyeIcon" color="#ffffff"></app-eye-closed-icon>
+      }
+    </div>
+    <input formControlName="password" cFormControl id="password" placeholder="Enter password..." type="password" />
+  </c-input-group>
+  @if (password?.invalid && (password?.dirty || password?.touched)) {
+  <div class="text-danger mb-2">
+    @if (password?.hasError('required')) {
+    <div>
+      Enter Password, please!
+    </div>
+    }
+  </div>
+  }
+  <div class="mb-4 mt-2 row">
+    <div class="col-6">
+      <c-form-check class="mb-4 mt-2">
+        <input formControlName="rememberMe" cFormCheckInput id="remember" type="checkbox" class="me-2" />
+        <label cFormCheckLabel for="remember">Remember me</label>
+      </c-form-check>
+    </div>
+    <div class="col-6">
+      <a routerLink="/recover-password" class="forgotPassword float-end">Forgot password?</a>
+    </div>
+  </div>
+  <button cButton type="submit" class="px-4 mb-4 w-100 text-uppercase btn btn-submit" [disabled]="!loginForm.valid || isLoading()">
+    @if(isLoading()){
+    <c-spinner aria-hidden="true" size="sm" />
+    Loading...
+    }@else{
+    Login
+    }
+  </button>
+  <div class="pt-4 googleSignIn">
+    <asl-google-signin-button type="standard" size="large" text="signin_with" theme="filled_black">
+    </asl-google-signin-button>
+  </div>
+</form>

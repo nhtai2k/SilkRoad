@@ -3,7 +3,7 @@ import { IconDirective } from '@coreui/icons-angular';
 import { InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective, FormCheckComponent } from '@coreui/angular';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { EyeIconComponent , EyeClosedIconComponent} from '@components/icons';
+import { EyeIconComponent, EyeClosedIconComponent } from '@components/icons';
 import { LoadingService } from '@services/helper-services/loading.service';
 import { ParticleCanvasComponent } from '@components/generals/particle-canvas/particle-canvas.component';
 import { AuthService } from '@services/system-services/auth.service';
@@ -19,8 +19,8 @@ import { ExternalAuthModel } from '@models/external-auth.model';
 })
 export class LoginComponent implements OnInit {
   //#region Variables
-    user: SocialUser | undefined;
-      GoogleLoginProvider = GoogleLoginProvider;
+  user: SocialUser | undefined;
+  GoogleLoginProvider = GoogleLoginProvider;
   showPassword: boolean = false;
   errorMessage: string = '';
   loginForm: FormGroup = new FormGroup({
@@ -28,17 +28,17 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', Validators.required),
     rememberMe: new FormControl(false)
   });
-  
+
   // private authSubscription: Subscription = new Subscription();
   //#endregion
 
   //#region Lifecycle Hooks
   constructor(private authenticationService: AuthService,
-    private router: Router, 
+    private router: Router,
     private loadingService: LoadingService,
     private socialAuthService: SocialAuthService
-  ) {
-  }
+  ) {}
+  
   ngOnInit(): void {
     const isAuthenticated = this.authenticationService.checkLogin();
     if (isAuthenticated) {
@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
     this.socialAuthService.authState.subscribe((user) => {
       if (user) {
         this.loadingService.showLoadingComponent(true);
-        const authModel : ExternalAuthModel = {
+        const authModel: ExternalAuthModel = {
           provider: user.provider,
           idToken: user.idToken
         };

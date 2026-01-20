@@ -24,7 +24,7 @@ export const pageRoutes: Routes = [
   },
   {
     path: 'login',
-    loadComponent: () => import('./login/login.component').then(m => m.LoginComponent),
+    loadComponent: () => import('./login-threejs/login-threejs.component').then(m => m.LoginThreejsComponent),
     data: {
       title: 'Login Page'
     }
