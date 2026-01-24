@@ -44,8 +44,13 @@ namespace WebCore.Server
                 builder.Host.UseSerilog();
 
                 var applicationconfig = builder.Configuration.GetSection("AppConfig");
-                var crossOrigins = builder.Configuration.GetSection("CorsOrigins").Get<string[]>(); ;
+                var crossOrigins = builder.Configuration.GetSection("CorsOrigins").Get<string[]>();
                 ServerAppConfig appConfig = applicationconfig.Get<ServerAppConfig>();
+                if(appConfig == null || crossOrigins == null)
+                {
+                    throw new Exception("AppConfig section is missing or invalid in appsettings.json");
+                }
+
                 builder.Services.AddSingleton(appConfig);
                 builder.Services.AddControllers();
                 builder.Services.AddSignalR();
