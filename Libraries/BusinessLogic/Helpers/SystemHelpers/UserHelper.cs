@@ -44,7 +44,7 @@ namespace System.BLL.Helpers.SystemHelpers
             if (pageSize < 0)
                 pageSize = result.PageSize;
             // Query only necessary data with pagination at the database level
-            var query = _unitOfWork.UserSystemRepository.Query( includeProperties: "UserRoles");
+            var query = _unitOfWork.UserSystemRepository.Query(includeProperties: "UserRoles");
             if (roleId != -1)
             {
                 query = query.Where(s => s.UserRoles.Any(r => r.RoleId == roleId));
@@ -86,7 +86,7 @@ namespace System.BLL.Helpers.SystemHelpers
             if (pageSize < 0)
                 pageSize = result.PageSize;
             // Query only necessary data with pagination at the database level
-            var query = _unitOfWork.UserSystemRepository.Query(s => s.IsActive );
+            var query = _unitOfWork.UserSystemRepository.Query(s => s.IsActive);
             result.PageIndex = pageIndex;
             result.TotalItems = await query.CountAsync();
             result.TotalPages = (int)Math.Ceiling(result.TotalPages / (double)pageSize);

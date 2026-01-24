@@ -1,5 +1,4 @@
-﻿using BOM.DAL;
-using BOM.DAL.DTOs;
+﻿using BOM.DAL.DTOs;
 using BOM.DAL.IRepositories;
 using BOM.DAL.QureyModels;
 using Microsoft.EntityFrameworkCore;

@@ -1,5 +1,4 @@
-﻿using Survey.DAL;
-using Survey.DAL.DTOs;
+﻿using Survey.DAL.DTOs;
 using Survey.DAL.IRepositories;
 
 namespace Survey.DAL.Repositories

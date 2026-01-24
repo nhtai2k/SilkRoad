@@ -1,6 +1,5 @@
 using ChatBot.IHelpers;
 using ChatBot.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Share;
 using WebCore.Server.Controllers.BaseApiControllers;

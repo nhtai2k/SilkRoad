@@ -2,7 +2,6 @@
 using Lipstick.BLL.ILipstickHelpers;
 using Lipstick.DAL;
 using Lipstick.DAL.DTOs;
-using LipstickDataAccess.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System.Share;
 using System.Share.Models;

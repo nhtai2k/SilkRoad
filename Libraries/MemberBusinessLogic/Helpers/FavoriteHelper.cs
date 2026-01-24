@@ -1,6 +1,6 @@
 ﻿using Member.BLL.IHelpers;
 using Member.DAL;
-using MemberDataAccess.DTOs;
+using Member.DAL.DTOs;
 
 namespace Member.BLL.Helpers
 {

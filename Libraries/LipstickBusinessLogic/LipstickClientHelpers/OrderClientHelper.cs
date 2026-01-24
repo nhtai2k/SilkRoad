@@ -1,7 +1,6 @@
 ﻿using Lipstick.BLL.ILipstickClientHelpers;
 using Lipstick.DAL;
 using Lipstick.DAL.DTOs;
-using LipstickDataAccess.DTOs;
 using System.Share;
 using System.Share.Models;
 using System.Share.ViewModels.LipstickClientViewModels;

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MindMap.Models
+﻿namespace MindMap.Models
 {
     public class NodeModel
     {

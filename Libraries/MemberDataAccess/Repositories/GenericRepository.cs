@@ -1,5 +1,4 @@
-﻿using Member.DAL;
-using Member.DAL.IRepositories;
+﻿using Member.DAL.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 

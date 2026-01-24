@@ -58,8 +58,8 @@ namespace WebCore.Server
             services.AddScoped<Lipstick.DAL.IUnitOfWork, Lipstick.DAL.UnitOfWork>();
             //lipstick
             //services.AddTransient<IUnitHelper, UnitHelper>();
-            services.AddTransient<ICategoryHelper, CategoryHelper>();
-            services.AddTransient<ISubCategoryHelper, SubCategoryHelper>();
+            services.AddTransient<Lipstick.BLL.ILipstickHelpers.ICategoryHelper, Lipstick.BLL.LipstickHelpers.CategoryHelper>();
+            services.AddTransient<Lipstick.BLL.ILipstickHelpers.ISubCategoryHelper, Lipstick.BLL.LipstickHelpers.SubCategoryHelper>();
             services.AddTransient<IBrandHelper, BrandHelper>();
             services.AddTransient<ITopicHelper, TopicHelper>();
             services.AddTransient<IBlogHelper, BlogHelper>();
@@ -148,11 +148,11 @@ namespace WebCore.Server
             services.AddScoped<IExpenseReportHelper, ExpenseReportHelper>();
             services.AddScoped<IAssetReportHelper, AssetReportHelper>();
             services.AddScoped<IAssetTypeHelper, AssetTypeHelper>();
-            services.AddScoped<IAssetHelper, AssetHelper>();     
+            services.AddScoped<IAssetHelper, AssetHelper>();
             #endregion
 
             #region Stock
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<Stock.DAL.IUnitOfWork, Stock.DAL.UnitOfWork>();
             //stock
             services.AddScoped<ICompanyHelper, CompanyHelper>();
             services.AddScoped<IStockPriceHelper, StockPriceHelper>();

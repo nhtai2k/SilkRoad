@@ -1,4 +1,4 @@
-﻿using Common.Custom.CustomDataAnnotations;
+﻿using System.Share.Custom.CustomDataAnnotations;
 
 namespace System.Share.ViewModels.LipstickClientViewModels
 {

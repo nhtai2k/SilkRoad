@@ -21,11 +21,11 @@ namespace PersonalFinance.BLL.Helpers
             {
                 query = query.Where(s => s.Date >= filter.FromDate);
             }
-            if(filter.ToDate != null)
+            if (filter.ToDate != null)
             {
                 query = query.Where(s => s.Date <= filter.ToDate);
             }
-            if(filter.CategoryId != null)
+            if (filter.CategoryId != null)
             {
                 query = query.Where(s => s.CategoryId == filter.CategoryId);
             }

@@ -1,5 +1,4 @@
-﻿using Common.ViewModels.LipstickClientViewModels;
-using Lipstick.BLL.ILipstickClientHelpers;
+﻿using Lipstick.BLL.ILipstickClientHelpers;
 using Lipstick.DAL;
 using System.Share;
 using System.Share.ViewModels.LipstickClientViewModels;

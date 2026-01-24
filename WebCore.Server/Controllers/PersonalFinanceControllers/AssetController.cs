@@ -1,5 +1,4 @@
-﻿using Common.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using PersonalFinance.BLL.IHelpers;

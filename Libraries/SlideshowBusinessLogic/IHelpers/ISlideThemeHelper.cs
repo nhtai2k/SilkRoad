@@ -1,5 +1,4 @@
-﻿using Slideshow.BLL;
-using System.Share.ViewModels.SlideshowViewModels;
+﻿using System.Share.ViewModels.SlideshowViewModels;
 
 namespace Slideshow.BLL.IHelpers
 {

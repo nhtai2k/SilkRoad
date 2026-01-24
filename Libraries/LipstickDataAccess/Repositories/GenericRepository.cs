@@ -1,5 +1,4 @@
-﻿using Lipstick.DAL;
-using Lipstick.DAL.IRepositories;
+﻿using Lipstick.DAL.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 

@@ -1,5 +1,4 @@
-﻿using BOM.DAL;
-using BOM.DAL.IRepositories;
+﻿using BOM.DAL.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 

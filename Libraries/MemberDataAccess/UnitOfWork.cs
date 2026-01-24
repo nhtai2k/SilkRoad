@@ -1,5 +1,5 @@
 ﻿using Member.DAL.IRepositories;
-using MemberDataAccess.Repositories;
+using Member.DAL.Repositories;
 namespace Member.DAL
 {
     public class UnitOfWork : IUnitOfWork

@@ -2,9 +2,6 @@
 using PersonalFinance.BLL.IHelpers;
 using PersonalFinance.BLL.Models;
 using PersonalFinance.DAL;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PersonalFinance.BLL.Helpers
 {

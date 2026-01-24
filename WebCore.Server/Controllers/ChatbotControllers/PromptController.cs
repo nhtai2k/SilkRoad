@@ -1,5 +1,4 @@
 using ChatBot.IHelpers;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Share;
 using WebCore.Server.Controllers.BaseApiControllers;
@@ -29,7 +28,7 @@ namespace WebCore.Server.Controllers.ChatbotControllers
             }
             return Succeeded(models, "Models retrieved successfully");
         }
-        
+
         [HttpGet("getOptionList")]
         public async Task<IActionResult> GetOptionList()
         {

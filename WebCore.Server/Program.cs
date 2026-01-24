@@ -77,7 +77,7 @@ namespace WebCore.Server
                 builder.Services.AddDbContext<LipstickDataAccess.MemberContext.LipstickMemberDatabaseContext>(options =>
                     options.UseSqlServer(builder.Configuration.GetConnectionString("LipstickMemberSqlConnection")));
                 //Stock Market DB
-                builder.Services.AddDbContext<ApplicationContext>(options =>
+                builder.Services.AddDbContext<Stock.DAL.ApplicationContext>(options =>
                     options.UseSqlServer(builder.Configuration.GetConnectionString("StockMarketSqlConnection")));
                 //System DB
                 builder.Services.AddDbContext<System.DAL.ApplicationContext>(options =>

@@ -3,7 +3,6 @@ using MailKit.Security;
 using Microsoft.AspNetCore.Http;
 using MimeKit;
 using RazorEngineCore;
-using System.Share;
 using System.Share.Models;
 using System.Text;
 

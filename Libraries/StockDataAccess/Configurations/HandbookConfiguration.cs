@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Stock.DAL.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Stock.DAL.Configurations
 {

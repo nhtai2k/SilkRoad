@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 using Stock.DAL.IRepositories;
-using StockDataAccess.Repositories;
+using Stock.DAL.Repositories;
 
 namespace Stock.DAL
 {

@@ -1,5 +1,5 @@
 ﻿using BOM.DAL.IRepositories;
-using BOMDataAccess.Repositories;
+using BOM.DAL.Repositories;
 using Microsoft.EntityFrameworkCore.Storage;
 namespace BOM.DAL
 {

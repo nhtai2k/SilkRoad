@@ -28,19 +28,19 @@ namespace WebCore.Server.Controllers.ChatbotControllers
                 return Failed(EStatusCodes.BadRequest, "Failed");
             }
             var result = await _chatGPTHelper.CompleteChatAsync(model);
-            return Succeeded(result,"Successded");
+            return Succeeded(result, "Successded");
         }
 
         [HttpGet("getModels")]
         public IActionResult GetModels()
         {
-            var models =  _chatGPTHelper.GetModels();
-            if(models == null || models.Count == 0)
+            var models = _chatGPTHelper.GetModels();
+            if (models == null || models.Count == 0)
             {
                 return Failed(EStatusCodes.NotFound, "No models found");
             }
             return Succeeded(models, "Models retrieved successfully");
         }
-    
+
     }
 }

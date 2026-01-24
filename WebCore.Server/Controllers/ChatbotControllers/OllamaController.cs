@@ -1,7 +1,6 @@
 ﻿using ChatBot.IHelpers;
 using ChatBot.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 using System.Share;
 using WebCore.Server.Controllers.BaseApiControllers;
 
@@ -53,7 +52,7 @@ namespace WebCore.Server.Controllers.ChatbotControllers
         public async Task<IActionResult> GetModels()
         {
             var models = await _ollamaHelper.GetModelsAsync();
-            if(models == null || models.Count == 0)
+            if (models == null || models.Count == 0)
             {
                 return Failed(EStatusCodes.NotFound, "No models found");
             }

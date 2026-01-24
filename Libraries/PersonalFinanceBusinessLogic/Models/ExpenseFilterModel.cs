@@ -1,9 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PersonalFinance.BLL.Models
+﻿namespace PersonalFinance.BLL.Models
 {
     public class ExpenseFilterModel
     {

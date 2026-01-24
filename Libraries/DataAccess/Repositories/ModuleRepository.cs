@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.DAL;
 using System.DAL.DTOs;
 using System.DAL.IRepositories;
 

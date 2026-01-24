@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 using VOC.DAL.IRepositories;
-using VOCDataAccess.Repositories;
 
 namespace VOC.DAL
 {

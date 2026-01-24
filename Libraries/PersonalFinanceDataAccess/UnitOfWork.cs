@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 using PersonalFinance.DAL.IRepositories;
-using PersonalFinanceDataAccess.Repositories;
+using PersonalFinance.DAL.Repositories;
 
 namespace PersonalFinance.DAL
 {

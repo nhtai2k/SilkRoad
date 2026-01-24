@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 using Survey.DAL.IRepositories;
-using SurveyDataAccess.Repositories;
+using Survey.DAL.Repositories;
 
 namespace Survey.DAL
 {

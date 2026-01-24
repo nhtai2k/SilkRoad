@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace System.Share.ViewModels.LipstickViewModels
+﻿namespace System.Share.ViewModels.LipstickViewModels
 {
     public class ProductFilterModel
     {
@@ -14,6 +10,6 @@ namespace System.Share.ViewModels.LipstickViewModels
         public int SizeId { get; set; }
         public int ColorId { get; set; }
         public int PageIndex { get; set; }
-        public int PageSize{ get; set; }
+        public int PageSize { get; set; }
     }
 }

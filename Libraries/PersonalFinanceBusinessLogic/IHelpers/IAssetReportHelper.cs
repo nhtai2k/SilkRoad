@@ -1,7 +1,4 @@
 ﻿using PersonalFinance.BLL.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PersonalFinance.BLL.IHelpers
 {

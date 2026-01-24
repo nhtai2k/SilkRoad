@@ -1,6 +1,6 @@
-﻿using Common.Custom.CustomDataAnnotations;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
+using System.Share.Custom.CustomDataAnnotations;
 
 namespace System.Share.ViewModels.VOCViewModelModels
 {

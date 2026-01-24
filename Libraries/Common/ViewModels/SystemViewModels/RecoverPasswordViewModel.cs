@@ -1,5 +1,5 @@
-﻿using Common.Custom.CustomDataAnnotations;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Share.Custom.CustomDataAnnotations;
 
 namespace System.Share.ViewModels.SystemViewModels
 {

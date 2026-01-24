@@ -2,10 +2,7 @@
 using PersonalFinance.BLL.IHelpers;
 using PersonalFinance.DAL;
 using PersonalFinance.DAL.DTOs;
-using System;
-using System.Collections.Generic;
 using System.Share.Models;
-using System.Text;
 
 namespace PersonalFinance.BLL.Helpers
 {

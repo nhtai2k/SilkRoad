@@ -2,10 +2,6 @@
 using PersonalFinance.BLL.IHelpers;
 using PersonalFinance.BLL.Models;
 using PersonalFinance.DAL;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 
 namespace PersonalFinance.BLL.Helpers
 {
@@ -25,7 +21,7 @@ namespace PersonalFinance.BLL.Helpers
             DateTime end = start.AddMonths(1);
             // data
             var data = await _unitOfWork.ExpenseRepository.Query(s => s.Date >= start && s.Date < end && s.UserId == userId).AsNoTracking().ToListAsync();
-            if(data == null || data.Count == 0)
+            if (data == null || data.Count == 0)
             {
                 return coloumns;
             }
@@ -36,9 +32,9 @@ namespace PersonalFinance.BLL.Helpers
                 var temp2 = temp.Where(s => s.HasRefund).ToList();
                 double sumAmount = (double)temp.Sum(s => s.Amount) - (double)temp2.Sum(s => s.RefundAmount ?? 0);
                 ColoumnModel coloumn = new ColoumnModel()
-                { 
-                    Category = dateTime.ToString("dd/MM/yyyy"), 
-                    Value = sumAmount 
+                {
+                    Category = dateTime.ToString("dd/MM/yyyy"),
+                    Value = sumAmount
                 };
 
                 coloumns.Add(coloumn);
@@ -50,7 +46,7 @@ namespace PersonalFinance.BLL.Helpers
         public async Task<ICollection<ColoumnModel>> GetColoumnChartByMonth(int year, int userId)
         {
             List<ColoumnModel> coloumns = new List<ColoumnModel>();
-            List<string> labels = new List<string>() { "Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+            List<string> labels = new List<string>() { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
             //Render months
             for (int month = 1; month <= 12; month++)
             {
@@ -63,7 +59,7 @@ namespace PersonalFinance.BLL.Helpers
                 {
                     ColoumnModel coloumnEmpty = new ColoumnModel()
                     {
-                        Category = labels[month-1],
+                        Category = labels[month - 1],
                         Value = 0
                     };
                     coloumns.Add(coloumnEmpty);
@@ -73,7 +69,7 @@ namespace PersonalFinance.BLL.Helpers
                 double sumAmount = (double)data.Sum(s => s.Amount) - (double)temp2.Sum(s => s.RefundAmount ?? 0);
                 ColoumnModel coloumn = new ColoumnModel()
                 {
-                    Category = labels[month-1],
+                    Category = labels[month - 1],
                     Value = sumAmount
                 };
                 coloumns.Add(coloumn);

@@ -16,7 +16,7 @@ namespace PersonalFinance.BLL.Helpers
 
         public async Task<Pagination<CategoryDTO>> GetAllAsync(int pageIndex, int pageSize)
         {
-            var query =  _unitOfWork.CategoryRepository.Query(x => !x.IsDeleted, includeProperties: "SubCategories");
+            var query = _unitOfWork.CategoryRepository.Query(x => !x.IsDeleted, includeProperties: "SubCategories");
             int totalItems = await query.CountAsync();
             int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
             if (pageIndex > totalPages)

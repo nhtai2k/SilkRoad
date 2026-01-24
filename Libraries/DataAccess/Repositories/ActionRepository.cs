@@ -1,5 +1,4 @@
-﻿using System.DAL;
-using System.DAL.DTOs;
+﻿using System.DAL.DTOs;
 using System.DAL.IRepositories;
 
 namespace System.DAL.Repositories

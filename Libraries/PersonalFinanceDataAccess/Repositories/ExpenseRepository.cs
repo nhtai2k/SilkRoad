@@ -1,5 +1,4 @@
-﻿using PersonalFinance.DAL;
-using PersonalFinance.DAL.DTOs;
+﻿using PersonalFinance.DAL.DTOs;
 using PersonalFinance.DAL.IRepositories;
 
 namespace PersonalFinance.DAL.Repositories

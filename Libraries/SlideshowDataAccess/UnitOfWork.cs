@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 using Slideshow.DAL.IRepositories;
-using SlideshowDataAccess.Repositories;
+using Slideshow.DAL.Repositories;
 
 namespace Slideshow.DAL
 {

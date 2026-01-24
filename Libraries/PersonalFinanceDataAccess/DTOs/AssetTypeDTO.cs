@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PersonalFinance.DAL.DTOs
+﻿namespace PersonalFinance.DAL.DTOs
 {
     public class AssetTypeDTO : BaseDTO
     {

@@ -2,10 +2,7 @@
 using Stock.BLL.IHelpers;
 using Stock.DAL;
 using Stock.DAL.DTOs;
-using System;
-using System.Collections.Generic;
 using System.Share.Models;
-using System.Text;
 
 namespace Stock.BLL.Helpers
 {
@@ -16,7 +13,7 @@ namespace Stock.BLL.Helpers
         {
             _unitOfWork = unitOfWork;
         }
-        
+
         public async Task<Pagination<TradeHistoryDTO>> GetAllAsync(int pageIndex, int pageSize, int userId)
         {
             var query = _unitOfWork.TradeHistoryRepository.Query(x => x.UserId == userId).AsNoTracking();
@@ -35,7 +32,7 @@ namespace Stock.BLL.Helpers
                 Items = items
             };
         }
-        
+
         public async Task<bool> CreateAsync(TradeHistoryDTO model)
         {
             try
@@ -44,7 +41,7 @@ namespace Stock.BLL.Helpers
                 await _unitOfWork.SaveChangesAsync();
                 return true;
             }
-            catch(Exception Ex)
+            catch (Exception Ex)
             {
                 Console.WriteLine(Ex.Message);
                 return false;

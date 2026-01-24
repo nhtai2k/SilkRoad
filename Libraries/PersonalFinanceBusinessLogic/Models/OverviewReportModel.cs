@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PersonalFinance.BLL.Models
+﻿namespace PersonalFinance.BLL.Models
 {
     public class OverviewReportModel
     {
@@ -10,6 +6,6 @@ namespace PersonalFinance.BLL.Models
         public decimal TotalExpenseThisMonth { get; set; }
         //Show total expense of previous month
         public decimal TotalExpensePreviousMonth { get; set; }
-        
+
     }
 }

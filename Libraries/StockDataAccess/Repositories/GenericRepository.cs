@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Stock.DAL;
 using Stock.DAL.IRepositories;
 using System.Linq.Expressions;
 

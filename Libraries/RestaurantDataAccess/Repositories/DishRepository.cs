@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Restaurant.DAL;
 using Restaurant.DAL.DTOs;
 using Restaurant.DAL.IRepositories;
 

@@ -1,8 +1,5 @@
 ﻿using Stock.DAL.DTOs;
 using Stock.DAL.IRepositories;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Stock.DAL.Repositories
 {
@@ -11,6 +8,6 @@ namespace Stock.DAL.Repositories
         public HandbookRepository(ApplicationContext context) : base(context)
         {
         }
-    
+
     }
 }

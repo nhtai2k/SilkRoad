@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Stock.DAL.DTOs
+﻿namespace Stock.DAL.DTOs
 {
     public class HandbookDTO : BaseDTO
     {

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PersonalFinance.DAL;
 using PersonalFinance.DAL.IRepositories;
 using System.Linq.Expressions;
 

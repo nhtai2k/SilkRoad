@@ -2,7 +2,6 @@
 using Stock.BLL.IHelpers;
 using Stock.DAL;
 using Stock.DAL.DTOs;
-using System.Data;
 
 namespace Stock.BLL.Helpers
 {
@@ -25,7 +24,7 @@ namespace Stock.BLL.Helpers
             //If time today < 15:00, today = today - 1 day
             if (today.Hour < 15)
                 today = today.AddDays(-1);
-            
+
 
             long fromUnixTime = new DateTimeOffset(company.IPODate).ToUnixTimeSeconds();
             long toUnixTime = new DateTimeOffset(today).ToUnixTimeSeconds();

@@ -1,5 +1,4 @@
-﻿using Lipstick.DAL;
-using Lipstick.DAL.DTOs;
+﻿using Lipstick.DAL.DTOs;
 using Lipstick.DAL.IRepositories;
 using Microsoft.EntityFrameworkCore;
 

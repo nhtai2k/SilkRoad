@@ -1,5 +1,4 @@
-﻿using Member.DAL;
-using Member.DAL.DTOs;
+﻿using Member.DAL.DTOs;
 using Member.DAL.IRepositories;
 using Microsoft.EntityFrameworkCore;
 

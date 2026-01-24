@@ -1,6 +1,6 @@
-﻿using DataAccess.Repositories;
-using Microsoft.EntityFrameworkCore.Storage;
+﻿using Microsoft.EntityFrameworkCore.Storage;
 using System.DAL.IRepositories;
+using System.DAL.Repositories;
 namespace System.DAL
 {
     public class UnitOfWork : IUnitOfWork

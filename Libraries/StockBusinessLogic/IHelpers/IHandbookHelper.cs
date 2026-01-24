@@ -1,8 +1,5 @@
 ﻿using Stock.DAL.DTOs;
-using System;
-using System.Collections.Generic;
 using System.Share.Models;
-using System.Text;
 
 namespace Stock.BLL.IHelpers
 {

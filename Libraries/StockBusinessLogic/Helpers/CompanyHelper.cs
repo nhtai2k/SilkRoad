@@ -161,7 +161,7 @@ namespace Stock.BLL.Helpers
 
         public async Task<Pagination<CompanyDTO>> GetAllAsync(int pageIndex, int pageSize, int industryId)
         {
-            var query =  _unitOfWork.CompanyRepository.Query(x => !x.IsDeleted).AsNoTracking();
+            var query = _unitOfWork.CompanyRepository.Query(x => !x.IsDeleted).AsNoTracking();
             if (industryId > 0)
             {
                 query = query.Where(x => x.IndustryId == industryId);

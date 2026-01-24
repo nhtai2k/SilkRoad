@@ -1,5 +1,4 @@
-﻿using VOC.DAL;
-using VOC.DAL.DTOs;
+﻿using VOC.DAL.DTOs;
 
 namespace VOC.DAL.IRepositories
 {

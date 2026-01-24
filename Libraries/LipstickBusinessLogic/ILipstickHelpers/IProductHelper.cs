@@ -1,5 +1,4 @@
-﻿using Lipstick.BLL;
-using System.Share.Models;
+﻿using System.Share.Models;
 using System.Share.ViewModels.LipstickViewModels;
 
 namespace Lipstick.BLL.ILipstickHelpers

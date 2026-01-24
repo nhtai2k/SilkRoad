@@ -1,6 +1,4 @@
-﻿using Common.Services.ActionLoggingServices;
-using DocumentFormat.OpenXml.Spreadsheet;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using PersonalFinance.BLL.IHelpers;
@@ -37,7 +35,7 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
         [HttpGet("GetPieChart/{userId}")]
         public async Task<IActionResult> GetPieChart(int userId)
         {
-            
+
             var data = await _helper.GetPieChartAsync(userId);
             if (data == null || data.Count == 0)
             {
