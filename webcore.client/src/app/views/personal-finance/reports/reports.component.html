@@ -66,3 +66,24 @@
     </c-card>
   </div>
 </div>
+
+<c-card class="mt-4">
+  <c-card-header class="bg-dark">
+    <div class="d-flex justify-content-between align-items-center">
+      <span class="fw-bold text-white">
+        Resource Report
+      </span>
+      <input class="form-control w-25" type="month" />
+    </div>
+  </c-card-header>
+  <c-card-body>
+   <app-stacked-column-chart
+  [data]="stackedData"
+  [seriesConfig]="stackedSeries"
+  [categoryField]="'quarter'"
+  [id]="1"
+  [showLegend]="true"
+  [showDataLabels]="true">
+</app-stacked-column-chart>
+  </c-card-body>
+</c-card>

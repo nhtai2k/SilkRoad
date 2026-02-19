@@ -4,7 +4,7 @@ import { StackedColumnChartComponent } from "@components/charts/stacked-column-c
 
 @Component({
   selector: 'app-test',
-  imports: [StackedClusteredColumnChartComponent, StackedColumnChartComponent],
+  imports: [ StackedColumnChartComponent],
   templateUrl: './test.component.html',
   styleUrl: './test.component.scss',
 })

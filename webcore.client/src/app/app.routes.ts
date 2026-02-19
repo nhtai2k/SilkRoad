@@ -7,10 +7,6 @@ import { LoginThreejsComponent } from './views/pages/login-threejs/login-threejs
 //Children Routes
 const childrenRoutes: Routes = [
   {
-    path: 'test',
-    loadChildren: () => import('./views/test/routes').then((m) => m.routes)
-  },
-  {
     path: 'introduction',
     loadChildren: () => import('./views/introduction/routes').then((m) => m.routes)
   },
