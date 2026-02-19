@@ -1,6 +1,6 @@
-﻿using Common.ViewModels.LipstickClientViewModels;
+﻿using System.Share.ViewModels.LipstickClientViewModels;
 
-namespace LipstickBusinessLogic.ILipstickClientHelpers
+namespace Lipstick.BLL.ILipstickClientHelpers
 {
     public interface ICartClientHelper
     {

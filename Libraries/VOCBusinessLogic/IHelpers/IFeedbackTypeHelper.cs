@@ -1,7 +1,7 @@
-﻿using Common.ViewModels.VOCClientViewModels;
-using Common.ViewModels.VOCViewModelModels;
+﻿using System.Share.ViewModels.VOCClientViewModels;
+using System.Share.ViewModels.VOCViewModelModels;
 
-namespace VOCBusinessLogic.IHelpers
+namespace VOC.BLL.IHelpers
 {
     public interface IFeedbackTypeHelper : IBaseAsyncHelper<FeedbackTypeViewModel>
     {

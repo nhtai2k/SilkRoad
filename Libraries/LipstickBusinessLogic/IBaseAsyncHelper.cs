@@ -1,6 +1,6 @@
-﻿using Common.Models;
+﻿using System.Share.Models;
 
-namespace LipstickBusinessLogic
+namespace Lipstick.BLL
 {
     public interface IBaseAsyncHelper<T> where T : class
     {

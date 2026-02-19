@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace MemberDataAccess.DTOs
+namespace Member.DAL.DTOs
 {
     public class RoleDTO : IdentityRole<int>
     {

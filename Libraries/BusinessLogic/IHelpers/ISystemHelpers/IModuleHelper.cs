@@ -1,5 +1,5 @@
-﻿using Common.ViewModels.SystemViewModels;
-namespace BusinessLogic.IHelpers.ISystemHelpers
+﻿using System.Share.ViewModels.SystemViewModels;
+namespace System.BLL.IHelpers.ISystemHelpers
 {
     public interface IModuleHelper
     {

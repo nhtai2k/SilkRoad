@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using System.Reflection;
 
-namespace BOMDataAccess
+namespace BOM.DAL
 {
     public class ApplicationContext : DbContext
     {

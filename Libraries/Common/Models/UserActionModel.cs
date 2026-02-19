@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 
-namespace Common.Models
+namespace System.Share.Models
 {
     public class UserActionModel
     {

@@ -1,11 +1,11 @@
-﻿using Common.ViewModels.SystemViewModels;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Share.ViewModels.SystemViewModels;
 using System.Text;
 
-namespace Common.Services.JwtServices
+namespace System.Share.Services.JwtServices
 {
     public class JwtService : IJwtService
     {

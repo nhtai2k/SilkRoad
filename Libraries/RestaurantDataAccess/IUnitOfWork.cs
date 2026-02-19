@@ -1,6 +1,6 @@
-﻿using RestaurantDataAccess.IRepositories;
+﻿using Restaurant.DAL.IRepositories;
 
-namespace RestaurantDataAccess
+namespace Restaurant.DAL
 {
     public interface IUnitOfWork : IDisposable
     {

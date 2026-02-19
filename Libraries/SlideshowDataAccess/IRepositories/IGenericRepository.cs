@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace SlideshowDataAccess.IRepositories
+namespace Slideshow.DAL.IRepositories
 {
     public interface IGenericRepository<TEntity, TDBContext>
           where TEntity : class

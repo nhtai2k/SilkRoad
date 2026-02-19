@@ -1,9 +1,9 @@
-﻿using Common;
-using Common.Custom.ApiKey;
-using Common.Models;
-using Common.ViewModels.LipstickClientViewModels;
-using LipstickBusinessLogic.ILipstickClientHelpers;
+﻿using Lipstick.BLL.ILipstickClientHelpers;
 using Microsoft.AspNetCore.Mvc;
+using System.Share;
+using System.Share.Custom.ApiKey;
+using System.Share.Models;
+using System.Share.ViewModels.LipstickClientViewModels;
 
 namespace WebCore.Server.Controllers.LipstickClientController
 {

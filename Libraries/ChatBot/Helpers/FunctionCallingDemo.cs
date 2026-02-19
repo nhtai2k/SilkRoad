@@ -1,4 +1,4 @@
-using Common;
+using System.Share;
 
 namespace ChatBot.Helpers
 {

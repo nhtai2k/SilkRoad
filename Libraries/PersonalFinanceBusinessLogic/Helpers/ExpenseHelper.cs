@@ -1,10 +1,11 @@
-﻿using Common.Models;
-using Microsoft.EntityFrameworkCore;
-using PersonalFinanceBusinessLogic.IHelpers;
-using PersonalFinanceDataAccess;
-using PersonalFinanceDataAccess.DTOs;
+﻿using Microsoft.EntityFrameworkCore;
+using PersonalFinance.BLL.IHelpers;
+using PersonalFinance.BLL.Models;
+using PersonalFinance.DAL;
+using PersonalFinance.DAL.DTOs;
+using System.Share.Models;
 
-namespace PersonalFinanceBusinessLogic.Helpers
+namespace PersonalFinance.BLL.Helpers
 {
     public class ExpenseHelper : IExpenseHelper
     {
@@ -20,11 +21,11 @@ namespace PersonalFinanceBusinessLogic.Helpers
             {
                 query = query.Where(s => s.Date >= filter.FromDate);
             }
-            if(filter.ToDate != null)
+            if (filter.ToDate != null)
             {
                 query = query.Where(s => s.Date <= filter.ToDate);
             }
-            if(filter.CategoryId != null)
+            if (filter.CategoryId != null)
             {
                 query = query.Where(s => s.CategoryId == filter.CategoryId);
             }

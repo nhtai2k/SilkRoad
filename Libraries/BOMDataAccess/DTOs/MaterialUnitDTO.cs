@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace BOMDataAccess.DTOs
+namespace BOM.DAL.DTOs
 {
     public class MaterialUnitDTO
     {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
-using PersonalFinanceDataAccess.IRepositories;
-using PersonalFinanceDataAccess.Repositories;
+using PersonalFinance.DAL.IRepositories;
+using PersonalFinance.DAL.Repositories;
 
-namespace PersonalFinanceDataAccess
+namespace PersonalFinance.DAL
 {
     public class UnitOfWork : IUnitOfWork
     {

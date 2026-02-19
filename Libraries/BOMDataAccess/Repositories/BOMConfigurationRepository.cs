@@ -1,8 +1,8 @@
-using BOMDataAccess.DTOs;
-using BOMDataAccess.IRepositories;
+using BOM.DAL.DTOs;
+using BOM.DAL.IRepositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace BOMDataAccess.Repositories
+namespace BOM.DAL.Repositories
 {
     public class BOMConfigurationRepository : GenericRepository<BOMConfigurationDTO>, IBOMConfigurationRepository
     {

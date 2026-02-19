@@ -1,5 +1,3 @@
-using System;
-
 namespace ChatBot.Models;
 
 public class ConversationFilterModel

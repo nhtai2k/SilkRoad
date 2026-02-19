@@ -1,8 +1,8 @@
-using BOMDataAccess.DTOs;
+using BOM.DAL.DTOs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace BOMDataAccess.Configurations
+namespace BOM.DAL.Configurations
 {
     public class PropertyConfiguration : IEntityTypeConfiguration<PropertyDTO>
     {

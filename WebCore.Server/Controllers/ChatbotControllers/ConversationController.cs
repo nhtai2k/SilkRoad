@@ -1,7 +1,7 @@
 using ChatBot.IHelpers;
 using ChatBot.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Share;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.ChatbotControllers
@@ -21,10 +21,10 @@ namespace WebCore.Server.Controllers.ChatbotControllers
         public async Task<IActionResult> GetByFilter([FromBody] ConversationFilterModel filter)
         {
             if (filter == null)
-                return Failed(Common.EStatusCodes.BadRequest, "invalidFilter");
+                return Failed(EStatusCodes.BadRequest, "invalidFilter");
 
             if (filter.PageIndex < 1 || filter.PageSize < 1)
-                return Failed(Common.EStatusCodes.BadRequest, "invalidPageIndex");
+                return Failed(EStatusCodes.BadRequest, "invalidPageIndex");
             var data = await _conversationHelper.GetAllAsync(filter);
             return Succeeded(data, "Models retrieved successfully");
         }

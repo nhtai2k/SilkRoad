@@ -1,4 +1,4 @@
-﻿namespace SurveyBusinessLogic.IHelpers
+﻿namespace Survey.BLL.IHelpers
 {
     public interface ISurveyReportHelper
     {

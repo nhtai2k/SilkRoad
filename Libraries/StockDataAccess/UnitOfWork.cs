@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
-using StockDataAccess.IRepositories;
-using StockDataAccess.Repositories;
+using Stock.DAL.IRepositories;
+using Stock.DAL.Repositories;
 
-namespace StockDataAccess
+namespace Stock.DAL
 {
     public class UnitOfWork : IUnitOfWork
     {

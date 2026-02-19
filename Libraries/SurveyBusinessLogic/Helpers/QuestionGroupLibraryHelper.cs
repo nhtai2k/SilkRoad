@@ -1,9 +1,9 @@
-﻿using Common.Models;
-using SurveyBusinessLogic.IHelpers;
-using SurveyDataAccess;
-using SurveyDataAccess.DTOs;
+﻿using Survey.BLL.IHelpers;
+using Survey.DAL;
+using Survey.DAL.DTOs;
+using System.Share.Models;
 
-namespace SurveyBusinessLogic.Helpers
+namespace Survey.BLL.Helpers
 {
     public class QuestionGroupLibraryHelper : IQuestionGroupLibraryHelper
     {

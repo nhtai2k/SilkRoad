@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
-using SlideshowDataAccess.IRepositories;
+using Slideshow.DAL.IRepositories;
 
-namespace SlideshowDataAccess
+namespace Slideshow.DAL
 {
     public interface IUnitOfWork : IDisposable
     {

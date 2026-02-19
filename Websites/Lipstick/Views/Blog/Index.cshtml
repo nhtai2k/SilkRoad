@@ -1,4 +1,6 @@
-﻿@model Pagination<BlogClientViewModel>
+﻿@using System.Share.Models
+@using System.Share.ViewModels.LipstickClientViewModels
+@model Pagination<BlogClientViewModel>
 @{
     IEnumerable<BlogClientViewModel> latestBlogs = ViewBag.LastestBlogs as IEnumerable<BlogClientViewModel>;
     // ViewData["Title"] = _localizer["blogPage"];

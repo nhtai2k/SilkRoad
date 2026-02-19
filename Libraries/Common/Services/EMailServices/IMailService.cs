@@ -1,6 +1,6 @@
-﻿using Common.Models;
+﻿using System.Share.Models;
 
-namespace Common.Services.EMailServices
+namespace System.Share.Services.EMailServices
 {
     public interface IMailService
     {

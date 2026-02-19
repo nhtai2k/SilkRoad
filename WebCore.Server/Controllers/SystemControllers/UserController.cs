@@ -1,10 +1,10 @@
-﻿using BusinessLogic.IHelpers.ISystemHelpers;
-using Common;
-using Common.Models;
-using Common.ViewModels.SystemViewModels;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using System.BLL.IHelpers.ISystemHelpers;
+using System.Share;
+using System.Share.Models;
+using System.Share.ViewModels.SystemViewModels;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.SystemControllers

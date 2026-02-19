@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using RestaurantDataAccess.DTOs;
-using RestaurantDataAccess.IRepositories;
+using Restaurant.DAL.DTOs;
+using Restaurant.DAL.IRepositories;
 
-namespace RestaurantDataAccess.Repositories
+namespace Restaurant.DAL.Repositories
 {
     public class ChatMessageRepository : GenericRepository<ChatMessageDTO>, IChatMessageRepository
     {

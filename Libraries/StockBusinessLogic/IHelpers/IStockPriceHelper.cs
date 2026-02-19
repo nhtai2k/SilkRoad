@@ -1,6 +1,6 @@
-﻿using StockDataAccess.DTOs;
+﻿using Stock.DAL.DTOs;
 
-namespace StockBusinessLogic.IHelpers
+namespace Stock.BLL.IHelpers
 {
     public interface IStockPriceHelper
     {

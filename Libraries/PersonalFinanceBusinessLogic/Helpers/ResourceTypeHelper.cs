@@ -1,13 +1,10 @@
-﻿using Common.Models;
-using Microsoft.EntityFrameworkCore;
-using PersonalFinanceBusinessLogic.IHelpers;
-using PersonalFinanceDataAccess;
-using PersonalFinanceDataAccess.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.EntityFrameworkCore;
+using PersonalFinance.BLL.IHelpers;
+using PersonalFinance.DAL;
+using PersonalFinance.DAL.DTOs;
+using System.Share.Models;
 
-namespace PersonalFinanceBusinessLogic.Helpers
+namespace PersonalFinance.BLL.Helpers
 {
     public class ResourceTypeHelper : IResourceTypeHelper
     {

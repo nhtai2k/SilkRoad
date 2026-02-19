@@ -1,9 +1,9 @@
-﻿using Common.Models;
-using PersonalFinanceBusinessLogic.IHelpers;
-using PersonalFinanceDataAccess;
-using PersonalFinanceDataAccess.DTOs;
+﻿using PersonalFinance.BLL.IHelpers;
+using PersonalFinance.DAL;
+using PersonalFinance.DAL.DTOs;
+using System.Share.Models;
 
-namespace PersonalFinanceBusinessLogic.Helpers
+namespace PersonalFinance.BLL.Helpers
 {
     public class SubCategoryHelper : ISubCategoryHelper
     {

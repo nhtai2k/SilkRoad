@@ -1,5 +1,6 @@
-﻿using SurveyDataAccess.DTOs;
-namespace SurveyDataAccess.IRepositories
+﻿using Survey.DAL.DTOs;
+
+namespace Survey.DAL.IRepositories
 {
     public interface IQuestionGroupRepository : IGenericRepository<QuestionGroupDTO>
     {

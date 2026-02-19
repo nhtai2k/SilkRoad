@@ -1,11 +1,11 @@
-using BOMBusinessLogic.IBOMHelpers;
-using BOMDataAccess;
-using BOMDataAccess.DTOs;
-using Common;
-using Common.Models;
-using Common.Services.FileStorageServices;
+using BOM.BLL.IHelpers;
+using BOM.DAL;
+using BOM.DAL.DTOs;
 using Microsoft.EntityFrameworkCore;
-namespace BOMBusinessLogic.BOMHelpers
+using System.Share;
+using System.Share.Models;
+using System.Share.Services.FileStorageServices;
+namespace BOM.BLL.Helpers
 {
     public class MaterialGroupHelper : IMaterialGroupHelper
     {

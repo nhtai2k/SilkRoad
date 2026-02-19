@@ -1,6 +1,6 @@
-﻿using Common.ViewModels.LipstickClientViewModels;
+﻿using System.Share.ViewModels.LipstickClientViewModels;
 
-namespace MemberBusinessLogic.IHelpers
+namespace Member.BLL.IHelpers
 {
     public interface IRegisterHelper
     {

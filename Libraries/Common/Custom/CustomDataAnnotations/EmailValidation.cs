@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
-namespace Common.Custom.CustomDataAnnotations
+namespace System.Share.Custom.CustomDataAnnotations
 {
     public class EmailValidation : ValidationAttribute
     {

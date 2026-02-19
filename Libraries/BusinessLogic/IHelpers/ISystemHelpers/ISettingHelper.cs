@@ -1,6 +1,6 @@
-﻿using Common.ViewModels.SystemViewModels;
+﻿using System.Share.ViewModels.SystemViewModels;
 
-namespace BusinessLogic.IHelpers.ISystemHelpers
+namespace System.BLL.IHelpers.ISystemHelpers
 {
     public interface ISettingHelper
     {

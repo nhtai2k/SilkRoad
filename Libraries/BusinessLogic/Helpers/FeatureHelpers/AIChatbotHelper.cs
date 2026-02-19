@@ -1,6 +1,6 @@
-﻿using BusinessLogic.IHelpers.IFeatureHelper;
+﻿using System.BLL.IHelpers.IFeatureHelper;
 
-namespace BusinessLogic.Helpers.FeatureHelpers
+namespace System.BLL.Helpers.FeatureHelpers
 {
     public class AIChatbotHelper : IAIChatbotHelper
     {

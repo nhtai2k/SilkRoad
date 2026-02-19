@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BOMDataAccess.DTOs
+namespace BOM.DAL.DTOs
 {
     public class MaterialGroupDTO : BaseDTO
     {

@@ -38,8 +38,8 @@ export class LoginThreejsComponent implements OnInit {
   constructor(private authenticationService: AuthService,
     private router: Router,
     private socialAuthService: SocialAuthService
-  ) {}
-  
+  ) { }
+
   ngOnInit(): void {
     const isAuthenticated = this.authenticationService.checkLogin();
     if (isAuthenticated) {
@@ -55,13 +55,16 @@ export class LoginThreejsComponent implements OnInit {
         };
         this.authenticationService.externalLogin(authModel).subscribe({
           next: (response) => {
+            this.isLoading.set(false);
             if (response.success) {
-              this.isLoading.set(false);
               this.router.navigate(['/introduction']);
             }
           },
           error: (exception: any) => {
             this.isLoading.set(false);
+            if (exception.status == 423) {
+              this.router.navigate(['/423']);
+            }
             this.errorMessage = exception.error.message;
           }
         });
@@ -76,9 +79,11 @@ export class LoginThreejsComponent implements OnInit {
     this.isLoading.set(true);
     this.authenticationService.login(this.loginForm.value).subscribe({
       next: (response) => {
+        this.isLoading.set(false);
         if (response.success) {
-          this.isLoading.set(false);
           this.router.navigate(['/introduction']);
+        }else{
+          this.errorMessage = response.message;
         }
       },
       error: (exception: any) => {
@@ -87,6 +92,7 @@ export class LoginThreejsComponent implements OnInit {
           this.router.navigate(['/423']);
         }
         this.errorMessage = exception.error.message;
+        console.error('Login error:', this.errorMessage);
       }
     });
   }

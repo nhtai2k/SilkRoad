@@ -1,6 +1,6 @@
-﻿using BOMDataAccess.DTOs;
+﻿using BOM.DAL.DTOs;
 
-namespace BOMDataAccess.IRepositories
+namespace BOM.DAL.IRepositories
 {
     public interface IDishGroupRepository : IGenericRepository<DishGroupDTO>
     {

@@ -1,10 +1,8 @@
-﻿
+﻿using Survey.BLL.Models;
+using Survey.DAL.DTOs;
+using System.Share.Models;
 
-using Common.Models;
-using SurveyBusinessLogic.Models;
-using SurveyDataAccess.DTOs;
-
-namespace SurveyBusinessLogic.IHelpers
+namespace Survey.BLL.IHelpers
 {
     public interface IParticipantHelper
     {

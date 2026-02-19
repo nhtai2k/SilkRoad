@@ -1,9 +1,9 @@
-﻿using Common.Custom.ExtensionMethods;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using SkiaSharp;
+using System.Share.Custom.ExtensionMethods;
 
-namespace Common.Services.FileStorageServices
+namespace System.Share.Services.FileStorageServices
 {
     public class FileStorageService : IFileStorageService
     {

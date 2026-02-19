@@ -1,12 +1,12 @@
-﻿using Common;
-using Common.Models;
-using LipstickBusinessLogic.ILipstickClientHelpers;
-using LipstickDataAccess;
-using LipstickDataAccess.DTOs;
+﻿using Lipstick.BLL.ILipstickClientHelpers;
+using Lipstick.DAL;
+using Lipstick.DAL.DTOs;
 using Newtonsoft.Json;
+using System.Share;
+using System.Share.Models;
 using System.Text;
 
-namespace LipstickBusinessLogic.LipstickClientHelpers
+namespace Lipstick.BLL.LipstickClientHelpers
 {
     public class WebhookHelper : IWebhookHelper
     {

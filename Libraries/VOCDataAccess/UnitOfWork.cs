@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
-using VOCDataAccess.IRepositories;
-using VOCDataAccess.Repositories;
+using VOC.DAL.IRepositories;
 
-namespace VOCDataAccess
+namespace VOC.DAL
 {
     public class UnitOfWork : IUnitOfWork
     {

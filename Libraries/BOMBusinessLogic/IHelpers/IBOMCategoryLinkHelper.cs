@@ -1,6 +1,6 @@
-﻿using BOMDataAccess.DTOs;
+﻿using BOM.DAL.DTOs;
 
-namespace BOMBusinessLogic.IBOMHelpers
+namespace BOM.BLL.IHelpers
 {
     public interface IBOMCategoryLinkHelper
     {

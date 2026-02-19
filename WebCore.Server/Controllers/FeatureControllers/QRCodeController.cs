@@ -1,10 +1,10 @@
-﻿using BusinessLogic.IHelpers.IFeatureHelper;
-using Common;
-using Common.Services.ActionLoggingServices;
-using Common.ViewModels.QRViewModels;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using System.BLL.IHelpers.IFeatureHelper;
+using System.Share;
+using System.Share.Services.ActionLoggingServices;
+using System.Share.ViewModels.QRViewModels;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.FeatureControllers

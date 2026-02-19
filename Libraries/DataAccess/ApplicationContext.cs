@@ -1,10 +1,10 @@
-﻿using DataAccess.DTOs;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using System.DAL.DTOs;
 using System.Reflection;
 
-namespace DataAccess
+namespace System.DAL
 {
     public class ApplicationContext : IdentityDbContext<UserDTO, RoleDTO, int, UserClaimDTO, UserRoleDTO, UserLoginDTO, RoleClaimDTO, UserTokenDTO>
     {

@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace StockDataAccess.IRepositories
+namespace Stock.DAL.IRepositories
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {

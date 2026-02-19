@@ -1,9 +1,9 @@
-﻿using Common;
-using Common.ViewModels.LipstickClientViewModels;
-using MemberBusinessLogic.IHelpers;
-using MemberDataAccess;
+﻿using Member.BLL.IHelpers;
+using Member.DAL;
+using System.Share;
+using System.Share.ViewModels.LipstickClientViewModels;
 
-namespace MemberBusinessLogic.Helpers
+namespace Member.BLL.Helpers
 {
     public class GenderHelper : IGenderHelper
     {

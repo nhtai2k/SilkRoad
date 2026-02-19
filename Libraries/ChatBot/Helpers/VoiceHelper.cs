@@ -1,6 +1,6 @@
 ﻿using ChatBot.IHelpers;
-using Common;
 using OpenAI.Audio;
+using System.Share;
 using System.Text.Json;
 
 namespace ChatBot.Helpers

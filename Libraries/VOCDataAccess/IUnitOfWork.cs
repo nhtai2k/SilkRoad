@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
-using VOCDataAccess.IRepositories;
+using VOC.DAL.IRepositories;
 
-namespace VOCDataAccess
+namespace VOC.DAL
 {
     public interface IUnitOfWork : IDisposable
     {

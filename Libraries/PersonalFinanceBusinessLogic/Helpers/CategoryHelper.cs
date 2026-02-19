@@ -1,10 +1,10 @@
-﻿using Common.Models;
-using Microsoft.EntityFrameworkCore;
-using PersonalFinanceBusinessLogic.IHelpers;
-using PersonalFinanceDataAccess;
-using PersonalFinanceDataAccess.DTOs;
+﻿using Microsoft.EntityFrameworkCore;
+using PersonalFinance.BLL.IHelpers;
+using PersonalFinance.DAL;
+using PersonalFinance.DAL.DTOs;
+using System.Share.Models;
 
-namespace PersonalFinanceBusinessLogic.Helpers
+namespace PersonalFinance.BLL.Helpers
 {
     public class CategoryHelper : ICategoryHelper
     {
@@ -16,7 +16,7 @@ namespace PersonalFinanceBusinessLogic.Helpers
 
         public async Task<Pagination<CategoryDTO>> GetAllAsync(int pageIndex, int pageSize)
         {
-            var query =  _unitOfWork.CategoryRepository.Query(x => !x.IsDeleted, includeProperties: "SubCategories");
+            var query = _unitOfWork.CategoryRepository.Query(x => !x.IsDeleted, includeProperties: "SubCategories");
             int totalItems = await query.CountAsync();
             int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
             if (pageIndex > totalPages)

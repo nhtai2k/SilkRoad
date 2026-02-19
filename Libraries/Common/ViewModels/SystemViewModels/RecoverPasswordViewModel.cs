@@ -1,7 +1,7 @@
-﻿using Common.Custom.CustomDataAnnotations;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Share.Custom.CustomDataAnnotations;
 
-namespace Common.ViewModels.SystemViewModels
+namespace System.Share.ViewModels.SystemViewModels
 {
     public class RecoverPasswordViewModel
     {

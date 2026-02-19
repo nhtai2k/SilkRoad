@@ -13,35 +13,35 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Websites", "Websites", "{BD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{5A72FBAA-CFF8-480E-BD13-52D107E68F6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "Libraries\BusinessLogic\BusinessLogic.csproj", "{E3FA5161-53A3-16C2-7CC4-FD95E04F8BFB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.BLL", "Libraries\BusinessLogic\System.BLL.csproj", "{E3FA5161-53A3-16C2-7CC4-FD95E04F8BFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Libraries\Common\Common.csproj", "{BFA3C65C-4D7A-B885-B8B2-52068F4580C0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Share", "Libraries\Common\System.Share.csproj", "{BFA3C65C-4D7A-B885-B8B2-52068F4580C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "Libraries\DataAccess\DataAccess.csproj", "{E4C4B524-3B24-3B39-75E5-BDE5643ABC96}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.DAL", "Libraries\DataAccess\System.DAL.csproj", "{E4C4B524-3B24-3B39-75E5-BDE5643ABC96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LipstickBusinessLogic", "Libraries\LipstickBusinessLogic\LipstickBusinessLogic.csproj", "{0FD6318E-CA90-CEE4-2A86-52B52066B7AD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lipstick.BLL", "Libraries\LipstickBusinessLogic\Lipstick.BLL.csproj", "{0FD6318E-CA90-CEE4-2A86-52B52066B7AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LipstickDataAccess", "Libraries\LipstickDataAccess\LipstickDataAccess.csproj", "{EC3BF17B-C8A9-538B-A1D6-C089ED971505}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lipstick.DAL", "Libraries\LipstickDataAccess\Lipstick.DAL.csproj", "{EC3BF17B-C8A9-538B-A1D6-C089ED971505}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemberBusinessLogic", "Libraries\MemberBusinessLogic\MemberBusinessLogic.csproj", "{FA21D0AE-C2D1-5FD3-62E0-32E07D85110B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Member.BLL", "Libraries\MemberBusinessLogic\Member.BLL.csproj", "{FA21D0AE-C2D1-5FD3-62E0-32E07D85110B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemberDataAccess", "Libraries\MemberDataAccess\MemberDataAccess.csproj", "{AD0CF495-B419-4065-1D46-1B99410EA1E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Member.DAL", "Libraries\MemberDataAccess\Member.DAL.csproj", "{AD0CF495-B419-4065-1D46-1B99410EA1E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlideshowBusinessLogic", "Libraries\SlideshowBusinessLogic\SlideshowBusinessLogic.csproj", "{A7F88379-3EE7-5069-4FBE-5639EAD13509}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slideshow.BLL", "Libraries\SlideshowBusinessLogic\Slideshow.BLL.csproj", "{A7F88379-3EE7-5069-4FBE-5639EAD13509}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlideshowDataAccess", "Libraries\SlideshowDataAccess\SlideshowDataAccess.csproj", "{D4EA00EE-5DE9-37D4-DB9F-78DD3C64AD28}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slideshow.DAL", "Libraries\SlideshowDataAccess\Slideshow.DAL.csproj", "{D4EA00EE-5DE9-37D4-DB9F-78DD3C64AD28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockBusinessLogic", "Libraries\StockBusinessLogic\StockBusinessLogic.csproj", "{B2DF5531-460F-4FC4-18CA-C03DF8E87380}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stock.BLL", "Libraries\StockBusinessLogic\Stock.BLL.csproj", "{B2DF5531-460F-4FC4-18CA-C03DF8E87380}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockDataAccess", "Libraries\StockDataAccess\StockDataAccess.csproj", "{55F22523-8189-C054-EAE8-158D4D2197AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stock.DAL", "Libraries\StockDataAccess\Stock.DAL.csproj", "{55F22523-8189-C054-EAE8-158D4D2197AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurveyBusinessLogic", "Libraries\SurveyBusinessLogic\SurveyBusinessLogic.csproj", "{2EA09578-75DB-9753-9AE6-50065D6CDB0D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Survey.BLL", "Libraries\SurveyBusinessLogic\Survey.BLL.csproj", "{2EA09578-75DB-9753-9AE6-50065D6CDB0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurveyDataAccess", "Libraries\SurveyDataAccess\SurveyDataAccess.csproj", "{4F623007-B507-D4F1-3FE5-63195398C231}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Survey.DAL", "Libraries\SurveyDataAccess\Survey.DAL.csproj", "{4F623007-B507-D4F1-3FE5-63195398C231}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VOCBusinessLogic", "Libraries\VOCBusinessLogic\VOCBusinessLogic.csproj", "{112C5575-F511-33E8-47EC-ED914E2EFF45}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VOC.BLL", "Libraries\VOCBusinessLogic\VOC.BLL.csproj", "{112C5575-F511-33E8-47EC-ED914E2EFF45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VOCDataAccess", "Libraries\VOCDataAccess\VOCDataAccess.csproj", "{FCF265AB-0368-B6F0-6592-4D9B7C586B77}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VOC.DAL", "Libraries\VOCDataAccess\VOC.DAL.csproj", "{FCF265AB-0368-B6F0-6592-4D9B7C586B77}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemberService", "Services\MemberService\MemberService.csproj", "{543D60A5-7917-23C8-AF8A-35BCA7305EAD}"
 EndProject
@@ -55,19 +55,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lipstick", "Websites\Lipsti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant", "Websites\Restaurant\Restaurant.csproj", "{D810D4AB-D180-FE4E-3398-E0D7C67D1627}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantBusinessLogic", "Libraries\RestaurantBusinessLogic\RestaurantBusinessLogic.csproj", "{55995AF1-0F78-411B-B7BC-9A8D702C991C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.BLL", "Libraries\RestaurantBusinessLogic\Restaurant.BLL.csproj", "{55995AF1-0F78-411B-B7BC-9A8D702C991C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantDataAccess", "Libraries\RestaurantDataAccess\RestaurantDataAccess.csproj", "{030640E3-080A-42E8-A50F-10B112685E1B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.DAL", "Libraries\RestaurantDataAccess\Restaurant.DAL.csproj", "{030640E3-080A-42E8-A50F-10B112685E1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalFinanceBusinessLogic", "Libraries\PersonalFinanceBusinessLogic\PersonalFinanceBusinessLogic.csproj", "{592A9EB6-8FF4-404A-8199-1ECBB31B1F41}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalFinance.BLL", "Libraries\PersonalFinanceBusinessLogic\PersonalFinance.BLL.csproj", "{592A9EB6-8FF4-404A-8199-1ECBB31B1F41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalFinanceDataAccess", "Libraries\PersonalFinanceDataAccess\PersonalFinanceDataAccess.csproj", "{EF697218-CA0C-4F76-B6DA-9B953CAB6AB2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalFinance.DAL", "Libraries\PersonalFinanceDataAccess\PersonalFinance.DAL.csproj", "{EF697218-CA0C-4F76-B6DA-9B953CAB6AB2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MindMap", "Libraries\MindMap\MindMap.csproj", "{FA7DDBE5-38ED-21A4-3798-18D2420AFCC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BOMBusinessLogic", "Libraries\BOMBusinessLogic\BOMBusinessLogic.csproj", "{003DE464-70DA-4347-A0B9-00A7D059CA0C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BOM.BLL", "Libraries\BOMBusinessLogic\BOM.BLL.csproj", "{003DE464-70DA-4347-A0B9-00A7D059CA0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BOMDataAccess", "Libraries\BOMDataAccess\BOMDataAccess.csproj", "{B6ABD3B9-2677-4171-B3A4-EBE758297A35}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BOM.DAL", "Libraries\BOMDataAccess\BOM.DAL.csproj", "{B6ABD3B9-2677-4171-B3A4-EBE758297A35}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatBot", "Libraries\ChatBot\ChatBot.csproj", "{C84638C7-F944-4644-BCF6-C7F93A6323F7}"
 EndProject

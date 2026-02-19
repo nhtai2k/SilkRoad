@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Common.ViewModels.LipstickViewModels
+namespace System.Share.ViewModels.LipstickViewModels
 {
     public class CategoryViewModel
     {

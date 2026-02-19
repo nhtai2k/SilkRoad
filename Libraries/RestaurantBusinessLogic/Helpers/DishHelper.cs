@@ -1,14 +1,14 @@
-﻿using Common;
-using Common.Models;
-using Common.Services.FileStorageServices;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using RestaurantBusinessLogic.IHelpers;
-using RestaurantBusinessLogic.Models;
-using RestaurantDataAccess;
-using RestaurantDataAccess.DTOs;
+using Restaurant.BLL.IHelpers;
+using Restaurant.BLL.Models;
+using Restaurant.DAL;
+using Restaurant.DAL.DTOs;
+using System.Share;
+using System.Share.Models;
+using System.Share.Services.FileStorageServices;
 
-namespace RestaurantBusinessLogic.Helpers
+namespace Restaurant.BLL.Helpers
 {
     public class DishHelper : IDishHelper
     {

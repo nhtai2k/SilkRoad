@@ -1,6 +1,6 @@
-﻿using Common.Models;
+﻿using System.Share.Models;
 
-namespace Common.ViewModels.LipstickViewModels
+namespace System.Share.ViewModels.LipstickViewModels
 {
     public class PaymentViewModel
     {

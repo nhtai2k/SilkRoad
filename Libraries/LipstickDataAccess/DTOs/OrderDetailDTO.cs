@@ -1,4 +1,4 @@
-﻿namespace LipstickDataAccess.DTOs
+﻿namespace Lipstick.DAL.DTOs
 {
     public class OrderDetailDTO
     {

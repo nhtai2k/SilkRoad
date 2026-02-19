@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace VOCDataAccess.IRepositories
+namespace VOC.DAL.IRepositories
 {
     public interface IGenericRepository<TEntity, TDBContext>
           where TEntity : class

@@ -1,7 +1,7 @@
-﻿using Common.ViewModels.SystemViewModels;
-using System.Security.Claims;
+﻿using System.Security.Claims;
+using System.Share.ViewModels.SystemViewModels;
 
-namespace Common.Services.JwtServices
+namespace System.Share.Services.JwtServices
 {
     public interface IJwtService
     {

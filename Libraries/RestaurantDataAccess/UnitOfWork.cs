@@ -1,6 +1,6 @@
-﻿using RestaurantDataAccess.IRepositories;
-using RestaurantDataAccess.Repositories;
-namespace RestaurantDataAccess
+﻿using Restaurant.DAL.IRepositories;
+using Restaurant.DAL.Repositories;
+namespace Restaurant.DAL
 {
     public class UnitOfWork : IUnitOfWork
     {

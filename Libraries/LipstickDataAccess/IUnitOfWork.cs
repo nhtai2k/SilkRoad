@@ -1,6 +1,6 @@
-﻿using LipstickDataAccess.IRepositories;
+﻿using Lipstick.DAL.IRepositories;
 
-namespace LipstickDataAccess
+namespace Lipstick.DAL
 {
     public interface IUnitOfWork : IDisposable
     {

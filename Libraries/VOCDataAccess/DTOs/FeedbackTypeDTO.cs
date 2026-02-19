@@ -1,4 +1,4 @@
-﻿namespace VOCDataAccess.DTOs
+﻿namespace VOC.DAL.DTOs
 {
     public class FeedbackTypeDTO : BaseDTO
     {

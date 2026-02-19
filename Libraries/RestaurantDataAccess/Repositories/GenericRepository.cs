@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RestaurantDataAccess.IRepositories;
+using Restaurant.DAL.IRepositories;
 using System.Linq.Expressions;
 
-namespace RestaurantDataAccess.Repositories
+namespace Restaurant.DAL.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {

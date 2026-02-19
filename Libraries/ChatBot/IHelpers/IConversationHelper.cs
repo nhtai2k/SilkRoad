@@ -1,10 +1,9 @@
-using System;
 using ChatBot.Models;
-using Common.Models;
+using System.Share.Models;
 
 namespace ChatBot.IHelpers;
 
 public interface IConversationHelper
 {
-        Task<Pagination<ConversationModel>> GetAllAsync(ConversationFilterModel filter);
+    Task<Pagination<ConversationModel>> GetAllAsync(ConversationFilterModel filter);
 }

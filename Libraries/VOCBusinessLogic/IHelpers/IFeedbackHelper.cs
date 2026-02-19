@@ -1,7 +1,7 @@
-﻿using Common.Models;
-using Common.ViewModels.VOCViewModelModels;
+﻿using System.Share.Models;
+using System.Share.ViewModels.VOCViewModelModels;
 
-namespace VOCBusinessLogic.IHelpers
+namespace VOC.BLL.IHelpers
 {
     public interface IFeedbackHelper
     {

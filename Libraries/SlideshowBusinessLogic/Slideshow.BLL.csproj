@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj" />
-    <ProjectReference Include="..\PersonalFinanceDataAccess\PersonalFinanceDataAccess.csproj" />
+    <ProjectReference Include="..\Common\System.Share.csproj" />
+    <ProjectReference Include="..\SlideshowDataAccess\Slideshow.DAL.csproj" />
   </ItemGroup>
 
 </Project>

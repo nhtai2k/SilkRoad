@@ -1,8 +1,8 @@
-﻿using Common.ViewModels.QRViewModels;
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
+using System.Share.ViewModels.QRViewModels;
 using System.Text.Json;
 
-namespace Common.Services.QRCodeServices
+namespace System.Share.Services.QRCodeServices
 {
     public class QRCodeService : IQRCodeService
     {

@@ -1,9 +1,9 @@
-﻿using MemberDataAccess.DTOs;
+﻿using Member.DAL.DTOs;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace MemberDataAccess
+namespace Member.DAL
 {
     public class ApplicationContext : IdentityDbContext<UserDTO, RoleDTO, int>
     {

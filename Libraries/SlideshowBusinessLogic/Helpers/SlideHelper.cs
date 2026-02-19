@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using Common;
-using Common.Services.FileStorageServices;
-using Common.ViewModels.SlideshowViewModels;
-using SlideshowBusinessLogic.IHelpers;
-using SlideshowDataAccess;
-using SlideshowDataAccess.DTOs;
+using Slideshow.BLL.IHelpers;
+using Slideshow.DAL;
+using Slideshow.DAL.DTOs;
+using System.Share;
+using System.Share.Services.FileStorageServices;
+using System.Share.ViewModels.SlideshowViewModels;
 
-namespace SlideshowBusinessLogic.Helpers
+namespace Slideshow.BLL.Helpers
 {
     public class SlideHelper : ISlideHelper
     {

@@ -1,9 +1,6 @@
-﻿using PersonalFinanceBusinessLogic.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using PersonalFinance.BLL.Models;
 
-namespace PersonalFinanceBusinessLogic.IHelpers
+namespace PersonalFinance.BLL.IHelpers
 {
     public interface IExpenseReportHelper
     {

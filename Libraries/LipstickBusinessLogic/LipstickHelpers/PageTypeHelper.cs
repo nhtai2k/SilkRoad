@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using Common;
-using Common.Models;
-using Common.ViewModels.LipstickViewModels;
-using LipstickBusinessLogic.ILipstickHelpers;
-using LipstickDataAccess;
-using LipstickDataAccess.DTOs;
+using Lipstick.BLL.ILipstickHelpers;
+using Lipstick.DAL;
+using Lipstick.DAL.DTOs;
+using System.Share;
+using System.Share.Models;
+using System.Share.ViewModels.LipstickViewModels;
 
-namespace LipstickBusinessLogic.LipstickHelpers
+namespace Lipstick.BLL.LipstickHelpers
 {
     public class PageTypeHelper : IPageTypeHelper
     {

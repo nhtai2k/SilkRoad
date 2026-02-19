@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StockDataAccess.DTOs;
-using StockDataAccess.IRepositories;
+using Stock.DAL.DTOs;
+using Stock.DAL.IRepositories;
 
-namespace StockDataAccess.Repositories
+namespace Stock.DAL.Repositories
 {
     public class StockPriceRepository : GenericRepository<StockPriceDTO>, IStockPriceRepository
     {

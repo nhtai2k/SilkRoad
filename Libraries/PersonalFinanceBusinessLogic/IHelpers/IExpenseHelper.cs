@@ -1,8 +1,8 @@
-﻿using Common.Models;
-using PersonalFinanceBusinessLogic.Helpers;
-using PersonalFinanceDataAccess.DTOs;
+﻿using PersonalFinance.BLL.Models;
+using PersonalFinance.DAL.DTOs;
+using System.Share.Models;
 
-namespace PersonalFinanceBusinessLogic.IHelpers
+namespace PersonalFinance.BLL.IHelpers
 {
     public interface IExpenseHelper
     {

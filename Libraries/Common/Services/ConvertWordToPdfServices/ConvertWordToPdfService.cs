@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Net.Http.Headers;
 
-namespace Common.Services.ConvertWordToPdfServices
+namespace System.Share.Services.ConvertWordToPdfServices
 {
     public class ConvertWordToPdfService : IConvertWordToPdfService
     {

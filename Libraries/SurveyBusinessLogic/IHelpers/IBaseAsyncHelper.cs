@@ -1,6 +1,6 @@
-﻿using Common.Models;
+﻿using System.Share.Models;
 
-namespace SurveyBusinessLogic.IHelpers
+namespace Survey.BLL.IHelpers
 {
     public interface IBaseAsyncHelper<T> where T : class
     {

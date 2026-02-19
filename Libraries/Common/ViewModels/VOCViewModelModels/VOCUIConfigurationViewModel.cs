@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Common.ViewModels.VOCViewModelModels
+namespace System.Share.ViewModels.VOCViewModelModels
 {
     public class VOCUIConfigurationViewModel
     {

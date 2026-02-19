@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SurveyDataAccess.IRepositories;
+using Survey.DAL.IRepositories;
 using System.Linq.Expressions;
 
-namespace SurveyDataAccess.Repositories
+namespace Survey.DAL.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {

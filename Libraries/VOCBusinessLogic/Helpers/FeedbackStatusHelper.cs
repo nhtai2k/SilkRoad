@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Common.ViewModels.VOCViewModelModels;
-using VOCBusinessLogic.IHelpers;
-using VOCDataAccess;
-using VOCDataAccess.DTOs;
+using System.Share.ViewModels.VOCViewModelModels;
+using VOC.BLL.IHelpers;
+using VOC.DAL;
+using VOC.DAL.DTOs;
 
-namespace VOCBusinessLogic.Helpers
+namespace VOC.BLL.Helpers
 {
     public class FeedbackStatusHelper : IFeedbackStatusHelper
     {

@@ -1,4 +1,5 @@
-﻿@model UserClientViewModel
+﻿@using System.Share.ViewModels.LipstickClientViewModels
+@model UserClientViewModel
 <form asp-action="UpdateUserInformation" asp-controller="MyAccount" method="post" onsubmit="return SubmitForm(this,updateAccount)">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" id="initialProvinceId" value="@Model.ProvinceId" />

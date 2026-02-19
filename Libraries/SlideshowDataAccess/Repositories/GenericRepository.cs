@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SlideshowDataAccess.IRepositories;
+using Slideshow.DAL.IRepositories;
 using System.Linq.Expressions;
 
-namespace SlideshowDataAccess.Repositories
+namespace Slideshow.DAL.Repositories
 {
     public abstract class GenericRepository<TEntity, TDBContext> : IGenericRepository<TEntity, TDBContext>
             where TEntity : class

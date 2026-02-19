@@ -1,4 +1,4 @@
-﻿namespace BusinessLogic.IHelpers.IFeatureHelper
+﻿namespace System.BLL.IHelpers.IFeatureHelper
 {
     public interface IAIChatbotHelper
     {

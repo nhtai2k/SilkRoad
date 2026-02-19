@@ -1,6 +1,6 @@
-﻿using LipstickDataAccess;
+﻿using Lipstick.DAL;
 
-namespace LipstickBusinessLogic.LipstickHelpers
+namespace Lipstick.BLL.LipstickHelpers
 {
     public class LayoutHelper
     {

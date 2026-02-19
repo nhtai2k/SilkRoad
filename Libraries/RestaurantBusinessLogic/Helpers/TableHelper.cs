@@ -1,9 +1,9 @@
-using Common.Models;
-using RestaurantBusinessLogic.IHelpers;
-using RestaurantDataAccess;
-using RestaurantDataAccess.DTOs;
+using Restaurant.BLL.IHelpers;
+using Restaurant.DAL;
+using Restaurant.DAL.DTOs;
+using System.Share.Models;
 
-namespace RestaurantBusinessLogic.Helpers
+namespace Restaurant.BLL.Helpers
 {
     public class TableHelper : ITableHelper
     {

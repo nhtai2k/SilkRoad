@@ -1,4 +1,4 @@
-﻿namespace RestaurantDataAccess.DTOs
+﻿namespace Restaurant.DAL.DTOs
 {
     public class ChatMessageDTO
     {

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using System.Reflection;
 
-namespace VOCDataAccess
+namespace VOC.DAL
 {
     public class ApplicationContext : DbContext
     {

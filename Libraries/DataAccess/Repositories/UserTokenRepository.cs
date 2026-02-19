@@ -1,8 +1,8 @@
-﻿using DataAccess.DTOs;
-using DataAccess.IRepositories;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using System.DAL.DTOs;
+using System.DAL.IRepositories;
 
-namespace DataAccess.Repositories
+namespace System.DAL.Repositories
 {
     public class UserTokenRepository : GenericRepository<UserTokenDTO>, IUserTokenRepository
     {

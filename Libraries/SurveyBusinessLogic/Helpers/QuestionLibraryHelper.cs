@@ -1,11 +1,11 @@
-﻿using Common.Models;
-using Microsoft.EntityFrameworkCore;
-using SurveyBusinessLogic.IHelpers;
-using SurveyBusinessLogic.Models;
-using SurveyDataAccess;
-using SurveyDataAccess.DTOs;
+﻿using Microsoft.EntityFrameworkCore;
+using Survey.BLL.IHelpers;
+using Survey.BLL.Models;
+using Survey.DAL;
+using Survey.DAL.DTOs;
+using System.Share.Models;
 
-namespace SurveyBusinessLogic.Helpers
+namespace Survey.BLL.Helpers
 {
     public class QuestionLibraryHelper : IQuestionLibraryHelper
     {

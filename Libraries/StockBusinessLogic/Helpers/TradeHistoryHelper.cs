@@ -1,13 +1,10 @@
-﻿using Common.Models;
-using Microsoft.EntityFrameworkCore;
-using StockBusinessLogic.IHelpers;
-using StockDataAccess;
-using StockDataAccess.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.EntityFrameworkCore;
+using Stock.BLL.IHelpers;
+using Stock.DAL;
+using Stock.DAL.DTOs;
+using System.Share.Models;
 
-namespace StockBusinessLogic.Helpers
+namespace Stock.BLL.Helpers
 {
     public class TradeHistoryHelper : ITradeHistoryHelper
     {
@@ -16,7 +13,7 @@ namespace StockBusinessLogic.Helpers
         {
             _unitOfWork = unitOfWork;
         }
-        
+
         public async Task<Pagination<TradeHistoryDTO>> GetAllAsync(int pageIndex, int pageSize, int userId)
         {
             var query = _unitOfWork.TradeHistoryRepository.Query(x => x.UserId == userId).AsNoTracking();
@@ -35,7 +32,7 @@ namespace StockBusinessLogic.Helpers
                 Items = items
             };
         }
-        
+
         public async Task<bool> CreateAsync(TradeHistoryDTO model)
         {
             try
@@ -44,7 +41,7 @@ namespace StockBusinessLogic.Helpers
                 await _unitOfWork.SaveChangesAsync();
                 return true;
             }
-            catch(Exception Ex)
+            catch (Exception Ex)
             {
                 Console.WriteLine(Ex.Message);
                 return false;

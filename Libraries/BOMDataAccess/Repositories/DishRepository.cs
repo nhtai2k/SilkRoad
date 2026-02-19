@@ -1,9 +1,9 @@
-﻿using BOMDataAccess.DTOs;
-using BOMDataAccess.IRepositories;
-using BOMDataAccess.QureyModels;
+﻿using BOM.DAL.DTOs;
+using BOM.DAL.IRepositories;
+using BOM.DAL.QureyModels;
 using Microsoft.EntityFrameworkCore;
 
-namespace BOMDataAccess.Repositories
+namespace BOM.DAL.Repositories
 {
     public class DishRepository : GenericRepository<DishDTO>, IDishRepository
     {

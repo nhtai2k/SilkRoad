@@ -25,27 +25,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Libraries\BOMBusinessLogic\BOMBusinessLogic.csproj" />
-    <ProjectReference Include="..\Libraries\BOMDataAccess\BOMDataAccess.csproj" />
-    <ProjectReference Include="..\Libraries\BusinessLogic\BusinessLogic.csproj" />
+    <ProjectReference Include="..\Libraries\BOMBusinessLogic\BOM.BLL.csproj" />
+    <ProjectReference Include="..\Libraries\BusinessLogic\System.BLL.csproj" />
     <ProjectReference Include="..\Libraries\ChatBot\ChatBot.csproj" />
-    <ProjectReference Include="..\Libraries\Common\Common.csproj" />
-    <ProjectReference Include="..\Libraries\DataAccess\DataAccess.csproj" />
-    <ProjectReference Include="..\Libraries\LipstickBusinessLogic\LipstickBusinessLogic.csproj" />
-    <ProjectReference Include="..\Libraries\LipstickDataAccess\LipstickDataAccess.csproj" />
-    <ProjectReference Include="..\Libraries\MemberBusinessLogic\MemberBusinessLogic.csproj" />
-    <ProjectReference Include="..\Libraries\MemberDataAccess\MemberDataAccess.csproj" />
-    <ProjectReference Include="..\Libraries\PersonalFinanceBusinessLogic\PersonalFinanceBusinessLogic.csproj" />
-    <ProjectReference Include="..\Libraries\PersonalFinanceDataAccess\PersonalFinanceDataAccess.csproj" />
-    <ProjectReference Include="..\Libraries\RestaurantBusinessLogic\RestaurantBusinessLogic.csproj" />
-    <ProjectReference Include="..\Libraries\RestaurantDataAccess\RestaurantDataAccess.csproj" />
-    <ProjectReference Include="..\Libraries\SlideshowBusinessLogic\SlideshowBusinessLogic.csproj" />
-    <ProjectReference Include="..\Libraries\SlideshowDataAccess\SlideshowDataAccess.csproj" />
-    <ProjectReference Include="..\Libraries\StockBusinessLogic\StockBusinessLogic.csproj" />
-    <ProjectReference Include="..\Libraries\StockDataAccess\StockDataAccess.csproj" />
-    <ProjectReference Include="..\Libraries\SurveyBusinessLogic\SurveyBusinessLogic.csproj" />
-    <ProjectReference Include="..\Libraries\SurveyDataAccess\SurveyDataAccess.csproj" />
-    <ProjectReference Include="..\Libraries\VOCBusinessLogic\VOCBusinessLogic.csproj" />
+    <ProjectReference Include="..\Libraries\LipstickBusinessLogic\Lipstick.BLL.csproj" />
+    <ProjectReference Include="..\Libraries\MemberBusinessLogic\Member.BLL.csproj" />
+    <ProjectReference Include="..\Libraries\PersonalFinanceBusinessLogic\PersonalFinance.BLL.csproj" />
+    <ProjectReference Include="..\Libraries\RestaurantBusinessLogic\Restaurant.BLL.csproj" />
+    <ProjectReference Include="..\Libraries\SlideshowBusinessLogic\Slideshow.BLL.csproj" />
+    <ProjectReference Include="..\Libraries\StockBusinessLogic\Stock.BLL.csproj" />
+    <ProjectReference Include="..\Libraries\SurveyBusinessLogic\Survey.BLL.csproj" />
     <ProjectReference Include="..\webcore.client\webcore.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>

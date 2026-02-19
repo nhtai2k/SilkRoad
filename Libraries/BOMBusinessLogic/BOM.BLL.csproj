@@ -7,8 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj" />
-    <ProjectReference Include="..\SurveyDataAccess\SurveyDataAccess.csproj" />
+    <PackageReference Include="EPPlus" Version="8.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BOMDataAccess\BOM.DAL.csproj" />
+    <ProjectReference Include="..\Common\System.Share.csproj" />
   </ItemGroup>
 
 </Project>

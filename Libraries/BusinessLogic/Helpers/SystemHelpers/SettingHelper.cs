@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using BusinessLogic.IHelpers.ISystemHelpers;
-using Common.ViewModels.SystemViewModels;
 using Newtonsoft.Json;
+using System.BLL.IHelpers.ISystemHelpers;
+using System.Share.ViewModels.SystemViewModels;
 
-namespace BusinessLogic.Helpers.SystemHelpers
+namespace System.BLL.Helpers.SystemHelpers
 {
     public class SettingHelper : ISettingHelper
     {

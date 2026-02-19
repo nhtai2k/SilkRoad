@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using VOCDataAccess.IRepositories;
+using VOC.DAL.IRepositories;
 
-namespace VOCDataAccess.Repositories
+namespace VOC.DAL.Repositories
 {
     public abstract class GenericRepository<TEntity, TDBContext> : IGenericRepository<TEntity, TDBContext>
             where TEntity : class

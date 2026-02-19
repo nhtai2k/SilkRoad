@@ -1,5 +1,4 @@
-﻿
-namespace StockBusinessLogic.IHelpers
+﻿namespace Stock.BLL.IHelpers
 {
     public interface IBaseHelper<T> where T : class
     {

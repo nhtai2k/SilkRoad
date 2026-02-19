@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
-using SurveyDataAccess.IRepositories;
+using Survey.DAL.IRepositories;
 
-namespace SurveyDataAccess
+namespace Survey.DAL
 {
     public interface IUnitOfWork : IDisposable
     {

@@ -1,10 +1,10 @@
-﻿using Common.Models;
-using Common.ViewModels.SystemViewModels;
-using DataAccess.DTOs;
-using Google.Apis.Auth;
+﻿using Google.Apis.Auth;
 using Microsoft.AspNetCore.Identity;
+using System.DAL.DTOs;
+using System.Share.Models;
+using System.Share.ViewModels.SystemViewModels;
 
-namespace BusinessLogic.IHelpers.ISystemHelpers
+namespace System.BLL.IHelpers.ISystemHelpers
 {
     public interface IMyAccountHelper
     {

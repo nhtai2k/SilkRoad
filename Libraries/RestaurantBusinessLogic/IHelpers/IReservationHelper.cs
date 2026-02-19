@@ -1,8 +1,8 @@
-using Common.Models;
-using RestaurantBusinessLogic.Models;
-using RestaurantDataAccess.DTOs;
+using Restaurant.BLL.Models;
+using Restaurant.DAL.DTOs;
+using System.Share.Models;
 
-namespace RestaurantBusinessLogic.IHelpers
+namespace Restaurant.BLL.IHelpers
 {
     public interface IReservationHelper
     {

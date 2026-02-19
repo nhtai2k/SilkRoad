@@ -1,7 +1,8 @@
-﻿using BOMBusinessLogic.IBOMHelpers;
-using BOMDataAccess.DTOs;
+﻿using BOM.BLL.IHelpers;
+using BOM.DAL.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using System.Share;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.BOMControllers
@@ -22,7 +23,7 @@ namespace WebCore.Server.Controllers.BOMControllers
         public async Task<IActionResult> GetMaterialList(Guid bomCategoryId)
         {
             if (bomCategoryId == Guid.Empty)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidData"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             var data = await _helper.GetMaterialListByBomCategoryIdAsync(bomCategoryId);
             return Succeeded(data, _localizer["createSuccess"]);
         }
@@ -31,10 +32,10 @@ namespace WebCore.Server.Controllers.BOMControllers
         public async Task<IActionResult> AddMaterial(BOMMaterialLinkDTO model)
         {
             if (model == null || !ModelState.IsValid)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidData"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             var result = await _helper.AddMaterialAsync(model);
             if (result == null)
-                return Failed(Common.EStatusCodes.InternalServerError, _localizer["createFailed"]);
+                return Failed(EStatusCodes.InternalServerError, _localizer["createFailed"]);
             return Succeeded(result, _localizer["createSuccess"]);
         }
 
@@ -42,7 +43,7 @@ namespace WebCore.Server.Controllers.BOMControllers
         public async Task<IActionResult> GetPropertyList(Guid bomCategoryId)
         {
             if (bomCategoryId == Guid.Empty)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidData"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             var data = await _helper.GetPropertyListByBomCategoryIdAsync(bomCategoryId);
             return Succeeded(data, _localizer["createSuccess"]);
         }
@@ -51,10 +52,10 @@ namespace WebCore.Server.Controllers.BOMControllers
         public async Task<IActionResult> AddPriority(BOMPropertyLinkDTO model)
         {
             if (model == null || !ModelState.IsValid)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidData"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             var result = await _helper.AddPropertyAsync(model);
             if (result == null)
-                return Failed(Common.EStatusCodes.InternalServerError, _localizer["createFailed"]);
+                return Failed(EStatusCodes.InternalServerError, _localizer["createFailed"]);
             return Succeeded(result, _localizer["createSuccess"]);
         }
 
@@ -63,7 +64,7 @@ namespace WebCore.Server.Controllers.BOMControllers
         {
             var result = await _helper.DeleteMaterialByIdAsync(id);
             if (!result)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["notFound"]);
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(_localizer["deleteSuccess"]);
         }
 
@@ -72,7 +73,7 @@ namespace WebCore.Server.Controllers.BOMControllers
         {
             var result = await _helper.DeletePropertyByIdAsync(id);
             if (!result)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["notFound"]);
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(_localizer["deleteSuccess"]);
         }
     }

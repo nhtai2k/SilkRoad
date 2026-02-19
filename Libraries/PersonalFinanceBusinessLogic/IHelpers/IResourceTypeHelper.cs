@@ -1,10 +1,7 @@
-﻿using Common.Models;
-using PersonalFinanceDataAccess.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using PersonalFinance.DAL.DTOs;
+using System.Share.Models;
 
-namespace PersonalFinanceBusinessLogic.IHelpers
+namespace PersonalFinance.BLL.IHelpers
 {
     public interface IResourceTypeHelper : IBaseAsyncHelper<ResourceTypeDTO>
     {

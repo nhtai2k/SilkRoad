@@ -1,6 +1,6 @@
-﻿using Common.Models;
+﻿using System.Share.Models;
 
-namespace Common.Services.ActionLoggingServices
+namespace System.Share.Services.ActionLoggingServices
 {
     public interface IActionLoggingService
     {

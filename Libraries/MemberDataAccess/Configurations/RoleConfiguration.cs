@@ -1,8 +1,8 @@
-﻿using MemberDataAccess.DTOs;
+﻿using Member.DAL.DTOs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace MemberDataAccess.Configurations
+namespace Member.DAL.Configurations
 {
     internal class RoleConfiguration : IEntityTypeConfiguration<RoleDTO>
     {

@@ -1,6 +1,6 @@
-﻿using Common.Models;
+﻿using System.Share.Models;
 
-namespace LipstickBusinessLogic.ILipstickClientHelpers
+namespace Lipstick.BLL.ILipstickClientHelpers
 {
     public interface IWebhookHelper
     {

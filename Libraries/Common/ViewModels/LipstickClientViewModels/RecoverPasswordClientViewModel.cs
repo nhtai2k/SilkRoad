@@ -1,6 +1,6 @@
-﻿using Common.Custom.CustomDataAnnotations;
+﻿using System.Share.Custom.CustomDataAnnotations;
 
-namespace Common.ViewModels.LipstickClientViewModels
+namespace System.Share.ViewModels.LipstickClientViewModels
 {
     public class RecoverPasswordClientViewModel
     {

@@ -1,8 +1,8 @@
-﻿using MemberBusinessLogic.IHelpers;
-using MemberDataAccess;
-using MemberDataAccess.DTOs;
+﻿using Member.BLL.IHelpers;
+using Member.DAL;
+using Member.DAL.DTOs;
 
-namespace MemberBusinessLogic.Helpers
+namespace Member.BLL.Helpers
 {
     public class FavoriteHelper : IFavoriteHelper
     {

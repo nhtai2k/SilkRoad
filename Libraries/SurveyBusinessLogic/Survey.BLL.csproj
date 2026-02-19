@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj" />
-    <ProjectReference Include="..\VOCDataAccess\VOCDataAccess.csproj" />
+    <ProjectReference Include="..\Common\System.Share.csproj" />
+    <ProjectReference Include="..\SurveyDataAccess\Survey.DAL.csproj" />
   </ItemGroup>
 
 </Project>

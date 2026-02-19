@@ -1,4 +1,4 @@
-﻿namespace SurveyDataAccess.DTOs
+﻿namespace Survey.DAL.DTOs
 {
     public class AnswerDTO
     {

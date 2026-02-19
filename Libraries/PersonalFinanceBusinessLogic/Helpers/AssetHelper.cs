@@ -1,13 +1,10 @@
-﻿using Common.Models;
-using Microsoft.EntityFrameworkCore;
-using PersonalFinanceBusinessLogic.IHelpers;
-using PersonalFinanceDataAccess;
-using PersonalFinanceDataAccess.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.EntityFrameworkCore;
+using PersonalFinance.BLL.IHelpers;
+using PersonalFinance.DAL;
+using PersonalFinance.DAL.DTOs;
+using System.Share.Models;
 
-namespace PersonalFinanceBusinessLogic.Helpers
+namespace PersonalFinance.BLL.Helpers
 {
     public class AssetHelper : IAssetHelper
     {
@@ -19,7 +16,7 @@ namespace PersonalFinanceBusinessLogic.Helpers
 
         public async Task<Pagination<AssetDTO>> GetAllAsync(int pageIndex, int pageSize, int userId)
         {
-            var query = _unitOfWork.AssetRepository.Query(x => x.UserId == userId, includeProperties: "AssetType");
+            var query = _unitOfWork.AssetRepository.Query(x => x.UserId == userId, includeProperties: "AssetType").OrderByDescending(s => s.Date).AsNoTracking();
 
             int totalItems = await query.CountAsync();
             int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
@@ -69,6 +66,8 @@ namespace PersonalFinanceBusinessLogic.Helpers
                 data.Amount = model.Amount;
                 data.Date = model.Date;
                 data.Note = model.Note?.Trim();
+                data.HasLoan = model.HasLoan;
+                data.LoanAmount = model.LoanAmount;
                 await _unitOfWork.SaveChangesAsync();
                 return true;
             }

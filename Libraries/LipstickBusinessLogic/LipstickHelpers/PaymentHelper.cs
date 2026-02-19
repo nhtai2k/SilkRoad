@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using Common.Models;
-using Common.ViewModels.LipstickViewModels;
-using LipstickBusinessLogic.ILipstickHelpers;
-using LipstickDataAccess;
+using Lipstick.BLL.ILipstickHelpers;
+using Lipstick.DAL;
 using Newtonsoft.Json;
+using System.Share.Models;
+using System.Share.ViewModels.LipstickViewModels;
 
-namespace LipstickBusinessLogic.LipstickHelpers
+namespace Lipstick.BLL.LipstickHelpers
 {
     public class PaymentHelper : IPaymentHelper
     {

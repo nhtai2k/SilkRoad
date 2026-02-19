@@ -1,4 +1,4 @@
-﻿namespace Common.Models
+﻿namespace System.Share.Models
 {
     public class SepayModel
     {

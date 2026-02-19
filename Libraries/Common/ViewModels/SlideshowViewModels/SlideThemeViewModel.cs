@@ -1,4 +1,4 @@
-﻿namespace Common.ViewModels.SlideshowViewModels
+﻿namespace System.Share.ViewModels.SlideshowViewModels
 {
     public class SlideThemeViewModel
     {

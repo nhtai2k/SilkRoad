@@ -1,4 +1,4 @@
-﻿namespace LipstickBusinessLogic
+﻿namespace Lipstick.BLL
 {
     public interface IBaseHelper<T> where T : class
     {

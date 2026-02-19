@@ -22,9 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Common\Common.csproj" />
-    <ProjectReference Include="..\..\Libraries\MemberBusinessLogic\MemberBusinessLogic.csproj" />
-    <ProjectReference Include="..\..\Libraries\MemberDataAccess\MemberDataAccess.csproj" />
+    <ProjectReference Include="..\..\Libraries\Common\System.Share.csproj" />
+    <ProjectReference Include="..\..\Libraries\MemberBusinessLogic\Member.BLL.csproj" />
+    <ProjectReference Include="..\..\Libraries\MemberDataAccess\Member.DAL.csproj" />
   </ItemGroup>
 
 </Project>

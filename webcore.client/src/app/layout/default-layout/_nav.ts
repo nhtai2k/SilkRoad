@@ -7,28 +7,8 @@ const featureNavItems: INavData[] = [
     name: 'Features'
   },
   {
-    name: 'prompts',
-    url: '/prompts',
-    iconComponent: { name: 'cil-speedometer' }
-  },
-  {
-    name: 'Conversations',
-    url: '/conversations',
-    iconComponent: { name: 'cil-chat-bubble' }
-  },
-  {
-    name: 'ChatGPT',
-    url: '/chatgpt',
-    iconComponent: { name: 'cil-baby' }
-  },
-  {
-    name: 'Ollama',
-    url: '/ollama',
-    iconComponent: { name: 'cil-baby' }
-  },
-  {
-    name: 'Streaming Ollama',
-    url: '/features/stream-ollama',
+    name: 'Test Component',
+    url: '/features/test',
     iconComponent: { name: 'cil-baby' }
   },
   {
@@ -462,18 +442,6 @@ const systemNavItems: INavData[] = [
   //#endregion
 ];
 
-const testNavItems: INavData[] = [
-  {
-    name: 'Test Component',
-    url: '/test',
-    iconComponent: { name: 'cil-speedometer' },
-    badge: {
-      color: 'info',
-      text: 'NEW'
-    }
-  }
-];
-
 const mindMapNavItems: INavData[] = [
   //#region Mind Maps
   {
@@ -488,31 +456,46 @@ const mindMapNavItems: INavData[] = [
   //#endregion
 ];
 
-// const chatbotNavItems: INavData[] = [
-//   //#region Chat Bot
-//     {
-//     name: 'Chat Bot',
-//     title: true
-//   },
-//     {
-//     name: 'prompts',
-//     url: '/prompts',
-//     iconComponent: { name: 'cil-speedometer' }
-//   },
-//   {
-//     name: 'Conversations',
-//     url: '/conversations',
-//     iconComponent: { name: 'cil-chat-bubble' }
-//   },
-//   //#endregion
-// ];
+const chatbotNavItems: INavData[] = [
+  //#region Chat Bot
+    {
+    name: 'Generative AI',
+    title: true
+  },
+ {
+    name: 'prompts',
+    url: '/prompts',
+    iconComponent: { name: 'cil-speedometer' }
+  },
+  {
+    name: 'Conversations',
+    url: '/conversations',
+    iconComponent: { name: 'cil-chat-bubble' }
+  },
+  {
+    name: 'ChatGPT',
+    url: '/chatgpt',
+    iconComponent: { name: 'cil-baby' }
+  },
+  {
+    name: 'Ollama',
+    url: '/ollama',
+    iconComponent: { name: 'cil-baby' }
+  },
+  {
+    name: 'Streaming Ollama',
+    url: '/features/stream-ollama',
+    iconComponent: { name: 'cil-baby' }
+  }
+  //#endregion
+];
 
 export const navItems: INavData[] = [
   ...mindMapNavItems,
   ...featureNavItems,
   ...stockMarketNavItems,
   ...personalFinanceNavItems,
-  // ...chatbotNavItems,
+  ...chatbotNavItems,
   ...restuarantNavItems,
   ...lipstickShopNavItems,
   ...surveyNavItems,

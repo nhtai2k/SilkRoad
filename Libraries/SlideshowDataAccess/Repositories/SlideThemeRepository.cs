@@ -1,7 +1,7 @@
-﻿using SlideshowDataAccess.DTOs;
-using SlideshowDataAccess.IRepositories;
+﻿using Slideshow.DAL.DTOs;
+using Slideshow.DAL.IRepositories;
 
-namespace SlideshowDataAccess.Repositories
+namespace Slideshow.DAL.Repositories
 {
     public class SlideThemeRepository : GenericRepository<SlideThemeDTO, ApplicationContext>, ISlideThemeRepository
     {

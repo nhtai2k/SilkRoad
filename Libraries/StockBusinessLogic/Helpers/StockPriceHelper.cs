@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StockBusinessLogic.IHelpers;
-using StockDataAccess;
-using StockDataAccess.DTOs;
-using System.Data;
+using Stock.BLL.IHelpers;
+using Stock.DAL;
+using Stock.DAL.DTOs;
 
-namespace StockBusinessLogic.Helpers
+namespace Stock.BLL.Helpers
 {
     public class StockPriceHelper : IStockPriceHelper
     {
@@ -25,7 +24,7 @@ namespace StockBusinessLogic.Helpers
             //If time today < 15:00, today = today - 1 day
             if (today.Hour < 15)
                 today = today.AddDays(-1);
-            
+
 
             long fromUnixTime = new DateTimeOffset(company.IPODate).ToUnixTimeSeconds();
             long toUnixTime = new DateTimeOffset(today).ToUnixTimeSeconds();

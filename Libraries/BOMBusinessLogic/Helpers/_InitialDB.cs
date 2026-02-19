@@ -1,9 +1,9 @@
-﻿using BOMDataAccess;
-using BOMDataAccess.DTOs;
+﻿using BOM.DAL;
+using BOM.DAL.DTOs;
 using Microsoft.AspNetCore.Hosting;
 using OfficeOpenXml;
 
-namespace BOMBusinessLogic.BOMHelpers
+namespace BOM.BLL.Helpers
 {
     public class InitialDB
     {

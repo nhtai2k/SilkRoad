@@ -1,7 +1,7 @@
-﻿using PersonalFinanceDataAccess.DTOs;
-using PersonalFinanceDataAccess.IRepositories;
+﻿using PersonalFinance.DAL.DTOs;
+using PersonalFinance.DAL.IRepositories;
 
-namespace PersonalFinanceDataAccess.Repositories
+namespace PersonalFinance.DAL.Repositories
 {
     public class SubCategoryRepository : GenericRepository<SubCategoryDTO>, ISubCategoryRepository
     {

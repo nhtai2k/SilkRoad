@@ -1,13 +1,10 @@
-﻿using Common.Models;
-using Microsoft.EntityFrameworkCore;
-using PersonalFinanceBusinessLogic.IHelpers;
-using PersonalFinanceDataAccess;
-using PersonalFinanceDataAccess.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.EntityFrameworkCore;
+using PersonalFinance.BLL.IHelpers;
+using PersonalFinance.DAL;
+using PersonalFinance.DAL.DTOs;
+using System.Share.Models;
 
-namespace PersonalFinanceBusinessLogic.Helpers
+namespace PersonalFinance.BLL.Helpers
 {
     public class AssetTypeHelper : IAssetTypeHelper
     {
@@ -19,7 +16,7 @@ namespace PersonalFinanceBusinessLogic.Helpers
 
         public async Task<Pagination<AssetTypeDTO>> GetAllAsync(int pageIndex, int pageSize)
         {
-            var query = _unitOfWork.AssetTypeRepository.Query(x => !x.IsDeleted);
+            var query = _unitOfWork.AssetTypeRepository.Query(x => !x.IsDeleted).OrderBy(s => s.Priority).AsNoTracking();
             int totalItems = await query.CountAsync();
             int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
             if (pageIndex > totalPages)

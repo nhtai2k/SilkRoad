@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace Common.ViewModels.SlideshowViewModels
+namespace System.Share.ViewModels.SlideshowViewModels
 {
     public class SlideViewModel
     {

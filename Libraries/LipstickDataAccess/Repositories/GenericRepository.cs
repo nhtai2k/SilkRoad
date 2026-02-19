@@ -1,8 +1,8 @@
-﻿using LipstickDataAccess.IRepositories;
+﻿using Lipstick.DAL.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace LipstickDataAccess.Repositories
+namespace Lipstick.DAL.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {

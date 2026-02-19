@@ -1,4 +1,4 @@
-﻿namespace DataAccess.DTOs
+﻿namespace System.DAL.DTOs
 {
     public class ModuleDTO : BaseDTO
     {

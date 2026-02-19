@@ -1,12 +1,12 @@
-﻿using Common.Models;
-using MailKit.Net.Smtp;
+﻿using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.AspNetCore.Http;
 using MimeKit;
 using RazorEngineCore;
+using System.Share.Models;
 using System.Text;
 
-namespace Common.Services.EMailServices
+namespace System.Share.Services.EMailServices
 {
     public class MailService : IMailService
     {

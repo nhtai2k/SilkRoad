@@ -1,13 +1,13 @@
-﻿using BusinessLogic.IHelpers.IFeatureHelper;
-using ClosedXML.Excel;
-using Common;
-using Common.Models;
-using Common.Services.QRCodeServices;
-using Common.ViewModels.QRViewModels;
+﻿using ClosedXML.Excel;
 using Microsoft.AspNetCore.Hosting;
+using System.BLL.IHelpers.IFeatureHelper;
 using System.IO.Compression;
+using System.Share;
+using System.Share.Models;
+using System.Share.Services.QRCodeServices;
+using System.Share.ViewModels.QRViewModels;
 
-namespace BusinessLogic.Helpers.FeatureHelpers
+namespace System.BLL.Helpers.FeatureHelpers
 {
     public class QRCodeHelper : IQRCodeHelper
     {

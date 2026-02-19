@@ -1,10 +1,10 @@
-﻿using Common.ViewModels.LipstickClientViewModels;
-using MemberBusinessLogic.IHelpers;
-using MemberDataAccess;
-using MemberDataAccess.DTOs;
+﻿using Member.BLL.IHelpers;
+using Member.DAL;
+using Member.DAL.DTOs;
 using Microsoft.AspNetCore.Identity;
+using System.Share.ViewModels.LipstickClientViewModels;
 
-namespace MemberBusinessLogic.Helpers
+namespace Member.BLL.Helpers
 {
     public class MyAccountHelper : IMyAccountHelper
     {

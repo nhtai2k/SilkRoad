@@ -1,8 +1,8 @@
-﻿using BusinessLogic.IHelpers.IFeatureHelper;
-using Common.Models;
-using Common.Services.EMailServices;
+﻿using System.BLL.IHelpers.IFeatureHelper;
+using System.Share.Models;
+using System.Share.Services.EMailServices;
 
-namespace BusinessLogic.Helpers.FeatureHelpers
+namespace System.BLL.Helpers.FeatureHelpers
 {
     public class EmailHelper : IEmailHelper
     {

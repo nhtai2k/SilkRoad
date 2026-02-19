@@ -1,4 +1,4 @@
-﻿namespace Common.ViewModels.AIViewModels
+﻿namespace System.Share.ViewModels.AIViewModels
 {
     public class AIChatbotViewModel
     {

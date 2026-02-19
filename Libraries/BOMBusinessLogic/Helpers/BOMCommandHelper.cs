@@ -1,9 +1,9 @@
-using BOMBusinessLogic.IBOMHelpers;
-using BOMDataAccess;
-using BOMDataAccess.DTOs;
+using BOM.BLL.IHelpers;
+using BOM.DAL;
+using BOM.DAL.DTOs;
 using Microsoft.EntityFrameworkCore;
 
-namespace BOMBusinessLogic.BOMHelpers
+namespace BOM.BLL.Helpers
 {
     public class BOMCommandHelper : IBOMCommandHelper
     {

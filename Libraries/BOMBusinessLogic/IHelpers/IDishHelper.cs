@@ -1,8 +1,8 @@
-﻿using BOMDataAccess.DTOs;
-using Common.Models;
-using Common.Models.BOMModels;
+﻿using BOM.DAL.DTOs;
+using System.Share.Models;
+using System.Share.Models.BOMModels;
 
-namespace BOMBusinessLogic.IBOMHelpers
+namespace BOM.BLL.IHelpers
 {
     public interface IDishHelper : IBaseAsyncHelper<DishDTO>
     {

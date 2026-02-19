@@ -1,6 +1,6 @@
-using RestaurantDataAccess.DTOs;
+using Restaurant.DAL.DTOs;
 
-namespace RestaurantDataAccess.IRepositories
+namespace Restaurant.DAL.IRepositories
 {
     public interface IChatMessageRepository : IGenericRepository<ChatMessageDTO>
     {

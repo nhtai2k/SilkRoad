@@ -1,7 +1,7 @@
-﻿using LipstickDataAccess.DTOs;
-using LipstickDataAccess.IRepositories;
+﻿using Lipstick.DAL.DTOs;
+using Lipstick.DAL.IRepositories;
 
-namespace LipstickDataAccess.Repositories
+namespace Lipstick.DAL.Repositories
 {
     public class SubCategoryRepository : GenericRepository<SubCategoryDTO>, ISubCategoryRepository
     {

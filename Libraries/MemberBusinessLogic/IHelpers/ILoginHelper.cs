@@ -1,8 +1,8 @@
-﻿using Common.Models;
-using Common.ViewModels.LipstickClientViewModels;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using System.Share.Models;
+using System.Share.ViewModels.LipstickClientViewModels;
 
-namespace MemberBusinessLogic.IHelpers
+namespace Member.BLL.IHelpers
 {
     public interface ILoginHelper
     {

@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
-using BusinessLogic.IHelpers.ISystemHelpers;
-using Common.Models;
-using Common.Services.JwtServices;
-using Common.ViewModels.SystemViewModels;
-using DataAccess;
-using DataAccess.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.BLL.IHelpers.ISystemHelpers;
+using System.DAL;
+using System.DAL.DTOs;
+using System.Share.Models;
+using System.Share.Services.JwtServices;
+using System.Share.ViewModels.SystemViewModels;
 
-namespace BusinessLogic.Helpers.SystemHelpers
+namespace System.BLL.Helpers.SystemHelpers
 {
     public class UserHelper : IUserHelper
     {
@@ -44,7 +44,7 @@ namespace BusinessLogic.Helpers.SystemHelpers
             if (pageSize < 0)
                 pageSize = result.PageSize;
             // Query only necessary data with pagination at the database level
-            var query = _unitOfWork.UserSystemRepository.Query( includeProperties: "UserRoles");
+            var query = _unitOfWork.UserSystemRepository.Query(includeProperties: "UserRoles");
             if (roleId != -1)
             {
                 query = query.Where(s => s.UserRoles.Any(r => r.RoleId == roleId));
@@ -86,7 +86,7 @@ namespace BusinessLogic.Helpers.SystemHelpers
             if (pageSize < 0)
                 pageSize = result.PageSize;
             // Query only necessary data with pagination at the database level
-            var query = _unitOfWork.UserSystemRepository.Query(s => s.IsActive );
+            var query = _unitOfWork.UserSystemRepository.Query(s => s.IsActive);
             result.PageIndex = pageIndex;
             result.TotalItems = await query.CountAsync();
             result.TotalPages = (int)Math.Ceiling(result.TotalPages / (double)pageSize);

@@ -1,7 +1,7 @@
-using StockDataAccess;
-using StockDataAccess.DTOs;
-using StockDataAccess.IRepositories;
-using StockDataAccess.Repositories;
+using Stock.DAL;
+using Stock.DAL.DTOs;
+using Stock.DAL.IRepositories;
+using Stock.DAL.Repositories;
 
 public class IndustryRepository : GenericRepository<IndustryDTO>, IIndustryRepository
 {

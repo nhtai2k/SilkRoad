@@ -1,7 +1,7 @@
-using BOMDataAccess.DTOs;
-using BOMDataAccess.IRepositories;
+using BOM.DAL.DTOs;
+using BOM.DAL.IRepositories;
 
-namespace BOMDataAccess.Repositories
+namespace BOM.DAL.Repositories
 {
     public class BOMPropertyLinkRepository : GenericRepository<BOMPropertyLinkDTO>, IBOMPropertyLinkRepository
     {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
-using SlideshowDataAccess.IRepositories;
-using SlideshowDataAccess.Repositories;
+using Slideshow.DAL.IRepositories;
+using Slideshow.DAL.Repositories;
 
-namespace SlideshowDataAccess
+namespace Slideshow.DAL
 {
     public class UnitOfWork : IUnitOfWork
     {

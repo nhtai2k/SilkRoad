@@ -1,8 +1,8 @@
-﻿using DataAccess.DTOs;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.DAL.DTOs;
 
-namespace DataAccess.Configurations
+namespace System.DAL.Configurations
 {
     public class ControllerActionConfiguration : IEntityTypeConfiguration<ControllerActionDTO>
     {

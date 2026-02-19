@@ -1,6 +1,7 @@
-﻿using LipstickDataAccess.DTOs;
-using LipstickDataAccess.IRepositories;
-namespace LipstickDataAccess.Repositories
+﻿using Lipstick.DAL.DTOs;
+using Lipstick.DAL.IRepositories;
+
+namespace Lipstick.DAL.Repositories
 {
     public class ProductRepository : GenericRepository<ProductDTO>, IProductRepository
     {

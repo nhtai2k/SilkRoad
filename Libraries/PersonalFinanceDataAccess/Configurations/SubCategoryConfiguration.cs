@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PersonalFinanceDataAccess.DTOs;
+using PersonalFinance.DAL.DTOs;
 
-namespace PersonalFinanceDataAccess.Configurations
+namespace PersonalFinance.DAL.Configurations
 {
     public class SubCategoryConfiguration : IEntityTypeConfiguration<SubCategoryDTO>
     {

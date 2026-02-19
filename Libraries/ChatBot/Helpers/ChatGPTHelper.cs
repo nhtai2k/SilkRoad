@@ -1,8 +1,8 @@
 ﻿using ChatBot.IHelpers;
 using ChatBot.IServices;
 using ChatBot.Models;
-using Common;
 using OpenAI.Chat;
+using System.Share;
 
 namespace ChatBot.Helpers
 {

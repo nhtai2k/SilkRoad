@@ -1,4 +1,4 @@
-﻿namespace Common.ViewModels.SystemViewModels
+﻿namespace System.Share.ViewModels.SystemViewModels
 {
     public class RefreshTokenModel
     {

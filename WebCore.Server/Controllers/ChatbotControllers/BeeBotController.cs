@@ -1,6 +1,6 @@
 ﻿using ChatBot.IHelpers;
-using Common.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Share.Models;
 
 namespace WebCore.Server.Controllers.ChatbotControllers
 {

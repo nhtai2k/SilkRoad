@@ -1,7 +1,7 @@
-﻿using Common.Models;
-using StockDataAccess.DTOs;
+﻿using Stock.DAL.DTOs;
+using System.Share.Models;
 
-namespace StockBusinessLogic.IHelpers
+namespace Stock.BLL.IHelpers
 {
     public interface ICompanyHelper : IBaseAsyncHelper<CompanyDTO>
     {

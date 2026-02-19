@@ -1,6 +1,6 @@
-﻿using Common.ViewModels.VOCViewModelModels;
+﻿using System.Share.ViewModels.VOCViewModelModels;
 
-namespace VOCBusinessLogic.IHelpers
+namespace VOC.BLL.IHelpers
 {
     public interface IVOCUISettingHelper
     {

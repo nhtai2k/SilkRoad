@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SlideshowDataAccess.DTOs;
+using Slideshow.DAL.DTOs;
 
-namespace SlideshowDataAccess.Configurations
+namespace Slideshow.DAL.Configurations
 {
     public class SlideConfiguration : IEntityTypeConfiguration<SlideDTO>
     {

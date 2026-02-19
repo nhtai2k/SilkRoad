@@ -1,5 +1,5 @@
-﻿using Common.ViewModels.VOCViewModelModels;
-namespace VOCBusinessLogic.IHelpers
+﻿using System.Share.ViewModels.VOCViewModelModels;
+namespace VOC.BLL.IHelpers
 {
     public interface IFeedbackStatusHelper
     {

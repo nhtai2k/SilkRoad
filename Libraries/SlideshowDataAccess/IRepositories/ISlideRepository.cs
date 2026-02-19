@@ -1,6 +1,6 @@
-﻿using SlideshowDataAccess.DTOs;
+﻿using Slideshow.DAL.DTOs;
 
-namespace SlideshowDataAccess.IRepositories
+namespace Slideshow.DAL.IRepositories
 {
     public interface ISlideRepository : IGenericRepository<SlideDTO, ApplicationContext>
     {

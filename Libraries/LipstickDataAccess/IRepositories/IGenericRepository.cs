@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace LipstickDataAccess.IRepositories
+namespace Lipstick.DAL.IRepositories
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {

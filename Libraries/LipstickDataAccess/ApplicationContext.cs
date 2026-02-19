@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace LipstickDataAccess
+namespace Lipstick.DAL
 {
     public class ApplicationContext : DbContext
     {

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using System.Reflection;
 
-namespace SurveyDataAccess
+namespace Survey.DAL
 {
     public class ApplicationContext : DbContext
     {

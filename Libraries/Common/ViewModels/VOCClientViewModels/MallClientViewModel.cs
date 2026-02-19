@@ -1,4 +1,4 @@
-﻿namespace Common.ViewModels.VOCClientViewModels
+﻿namespace System.Share.ViewModels.VOCClientViewModels
 {
     public class MallClientViewModel
     {

@@ -1,8 +1,8 @@
-﻿using LipstickDataAccess.DTOs;
+﻿using Lipstick.DAL.DTOs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace LipstickDataAccess.Configurations
+namespace Lipstick.DAL.Configurations
 {
     public class PaymentConfiguration : IEntityTypeConfiguration<PaymentDTO>
     {

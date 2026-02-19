@@ -1,7 +1,7 @@
-﻿using Common.ViewModels.LipstickClientViewModels;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using System.Share.ViewModels.LipstickClientViewModels;
 
-namespace MemberBusinessLogic.IHelpers
+namespace Member.BLL.IHelpers
 {
     public interface IMyAccountHelper
     {

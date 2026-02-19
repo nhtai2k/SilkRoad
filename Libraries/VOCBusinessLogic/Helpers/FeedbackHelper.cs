@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
-using Common;
-using Common.Models;
-using Common.Services.EMailServices;
-using Common.Services.FileStorageServices;
-using Common.ViewModels.VOCViewModelModels;
 using Microsoft.AspNetCore.Hosting;
-using VOCBusinessLogic.IHelpers;
-using VOCDataAccess;
-using VOCDataAccess.DTOs;
+using System.Share;
+using System.Share.Models;
+using System.Share.Services.EMailServices;
+using System.Share.Services.FileStorageServices;
+using System.Share.ViewModels.VOCViewModelModels;
+using VOC.BLL.IHelpers;
+using VOC.DAL;
+using VOC.DAL.DTOs;
 
-namespace VOCBusinessLogic.Helpers
+namespace VOC.BLL.Helpers
 {
     public class FeedbackHelper : IFeedbackHelper
     {

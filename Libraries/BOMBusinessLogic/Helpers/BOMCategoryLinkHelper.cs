@@ -1,7 +1,7 @@
-﻿using BOMBusinessLogic.IBOMHelpers;
-using BOMDataAccess.DTOs;
+﻿using BOM.BLL.IHelpers;
+using BOM.DAL.DTOs;
 
-namespace BOMBusinessLogic.BOMHelpers
+namespace BOM.BLL.Helpers
 {
     public class BOMCategoryLinkHelper : IBOMCategoryLinkHelper
     {

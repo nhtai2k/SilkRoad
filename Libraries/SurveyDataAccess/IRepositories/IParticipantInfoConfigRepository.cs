@@ -1,6 +1,6 @@
-﻿using SurveyDataAccess.DTOs;
+﻿using Survey.DAL.DTOs;
 
-namespace SurveyDataAccess.IRepositories
+namespace Survey.DAL.IRepositories
 {
     public interface IParticipantInfoConfigRepository : IGenericRepository<ParticipantInfoConfigDTO>
     {

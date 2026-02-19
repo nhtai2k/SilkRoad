@@ -1,9 +1,9 @@
-using BOMBusinessLogic.IBOMHelpers;
-using BOMDataAccess;
-using BOMDataAccess.DTOs;
-using Common.Models;
+using BOM.BLL.IHelpers;
+using BOM.DAL;
+using BOM.DAL.DTOs;
 using Microsoft.EntityFrameworkCore;
-namespace BOMBusinessLogic.BOMHelpers
+using System.Share.Models;
+namespace BOM.BLL.Helpers
 {
     public class RankHelper : IRankHelper
     {

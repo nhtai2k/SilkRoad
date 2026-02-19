@@ -1,15 +1,15 @@
-﻿using Common;
-using Common.Models;
-using Common.ViewModels.LipstickClientViewModels;
-using Lipstick._Convergence.Helpers;
+﻿using Lipstick._Convergence.Helpers;
 using Lipstick._Convergence.Services;
 using Lipstick.ViewModels;
-using MemberBusinessLogic.IHelpers;
+using Member.BLL.IHelpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
+using System.Share;
+using System.Share.Models;
+using System.Share.ViewModels.LipstickClientViewModels;
 
 namespace Lipstick.Controllers
 {

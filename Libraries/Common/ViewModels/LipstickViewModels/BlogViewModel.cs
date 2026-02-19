@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Common.ViewModels.LipstickViewModels
+namespace System.Share.ViewModels.LipstickViewModels
 {
     public class BlogViewModel
     {

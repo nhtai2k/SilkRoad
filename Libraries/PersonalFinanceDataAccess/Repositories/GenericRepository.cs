@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PersonalFinanceDataAccess.IRepositories;
+using PersonalFinance.DAL.IRepositories;
 using System.Linq.Expressions;
 
-namespace PersonalFinanceDataAccess.Repositories
+namespace PersonalFinance.DAL.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {

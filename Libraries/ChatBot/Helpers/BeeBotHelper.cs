@@ -1,9 +1,9 @@
 ﻿using ChatBot.IHelpers;
-using Common;
-using Common.Models;
 using Microsoft.AspNetCore.Hosting;
 using OpenAI.Audio;
 using OpenAI.Chat;
+using System.Share;
+using System.Share.Models;
 using System.Text.Json;
 
 namespace ChatBot.Helpers

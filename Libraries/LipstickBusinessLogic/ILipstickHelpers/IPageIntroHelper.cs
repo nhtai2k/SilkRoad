@@ -1,7 +1,7 @@
-﻿using Common.Models;
-using Common.ViewModels.LipstickViewModels;
+﻿using System.Share.Models;
+using System.Share.ViewModels.LipstickViewModels;
 
-namespace LipstickBusinessLogic.ILipstickHelpers
+namespace Lipstick.BLL.ILipstickHelpers
 {
     public interface IPageIntroHelper : IBaseHelper<PageIntroViewModel>
     {

@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace SurveyDataAccess.IRepositories
+namespace Survey.DAL.IRepositories
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {

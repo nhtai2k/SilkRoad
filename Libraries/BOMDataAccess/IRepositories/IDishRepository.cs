@@ -1,7 +1,7 @@
-﻿using BOMDataAccess.DTOs;
-using BOMDataAccess.QureyModels;
+﻿using BOM.DAL.DTOs;
+using BOM.DAL.QureyModels;
 
-namespace BOMDataAccess.IRepositories
+namespace BOM.DAL.IRepositories
 {
     public interface IDishRepository : IGenericRepository<DishDTO>
     {

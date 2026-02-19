@@ -1,6 +1,6 @@
-﻿using Common;
-using Common.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System.Share;
+using System.Share.Models;
 
 namespace Lipstick._Convergence.Helpers
 {

@@ -1,6 +1,6 @@
-﻿using Common;
-using Common.ViewModels.LipstickClientViewModels;
-using Lipstick._Convergence.Services;
+﻿using Lipstick._Convergence.Services;
+using System.Share;
+using System.Share.ViewModels.LipstickClientViewModels;
 
 namespace Lipstick._Convergence.Helpers
 {

@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace BOMDataAccess.IRepositories
+namespace BOM.DAL.IRepositories
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {

@@ -1,16 +1,11 @@
 import { Routes } from '@angular/router';
 import { DefaultLayoutComponent } from './layout';
-import { LoginComponent } from './views/pages/login/login.component';
 import { authGuard } from './core/guards/auth.guard';
 import { authenticationGuard } from './core/guards/authentication.guard';
 import { pageRoutes } from './views/pages/routes';
 import { LoginThreejsComponent } from './views/pages/login-threejs/login-threejs.component';
 //Children Routes
 const childrenRoutes: Routes = [
-  {
-    path: 'test',
-    loadChildren: () => import('./views/test/routes').then((m) => m.routes)
-  },
   {
     path: 'introduction',
     loadChildren: () => import('./views/introduction/routes').then((m) => m.routes)
@@ -88,6 +83,10 @@ const featureChildrenRoutes: Routes = [
     path: 'features/convert-word-to-pdf',
     loadChildren: () => import('./views/features/convert-word-to-pdf/routes').then((m) => m.routes)
   },
+  {
+    path: 'features/test',
+    loadChildren: () => import('./views/features/test/routes').then((m) => m.routes)
+  }
   // {
   //   path: 'features/email-service',
   //   loadChildren: () => import('./views/features/email-service/routes').then((m) => m.routes)

@@ -1,10 +1,10 @@
-﻿using Common;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using SurveyBusinessLogic.IHelpers;
-using SurveyBusinessLogic.Models;
-using SurveyDataAccess.DTOs;
+using Survey.BLL.IHelpers;
+using Survey.BLL.Models;
+using Survey.DAL.DTOs;
+using System.Share;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.SurveyControllers
@@ -58,7 +58,7 @@ namespace WebCore.Server.Controllers.SurveyControllers
         public async Task<IActionResult> GetAllDeleted(int pageIndex, int pageSize)
         {
             if (pageIndex < 1 || pageSize < 1)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             var data = await _helper.GetAllDeletedAsync(pageIndex, pageSize);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }

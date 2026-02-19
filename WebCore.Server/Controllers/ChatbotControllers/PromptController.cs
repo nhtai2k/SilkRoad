@@ -1,7 +1,6 @@
 using ChatBot.IHelpers;
-using Common;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Share;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.ChatbotControllers
@@ -21,7 +20,7 @@ namespace WebCore.Server.Controllers.ChatbotControllers
         public async Task<IActionResult> GetAll(int pageIndex, int pageSize)
         {
             if (pageIndex < 1 || pageSize < 1)
-                return Failed(Common.EStatusCodes.BadRequest, "invalidPageIndex");
+                return Failed(EStatusCodes.BadRequest, "invalidPageIndex");
             var models = await _promptHelper.GetAllAsync(pageIndex, pageSize);
             if (models == null)
             {
@@ -29,7 +28,7 @@ namespace WebCore.Server.Controllers.ChatbotControllers
             }
             return Succeeded(models, "Models retrieved successfully");
         }
-        
+
         [HttpGet("getOptionList")]
         public async Task<IActionResult> GetOptionList()
         {

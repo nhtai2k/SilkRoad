@@ -1,6 +1,6 @@
-﻿using SurveyDataAccess.DTOs;
+﻿using Survey.DAL.DTOs;
 
-namespace SurveyBusinessLogic.IHelpers
+namespace Survey.BLL.IHelpers
 {
     public interface IPredefinedAnswerHelper
     {

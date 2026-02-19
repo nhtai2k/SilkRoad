@@ -1,7 +1,7 @@
-﻿using VOCDataAccess.DTOs;
-using VOCDataAccess.IRepositories;
+﻿using VOC.DAL.DTOs;
+using VOC.DAL.IRepositories;
 
-namespace VOCDataAccess.Repositories
+namespace VOC.DAL.Repositories
 {
     public class FeedbackTypeRepository : GenericRepository<FeedbackTypeDTO, ApplicationContext>, IFeedbackTypeRepository
     {

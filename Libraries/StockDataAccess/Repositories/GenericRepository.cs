@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StockDataAccess.IRepositories;
+using Stock.DAL.IRepositories;
 using System.Linq.Expressions;
 
-namespace StockDataAccess.Repositories
+namespace Stock.DAL.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {

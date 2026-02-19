@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Common.Custom.ApiKey
+namespace System.Share.Custom.ApiKey
 {
     public class ApiKeyAuthFilter : IAuthorizationFilter
     {

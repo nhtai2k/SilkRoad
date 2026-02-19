@@ -1,8 +1,8 @@
-﻿using Common;
-using Common.ViewModels.LipstickClientViewModels;
-using Lipstick._Convergence.Helpers;
-using MemberBusinessLogic.IHelpers;
+﻿using Lipstick._Convergence.Helpers;
+using Member.BLL.IHelpers;
 using Microsoft.AspNetCore.Mvc;
+using System.Share;
+using System.Share.ViewModels.LipstickClientViewModels;
 
 namespace Lipstick.Controllers
 {

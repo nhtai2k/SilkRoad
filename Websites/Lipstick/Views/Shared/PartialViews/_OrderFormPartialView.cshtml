@@ -1,4 +1,6 @@
-﻿@model OrderClientViewModel
+﻿@using System.Share
+@using System.Share.ViewModels.LipstickClientViewModels
+@model OrderClientViewModel
 @if (Model != null && Model.Cart != null && Model.Cart.CartItems.Count > 0)
 {
     int index = 0;

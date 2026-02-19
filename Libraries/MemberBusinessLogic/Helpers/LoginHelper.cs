@@ -1,13 +1,13 @@
-﻿using Common;
-using Common.Models;
-using Common.Services.SMSServices;
-using Common.ViewModels.LipstickClientViewModels;
-using MemberBusinessLogic.IHelpers;
-using MemberDataAccess.DTOs;
+﻿using Member.BLL.IHelpers;
+using Member.DAL.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using System.Share;
+using System.Share.Models;
+using System.Share.Services.SMSServices;
+using System.Share.ViewModels.LipstickClientViewModels;
 
-namespace MemberBusinessLogic.Helpers
+namespace Member.BLL.Helpers
 {
     public class LoginHelper : ILoginHelper
     {

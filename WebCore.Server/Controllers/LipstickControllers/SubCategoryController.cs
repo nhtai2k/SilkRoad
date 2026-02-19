@@ -1,11 +1,11 @@
-﻿using Common;
-using Common.Models;
-using Common.Services.ActionLoggingServices;
-using Common.ViewModels.LipstickViewModels;
-using LipstickBusinessLogic.ILipstickHelpers;
+﻿using Lipstick.BLL.ILipstickHelpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using System.Share;
+using System.Share.Models;
+using System.Share.Services.ActionLoggingServices;
+using System.Share.ViewModels.LipstickViewModels;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.LipstickControllers

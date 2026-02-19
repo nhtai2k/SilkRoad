@@ -1,6 +1,6 @@
-﻿namespace PersonalFinanceDataAccess.DTOs
+﻿namespace PersonalFinance.DAL.DTOs
 {
-    public class ResourceDTO 
+    public class ResourceDTO
     {
         public Guid Id { get; set; }
         public int UserId { get; set; }

@@ -1,7 +1,7 @@
-﻿using BOMDataAccess.IRepositories;
-using BOMDataAccess.Repositories;
+﻿using BOM.DAL.IRepositories;
+using BOM.DAL.Repositories;
 using Microsoft.EntityFrameworkCore.Storage;
-namespace BOMDataAccess
+namespace BOM.DAL
 {
     public class UnitOfWork : IUnitOfWork
     {

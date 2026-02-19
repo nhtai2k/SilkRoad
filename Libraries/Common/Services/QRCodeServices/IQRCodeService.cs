@@ -1,6 +1,6 @@
-﻿using Common.ViewModels.QRViewModels;
+﻿using System.Share.ViewModels.QRViewModels;
 
-namespace Common.Services.QRCodeServices
+namespace System.Share.Services.QRCodeServices
 {
     public interface IQRCodeService
     {

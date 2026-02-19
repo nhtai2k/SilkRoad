@@ -1,4 +1,4 @@
-﻿namespace StockBusinessLogic.Models
+﻿namespace Stock.BLL.Models
 {
     public class StockPriceViewModel
     {

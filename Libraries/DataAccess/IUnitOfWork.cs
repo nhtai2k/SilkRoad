@@ -1,7 +1,7 @@
-﻿using DataAccess.IRepositories;
-using Microsoft.EntityFrameworkCore.Storage;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using System.DAL.IRepositories;
 
-namespace DataAccess
+namespace System.DAL
 {
     public interface IUnitOfWork : IDisposable
     {

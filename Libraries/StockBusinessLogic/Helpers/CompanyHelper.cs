@@ -1,10 +1,10 @@
-﻿using Common.Models;
-using Microsoft.EntityFrameworkCore;
-using StockBusinessLogic.IHelpers;
-using StockDataAccess;
-using StockDataAccess.DTOs;
+﻿using Microsoft.EntityFrameworkCore;
+using Stock.BLL.IHelpers;
+using Stock.DAL;
+using Stock.DAL.DTOs;
+using System.Share.Models;
 
-namespace StockBusinessLogic.Helpers
+namespace Stock.BLL.Helpers
 {
     public class CompanyHelper : ICompanyHelper
     {
@@ -161,7 +161,7 @@ namespace StockBusinessLogic.Helpers
 
         public async Task<Pagination<CompanyDTO>> GetAllAsync(int pageIndex, int pageSize, int industryId)
         {
-            var query =  _unitOfWork.CompanyRepository.Query(x => !x.IsDeleted).AsNoTracking();
+            var query = _unitOfWork.CompanyRepository.Query(x => !x.IsDeleted).AsNoTracking();
             if (industryId > 0)
             {
                 query = query.Where(x => x.IndustryId == industryId);

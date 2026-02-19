@@ -4,41 +4,20 @@ import { ColoumnChartComponent } from "@components/charts/coloumn-chart/coloumn-
 import { CardBodyComponent, CardComponent, CardHeaderComponent, FormSelectDirective } from '@coreui/angular';
 import { AssetReportService, ExpenseReportService } from '@services/personal-finance-services';
 import { AuthService } from '@services/system-services';
-
-
-import { DOCUMENT, NgStyle } from '@angular/common';
-import { Component, DestroyRef, effect, inject, OnInit, Renderer2, signal, ViewEncapsulation, WritableSignal } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ChartOptions } from 'chart.js';
-import {
-  AvatarComponent,
-  ButtonDirective,
-  ButtonGroupComponent,
-  CardFooterComponent,
-  ColComponent,
-  FormCheckLabelDirective,
-  GutterDirective,
-  ProgressBarDirective,
-  ProgressComponent,
-  RowComponent,
-  TableDirective,
-  TextColorDirective
-} from '@coreui/angular';
-import { ChartjsComponent } from '@coreui/angular-chartjs';
+import { ButtonDirective, ButtonGroupComponent, FormCheckLabelDirective, TextColorDirective} from '@coreui/angular';
 import { IconDirective } from '@coreui/icons-angular';
-
-import { WidgetsBrandComponent } from '../../widgets/widgets-brand/widgets-brand.component';
 import { WidgetsDropdownComponent } from '../../widgets/widgets-dropdown/widgets-dropdown.component';
-import { DashboardChartsData, IChartProps } from './dashboard-charts-data';
 import { PieChartComponent } from "@components/charts";
+import { StackedColumnChartComponent } from "@components/charts/stacked-column-chart/stacked-column-chart.component";
 
 
 @Component({
   selector: 'app-reports',
   imports: [ColoumnChartComponent, CardComponent, CardBodyComponent, CardHeaderComponent, FormsModule,
     WidgetsDropdownComponent, TextColorDirective, ButtonDirective, IconDirective, ButtonGroupComponent,
-    //RowComponent, ColComponent, , ,
-    ReactiveFormsModule, FormCheckLabelDirective, FormSelectDirective, PieChartComponent],
+    ReactiveFormsModule, FormCheckLabelDirective, FormSelectDirective, PieChartComponent, StackedColumnChartComponent],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.scss',
   encapsulation: ViewEncapsulation.None
@@ -53,7 +32,18 @@ export class ReportsComponent implements OnInit {
   // Asset Report
   assetReportColoums: any[] = [];
   assetReportPie: any[] = [];
+// Component data
+stackedData = [
+  { quarter: "Q1 2023", revenue: 150, costs: 80, profit: 70 },
+  { quarter: "Q2 2023", revenue: 180, costs: 90, profit: 90 },
+  { quarter: "Q3 2023", revenue: 200, costs: 100, profit: 100 }
+];
 
+stackedSeries = [
+  { name: "Revenue", fieldName: "revenue", color: "#5BA0F2" },
+  { name: "Costs", fieldName: "costs", color: "#FF6B6B" },
+  { name: "Profit", fieldName: "profit", color: "#4ECDC4" }
+];
   reportForm = new FormGroup({
     type: new FormControl('month')
   });

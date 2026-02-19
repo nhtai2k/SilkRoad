@@ -1,12 +1,12 @@
-﻿using BOMBusinessLogic.IBOMHelpers;
-using BOMDataAccess;
-using BOMDataAccess.DTOs;
-using Common;
-using Common.Models;
+﻿using BOM.BLL.IHelpers;
+using BOM.DAL;
+using BOM.DAL.DTOs;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
-namespace BOMBusinessLogic.BOMHelpers
+using System.Share;
+using System.Share.Models;
+namespace BOM.BLL.Helpers
 {
     public class EnergyHelper : IEnergyHelper
     {

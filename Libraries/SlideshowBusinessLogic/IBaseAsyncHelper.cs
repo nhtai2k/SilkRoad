@@ -1,4 +1,4 @@
-﻿namespace SlideshowBusinessLogic
+﻿namespace Slideshow.BLL
 {
     public interface IBaseAsyncHelper<T> where T : class
     {

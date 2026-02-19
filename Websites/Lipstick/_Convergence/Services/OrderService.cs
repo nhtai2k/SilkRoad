@@ -1,9 +1,9 @@
-﻿using Common;
-using Common.Models;
-using Common.ViewModels.LipstickClientViewModels;
-using Lipstick._Convergence.Hubs;
+﻿using Lipstick._Convergence.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
+using System.Share;
+using System.Share.Models;
+using System.Share.ViewModels.LipstickClientViewModels;
 using System.Text;
 
 namespace Lipstick._Convergence.Services

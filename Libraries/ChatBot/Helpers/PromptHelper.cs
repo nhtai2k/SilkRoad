@@ -1,8 +1,7 @@
 ﻿using ChatBot.IHelpers;
 using ChatBot.IServices;
 using ChatBot.Models;
-using Common.Models;
-using Newtonsoft.Json;
+using System.Share.Models;
 
 namespace ChatBot.Helpers
 {

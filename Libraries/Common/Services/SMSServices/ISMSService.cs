@@ -1,4 +1,4 @@
-﻿namespace Common.Services.SMSServices
+﻿namespace System.Share.Services.SMSServices
 {
     public interface ISMSService
     {

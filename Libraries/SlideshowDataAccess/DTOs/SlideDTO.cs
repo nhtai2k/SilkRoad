@@ -1,4 +1,4 @@
-﻿namespace SlideshowDataAccess.DTOs
+﻿namespace Slideshow.DAL.DTOs
 {
     public class SlideDTO : BaseDTO
     {

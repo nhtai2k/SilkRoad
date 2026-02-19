@@ -1,5 +1,5 @@
-﻿using Common.ViewModels.LipstickClientViewModels;
-namespace LipstickBusinessLogic.ILipstickClientHelpers
+﻿using System.Share.ViewModels.LipstickClientViewModels;
+namespace Lipstick.BLL.ILipstickClientHelpers
 {
     public interface IHomeBannerClientHelper
     {

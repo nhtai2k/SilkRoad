@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Common.Custom.ApiKey
+namespace System.Share.Custom.ApiKey
 {
     public class ApiKeyValidation : IApiKeyValidation
     {

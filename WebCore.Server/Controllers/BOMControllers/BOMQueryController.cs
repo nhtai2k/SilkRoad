@@ -1,7 +1,8 @@
-using BOMBusinessLogic.IBOMHelpers;
+using BOM.BLL.IHelpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using System.Share;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.BOMControllers
@@ -24,7 +25,7 @@ namespace WebCore.Server.Controllers.BOMControllers
         public async Task<IActionResult> GetAll(int pageIndex, int pageSize)
         {
             if (pageIndex < 1 || pageSize < 1)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             var data = await _helper.GetAllAsync(pageIndex, pageSize);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
@@ -33,7 +34,7 @@ namespace WebCore.Server.Controllers.BOMControllers
         public async Task<IActionResult> GetAllDeleted(int pageIndex, int pageSize)
         {
             if (pageIndex < 1 || pageSize < 1)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             var data = await _helper.GetAllDeletedAsync(pageIndex, pageSize);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
@@ -43,7 +44,7 @@ namespace WebCore.Server.Controllers.BOMControllers
         {
             var data = await _helper.GetByIdAsync(id);
             if (data == null)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["notFound"]);
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 

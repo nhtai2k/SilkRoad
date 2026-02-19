@@ -1,6 +1,6 @@
-using RestaurantDataAccess.DTOs;
+using Restaurant.DAL.DTOs;
 
-namespace RestaurantBusinessLogic.IHelpers
+namespace Restaurant.BLL.IHelpers
 {
     public interface IChatMessageHelper : IBaseAsyncHelper<ChatMessageDTO>
     {

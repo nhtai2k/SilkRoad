@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using VOCDataAccess.DTOs;
+using VOC.DAL.DTOs;
 
-namespace VOCDataAccess.Configurations
+namespace VOC.DAL.Configurations
 {
     public class ForwardFeedbackConfiguration : IEntityTypeConfiguration<ForwardFeedbackDTO>
     {

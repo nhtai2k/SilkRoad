@@ -1,4 +1,4 @@
-﻿namespace Common.ViewModels.VOCViewModelModels
+﻿namespace System.Share.ViewModels.VOCViewModelModels
 {
     public class FeedbackPriorityViewModel
     {

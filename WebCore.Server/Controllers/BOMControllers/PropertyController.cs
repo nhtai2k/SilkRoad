@@ -1,9 +1,10 @@
-using BOMBusinessLogic.IBOMHelpers;
-using BOMDataAccess.DTOs;
-using Common.Models.BOMModels;
+using BOM.BLL.IHelpers;
+using BOM.DAL.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using System.Share;
+using System.Share.Models.BOMModels;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.BOMControllers
@@ -21,7 +22,7 @@ namespace WebCore.Server.Controllers.BOMControllers
         public async Task<IActionResult> GetAll(int pageIndex, int pageSize)
         {
             if (pageIndex < 1 || pageSize < 1)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             var data = await _helper.GetAllAsync(pageIndex, pageSize);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
@@ -30,7 +31,7 @@ namespace WebCore.Server.Controllers.BOMControllers
         public async Task<IActionResult> GetByFilter([FromBody] PropertyFilterModel model)
         {
             if (model.PageIndex < 1 || model.PageSize < 1)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             var data = await _helper.GetByFilterAsync(model);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
@@ -48,7 +49,7 @@ namespace WebCore.Server.Controllers.BOMControllers
         public async Task<IActionResult> GetAllDeleted(int pageIndex, int pageSize)
         {
             if (pageIndex < 1 || pageSize < 1)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             var data = await _helper.GetAllDeletedAsync(pageIndex, pageSize);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
@@ -68,7 +69,7 @@ namespace WebCore.Server.Controllers.BOMControllers
         {
             var data = await _helper.GetByIdAsync(id);
             if (data == null)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["notFound"]);
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
@@ -76,14 +77,14 @@ namespace WebCore.Server.Controllers.BOMControllers
         public async Task<IActionResult> Create([FromForm] PropertyDTO model)
         {
             if (model == null || !ModelState.IsValid)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidData"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             bool codeExists = await _helper.IsCodeExistsAsync(model.Code);
             if (codeExists)
-                return Failed(Common.EStatusCodes.Conflict, _localizer["codeAlreadyExists"]);
+                return Failed(EStatusCodes.Conflict, _localizer["codeAlreadyExists"]);
             var userName = User.Identity?.Name;
             var result = await _helper.CreateAsync(model, userName);
             if (!result)
-                return Failed(Common.EStatusCodes.InternalServerError, _localizer["createFailed"]);
+                return Failed(EStatusCodes.InternalServerError, _localizer["createFailed"]);
             return Succeeded(_localizer["createSuccess"]);
         }
 
@@ -91,11 +92,11 @@ namespace WebCore.Server.Controllers.BOMControllers
         public async Task<IActionResult> Update([FromForm] PropertyDTO model)
         {
             if (model == null || !ModelState.IsValid)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidData"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             var userName = User.Identity?.Name;
             var result = await _helper.UpdateAsync(model, userName);
             if (!result)
-                return Failed(Common.EStatusCodes.InternalServerError, _localizer["updateFailed"]);
+                return Failed(EStatusCodes.InternalServerError, _localizer["updateFailed"]);
             return Succeeded(_localizer["updateSuccess"]);
         }
 
@@ -105,7 +106,7 @@ namespace WebCore.Server.Controllers.BOMControllers
             var userName = User.Identity?.Name;
             var result = await _helper.SoftDeleteAsync(id, userName);
             if (!result)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["notFound"]);
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(_localizer["softDeleteSuccess"]);
         }
 
@@ -115,7 +116,7 @@ namespace WebCore.Server.Controllers.BOMControllers
             var userName = User.Identity?.Name;
             var result = await _helper.RestoreAsync(id, userName);
             if (!result)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["notFound"]);
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(_localizer["restoreSuccess"]);
         }
 
@@ -124,7 +125,7 @@ namespace WebCore.Server.Controllers.BOMControllers
         {
             var result = await _helper.DeleteAsync(id);
             if (!result)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["notFound"]);
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(_localizer["deleteSuccess"]);
         }
     }

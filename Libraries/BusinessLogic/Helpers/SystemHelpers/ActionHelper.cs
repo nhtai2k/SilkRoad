@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using BusinessLogic.IHelpers.ISystemHelpers;
-using Common;
-using Common.Models;
-using Common.ViewModels.SystemViewModels;
-using DataAccess;
-using DataAccess.DTOs;
+using System.BLL.IHelpers.ISystemHelpers;
+using System.DAL;
+using System.DAL.DTOs;
+using System.Share;
+using System.Share.Models;
+using System.Share.ViewModels.SystemViewModels;
 
-namespace BusinessLogic.Helpers.SystemHelpers
+namespace System.BLL.Helpers.SystemHelpers
 {
     public class ActionHelper : IActionHelper
     {

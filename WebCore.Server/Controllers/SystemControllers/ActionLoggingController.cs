@@ -1,8 +1,9 @@
-﻿using Common.Models;
-using Common.Services.ActionLoggingServices;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using System.Share;
+using System.Share.Models;
+using System.Share.Services.ActionLoggingServices;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.SystemControllers
@@ -26,7 +27,7 @@ namespace WebCore.Server.Controllers.SystemControllers
             string? controllerName, string? actionName, DateTime? startDate, DateTime? endDate)
         {
             if (pageIndex < 1)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             Pagination<UserActionModel> data = await _actionloggingService.GetAllAsync(controllerName, actionName, startDate, endDate, pageIndex, pageSize);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
@@ -36,7 +37,7 @@ namespace WebCore.Server.Controllers.SystemControllers
         {
             UserActionModel data = await _actionloggingService.GetAsync(id);
             if (data == null)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["dataNotFound"]);
+                return Failed(EStatusCodes.NotFound, _localizer["dataNotFound"]);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
 
         }

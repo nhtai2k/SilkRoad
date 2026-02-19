@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Common.ViewModels.LipstickViewModels;
-using Common.ViewModels.SystemViewModels;
-using DataAccess.DTOs;
-using LipstickDataAccess.DTOs;
+using Lipstick.DAL.DTOs;
 using LipstickDataAccess.MemberContext;
+using System.DAL.DTOs;
+using System.Share.ViewModels.LipstickViewModels;
+using System.Share.ViewModels.SystemViewModels;
 
 namespace WebCore.Server
 {

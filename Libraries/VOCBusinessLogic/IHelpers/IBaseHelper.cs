@@ -1,4 +1,4 @@
-﻿namespace VOCBusinessLogic.IHelpers
+﻿namespace VOC.BLL.IHelpers
 {
     public interface IBaseHelper<T> where T : class
     {

@@ -1,4 +1,4 @@
-﻿namespace Common.Models.BOMModels
+﻿namespace System.Share.Models.BOMModels
 {
     public class EmployeeFilterModel
     {

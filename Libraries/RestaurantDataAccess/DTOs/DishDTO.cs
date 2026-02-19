@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RestaurantDataAccess.DTOs
+namespace Restaurant.DAL.DTOs
 {
     public class DishDTO : BaseDTO
     {

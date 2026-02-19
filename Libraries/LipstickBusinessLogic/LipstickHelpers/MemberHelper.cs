@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Common.Models;
-using Common.ViewModels.LipstickViewModels;
-using LipstickBusinessLogic.ILipstickHelpers;
+using Lipstick.BLL.ILipstickHelpers;
 using LipstickDataAccess.MemberContext;
+using System.Share.Models;
+using System.Share.ViewModels.LipstickViewModels;
 
-namespace LipstickBusinessLogic.LipstickHelpers
+namespace Lipstick.BLL.LipstickHelpers
 {
     public class Memberhelper : IMemberHelper
     {

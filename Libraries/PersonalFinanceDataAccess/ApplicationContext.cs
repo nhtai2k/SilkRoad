@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using System.Reflection;
 
-namespace PersonalFinanceDataAccess
+namespace PersonalFinance.DAL
 {
     public class ApplicationContext : DbContext
     {

@@ -34,7 +34,7 @@ export class AuthService {
       }),
       catchError((exception) => {
         return new Observable<BaseAPIResponse>(observer => {
-          observer.next({ success: false, message: exception.message || 'External login failed' });
+          observer.next({ success: false, message: exception.error.message || 'External login failed' });
           observer.complete();
         });
       })
@@ -54,7 +54,7 @@ export class AuthService {
       }),
       catchError((exception) => {
         return new Observable<BaseAPIResponse>(observer => {
-          observer.next({ success: false, message: exception.message || 'Login failed' });
+          observer.next({ success: false, message: exception.error.message  || 'Login failed' });
           observer.complete();
         });
       })

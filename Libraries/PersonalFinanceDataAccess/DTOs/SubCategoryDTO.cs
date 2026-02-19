@@ -1,4 +1,4 @@
-﻿namespace PersonalFinanceDataAccess.DTOs
+﻿namespace PersonalFinance.DAL.DTOs
 {
     public class SubCategoryDTO : BaseDTO
     {

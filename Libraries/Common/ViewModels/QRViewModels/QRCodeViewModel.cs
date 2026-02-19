@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace Common.ViewModels.QRViewModels
+namespace System.Share.ViewModels.QRViewModels
 {
     public class QRCodeViewModel
     {

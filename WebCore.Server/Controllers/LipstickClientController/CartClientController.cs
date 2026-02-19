@@ -1,7 +1,7 @@
-﻿using Common;
-using Common.ViewModels.LipstickClientViewModels;
-using LipstickBusinessLogic.ILipstickClientHelpers;
+﻿using Lipstick.BLL.ILipstickClientHelpers;
 using Microsoft.AspNetCore.Mvc;
+using System.Share;
+using System.Share.ViewModels.LipstickClientViewModels;
 
 namespace WebCore.Server.Controllers.LipstickClientController
 {

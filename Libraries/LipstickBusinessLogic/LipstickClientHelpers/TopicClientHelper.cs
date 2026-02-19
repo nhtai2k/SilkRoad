@@ -1,9 +1,9 @@
-﻿using Common;
-using Common.ViewModels.LipstickClientViewModels;
-using LipstickBusinessLogic.ILipstickClientHelpers;
-using LipstickDataAccess;
+﻿using Lipstick.BLL.ILipstickClientHelpers;
+using Lipstick.DAL;
+using System.Share;
+using System.Share.ViewModels.LipstickClientViewModels;
 
-namespace LipstickBusinessLogic.LipstickClientHelpers
+namespace Lipstick.BLL.LipstickClientHelpers
 {
     public class TopicClientHelper : ITopicClientHelper
     {

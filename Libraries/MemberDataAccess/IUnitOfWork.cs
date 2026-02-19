@@ -1,6 +1,6 @@
-﻿using MemberDataAccess.IRepositories;
+﻿using Member.DAL.IRepositories;
 
-namespace MemberDataAccess
+namespace Member.DAL
 {
     public interface IUnitOfWork : IDisposable
     {

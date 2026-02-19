@@ -1,6 +1,6 @@
-﻿using PersonalFinanceDataAccess.DTOs;
+﻿using PersonalFinance.DAL.DTOs;
 
-namespace PersonalFinanceDataAccess.IRepositories
+namespace PersonalFinance.DAL.IRepositories
 {
     public interface IExpenseRepository : IGenericRepository<ExpenseDTO>
     {

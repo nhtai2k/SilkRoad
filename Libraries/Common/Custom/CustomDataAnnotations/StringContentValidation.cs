@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Common.Custom.CustomDataAnnotations
+namespace System.Share.Custom.CustomDataAnnotations
 {
     public class StringContentValidation : ValidationAttribute
     {

@@ -1,7 +1,7 @@
 
-using StockDataAccess.DTOs;
+using Stock.DAL.DTOs;
 
-namespace StockDataAccess.IRepositories
+namespace Stock.DAL.IRepositories
 {
     public interface IIndustryRepository : IGenericRepository<IndustryDTO>
     {

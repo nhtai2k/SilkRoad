@@ -1,4 +1,4 @@
-﻿namespace Common.ViewModels.QRViewModels
+﻿namespace System.Share.ViewModels.QRViewModels
 {
     public class VoucherViewModel
     {

@@ -1,6 +1,5 @@
-using Common;
-using Common.Models;
-using DataAccess.DTOs;
+using BOM.DAL;
+using Lipstick.DAL;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -8,9 +7,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
+using PersonalFinance.DAL;
 using Serilog;
+using Stock.DAL;
+using Survey.DAL;
+using System.DAL;
+using System.DAL.DTOs;
 using System.Globalization;
 using System.Reflection;
+using System.Share;
+using System.Share.Models;
 using System.Text;
 using System.Text.Json.Serialization;
 using WebCore.Server._Convergence.Hubs;
@@ -38,8 +44,13 @@ namespace WebCore.Server
                 builder.Host.UseSerilog();
 
                 var applicationconfig = builder.Configuration.GetSection("AppConfig");
-                var crossOrigins = builder.Configuration.GetSection("CorsOrigins").Get<string[]>(); ;
+                var crossOrigins = builder.Configuration.GetSection("CorsOrigins").Get<string[]>();
                 ServerAppConfig appConfig = applicationconfig.Get<ServerAppConfig>();
+                if(appConfig == null || crossOrigins == null)
+                {
+                    throw new Exception("AppConfig section is missing or invalid in appsettings.json");
+                }
+
                 builder.Services.AddSingleton(appConfig);
                 builder.Services.AddControllers();
                 builder.Services.AddSignalR();
@@ -56,28 +67,28 @@ namespace WebCore.Server
                 #region add database context
                 builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDBSettings"));
                 //BOM DB
-                builder.Services.AddDbContext<BOMDataAccess.ApplicationContext>(options =>
+                builder.Services.AddDbContext<BOM.DAL.ApplicationContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("BOMSqlConnection")));
                 //Survey DB
-                builder.Services.AddDbContext<SurveyDataAccess.ApplicationContext>(options =>
+                builder.Services.AddDbContext<Survey.DAL.ApplicationContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("SurveySqlConnection")));
                 //Personal Finance DB
-                builder.Services.AddDbContext<PersonalFinanceDataAccess.ApplicationContext>(options =>
+                builder.Services.AddDbContext<PersonalFinance.DAL.ApplicationContext>(options =>
                options.UseSqlServer(builder.Configuration.GetConnectionString("PersonalFinanceSqlConnection")));
                 //Lipstick DB
-                builder.Services.AddDbContext<LipstickDataAccess.ApplicationContext>(options =>
+                builder.Services.AddDbContext<Lipstick.DAL.ApplicationContext>(options =>
                     options.UseSqlServer(builder.Configuration.GetConnectionString("LipstickSqlConnection")));
                 //LipstickMember DB
                 builder.Services.AddDbContext<LipstickDataAccess.MemberContext.LipstickMemberDatabaseContext>(options =>
                     options.UseSqlServer(builder.Configuration.GetConnectionString("LipstickMemberSqlConnection")));
                 //Stock Market DB
-                builder.Services.AddDbContext<StockDataAccess.ApplicationContext>(options =>
+                builder.Services.AddDbContext<Stock.DAL.ApplicationContext>(options =>
                     options.UseSqlServer(builder.Configuration.GetConnectionString("StockMarketSqlConnection")));
                 //System DB
-                builder.Services.AddDbContext<DataAccess.ApplicationContext>(options =>
+                builder.Services.AddDbContext<System.DAL.ApplicationContext>(options =>
                                 options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection")));
                 builder.Services.AddIdentity<UserDTO, RoleDTO>()
-                    .AddEntityFrameworkStores<DataAccess.ApplicationContext>()
+                    .AddEntityFrameworkStores<System.DAL.ApplicationContext>()
                     .AddDefaultTokenProviders();
                 builder.Services.Configure<IdentityOptions>(options =>
                 {

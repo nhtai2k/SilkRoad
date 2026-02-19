@@ -1,4 +1,4 @@
-﻿namespace MemberDataAccess.DTOs
+﻿namespace Member.DAL.DTOs
 {
     public class FavoriteDTO
     {

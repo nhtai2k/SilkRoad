@@ -1,9 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PersonalFinanceDataAccess.DTOs
+﻿namespace PersonalFinance.DAL.DTOs
 {
     public class ResourceTypeDTO : BaseDTO
     {

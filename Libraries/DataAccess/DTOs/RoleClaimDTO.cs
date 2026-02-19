@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace DataAccess.DTOs
+namespace System.DAL.DTOs
 {
     public class RoleClaimDTO : IdentityRoleClaim<int>
     {

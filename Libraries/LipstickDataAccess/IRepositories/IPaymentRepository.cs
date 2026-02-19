@@ -1,6 +1,6 @@
-﻿using LipstickDataAccess.DTOs;
+﻿using Lipstick.DAL.DTOs;
 
-namespace LipstickDataAccess.IRepositories
+namespace Lipstick.DAL.IRepositories
 {
     public interface IPaymentRepository : IGenericRepository<PaymentDTO>
     {

@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using StockBusinessLogic.IHelpers;
-using StockDataAccess.DTOs;
+using Stock.BLL.IHelpers;
+using Stock.DAL.DTOs;
+using System.Share;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.StockControllers
@@ -24,7 +25,7 @@ namespace WebCore.Server.Controllers.StockControllers
         public async Task<IActionResult> GetAll(int pageIndex, int pageSize, int userId)
         {
             if (pageIndex < 1 || pageSize < 1)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             var data = await _helper.GetAllAsync(pageIndex, pageSize, userId);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
@@ -35,7 +36,7 @@ namespace WebCore.Server.Controllers.StockControllers
         {
             var data = await _helper.GetByIdAsync(id);
             if (data == null)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["notFound"]);
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
@@ -43,11 +44,11 @@ namespace WebCore.Server.Controllers.StockControllers
         public async Task<IActionResult> Create([FromBody] TradeHistoryDTO model)
         {
             if (model == null || !ModelState.IsValid)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidData"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             var userName = User.Identity?.Name;
             var result = await _helper.CreateAsync(model);
             if (!result)
-                return Failed(Common.EStatusCodes.InternalServerError, _localizer["createFailed"]);
+                return Failed(EStatusCodes.InternalServerError, _localizer["createFailed"]);
             return Succeeded(_localizer["createSuccess"]);
         }
 
@@ -55,11 +56,11 @@ namespace WebCore.Server.Controllers.StockControllers
         public async Task<IActionResult> Update([FromBody] TradeHistoryDTO model)
         {
             if (model == null || !ModelState.IsValid)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidData"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             var userName = User.Identity?.Name;
             var result = await _helper.UpdateAsync(model);
             if (!result)
-                return Failed(Common.EStatusCodes.InternalServerError, _localizer["updateFailed"]);
+                return Failed(EStatusCodes.InternalServerError, _localizer["updateFailed"]);
             return Succeeded(_localizer["updateSuccess"]);
         }
 
@@ -69,7 +70,7 @@ namespace WebCore.Server.Controllers.StockControllers
         {
             var result = await _helper.DeleteAsync(id);
             if (!result)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["notFound"]);
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(_localizer["deleteSuccess"]);
         }
     }

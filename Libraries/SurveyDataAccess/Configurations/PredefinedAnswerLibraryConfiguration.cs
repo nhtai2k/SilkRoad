@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SurveyDataAccess.DTOs;
+using Survey.DAL.DTOs;
 
-namespace SurveyDataAccess.Configurations
+namespace Survey.DAL.Configurations
 {
     public class PredefinedAnswerLibraryConfiguration : IEntityTypeConfiguration<PredefinedAnswerLibraryDTO>
     {

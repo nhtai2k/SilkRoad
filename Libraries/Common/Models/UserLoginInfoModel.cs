@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Common.Models
+﻿namespace System.Share.Models
 {
     public class UserLoginInfoModel
     {

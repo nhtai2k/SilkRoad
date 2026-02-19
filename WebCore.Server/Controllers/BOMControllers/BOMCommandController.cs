@@ -1,8 +1,9 @@
-using BOMBusinessLogic.IBOMHelpers;
-using BOMDataAccess.DTOs;
+using BOM.BLL.IHelpers;
+using BOM.DAL.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using System.Share;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.BOMControllers
@@ -29,14 +30,14 @@ namespace WebCore.Server.Controllers.BOMControllers
         public async Task<IActionResult> Create([FromBody] BOMDTO model)
         {
             if (model == null || !ModelState.IsValid)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidData"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             bool codeExists = await _queryHelper.IsCodeExistsAsync(model.Code);
             if (codeExists)
-                return Failed(Common.EStatusCodes.Conflict, _localizer["codeAlreadyExists"]);
+                return Failed(EStatusCodes.Conflict, _localizer["codeAlreadyExists"]);
             var userName = User.Identity?.Name;
             var result = await _commandHelper.CreateAsync(model, userName);
             if (result == null)
-                return Failed(Common.EStatusCodes.InternalServerError, _localizer["createFailed"]);
+                return Failed(EStatusCodes.InternalServerError, _localizer["createFailed"]);
             return Succeeded(result, _localizer["createSuccess"]);
         }
 
@@ -44,11 +45,11 @@ namespace WebCore.Server.Controllers.BOMControllers
         public async Task<IActionResult> Update([FromBody] BOMDTO model)
         {
             if (model == null || !ModelState.IsValid)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidData"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             var userName = User.Identity?.Name;
             var result = await _commandHelper.UpdateAsync(model, userName);
             if (!result)
-                return Failed(Common.EStatusCodes.InternalServerError, _localizer["updateFailed"]);
+                return Failed(EStatusCodes.InternalServerError, _localizer["updateFailed"]);
             return Succeeded(_localizer["updateSuccess"]);
         }
 
@@ -58,7 +59,7 @@ namespace WebCore.Server.Controllers.BOMControllers
             var userName = User.Identity?.Name;
             var result = await _commandHelper.SoftDeleteAsync(id, userName);
             if (!result)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["notFound"]);
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(_localizer["softDeleteSuccess"]);
         }
 
@@ -68,7 +69,7 @@ namespace WebCore.Server.Controllers.BOMControllers
             var userName = User.Identity?.Name;
             var result = await _commandHelper.RestoreAsync(id, userName);
             if (!result)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["notFound"]);
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(_localizer["restoreSuccess"]);
         }
 
@@ -77,7 +78,7 @@ namespace WebCore.Server.Controllers.BOMControllers
         {
             var result = await _commandHelper.DeleteAsync(id);
             if (!result)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["notFound"]);
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(_localizer["deleteSuccess"]);
         }
     }

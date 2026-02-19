@@ -1,11 +1,11 @@
-﻿using Common;
-using Common.Models;
-using Common.Services.ActionLoggingServices;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using PersonalFinanceBusinessLogic.IHelpers;
-using PersonalFinanceDataAccess.DTOs;
+using PersonalFinance.BLL.IHelpers;
+using PersonalFinance.DAL.DTOs;
+using System.Share;
+using System.Share.Models;
+using System.Share.Services.ActionLoggingServices;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.PersonalFinanceControllers

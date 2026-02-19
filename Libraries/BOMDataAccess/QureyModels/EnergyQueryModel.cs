@@ -1,4 +1,4 @@
-﻿namespace BOMDataAccess.QureyModels
+﻿namespace BOM.DAL.QureyModels
 {
     public class EnergyQueryModel
     {

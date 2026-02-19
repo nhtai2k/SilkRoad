@@ -1,7 +1,7 @@
-using Common.Models;
-using RestaurantDataAccess.DTOs;
+using Restaurant.DAL.DTOs;
+using System.Share.Models;
 
-namespace RestaurantBusinessLogic.IHelpers
+namespace Restaurant.BLL.IHelpers
 {
     public interface ICategoryHelper : IBaseAsyncHelper<CategoryDTO>
     {

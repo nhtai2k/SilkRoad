@@ -1,7 +1,7 @@
 using ChatBot.Models;
-using Common.Models;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using System.Share.Models;
 
 namespace ChatBot
 {

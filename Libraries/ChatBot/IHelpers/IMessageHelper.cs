@@ -1,4 +1,3 @@
-using System;
 using ChatBot.Models;
 
 namespace ChatBot.IHelpers;

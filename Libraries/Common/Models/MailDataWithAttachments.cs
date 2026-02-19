@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Common.Models
+namespace System.Share.Models
 {
     public class MailDataWithAttachments
     {

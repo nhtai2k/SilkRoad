@@ -1,6 +1,6 @@
-﻿using Common.ViewModels.SlideshowViewModels;
+﻿using System.Share.ViewModels.SlideshowViewModels;
 
-namespace SlideshowBusinessLogic.IHelpers
+namespace Slideshow.BLL.IHelpers
 {
     public interface ISlideThemeHelper : IBaseAsyncHelper<SlideThemeViewModel>
     {

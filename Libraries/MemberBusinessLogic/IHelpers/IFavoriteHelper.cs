@@ -1,4 +1,4 @@
-﻿namespace MemberBusinessLogic.IHelpers
+﻿namespace Member.BLL.IHelpers
 {
     public interface IFavoriteHelper
     {

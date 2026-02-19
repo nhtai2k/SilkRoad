@@ -1,8 +1,8 @@
-using BOMBusinessLogic.IBOMHelpers;
-using BOMDataAccess;
-using BOMDataAccess.DTOs;
-using Common.Models;
+using BOM.BLL.IHelpers;
+using BOM.DAL;
+using BOM.DAL.DTOs;
 using Microsoft.EntityFrameworkCore;
+using System.Share.Models;
 public class DepartmentHelper : IDepartmentHelper
 {
     private readonly IUnitOfWork _unitOfWork;

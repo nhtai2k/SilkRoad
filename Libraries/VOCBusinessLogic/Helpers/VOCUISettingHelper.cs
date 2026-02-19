@@ -1,9 +1,9 @@
-﻿using Common;
-using Common.ViewModels.VOCViewModelModels;
-using Newtonsoft.Json;
-using VOCBusinessLogic.IHelpers;
+﻿using Newtonsoft.Json;
+using System.Share;
+using System.Share.ViewModels.VOCViewModelModels;
+using VOC.BLL.IHelpers;
 
-namespace VOCBusinessLogic.Helpers
+namespace VOC.BLL.Helpers
 {
     public class VOCUISettingHelper : IVOCUISettingHelper
     {

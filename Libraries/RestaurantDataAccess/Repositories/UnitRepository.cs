@@ -1,7 +1,7 @@
-using RestaurantDataAccess.DTOs;
-using RestaurantDataAccess.IRepositories;
+using Restaurant.DAL.DTOs;
+using Restaurant.DAL.IRepositories;
 
-namespace RestaurantDataAccess.Repositories
+namespace Restaurant.DAL.Repositories
 {
     public class UnitRepository : GenericRepository<UnitDTO>, IUnitRepository
     {

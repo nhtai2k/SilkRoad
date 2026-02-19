@@ -1,9 +1,8 @@
-﻿using Common;
-using Common.Services.ActionLoggingServices;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using PersonalFinanceBusinessLogic.IHelpers;
+using PersonalFinance.BLL.IHelpers;
+using System.Share;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.PersonalFinanceControllers
@@ -36,7 +35,7 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
         [HttpGet("GetColoumnChartByYear/{userId}/{year}")]
         public async Task<IActionResult> GetColoumnChartByMonthAsync(int userId, int year)
         {
-            
+
             var data = await _helper.GetColoumnChartByMonth(year, userId);
             if (data == null || data.Count == 0)
             {

@@ -1,6 +1,6 @@
-﻿using SurveyBusinessLogic.IHelpers;
+﻿using Survey.BLL.IHelpers;
 
-namespace SurveyBusinessLogic.Helpers
+namespace Survey.BLL.Helpers
 {
     public class SurveyReportHelper : ISurveyReportHelper
     {

@@ -1,10 +1,7 @@
-﻿using StockDataAccess.DTOs;
-using StockDataAccess.IRepositories;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Stock.DAL.DTOs;
+using Stock.DAL.IRepositories;
 
-namespace StockDataAccess.Repositories
+namespace Stock.DAL.Repositories
 {
     public class TradeHistoryRepository : GenericRepository<TradeHistoryDTO>, ITradeHistoryRepository
     {

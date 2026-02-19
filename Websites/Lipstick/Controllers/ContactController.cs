@@ -1,7 +1,7 @@
-﻿using Common;
-using Common.ViewModels.LipstickClientViewModels;
-using Lipstick._Convergence.Helpers;
+﻿using Lipstick._Convergence.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using System.Share;
+using System.Share.ViewModels.LipstickClientViewModels;
 
 namespace Lipstick.Controllers
 {

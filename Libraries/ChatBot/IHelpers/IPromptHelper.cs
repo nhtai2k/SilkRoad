@@ -1,5 +1,5 @@
 ﻿using ChatBot.Models;
-using Common.Models;
+using System.Share.Models;
 
 namespace ChatBot.IHelpers
 {

@@ -1,7 +1,8 @@
-﻿using BusinessLogic.IHelpers.ISystemHelpers;
-using Common.ViewModels.SystemViewModels;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using System.BLL.IHelpers.ISystemHelpers;
+using System.Share;
+using System.Share.ViewModels.SystemViewModels;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.SystemControllers
@@ -35,7 +36,7 @@ namespace WebCore.Server.Controllers.SystemControllers
         {
             ModuleViewModel data = await _moduleHelper.GetByIdAsync(id);
             if (data == null)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["dataNotFound"]);
+                return Failed(EStatusCodes.NotFound, _localizer["dataNotFound"]);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
         /// <summary>
@@ -47,10 +48,10 @@ namespace WebCore.Server.Controllers.SystemControllers
         public async Task<IActionResult> Create([FromBody] ModuleViewModel model)
         {
             if (!ModelState.IsValid)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidData"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             bool result = await _moduleHelper.CreateAsync(model);
             if (!result)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["dataCreationFailed"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["dataCreationFailed"]);
             return Succeeded(_localizer["dataCreatedSuccessfully"]);
         }
         /// <summary>
@@ -62,10 +63,10 @@ namespace WebCore.Server.Controllers.SystemControllers
         public async Task<IActionResult> Update([FromBody] ModuleViewModel model)
         {
             if (!ModelState.IsValid)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidData"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             bool result = await _moduleHelper.UpdateAsync(model);
             if (!result)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["dataUpdateFailed"]);
+                return Failed(EStatusCodes.NotFound, _localizer["dataUpdateFailed"]);
             return Succeeded(_localizer["dataUpdatedSuccessfully"]);
         }
 

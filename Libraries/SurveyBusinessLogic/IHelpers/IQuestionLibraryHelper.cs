@@ -1,8 +1,8 @@
-﻿using Common.Models;
-using SurveyBusinessLogic.Models;
-using SurveyDataAccess.DTOs;
+﻿using Survey.BLL.Models;
+using Survey.DAL.DTOs;
+using System.Share.Models;
 
-namespace SurveyBusinessLogic.IHelpers
+namespace Survey.BLL.IHelpers
 {
     public interface IQuestionLibraryHelper : IBaseAsyncHelper<QuestionLibraryDTO>
     {

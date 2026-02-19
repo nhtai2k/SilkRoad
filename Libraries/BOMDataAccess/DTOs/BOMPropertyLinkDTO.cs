@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BOMDataAccess.DTOs
+namespace BOM.DAL.DTOs
 {
     public class BOMPropertyLinkDTO
     {

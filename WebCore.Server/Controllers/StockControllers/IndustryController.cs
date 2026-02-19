@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using StockBusinessLogic.IHelpers;
-using StockDataAccess.DTOs;
+using Stock.BLL.IHelpers;
+using Stock.DAL.DTOs;
+using System.Share;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.StockControllers
@@ -24,7 +25,7 @@ namespace WebCore.Server.Controllers.StockControllers
         public async Task<IActionResult> GetAll(int pageIndex, int pageSize)
         {
             if (pageIndex < 1 || pageSize < 1)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             var data = await _industryHelper.GetAllAsync(pageIndex, pageSize);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
@@ -33,7 +34,7 @@ namespace WebCore.Server.Controllers.StockControllers
         public async Task<IActionResult> GetAllActive(int pageIndex, int pageSize, string? search = null)
         {
             if (pageIndex < 1 || pageSize < 1)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             var data = await _industryHelper.GetAllActiveAsync(pageIndex, pageSize, search);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
@@ -49,7 +50,7 @@ namespace WebCore.Server.Controllers.StockControllers
         public async Task<IActionResult> GetAllDeleted(int pageIndex, int pageSize)
         {
             if (pageIndex < 1 || pageSize < 1)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             var data = await _industryHelper.GetAllDeletedAsync(pageIndex, pageSize);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
@@ -59,7 +60,7 @@ namespace WebCore.Server.Controllers.StockControllers
         {
             var data = await _industryHelper.GetByIdAsync(id);
             if (data == null)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["notFound"]);
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
@@ -67,11 +68,11 @@ namespace WebCore.Server.Controllers.StockControllers
         public async Task<IActionResult> Create([FromBody] IndustryDTO model)
         {
             if (model == null || !ModelState.IsValid)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidData"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             var userName = User.Identity?.Name;
             var result = await _industryHelper.CreateAsync(model, userName);
             if (!result)
-                return Failed(Common.EStatusCodes.InternalServerError, _localizer["createFailed"]);
+                return Failed(EStatusCodes.InternalServerError, _localizer["createFailed"]);
             return Succeeded(_localizer["createSuccess"]);
         }
 
@@ -79,11 +80,11 @@ namespace WebCore.Server.Controllers.StockControllers
         public async Task<IActionResult> Update([FromBody] IndustryDTO model)
         {
             if (model == null || !ModelState.IsValid)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidData"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             var userName = User.Identity?.Name;
             var result = await _industryHelper.UpdateAsync(model, userName);
             if (!result)
-                return Failed(Common.EStatusCodes.InternalServerError, _localizer["updateFailed"]);
+                return Failed(EStatusCodes.InternalServerError, _localizer["updateFailed"]);
             return Succeeded(_localizer["updateSuccess"]);
         }
 
@@ -93,7 +94,7 @@ namespace WebCore.Server.Controllers.StockControllers
             var userName = User.Identity?.Name;
             var result = await _industryHelper.SoftDeleteAsync(id, userName);
             if (!result)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["notFound"]);
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(_localizer["softDeleteSuccess"]);
         }
 
@@ -103,7 +104,7 @@ namespace WebCore.Server.Controllers.StockControllers
             var userName = User.Identity?.Name;
             var result = await _industryHelper.RestoreAsync(id, userName);
             if (!result)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["notFound"]);
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(_localizer["restoreSuccess"]);
         }
 
@@ -112,7 +113,7 @@ namespace WebCore.Server.Controllers.StockControllers
         {
             var result = await _industryHelper.DeleteAsync(id);
             if (!result)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["notFound"]);
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(_localizer["deleteSuccess"]);
         }
     }

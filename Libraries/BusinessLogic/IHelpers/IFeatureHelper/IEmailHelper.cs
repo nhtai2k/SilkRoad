@@ -1,6 +1,6 @@
-﻿using Common.Models;
+﻿using System.Share.Models;
 
-namespace BusinessLogic.IHelpers.IFeatureHelper
+namespace System.BLL.IHelpers.IFeatureHelper
 {
     public interface IEmailHelper
     {

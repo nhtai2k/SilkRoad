@@ -1,29 +1,37 @@
-﻿using BOMBusinessLogic.BOMHelpers;
-using BOMBusinessLogic.IBOMHelpers;
-using BusinessLogic.Helpers.FeatureHelpers;
-using BusinessLogic.Helpers.SystemHelpers;
-using BusinessLogic.IHelpers.IFeatureHelper;
-using BusinessLogic.IHelpers.ISystemHelpers;
+﻿using BOM.BLL.Helpers;
+using BOM.BLL.IHelpers;
+using BOM.DAL;
 using ChatBot;
 using ChatBot.Helpers;
 using ChatBot.IHelpers;
 using ChatBot.IServices;
 using ChatBot.Services;
-using Common.Custom.ApiKey;
-using Common.Services.ActionLoggingServices;
-using Common.Services.ConvertWordToPdfServices;
-using Common.Services.EMailServices;
-using Common.Services.FileStorageServices;
-using Common.Services.JwtServices;
-using Common.Services.QRCodeServices;
-using LipstickBusinessLogic.ILipstickClientHelpers;
-using LipstickBusinessLogic.ILipstickHelpers;
-using LipstickBusinessLogic.LipstickClientHelpers;
-using LipstickBusinessLogic.LipstickHelpers;
-using StockBusinessLogic.Helpers;
-using StockBusinessLogic.IHelpers;
-using SurveyBusinessLogic.Helpers;
-using SurveyBusinessLogic.IHelpers;
+using Lipstick.BLL.ILipstickClientHelpers;
+using Lipstick.BLL.ILipstickHelpers;
+using Lipstick.BLL.LipstickClientHelpers;
+using Lipstick.BLL.LipstickHelpers;
+using Lipstick.DAL;
+using PersonalFinance.BLL.Helpers;
+using PersonalFinance.BLL.IHelpers;
+using PersonalFinance.DAL;
+using Stock.BLL.Helpers;
+using Stock.BLL.IHelpers;
+using Stock.DAL;
+using Survey.BLL.Helpers;
+using Survey.BLL.IHelpers;
+using Survey.DAL;
+using System.BLL.Helpers.FeatureHelpers;
+using System.BLL.Helpers.SystemHelpers;
+using System.BLL.IHelpers.IFeatureHelper;
+using System.BLL.IHelpers.ISystemHelpers;
+using System.DAL;
+using System.Share.Custom.ApiKey;
+using System.Share.Services.ActionLoggingServices;
+using System.Share.Services.ConvertWordToPdfServices;
+using System.Share.Services.EMailServices;
+using System.Share.Services.FileStorageServices;
+using System.Share.Services.JwtServices;
+using System.Share.Services.QRCodeServices;
 
 namespace WebCore.Server
 {
@@ -47,11 +55,11 @@ namespace WebCore.Server
             #endregion
 
             #region Lipstick
-            services.AddScoped<LipstickDataAccess.IUnitOfWork, LipstickDataAccess.UnitOfWork>();
+            services.AddScoped<Lipstick.DAL.IUnitOfWork, Lipstick.DAL.UnitOfWork>();
             //lipstick
             //services.AddTransient<IUnitHelper, UnitHelper>();
-            services.AddTransient<ICategoryHelper, CategoryHelper>();
-            services.AddTransient<ISubCategoryHelper, SubCategoryHelper>();
+            services.AddTransient<Lipstick.BLL.ILipstickHelpers.ICategoryHelper, Lipstick.BLL.LipstickHelpers.CategoryHelper>();
+            services.AddTransient<Lipstick.BLL.ILipstickHelpers.ISubCategoryHelper, Lipstick.BLL.LipstickHelpers.SubCategoryHelper>();
             services.AddTransient<IBrandHelper, BrandHelper>();
             services.AddTransient<ITopicHelper, TopicHelper>();
             services.AddTransient<IBlogHelper, BlogHelper>();
@@ -84,7 +92,7 @@ namespace WebCore.Server
             #endregion
 
             #region BOM Helpers
-            services.AddScoped<BOMDataAccess.IUnitOfWork, BOMDataAccess.UnitOfWork>();
+            services.AddScoped<BOM.DAL.IUnitOfWork, BOM.DAL.UnitOfWork>();
             //BOM
             services.AddScoped<IBOMConfigurationHelper, BOMConfigurationHelper>();
             //services.AddScoped<IEmployeeHelper, EmployeeHelper>();
@@ -115,7 +123,7 @@ namespace WebCore.Server
             #endregion
 
             #region Survey
-            services.AddScoped<SurveyDataAccess.IUnitOfWork, SurveyDataAccess.UnitOfWork>();
+            services.AddScoped<Survey.DAL.IUnitOfWork, Survey.DAL.UnitOfWork>();
             services.AddScoped<IParticipantHelper, ParticipantHelper>();
             services.AddScoped<IQuestionGroupLibraryHelper, QuestionGroupLibraryHelper>();
             services.AddScoped<IQuestionLibraryHelper, QuestionLibraryHelper>();
@@ -131,20 +139,20 @@ namespace WebCore.Server
             #endregion
 
             #region Personal Finance
-            services.AddScoped<PersonalFinanceDataAccess.IUnitOfWork, PersonalFinanceDataAccess.UnitOfWork>();
-            services.AddScoped<PersonalFinanceBusinessLogic.IHelpers.ICategoryHelper, PersonalFinanceBusinessLogic.Helpers.CategoryHelper>();
-            services.AddScoped<PersonalFinanceBusinessLogic.IHelpers.ISubCategoryHelper, PersonalFinanceBusinessLogic.Helpers.SubCategoryHelper>();
-            services.AddScoped<PersonalFinanceBusinessLogic.IHelpers.IResourceHelper, PersonalFinanceBusinessLogic.Helpers.ResourceHelper>();
-            services.AddScoped<PersonalFinanceBusinessLogic.IHelpers.IResourceTypeHelper, PersonalFinanceBusinessLogic.Helpers.ResourceTypeHelper>();
-            services.AddScoped<PersonalFinanceBusinessLogic.IHelpers.IExpenseHelper, PersonalFinanceBusinessLogic.Helpers.ExpenseHelper>();
-            services.AddScoped<PersonalFinanceBusinessLogic.IHelpers.IExpenseReportHelper, PersonalFinanceBusinessLogic.Helpers.ExpenseReportHelper>();
-            services.AddScoped<PersonalFinanceBusinessLogic.IHelpers.IAssetReportHelper, PersonalFinanceBusinessLogic.Helpers.AssetReportHelper>();
-            services.AddScoped<PersonalFinanceBusinessLogic.IHelpers.IAssetTypeHelper, PersonalFinanceBusinessLogic.Helpers.AssetTypeHelper>();
-            services.AddScoped<PersonalFinanceBusinessLogic.IHelpers.IAssetHelper, PersonalFinanceBusinessLogic.Helpers.AssetHelper>();     
+            services.AddScoped<PersonalFinance.DAL.IUnitOfWork, PersonalFinance.DAL.UnitOfWork>();
+            services.AddScoped<PersonalFinance.BLL.IHelpers.ICategoryHelper, PersonalFinance.BLL.Helpers.CategoryHelper>();
+            services.AddScoped<PersonalFinance.BLL.IHelpers.ISubCategoryHelper, PersonalFinance.BLL.Helpers.SubCategoryHelper>();
+            services.AddScoped<IResourceHelper, ResourceHelper>();
+            services.AddScoped<IResourceTypeHelper, ResourceTypeHelper>();
+            services.AddScoped<IExpenseHelper, ExpenseHelper>();
+            services.AddScoped<IExpenseReportHelper, ExpenseReportHelper>();
+            services.AddScoped<IAssetReportHelper, AssetReportHelper>();
+            services.AddScoped<IAssetTypeHelper, AssetTypeHelper>();
+            services.AddScoped<IAssetHelper, AssetHelper>();
             #endregion
 
             #region Stock
-            services.AddScoped<StockDataAccess.IUnitOfWork, StockDataAccess.UnitOfWork>();
+            services.AddScoped<Stock.DAL.IUnitOfWork, Stock.DAL.UnitOfWork>();
             //stock
             services.AddScoped<ICompanyHelper, CompanyHelper>();
             services.AddScoped<IStockPriceHelper, StockPriceHelper>();
@@ -154,7 +162,7 @@ namespace WebCore.Server
             #endregion
 
             #region System Database
-            services.AddScoped<DataAccess.IUnitOfWork, DataAccess.UnitOfWork>();
+            services.AddScoped<System.DAL.IUnitOfWork, System.DAL.UnitOfWork>();
             //system
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<IJwtService, JwtService>();

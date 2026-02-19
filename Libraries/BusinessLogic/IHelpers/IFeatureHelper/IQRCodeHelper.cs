@@ -1,6 +1,6 @@
-﻿using Common.ViewModels.QRViewModels;
+﻿using System.Share.ViewModels.QRViewModels;
 
-namespace BusinessLogic.IHelpers.IFeatureHelper
+namespace System.BLL.IHelpers.IFeatureHelper
 {
     public interface IQRCodeHelper
     {

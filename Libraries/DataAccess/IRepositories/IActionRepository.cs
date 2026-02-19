@@ -1,6 +1,6 @@
-﻿using DataAccess.DTOs;
+﻿using System.DAL.DTOs;
 
-namespace DataAccess.IRepositories
+namespace System.DAL.IRepositories
 {
     public interface IActionRepository : IGenericRepository<ActionDTO>
     {

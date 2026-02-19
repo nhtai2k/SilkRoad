@@ -1,4 +1,4 @@
-﻿namespace LipstickBusinessLogic.ILipstickHelpers
+﻿namespace Lipstick.BLL.ILipstickHelpers
 {
     public interface ILayoutHelper
     {

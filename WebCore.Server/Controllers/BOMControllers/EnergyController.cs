@@ -1,10 +1,10 @@
-﻿using BOMBusinessLogic.IBOMHelpers;
-using BOMDataAccess.DTOs;
-using Common;
-using Common.Models;
+﻿using BOM.BLL.IHelpers;
+using BOM.DAL.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using System.Share;
+using System.Share.Models;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.BOMControllers
@@ -56,7 +56,7 @@ namespace WebCore.Server.Controllers.BOMControllers
         public async Task<IActionResult> GetAllDeleted(int pageIndex, int pageSize)
         {
             if (pageIndex < 1 || pageSize < 1)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             var data = await _helper.GetAllDeletedAsync(pageIndex, pageSize);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
@@ -77,7 +77,7 @@ namespace WebCore.Server.Controllers.BOMControllers
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             bool codeExists = await _helper.IsCodeExistsAsync(model.Code);
             if (codeExists)
-                return Failed(Common.EStatusCodes.Conflict, _localizer["codeAlreadyExists"]);
+                return Failed(EStatusCodes.Conflict, _localizer["codeAlreadyExists"]);
             var userName = User.Identity?.Name;
             var result = await _helper.CreateAsync(model, userName);
             if (!result)

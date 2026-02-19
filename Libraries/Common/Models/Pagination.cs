@@ -1,6 +1,6 @@
-﻿using Common.ViewModels.LipstickViewModels;
+﻿using System.Share.ViewModels.LipstickViewModels;
 
-namespace Common.Models
+namespace System.Share.Models
 {
     public class Pagination<T> : PageInformation where T : class
     {

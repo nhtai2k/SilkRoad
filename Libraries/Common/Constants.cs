@@ -1,4 +1,4 @@
-﻿namespace Common
+﻿namespace System.Share
 {
     public static class Constants
     {

@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using RestaurantDataAccess.DTOs;
+using Restaurant.DAL.DTOs;
 
-namespace RestaurantDataAccess.Configurations
+namespace Restaurant.DAL.Configurations
 {
     public class UnitConfiguration : IEntityTypeConfiguration<UnitDTO>
     {

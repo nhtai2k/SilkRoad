@@ -1,4 +1,4 @@
-﻿namespace Common.ViewModels.LipstickClientViewModels
+﻿namespace System.Share.ViewModels.LipstickClientViewModels
 {
     public class ResetPasswordClientViewModel
     {

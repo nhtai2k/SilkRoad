@@ -1,6 +1,6 @@
-﻿using PersonalFinanceDataAccess.DTOs;
+﻿using PersonalFinance.DAL.DTOs;
 
-namespace PersonalFinanceBusinessLogic.IHelpers
+namespace PersonalFinance.BLL.IHelpers
 {
     public interface ISubCategoryHelper : IBaseAsyncHelper<SubCategoryDTO>
     {

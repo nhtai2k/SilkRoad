@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
-namespace Common.Custom.ExtensionMethods
+namespace System.Share.Custom.ExtensionMethods
 {
     public static class EnumExtensions
     {

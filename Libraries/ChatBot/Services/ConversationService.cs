@@ -1,26 +1,24 @@
-using System;
-using ChatBot;
 using ChatBot.IServices;
 using ChatBot.Models;
-using Common.Models;
 using MongoDB.Driver;
+using System.Share.Models;
 
 namespace ChatBot.Services;
 
 public class ConversationService : IConversationService
 {
     private readonly ApplicationConnection _applicationConnection;
-    
+
     public ConversationService(ApplicationConnection applicationConnection)
     {
         _applicationConnection = applicationConnection ?? throw new ArgumentNullException(nameof(applicationConnection));
     }
-    
+
     public async Task CreateAsync(ConversationModel entity)
     {
         if (entity == null)
             throw new ArgumentNullException(nameof(entity));
-            
+
         await _applicationConnection._conversationsCollection.InsertOneAsync(entity);
     }
 
@@ -54,13 +52,13 @@ public class ConversationService : IConversationService
 
         // Get all matching conversations
         var allConversations = await _applicationConnection._conversationsCollection.Find(filters).ToListAsync();
-        
+
         // Calculate pagination
         var totalItems = allConversations.Count;
         var pageSize = filter?.PageSize ?? 10;
         var pageIndex = filter?.PageIndex ?? 1;
         var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
-        
+
         // Apply pagination
         var pagedConversations = allConversations
             .Skip((pageIndex - 1) * pageSize)

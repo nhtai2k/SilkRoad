@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using Common;
-using Common.ViewModels.VOCClientViewModels;
-using Common.ViewModels.VOCViewModelModels;
-using VOCBusinessLogic.IHelpers;
-using VOCDataAccess;
-using VOCDataAccess.DTOs;
+using System.Share;
+using System.Share.ViewModels.VOCClientViewModels;
+using System.Share.ViewModels.VOCViewModelModels;
+using VOC.BLL.IHelpers;
+using VOC.DAL;
+using VOC.DAL.DTOs;
 
-namespace VOCBusinessLogic.Helpers
+namespace VOC.BLL.Helpers
 {
     public class FeedbackTypeHelper : IFeedbackTypeHelper
     {

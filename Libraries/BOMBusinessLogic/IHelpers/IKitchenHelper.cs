@@ -1,7 +1,7 @@
-using BOMDataAccess.DTOs;
-using Common.Models;
+using BOM.DAL.DTOs;
+using System.Share.Models;
 
-namespace BOMBusinessLogic.IBOMHelpers
+namespace BOM.BLL.IHelpers
 {
     public interface IKitchenHelper : IBaseAsyncHelper<KitchenDTO>
     {

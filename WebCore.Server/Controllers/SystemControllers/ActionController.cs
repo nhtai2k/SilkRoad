@@ -1,9 +1,10 @@
-﻿using BusinessLogic.IHelpers.ISystemHelpers;
-using Common.Models;
-using Common.ViewModels.SystemViewModels;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using System.BLL.IHelpers.ISystemHelpers;
+using System.Share;
+using System.Share.Models;
+using System.Share.ViewModels.SystemViewModels;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.SystemControllers
@@ -30,7 +31,7 @@ namespace WebCore.Server.Controllers.SystemControllers
         {
             string mess = _localizer["dataFetchedSuccessfully"];
             if (pageIndex < 1)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             Pagination<ActionViewModel> data = await _actionHelper.GetAllAsync(pageIndex, pageSize);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
@@ -59,7 +60,7 @@ namespace WebCore.Server.Controllers.SystemControllers
         {
             ActionViewModel data = await _actionHelper.GetByIdAsync(id);
             if (data == null)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["dataNotFound"]);
+                return Failed(EStatusCodes.NotFound, _localizer["dataNotFound"]);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
         /// <summary>
@@ -68,14 +69,14 @@ namespace WebCore.Server.Controllers.SystemControllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("Create")]
-        [AuthorizeEnumPolicy(Common.ERoles.Admin)]
+        [AuthorizeEnumPolicy(ERoles.Admin)]
         public async Task<IActionResult> Create([FromBody] ActionViewModel model)
         {
             if (!ModelState.IsValid)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidData"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             bool result = await _actionHelper.CreateAsync(model);
             if (!result)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["dataCreationFailed"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["dataCreationFailed"]);
             return Succeeded(_localizer["dataCreatedSuccessfully"]);
         }
         /// <summary>
@@ -84,14 +85,14 @@ namespace WebCore.Server.Controllers.SystemControllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut("Update")]
-        [AuthorizeEnumPolicy(Common.ERoles.Admin)]
+        [AuthorizeEnumPolicy(ERoles.Admin)]
         public async Task<IActionResult> Update([FromBody] ActionViewModel model)
         {
             if (!ModelState.IsValid)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidData"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             bool result = await _actionHelper.UpdateAsync(model);
             if (!result)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["dataUpdateFailed"]);
+                return Failed(EStatusCodes.NotFound, _localizer["dataUpdateFailed"]);
             return Succeeded(_localizer["dataUpdatedSuccessfully"]);
         }
 

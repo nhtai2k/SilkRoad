@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Common.ViewModels.QRViewModels
+namespace System.Share.ViewModels.QRViewModels
 {
     public class MergeImageViewModel
     {

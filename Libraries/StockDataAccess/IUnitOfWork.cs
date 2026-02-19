@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
-using StockDataAccess.IRepositories;
+using Stock.DAL.IRepositories;
 
-namespace StockDataAccess
+namespace Stock.DAL
 {
     public interface IUnitOfWork : IDisposable
     {

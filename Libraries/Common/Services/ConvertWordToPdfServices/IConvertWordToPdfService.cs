@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Common.Services.ConvertWordToPdfServices
+namespace System.Share.Services.ConvertWordToPdfServices
 {
     public interface IConvertWordToPdfService
     {

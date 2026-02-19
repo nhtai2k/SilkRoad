@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace StockDataAccess
+namespace Stock.DAL
 {
     public class ApplicationContext : DbContext
     {

@@ -1,8 +1,7 @@
-using System;
 using ChatBot.IHelpers;
 using ChatBot.IServices;
 using ChatBot.Models;
-using Common.Models;
+using System.Share.Models;
 
 namespace ChatBot.Helpers;
 

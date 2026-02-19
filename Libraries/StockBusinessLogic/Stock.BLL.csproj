@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj" />
-    <ProjectReference Include="..\StockDataAccess\StockDataAccess.csproj" />
+    <ProjectReference Include="..\Common\System.Share.csproj" />
+    <ProjectReference Include="..\StockDataAccess\Stock.DAL.csproj" />
   </ItemGroup>
 
 </Project>

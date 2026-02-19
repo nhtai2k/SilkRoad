@@ -1,13 +1,13 @@
-using Common.Models;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using RestaurantBusinessLogic.IHelpers;
-using RestaurantBusinessLogic.Models;
-using RestaurantDataAccess;
-using RestaurantDataAccess.DTOs;
+using Restaurant.BLL.IHelpers;
+using Restaurant.BLL.Models;
+using Restaurant.DAL;
+using Restaurant.DAL.DTOs;
+using System.Share.Models;
 
-namespace RestaurantBusinessLogic.Helpers
+namespace Restaurant.BLL.Helpers
 {
     public class ReservationHelper : IReservationHelper
     {

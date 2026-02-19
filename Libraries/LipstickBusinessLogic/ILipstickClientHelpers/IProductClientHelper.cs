@@ -1,7 +1,7 @@
-﻿using Common.Models;
-using Common.ViewModels.LipstickClientViewModels;
+﻿using System.Share.Models;
+using System.Share.ViewModels.LipstickClientViewModels;
 
-namespace LipstickBusinessLogic.ILipstickClientHelpers
+namespace Lipstick.BLL.ILipstickClientHelpers
 {
     public interface IProductClientHelper
     {

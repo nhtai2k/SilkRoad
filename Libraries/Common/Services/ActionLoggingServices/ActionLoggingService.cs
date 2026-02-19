@@ -1,9 +1,9 @@
-﻿using Common.Models;
-using Common.Services.JwtServices;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using System.Share.Models;
+using System.Share.Services.JwtServices;
 
-namespace Common.Services.ActionLoggingServices
+namespace System.Share.Services.ActionLoggingServices
 {
     public class ActionLoggingService : IActionLoggingService
     {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using StockDataAccess.DTOs;
+using Stock.DAL.DTOs;
 
-namespace StockDataAccess.Configurations
+namespace Stock.DAL.Configurations
 {
     public class StockPriceConfiguration : IEntityTypeConfiguration<StockPriceDTO>
     {

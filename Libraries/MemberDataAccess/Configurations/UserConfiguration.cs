@@ -1,8 +1,8 @@
-﻿using MemberDataAccess.DTOs;
+﻿using Member.DAL.DTOs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace MemberDataAccess.Configurations
+namespace Member.DAL.Configurations
 {
     public class UserConfiguration : IEntityTypeConfiguration<UserDTO>
     {

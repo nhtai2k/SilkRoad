@@ -1,8 +1,8 @@
-﻿using MemberDataAccess.DTOs;
-using MemberDataAccess.IRepositories;
+﻿using Member.DAL.DTOs;
+using Member.DAL.IRepositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace MemberDataAccess.Repositories
+namespace Member.DAL.Repositories
 {
     public class RoleRepository : GenericRepository<RoleDTO>, IRoleRepository
     {

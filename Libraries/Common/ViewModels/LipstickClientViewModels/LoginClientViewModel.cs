@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Common.ViewModels.LipstickClientViewModels
+namespace System.Share.ViewModels.LipstickClientViewModels
 {
     public class LoginClientViewModel
     {

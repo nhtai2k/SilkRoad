@@ -1,4 +1,4 @@
-﻿namespace RestaurantBusinessLogic.Models
+﻿namespace Restaurant.BLL.Models
 {
     public class DishFilterModel
     {

@@ -1,8 +1,8 @@
-﻿using Common;
-using Common.Models;
-using Lipstick._Convergence.Helpers;
+﻿using Lipstick._Convergence.Helpers;
 using Lipstick._Convergence.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Share;
+using System.Share.Models;
 
 namespace Lipstick.Controllers
 {

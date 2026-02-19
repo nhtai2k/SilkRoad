@@ -1,4 +1,4 @@
-namespace BOMDataAccess.DTOs
+namespace BOM.DAL.DTOs
 {
     public class BOMDTO : BaseDTO
     {

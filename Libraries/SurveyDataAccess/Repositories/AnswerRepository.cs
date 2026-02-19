@@ -1,7 +1,7 @@
-﻿using SurveyDataAccess.DTOs;
-using SurveyDataAccess.IRepositories;
+﻿using Survey.DAL.DTOs;
+using Survey.DAL.IRepositories;
 
-namespace SurveyDataAccess.Repositories
+namespace Survey.DAL.Repositories
 {
     public class AnswerRepository : GenericRepository<AnswerDTO>, IAnswerRepository
     {

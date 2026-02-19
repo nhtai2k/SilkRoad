@@ -1,14 +1,14 @@
-using Common;
 using Lipstick;
 using Lipstick._Convergence.Hubs;
-using MemberDataAccess;
-using MemberDataAccess.DTOs;
+using Member.DAL;
+using Member.DAL.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Globalization;
 using System.Reflection;
+using System.Share;
 
 var builder = WebApplication.CreateBuilder(args);
 var applicationconfig = builder.Configuration.GetSection("AppConfig");

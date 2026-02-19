@@ -1,7 +1,7 @@
-﻿using Common.Models;
-using PersonalFinanceDataAccess.DTOs;
+﻿using PersonalFinance.DAL.DTOs;
+using System.Share.Models;
 
-namespace PersonalFinanceBusinessLogic.IHelpers
+namespace PersonalFinance.BLL.IHelpers
 {
     public interface ICategoryHelper : IBaseAsyncHelper<CategoryDTO>
     {

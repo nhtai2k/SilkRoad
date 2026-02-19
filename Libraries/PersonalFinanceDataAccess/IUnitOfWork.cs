@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
-using PersonalFinanceDataAccess.IRepositories;
+using PersonalFinance.DAL.IRepositories;
 
-namespace PersonalFinanceDataAccess
+namespace PersonalFinance.DAL
 {
     public interface IUnitOfWork : IDisposable
     {

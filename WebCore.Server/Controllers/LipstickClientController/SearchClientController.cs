@@ -1,4 +1,4 @@
-﻿using LipstickBusinessLogic.ILipstickClientHelpers;
+﻿using Lipstick.BLL.ILipstickClientHelpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebCore.Server.Controllers.LipstickClientController

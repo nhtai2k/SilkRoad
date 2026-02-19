@@ -1,4 +1,4 @@
-﻿namespace Common
+﻿namespace System.Share
 {
     //client content key
 

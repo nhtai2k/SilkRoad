@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace Common.Models
+namespace System.Share.Models
 {
     public class SingleMailData
     {

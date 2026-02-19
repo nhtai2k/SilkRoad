@@ -1,10 +1,10 @@
-using Common.Models;
-using Common.Services.FileStorageServices;
-using RestaurantBusinessLogic.IHelpers;
-using RestaurantDataAccess;
-using RestaurantDataAccess.DTOs;
+using Restaurant.BLL.IHelpers;
+using Restaurant.DAL;
+using Restaurant.DAL.DTOs;
+using System.Share.Models;
+using System.Share.Services.FileStorageServices;
 
-namespace RestaurantBusinessLogic.Helpers
+namespace Restaurant.BLL.Helpers
 {
     public class CategoryHelper : ICategoryHelper
     {

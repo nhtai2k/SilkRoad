@@ -1,6 +1,6 @@
-﻿using Common.Models;
-using LipstickBusinessLogic.ILipstickClientHelpers;
+﻿using Lipstick.BLL.ILipstickClientHelpers;
 using Microsoft.AspNetCore.Mvc;
+using System.Share.Models;
 
 namespace WebCore.Server.Controllers.LipstickClientController
 {

@@ -1,11 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using StockDataAccess.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Stock.DAL.DTOs;
 
-namespace StockDataAccess.Configurations
+namespace Stock.DAL.Configurations
 {
     public class TradeHistoryConfiguration : IEntityTypeConfiguration<TradeHistoryDTO>
     {

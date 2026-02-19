@@ -1,8 +1,8 @@
-﻿using MemberDataAccess.IRepositories;
+﻿using Member.DAL.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace MemberDataAccess.Repositories
+namespace Member.DAL.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {

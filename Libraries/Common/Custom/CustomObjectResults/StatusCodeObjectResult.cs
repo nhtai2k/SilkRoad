@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Common.Custom.CustomObjectResults
+namespace System.Share.Custom.CustomObjectResults
 {
     public class StatusCodeObjectResult : ObjectResult
     {

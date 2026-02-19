@@ -1,4 +1,4 @@
-namespace StockDataAccess.DTOs
+namespace Stock.DAL.DTOs
 {
     public class BaseDTO
     {

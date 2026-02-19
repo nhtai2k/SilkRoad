@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace RestaurantDataAccess
+namespace Restaurant.DAL
 {
     public class ApplicationContext : DbContext
     {

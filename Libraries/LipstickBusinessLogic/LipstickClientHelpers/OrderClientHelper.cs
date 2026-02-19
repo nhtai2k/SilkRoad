@@ -1,11 +1,11 @@
-﻿using Common;
-using Common.Models;
-using Common.ViewModels.LipstickClientViewModels;
-using LipstickBusinessLogic.ILipstickClientHelpers;
-using LipstickDataAccess;
-using LipstickDataAccess.DTOs;
+﻿using Lipstick.BLL.ILipstickClientHelpers;
+using Lipstick.DAL;
+using Lipstick.DAL.DTOs;
+using System.Share;
+using System.Share.Models;
+using System.Share.ViewModels.LipstickClientViewModels;
 
-namespace LipstickBusinessLogic.LipstickClientHelpers
+namespace Lipstick.BLL.LipstickClientHelpers
 {
     public class OrderClientHelper : IOrderClientHelper
     {

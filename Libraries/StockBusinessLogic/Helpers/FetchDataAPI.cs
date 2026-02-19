@@ -1,8 +1,7 @@
 ﻿using Newtonsoft.Json;
-using Org.BouncyCastle.Ocsp;
-using StockBusinessLogic.Models;
+using Stock.BLL.Models;
 
-namespace StockBusinessLogic.Helpers
+namespace Stock.BLL.Helpers
 {
     public class FetchDataAPI
     {
@@ -30,9 +29,9 @@ namespace StockBusinessLogic.Helpers
                 var response = await httpClient.SendAsync(req);
                 if (response.IsSuccessStatusCode)
                 {
-                var content = await response.Content.ReadAsStringAsync();
-                FetchStockHistoryViewModel fetchStockHistoryViewModel = JsonConvert.DeserializeObject<FetchStockHistoryViewModel>(content);
-                return fetchStockHistoryViewModel;
+                    var content = await response.Content.ReadAsStringAsync();
+                    FetchStockHistoryViewModel fetchStockHistoryViewModel = JsonConvert.DeserializeObject<FetchStockHistoryViewModel>(content);
+                    return fetchStockHistoryViewModel;
                 }
             }
             return null;

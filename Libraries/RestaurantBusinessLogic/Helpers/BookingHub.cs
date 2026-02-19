@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 
-namespace RestaurantBusinessLogic.Helpers
+namespace Restaurant.BLL.Helpers
 {
     public class BookingHub : Hub
     {

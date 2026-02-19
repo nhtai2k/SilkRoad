@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Common.ViewModels.SystemViewModels
+namespace System.Share.ViewModels.SystemViewModels
 {
     public class RoleViewModel
     {

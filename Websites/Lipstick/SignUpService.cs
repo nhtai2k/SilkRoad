@@ -1,9 +1,9 @@
-﻿using Common.Services.SMSServices;
-using Lipstick._Convergence.Helpers;
+﻿using Lipstick._Convergence.Helpers;
 using Lipstick._Convergence.Services;
-using MemberBusinessLogic.Helpers;
-using MemberBusinessLogic.IHelpers;
-using MemberDataAccess;
+using Member.BLL.Helpers;
+using Member.BLL.IHelpers;
+using Member.DAL;
+using System.Share.Services.SMSServices;
 
 namespace Lipstick
 {

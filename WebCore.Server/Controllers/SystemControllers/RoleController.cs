@@ -1,9 +1,10 @@
-﻿using BusinessLogic.IHelpers.ISystemHelpers;
-using Common.Models;
-using Common.ViewModels.SystemViewModels;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using System.BLL.IHelpers.ISystemHelpers;
+using System.Share;
+using System.Share.Models;
+using System.Share.ViewModels.SystemViewModels;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.SystemControllers
@@ -29,7 +30,7 @@ namespace WebCore.Server.Controllers.SystemControllers
         public async Task<IActionResult> GetAll(int pageIndex, int pageSize)
         {
             if (pageIndex < 1)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             Pagination<RoleViewModel> data = await _helper.GetAllAsync(pageIndex, pageSize);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
@@ -56,7 +57,7 @@ namespace WebCore.Server.Controllers.SystemControllers
         {
             RoleViewModel data = await _helper.GetByIdAsync(id);
             if (data == null)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["dataNotFound"]);
+                return Failed(EStatusCodes.NotFound, _localizer["dataNotFound"]);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
         /// <summary>
@@ -65,14 +66,14 @@ namespace WebCore.Server.Controllers.SystemControllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("Create")]
-        [AuthorizeEnumPolicy(Common.ERoles.Admin)]
+        [AuthorizeEnumPolicy(ERoles.Admin)]
         public async Task<IActionResult> Create([FromBody] RoleViewModel model)
         {
             if (!ModelState.IsValid)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidData"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             bool result = await _helper.CreateAsync(model);
             if (!result)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["dataCreationFailed"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["dataCreationFailed"]);
             return Succeeded(_localizer["dataCreatedSuccessfully"]);
         }
         /// <summary>
@@ -81,14 +82,14 @@ namespace WebCore.Server.Controllers.SystemControllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut("Update")]
-        [AuthorizeEnumPolicy(Common.ERoles.Admin)]
+        [AuthorizeEnumPolicy(ERoles.Admin)]
         public async Task<IActionResult> Update([FromBody] RoleViewModel model)
         {
             if (!ModelState.IsValid)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidData"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             bool result = await _helper.UpdateAsync(model);
             if (!result)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["dataUpdateFailed"]);
+                return Failed(EStatusCodes.NotFound, _localizer["dataUpdateFailed"]);
             return Succeeded(_localizer["dataUpdatedSuccessfully"]);
         }
         /// <summary>
@@ -97,12 +98,12 @@ namespace WebCore.Server.Controllers.SystemControllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPatch("SoftDelete/{id}")]
-        [AuthorizeEnumPolicy(Common.ERoles.Admin)]
+        [AuthorizeEnumPolicy(ERoles.Admin)]
         public async Task<IActionResult> SoftDelete(int id)
         {
             bool result = await _helper.SoftDeleteAsync(id);
             if (!result)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["dataDeletionFailed"]);
+                return Failed(EStatusCodes.NotFound, _localizer["dataDeletionFailed"]);
             return Succeeded(_localizer["dataDeletedSuccessfully"]);
         }
         /// <summary>
@@ -111,12 +112,12 @@ namespace WebCore.Server.Controllers.SystemControllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPatch("Restore/{id}")]
-        [AuthorizeEnumPolicy(Common.ERoles.Admin)]
+        [AuthorizeEnumPolicy(ERoles.Admin)]
         public async Task<IActionResult> Restore(int id)
         {
             bool result = await _helper.RestoreAsync(id);
             if (!result)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["dataRestorationFailed"]);
+                return Failed(EStatusCodes.NotFound, _localizer["dataRestorationFailed"]);
             return Succeeded(_localizer["dataRestoredSuccessfully"]);
         }
         /// <summary>
@@ -125,12 +126,12 @@ namespace WebCore.Server.Controllers.SystemControllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("Delete/{id}")]
-        [AuthorizeEnumPolicy(Common.ERoles.Admin)]
+        [AuthorizeEnumPolicy(ERoles.Admin)]
         public async Task<IActionResult> Delete(int id)
         {
             bool result = await _helper.DeleteAsync(id);
             if (!result)
-                return Failed(Common.EStatusCodes.NotFound, _localizer["dataDeletionFailed"]);
+                return Failed(EStatusCodes.NotFound, _localizer["dataDeletionFailed"]);
             return Succeeded(_localizer["dataDeletedSuccessfully"]);
         }
     }

@@ -1,0 +1,26 @@
+// Stacked Clustered Column chart component styles
+.stacked-clustered-chart-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  
+  div {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background-color: transparent;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .stacked-clustered-chart-container {
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stacked-clustered-chart-container {
+    height: 250px;
+  }
+}

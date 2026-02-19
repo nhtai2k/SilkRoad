@@ -1,6 +1,6 @@
-﻿using VOCDataAccess.DTOs;
+﻿using VOC.DAL.DTOs;
 
-namespace VOCDataAccess.IRepositories
+namespace VOC.DAL.IRepositories
 {
     public interface IFeedbackStatusRepository : IGenericRepository<FeedbackStatusDTO, ApplicationContext>
     {

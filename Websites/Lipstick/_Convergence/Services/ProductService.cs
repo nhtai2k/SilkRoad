@@ -1,7 +1,7 @@
-﻿using Common;
-using Common.Models;
-using Common.ViewModels.LipstickClientViewModels;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System.Share;
+using System.Share.Models;
+using System.Share.ViewModels.LipstickClientViewModels;
 
 namespace Lipstick._Convergence.Services
 {

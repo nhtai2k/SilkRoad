@@ -1,11 +1,11 @@
-﻿using Common;
-using Common.Models;
-using Common.Services.ActionLoggingServices;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using PersonalFinanceBusinessLogic.IHelpers;
-using PersonalFinanceDataAccess.DTOs;
+using PersonalFinance.BLL.IHelpers;
+using PersonalFinance.DAL.DTOs;
+using System.Share;
+using System.Share.Models;
+using System.Share.Services.ActionLoggingServices;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.PersonalFinanceControllers
@@ -56,7 +56,7 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
         public async Task<IActionResult> GetAllDeleted(int pageIndex, int pageSize)
         {
             if (pageIndex < 1 || pageSize < 1)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             var data = await _helper.GetAllDeletedAsync(pageIndex, pageSize);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }

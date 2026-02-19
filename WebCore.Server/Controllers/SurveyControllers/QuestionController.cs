@@ -1,10 +1,10 @@
-﻿using Common;
-using Common.Services.ActionLoggingServices;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using SurveyBusinessLogic.IHelpers;
-using SurveyDataAccess.DTOs;
+using Survey.BLL.IHelpers;
+using Survey.DAL.DTOs;
+using System.Share;
+using System.Share.Services.ActionLoggingServices;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.SurveyControllers

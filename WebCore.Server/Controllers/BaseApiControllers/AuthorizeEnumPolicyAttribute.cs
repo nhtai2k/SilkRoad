@@ -1,8 +1,8 @@
-﻿using Common;
-using Common.Custom.CustomObjectResults;
-using Common.Models;
-using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Localization;
+using System.Share;
+using System.Share.Custom.CustomObjectResults;
+using System.Share.Models;
 
 namespace WebCore.Server.Controllers.BaseApiControllers
 {

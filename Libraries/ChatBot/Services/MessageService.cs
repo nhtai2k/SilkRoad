@@ -1,7 +1,5 @@
-using ChatBot;
 using ChatBot.IServices;
 using ChatBot.Models;
-using MailKit.Search;
 using MongoDB.Driver;
 
 namespace ChatBot.Services
@@ -37,7 +35,7 @@ namespace ChatBot.Services
                 .SortByDescending(x => x.Timestamp)
                 .FirstOrDefaultAsync();
         }
-          public async Task<IEnumerable<MessageModel>> GetMessagesAsync(Guid conversationId)
+        public async Task<IEnumerable<MessageModel>> GetMessagesAsync(Guid conversationId)
         {
             return await _applicationConnection._messagesCollection
                 .Find(x => x.ConversationId == conversationId)

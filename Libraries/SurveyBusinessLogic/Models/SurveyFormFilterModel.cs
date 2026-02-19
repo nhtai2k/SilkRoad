@@ -1,4 +1,4 @@
-﻿namespace SurveyBusinessLogic.Models
+﻿namespace Survey.BLL.Models
 {
     public class SurveyFormFilterModel
     {

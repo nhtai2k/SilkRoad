@@ -1,6 +1,6 @@
-﻿using MemberDataAccess.DTOs;
+﻿using Member.DAL.DTOs;
 
-namespace MemberDataAccess.IRepositories
+namespace Member.DAL.IRepositories
 {
     public interface IUserRepository : IGenericRepository<UserDTO>
     {

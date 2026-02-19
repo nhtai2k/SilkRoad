@@ -1,4 +1,4 @@
-﻿namespace SurveyDataAccess.DTOs
+﻿namespace Survey.DAL.DTOs
 {
     //IsActive indicates whether the survey is currently active or inactive.
     public class SurveyFormDTO : BaseDTO
