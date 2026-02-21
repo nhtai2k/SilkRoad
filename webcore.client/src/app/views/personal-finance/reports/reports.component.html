@@ -52,7 +52,7 @@
     </c-card>
   </div>
   <div class="col-4">
-        <c-card>
+    <c-card>
       <c-card-header class="bg-dark">
         <span class="fw-bold text-white">
           Asset Report
@@ -73,17 +73,16 @@
       <span class="fw-bold text-white">
         Resource Report
       </span>
-      <input class="form-control w-25" type="month" />
+      <select class="form-select w-25">
+        @for(year of years; track year) {
+        <option [value]="year">{{ year }}</option>
+        }
+      </select>
     </div>
   </c-card-header>
   <c-card-body>
-   <app-stacked-column-chart
-  [data]="stackedData"
-  [seriesConfig]="stackedSeries"
-  [categoryField]="'quarter'"
-  [id]="1"
-  [showLegend]="true"
-  [showDataLabels]="true">
-</app-stacked-column-chart>
+    <app-clustered-column-chart [data]="resourceClusteredColumns" [series]="resourceChartSeries" [id]="1"
+      categoryField="month" [showLegend]="true">
+    </app-clustered-column-chart>
   </c-card-body>
 </c-card>

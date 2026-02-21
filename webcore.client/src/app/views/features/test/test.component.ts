@@ -1,24 +1,23 @@
 import { Component } from '@angular/core';
-import { StackedClusteredColumnChartComponent } from "@components/charts";
-import { StackedColumnChartComponent } from "@components/charts/stacked-column-chart/stacked-column-chart.component";
+import { StackedClusteredColumnChartComponent, ClusteredColumnChartComponent } from "@components/charts";
 
 @Component({
   selector: 'app-test',
-  imports: [ StackedColumnChartComponent],
+  imports: [StackedClusteredColumnChartComponent, ClusteredColumnChartComponent],
   templateUrl: './test.component.html',
   styleUrl: './test.component.scss',
 })
 export class TestComponent {
-// Component data
-stackedData = [
-  { quarter: "Q1 2023", revenue: 150, costs: 80, profit: 70 },
-  { quarter: "Q2 2023", revenue: 180, costs: 90, profit: 90 },
-  { quarter: "Q3 2023", revenue: 200, costs: 100, profit: 100 }
+// In your parent component
+chartData = [
+  { year: "2021", europe: 2.5, namerica: 2.5, asia: 2.1 },
+  { year: "2022", europe: 2.6, namerica: 2.7, asia: 2.2 },
+  { year: "2023", europe: 2.8, namerica: 2.9, asia: 2.4 }
 ];
 
-stackedSeries = [
-  { name: "Revenue", fieldName: "revenue", color: "#5BA0F2" },
-  { name: "Costs", fieldName: "costs", color: "#FF6B6B" },
-  { name: "Profit", fieldName: "profit", color: "#4ECDC4" }
+chartSeries = [
+  { name: "Europe", fieldName: "europe" },
+  { name: "North America", fieldName: "namerica" },
+  { name: "Asia", fieldName: "asia" }
 ];
 }

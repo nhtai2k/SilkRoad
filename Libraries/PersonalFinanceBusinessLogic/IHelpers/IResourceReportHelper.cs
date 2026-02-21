@@ -7,7 +7,7 @@ namespace PersonalFinance.BLL.IHelpers
 {
     public interface IResourceReportHelper
     {
-        public Task<ICollection<ColoumnModel>> GetColoumnChartByMonth(int year, int userId);
+        public Task<ICollection<ResourceMonthReportModel>> GetClusteredColumnChartAsync(int year, int userId);
 
     }
 }

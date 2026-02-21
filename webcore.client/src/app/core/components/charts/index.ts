@@ -4,4 +4,6 @@ export { PieChartComponent } from './pie-chart/pie-chart.component';
 export { LineChartComponent } from './line-chart/line-chart.component';
 export { AreaChartComponent } from './area-chart/area-chart.component';
 export { BarChartComponent } from './bar-chart/bar-chart.component';
+export { ClusteredColumnChartComponent } from './clustered-column-chart/clustered-column-chart.component';
+export { StackedColumnChartComponent } from './stacked-column-chart/stacked-column-chart.component';
 export {StackedClusteredColumnChartComponent} from './stacked-clustered-column-chart/stacked-clustered-column-chart.component';

@@ -22,9 +22,9 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
         }
 
         [HttpGet("GetColoumnChartByMonth/{userId}/{month}")]
-        public async Task<IActionResult> GetColoumnChartByMonthAsync(int userId, DateTime month)
+        public async Task<IActionResult> GetColoumnChartByMonth(int userId, DateTime month)
         {
-            var data = await _helper.GetColoumnChartByMonth(month, userId);
+            var data = await _helper.GetColoumnChartAsync(month, userId);
             if (data == null || data.Count == 0)
             {
                 return Failed(EStatusCodes.BadRequest, _localizer["noDataFound"]);
@@ -33,10 +33,10 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
         }
 
         [HttpGet("GetColoumnChartByYear/{userId}/{year}")]
-        public async Task<IActionResult> GetColoumnChartByMonthAsync(int userId, int year)
+        public async Task<IActionResult> GetColoumnChartByYear(int userId, int year)
         {
 
-            var data = await _helper.GetColoumnChartByMonth(year, userId);
+            var data = await _helper.GetColoumnChartAsync(year, userId);
             if (data == null || data.Count == 0)
             {
                 return Failed(EStatusCodes.BadRequest, _localizer["noDataFound"]);
