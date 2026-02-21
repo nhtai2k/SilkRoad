@@ -12,7 +12,7 @@ namespace PersonalFinance.BLL.Helpers
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task<ICollection<ColoumnModel>> GetColoumnChartByMonth(DateTime month, int userId)
+        public async Task<ICollection<ColoumnModel>> GetColoumnChartAsync(DateTime month, int userId)
         {
             List<ColoumnModel> coloumns = new List<ColoumnModel>();
             //Reset month to first day
@@ -43,7 +43,7 @@ namespace PersonalFinance.BLL.Helpers
             return coloumns;
         }
 
-        public async Task<ICollection<ColoumnModel>> GetColoumnChartByMonth(int year, int userId)
+        public async Task<ICollection<ColoumnModel>> GetColoumnChartAsync(int year, int userId)
         {
             List<ColoumnModel> coloumns = new List<ColoumnModel>();
             List<string> labels = new List<string>() { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };

@@ -15,34 +15,39 @@ namespace PersonalFinance.BLL.Helpers
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task<ICollection<ColoumnModel>> GetColoumnChartByMonth(int year, int userId)
+        public async Task<ICollection<ResourceMonthReportModel>> GetClusteredColumnChartAsync(int year, int userId)
         {
-            List<ColoumnModel> coloumns = new List<ColoumnModel>();
+
+            int months = 12;
+            DateTime dateTime = DateTime.Now;
+            List<ResourceMonthReportModel> coloumns = new List<ResourceMonthReportModel>();
             List<string> labels = new List<string>() { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
-            //Render months
-            for (int month = 1; month <= 12; month++)
+            if(year == dateTime.Year)
             {
+                months = dateTime.Month;
+            }
+            //Render months
+            for (int month = 1; month <= months; month++)
+            {
+                decimal inflow = 0;
+                decimal outflow = 0;
                 DateTime start = new DateTime(year, month, 1);
                 //int daysInMonth = DateTime.DaysInMonth(start.Year, start.Month);
                 DateTime end = start.AddMonths(1);
                 // data
                 var data = await _unitOfWork.ResourceRepository.Query(s => s.Date >= start && s.Date < end && s.UserId == userId).AsNoTracking().ToListAsync();
-                if (data == null || data.Count == 0)
+                if (data != null && data.Count > 0)
                 {
-                    ColoumnModel coloumnEmpty = new ColoumnModel()
-                    {
-                        Category = labels[month - 1],
-                        Value = 0
-                    };
-                    coloumns.Add(coloumnEmpty);
-                    continue;
+                    inflow = data.Where(s => s.Inflow).Sum(s => s.Amount);
+                    outflow = data.Where(s => !s.Inflow).Sum(s => s.Amount);
                 }
-                var temp2 = data.Where(s => s.Inflow).ToList();
-                double sumAmount = (double)data.Sum(s => s.Amount);
-                ColoumnModel coloumn = new ColoumnModel()
+                
+                ResourceMonthReportModel coloumn = new ResourceMonthReportModel()
                 {
-                    Category = labels[month - 1],
-                    Value = sumAmount
+                    Month = labels[month - 1],
+                    Inflow = inflow,
+                    Outflow = outflow,
+                    NetIncome = inflow - outflow
                 };
                 coloumns.Add(coloumn);
             }

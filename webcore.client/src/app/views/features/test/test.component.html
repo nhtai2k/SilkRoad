@@ -1,9 +1,7 @@
-<app-stacked-column-chart
-  [data]="stackedData"
-  [seriesConfig]="stackedSeries"
-  [categoryField]="'quarter'"
+<app-clustered-column-chart
+  [data]="chartData"
+  [series]="chartSeries"
   [id]="1"
-  [chartTitle]="'Financial Overview'"
-  [showLegend]="true"
-  [showDataLabels]="true">
-</app-stacked-column-chart>
+  categoryField="year"
+  [showLegend]="true">
+</app-clustered-column-chart>

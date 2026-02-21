@@ -182,6 +182,10 @@ export enum EAssetReportPersonalFinanceUrl {
   getColoumnChartUrl = "/api/personalFinance/assetReport/GetColoumnChart",
   getPieChartUrl = "/api/personalFinance/assetReport/GetPieChart",
 }
+//Resource Report
+export enum EResourceReportPersonalFinanceUrl {
+  GetClusteredColumnChartUrl = "/api/personalFinance/resourceReport/GetClusteredColumnChart",
+}
 
 //#endregion
 

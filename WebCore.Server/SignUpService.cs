@@ -1,6 +1,5 @@
 ﻿using BOM.BLL.Helpers;
 using BOM.BLL.IHelpers;
-using BOM.DAL;
 using ChatBot;
 using ChatBot.Helpers;
 using ChatBot.IHelpers;
@@ -10,21 +9,12 @@ using Lipstick.BLL.ILipstickClientHelpers;
 using Lipstick.BLL.ILipstickHelpers;
 using Lipstick.BLL.LipstickClientHelpers;
 using Lipstick.BLL.LipstickHelpers;
-using Lipstick.DAL;
-using PersonalFinance.BLL.Helpers;
-using PersonalFinance.BLL.IHelpers;
-using PersonalFinance.DAL;
 using Stock.BLL.Helpers;
 using Stock.BLL.IHelpers;
-using Stock.DAL;
 using Survey.BLL.Helpers;
 using Survey.BLL.IHelpers;
-using Survey.DAL;
 using System.BLL.Helpers.FeatureHelpers;
-using System.BLL.Helpers.SystemHelpers;
 using System.BLL.IHelpers.IFeatureHelper;
-using System.BLL.IHelpers.ISystemHelpers;
-using System.DAL;
 using System.Share.Custom.ApiKey;
 using System.Share.Services.ActionLoggingServices;
 using System.Share.Services.ConvertWordToPdfServices;
@@ -142,13 +132,14 @@ namespace WebCore.Server
             services.AddScoped<PersonalFinance.DAL.IUnitOfWork, PersonalFinance.DAL.UnitOfWork>();
             services.AddScoped<PersonalFinance.BLL.IHelpers.ICategoryHelper, PersonalFinance.BLL.Helpers.CategoryHelper>();
             services.AddScoped<PersonalFinance.BLL.IHelpers.ISubCategoryHelper, PersonalFinance.BLL.Helpers.SubCategoryHelper>();
-            services.AddScoped<IResourceHelper, ResourceHelper>();
-            services.AddScoped<IResourceTypeHelper, ResourceTypeHelper>();
-            services.AddScoped<IExpenseHelper, ExpenseHelper>();
-            services.AddScoped<IExpenseReportHelper, ExpenseReportHelper>();
-            services.AddScoped<IAssetReportHelper, AssetReportHelper>();
-            services.AddScoped<IAssetTypeHelper, AssetTypeHelper>();
-            services.AddScoped<IAssetHelper, AssetHelper>();
+            services.AddScoped<PersonalFinance.BLL.IHelpers.IResourceHelper, PersonalFinance.BLL.Helpers.ResourceHelper>();
+            services.AddScoped<PersonalFinance.BLL.IHelpers.IResourceReportHelper, PersonalFinance.BLL.Helpers.ResourceReportHelper>();
+            services.AddScoped<PersonalFinance.BLL.IHelpers.IResourceTypeHelper, PersonalFinance.BLL.Helpers.ResourceTypeHelper>();
+            services.AddScoped<PersonalFinance.BLL.IHelpers.IExpenseHelper, PersonalFinance.BLL.Helpers.ExpenseHelper>();
+            services.AddScoped<PersonalFinance.BLL.IHelpers.IExpenseReportHelper, PersonalFinance.BLL.Helpers.ExpenseReportHelper>();
+            services.AddScoped<PersonalFinance.BLL.IHelpers.IAssetReportHelper, PersonalFinance.BLL.Helpers.AssetReportHelper>();
+            services.AddScoped<PersonalFinance.BLL.IHelpers.IAssetTypeHelper, PersonalFinance.BLL.Helpers.AssetTypeHelper>();
+            services.AddScoped<PersonalFinance.BLL.IHelpers.IAssetHelper, PersonalFinance.BLL.Helpers.AssetHelper>();
             #endregion
 
             #region Stock
@@ -164,19 +155,17 @@ namespace WebCore.Server
             #region System Database
             services.AddScoped<System.DAL.IUnitOfWork, System.DAL.UnitOfWork>();
             //system
-            services.AddScoped<IUserHelper, UserHelper>();
-            services.AddScoped<IJwtService, JwtService>();
-            services.AddScoped<IModuleHelper, ModuleHelper>();
-            services.AddScoped<IRoleHelper, RoleHelper>();
-            services.AddScoped<IMyAccountHelper, MyAccountHelper>();
-            services.AddScoped<IActionHelper, ActionHelper>();
-            //services.AddScoped<IRoleClaimGroupHelper, RoleClaimGroupHelper>();
-            //services.AddScoped<IRoleClaimHelper, RoleClaimHelper>();
-            services.AddScoped<ISettingHelper, SettingHelper>();
+            services.AddScoped<System.BLL.IHelpers.ISystemHelpers.IUserHelper, System.BLL.Helpers.SystemHelpers.UserHelper>();
+            services.AddScoped<System.BLL.IHelpers.ISystemHelpers.IModuleHelper, System.BLL.Helpers.SystemHelpers.ModuleHelper>();
+            services.AddScoped<System.BLL.IHelpers.ISystemHelpers.IRoleHelper, System.BLL.Helpers.SystemHelpers.RoleHelper>();
+            services.AddScoped<System.BLL.IHelpers.ISystemHelpers.IMyAccountHelper, System.BLL.Helpers.SystemHelpers.MyAccountHelper>();
+            services.AddScoped<System.BLL.IHelpers.ISystemHelpers.IActionHelper, System.BLL.Helpers.SystemHelpers.ActionHelper>();
+            services.AddScoped<System.BLL.IHelpers.ISystemHelpers.ISettingHelper, System.BLL.Helpers.SystemHelpers.SettingHelper>();
             #endregion
 
             #region Service
             //service
+            services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IMailService, MailService>();
             services.AddScoped<IQRCodeService, QRCodeService>();
             services.AddScoped<IFileStorageService, FileStorageService>();

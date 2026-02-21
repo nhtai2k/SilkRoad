@@ -4,3 +4,4 @@ export {ExpenseModel} from './expense.model';
 export {ResourceTypeModel} from './resource-type.model';
 export {AssetModel} from './asset.model';
 export {AssetTypeModel} from './asset-type.model';
+export {ResourceMonthReportModel} from './resource-month-report.model';
