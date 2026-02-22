@@ -40,6 +40,8 @@ export class TradeHistoriesComponent implements OnInit {
   initAmountCreateForm = signal<number>(0);
   initFeesCreateForm = signal<number>(0);
   initTotalAmountCreateForm = signal<number>(0);
+  initProfitLossCreateForm = signal<number>(0);
+  initTaxCreateForm = signal<number>(0);
   // initAmountUpdateForm = signal<number>(0);
   // initSourceIdUpdateForm = signal<number>(1);
   userId: number = -1;
@@ -56,6 +58,7 @@ export class TradeHistoriesComponent implements OnInit {
     fees: new FormControl(0, [Validators.required, Validators.min(0)]),
     profitLoss: new FormControl(null),
     profitLossPercent: new FormControl(null),
+    tax: new FormControl(0, [Validators.required, Validators.min(0)]),
     note: new FormControl('', Validators.maxLength(500))
   });
 
@@ -71,6 +74,7 @@ export class TradeHistoriesComponent implements OnInit {
     fees: new FormControl(0, [Validators.required, Validators.min(0)]),
     profitLoss: new FormControl(null),
     profitLossPercent: new FormControl(null),
+    tax: new FormControl(0, [Validators.required, Validators.min(0)]),
     note: new FormControl('', Validators.maxLength(500))
   });
   //#endregion
@@ -199,6 +203,22 @@ export class TradeHistoriesComponent implements OnInit {
       this.initTotalAmountCreateForm.set(0)
       this.initFeesCreateForm.set(0);
             this.createForm.patchValue({ totalAmount: 0, fees: 0 });
+    }
+  }
+  onChangeProfileLossPercent(event: any) {
+    const profitLossPercent = event;
+    const totalAmount = this.createForm.value.totalAmount;
+    if (totalAmount && profitLossPercent && totalAmount > 0) {
+      const profitLoss = Math.round(totalAmount * profitLossPercent / 100);
+      const tax = Math.round(totalAmount * 0.1/100);
+      this.initTaxCreateForm.set(tax);
+      this.initProfitLossCreateForm.set(profitLoss);
+      this.createForm.patchValue({ profitLoss: profitLoss, tax: tax });
+    }
+    else{
+      this.initProfitLossCreateForm.set(0);
+      this.initTaxCreateForm.set(0);
+      this.createForm.patchValue({ profitLoss: 0, tax: 0 });
     }
   }
   //#endregion

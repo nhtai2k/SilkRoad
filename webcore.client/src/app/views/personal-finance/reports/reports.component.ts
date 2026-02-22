@@ -19,7 +19,7 @@ import { RouterLink } from '@angular/router';
   imports: [ColoumnChartComponent, CardComponent, CardBodyComponent, CardHeaderComponent, FormsModule,
     TextColorDirective, ButtonDirective, IconDirective, ButtonGroupComponent,
     ReactiveFormsModule, FormCheckLabelDirective, FormSelectDirective, PieChartComponent, ClusteredColumnChartComponent, WidgetStatAComponent, ChartjsComponent,
-    TemplateIdDirective, ThemeDirective, DropdownToggleDirective, DropdownMenuDirective, DropdownItemDirective, RouterLink, DropdownDividerDirective, DropdownComponent],
+    TemplateIdDirective],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.scss',
   encapsulation: ViewEncapsulation.None

@@ -150,6 +150,7 @@ namespace WebCore.Server
             services.AddScoped<IIndustryHelper, IndustryHelper>();
             services.AddScoped<ITradeHistoryHelper, TradeHistoryHelper>();
             services.AddScoped<IHandbookHelper, HandbookHelper>();
+            services.AddScoped<ICoveredWarrantHelper, CoveredWarrantHelper>();
             #endregion
 
             #region System Database

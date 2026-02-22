@@ -4,6 +4,6 @@ namespace Stock.DAL.IRepositories
 {
     public interface ICompanyRepository : IGenericRepository<CompanyDTO>
     {
-        public Task<CompanyDTO> GetCompanyBySymbolAsync(string symbol);
+        public Task<CompanyDTO?> GetCompanyBySymbolAsync(string symbol);
     }
 }

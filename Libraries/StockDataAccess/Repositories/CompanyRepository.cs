@@ -10,7 +10,7 @@ namespace Stock.DAL.Repositories
         {
         }
 
-        public async Task<CompanyDTO> GetCompanyBySymbolAsync(string symbol)
+        public async Task<CompanyDTO?> GetCompanyBySymbolAsync(string symbol)
         {
             return await _dbSet.FirstOrDefaultAsync(x => x.Symbol == symbol);
         }

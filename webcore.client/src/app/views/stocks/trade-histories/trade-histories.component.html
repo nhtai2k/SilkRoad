@@ -96,15 +96,17 @@
             </div>
             @if(!createForm.value.isBuy) {
             <div class="row mb-2">
-                <div class="col-6">
+                <div class="col-4">
                     <label cLabel>Profit Loss Percent: <span class="text-danger">(*)</span></label>
-                    <app-input-currency [initialValue]="initFeesCreateForm()" [disabled]="true"
-                        (valueChange)="createForm.patchValue({fees: $event})"></app-input-currency>
+                    <app-input-number [min]="-100" [max]="1000" (valueChange)="onChangeProfileLossPercent($event)"></app-input-number>
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <label cLabel>Profit Loss: <span class="text-danger">(*)</span></label>
-                    <app-input-currency [initialValue]="initTotalAmountCreateForm()" [disabled]="true"
-                        (valueChange)="createForm.patchValue({totalAmount: $event})"></app-input-currency>
+                    <app-input-currency [initialValue]="initProfitLossCreateForm()" [disabled]="true"></app-input-currency>
+                </div>
+                <div class="col-4">
+                    <label cLabel>Tax: <span class="text-danger">(*)</span></label>
+                    <app-input-currency [initialValue]="initTaxCreateForm()" [disabled]="true"></app-input-currency>
                 </div>
             </div>
             }

@@ -14,6 +14,7 @@ namespace Stock.DAL
         public IStockPriceRepository StockPriceRepository { private set; get; }
         public IIndustryRepository IndustryRepository { private set; get; }
         public ITradeHistoryRepository TradeHistoryRepository { private set; get; }
+        public ICoveredWarrantRepository CoveredWarrantRepository { private set; get; }
         public IHandbookRepository HandbookRepository { private set; get; }
 
         public UnitOfWork(ApplicationContext databaseContext)
@@ -23,6 +24,7 @@ namespace Stock.DAL
             StockPriceRepository = new StockPriceRepository(context);
             IndustryRepository = new IndustryRepository(context);
             TradeHistoryRepository = new TradeHistoryRepository(context);
+            CoveredWarrantRepository = new CoveredWarrantRepository(context);
             HandbookRepository = new HandbookRepository(context);
         }
 

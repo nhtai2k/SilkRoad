@@ -11,6 +11,7 @@
         public double Price { get; set; }
         public double TotalAmount { get; set; }
         public double Fees { get; set; }
+        public double? Tax { get; set; }
         public double? ProfitLoss { get; set; }
         public double? ProfitLossPercent { get; set; }
         public string? Note { get; set; }

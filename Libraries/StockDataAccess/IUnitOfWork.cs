@@ -10,6 +10,7 @@ namespace Stock.DAL
         IIndustryRepository IndustryRepository { get; }
         ITradeHistoryRepository TradeHistoryRepository { get; }
         IHandbookRepository HandbookRepository { get; }
+        ICoveredWarrantRepository CoveredWarrantRepository { get; }
         IDbContextTransaction BeginTransaction();
         void Commit();
         void Rollback();
