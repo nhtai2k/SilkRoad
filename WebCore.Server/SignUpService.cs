@@ -162,6 +162,7 @@ namespace WebCore.Server
             services.AddScoped<System.BLL.IHelpers.ISystemHelpers.IMyAccountHelper, System.BLL.Helpers.SystemHelpers.MyAccountHelper>();
             services.AddScoped<System.BLL.IHelpers.ISystemHelpers.IActionHelper, System.BLL.Helpers.SystemHelpers.ActionHelper>();
             services.AddScoped<System.BLL.IHelpers.ISystemHelpers.ISettingHelper, System.BLL.Helpers.SystemHelpers.SettingHelper>();
+            services.AddScoped<System.BLL.IHelpers.ISystemHelpers.INavigationHelper, System.BLL.Helpers.SystemHelpers.NavigationHelper>();
             #endregion
 
             #region Service

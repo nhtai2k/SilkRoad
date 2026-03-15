@@ -9,5 +9,7 @@
         public string? Email { get; set; }
         public List<string>? Roles { get; set; }
         public string? AvatarUrl { get; set; }
+        public bool IsAdmin { get; set; } = false;
+        public ICollection<NavItemModel>? NavItems { get; set; }
     }
 }

@@ -79,7 +79,7 @@ export class DefaultLayoutComponent implements OnInit {
     error: new FormControl('')
   });
   //#endregion
-  public navItems = [...navItems];
+  public navItems: any = [];
   constructor(private authentication: AuthService, private toastService: ToastService,
     private myAccountService: MyAccountService) {
 
@@ -88,6 +88,7 @@ export class DefaultLayoutComponent implements OnInit {
     this.authentication.getCurrentUserInfor().subscribe( res =>
     {
       this.currentUser = res;
+      this.navItems = res?.navItems ?? [];
       // console.log(this.currentUser);
     });
   }

@@ -19,24 +19,22 @@ namespace System.BLL.Helpers.SystemHelpers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly UserManager<UserDTO> _userManager;
-        //private readonly RoleManager<RoleDTO> _roleManager;
         private readonly IJwtService _jwtService;
+        private readonly INavigationHelper _navHelper;
         public MyAccountHelper(
             IUnitOfWork unitOfWork,
             SignInManager<UserDTO> signInManager,
             IMapper mapper,
             UserManager<UserDTO> userManager,
-            //RoleManager<RoleDTO> roleManager,
+                INavigationHelper navHelper,
             IJwtService jwtService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _userManager = userManager;
-            //_roleManager = roleManager;
             _jwtService = jwtService;
             _signInManager = signInManager;
-            //_userInformation = userInformation;
-            //_userLogHelper = userLogHelper;
+            _navHelper = navHelper;
         }
         public async Task<UserDTO?> FindByNameAsync(string userName)
         {
@@ -282,19 +280,39 @@ namespace System.BLL.Helpers.SystemHelpers
 
         public async Task<UserLoginInfoModel?> GetCurrentUserAsync(string userId)
         {
+            UserLoginInfoModel result = new UserLoginInfoModel();
             var user = await _userManager.FindByIdAsync(userId.ToString());
             if (user == null)
                 return null;
-            var userRoles = await _userManager.GetRolesAsync(user);
-            return new UserLoginInfoModel
+
+            result.UserId = user.Id;
+            result.UserName = user.UserName;
+            result.NavItems = new List<NavItemModel>();
+            var roles = await _userManager.GetRolesAsync(user);
+            if (roles.Any(x => x == "Admin"))
             {
-                UserId = user.Id,
-                UserName = user.UserName,
-                Email = user.Email,
-                AvatarUrl = user.AvatarUrl,
-                Provider = user.Provider,
-                Roles = userRoles.ToList()
-            };
+                var navData = _navHelper.GetAll();
+                if (navData != null)
+                {
+                    foreach (var item in navData)
+                    {
+                        result.NavItems = result.NavItems.Concat(item.NavItems).ToList();
+                    }
+                }
+                result.IsAdmin = true;
+            }
+            else
+            {
+                foreach (var item in roles)
+                {
+                    var navItem = _navHelper.GetByName(item);
+                    if (navItem != null && navItem.NavItems != null)
+                    {
+                        result.NavItems = result.NavItems.Concat(navItem.NavItems).ToList();
+                    }
+                }
+            }
+            return result;
         }
     }
 }

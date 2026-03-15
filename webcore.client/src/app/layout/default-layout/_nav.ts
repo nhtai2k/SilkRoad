@@ -21,13 +21,7 @@ const featureNavItems: INavData[] = [
     url: '/features/convert-word-to-pdf',
     iconComponent: { name: 'cil-file' }
   },
-  // {
-  //   name: 'Email Service',
-  //   url: '/features/email-service',
-  //   iconComponent: { name: 'cil-envelope-closed' }
-  // },
   //#endregion
-
 ];
 
 const stockMarketNavItems: INavData[] = [
