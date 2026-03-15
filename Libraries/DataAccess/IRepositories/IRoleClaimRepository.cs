@@ -1,9 +1,9 @@
-﻿using System.DAL.DTOs;
+﻿//using System.DAL.DTOs;
 
-namespace System.DAL.IRepositories
-{
-    public interface IRoleClaimRepository : IGenericRepository<RoleClaimDTO>
-    {
-        Task RemoveSelectedRoleClaimByRoleID(int roleID);
-    }
-}
+//namespace System.DAL.IRepositories
+//{
+//    public interface IRoleClaimRepository : IGenericRepository<RoleClaimDTO>
+//    {
+//        Task RemoveSelectedRoleClaimByRoleID(int roleID);
+//    }
+//}

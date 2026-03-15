@@ -1,15 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿//using System.ComponentModel.DataAnnotations;
 
-namespace System.Share.ViewModels.SystemViewModels
-{
-    public class ActionViewModel
-    {
-        public int Id { get; set; }
-        [Range(1, 100)]
-        public int Priority { get; set; }
-        [Required]
-        public required string Name { get; set; }
-        [Required]
-        public required string Label { get; set; }
-    }
-}
+//namespace System.Share.ViewModels.SystemViewModels
+//{
+//    public class ActionViewModel
+//    {
+//        public int Id { get; set; }
+//        [Range(1, 100)]
+//        public int Priority { get; set; }
+//        [Required]
+//        public required string Name { get; set; }
+//        [Required]
+//        public required string Label { get; set; }
+//    }
+//}

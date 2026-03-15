@@ -35,10 +35,6 @@ namespace WebCore.Server
             #region System
             CreateMap<RoleDTO, RoleViewModel>().ReverseMap();
             CreateMap<UserDTO, UserViewModel>().ReverseMap();
-            CreateMap<ModuleDTO, ModuleViewModel>().ReverseMap();
-            CreateMap<ControllerDTO, ControllerViewModel>().ReverseMap();
-            CreateMap<ControllerActionDTO, ControllerActionViewModel>().ReverseMap();
-            CreateMap<ActionDTO, ActionViewModel>().ReverseMap();
             #endregion
         }
     }

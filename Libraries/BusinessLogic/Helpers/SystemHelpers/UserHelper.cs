@@ -194,7 +194,7 @@ namespace System.BLL.Helpers.SystemHelpers
             data.ModifiedOn = DateTime.Now;
             data.ModifiedBy = userName;
 
-            _unitOfWork.UserTokenRepository.DeleteUserTokenByUserId(Id);
+            _unitOfWork.RefreshTokenRepository.Delete(Id);
 
             _unitOfWork.SaveChanges();
             return true;

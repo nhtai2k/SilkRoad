@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using System.DAL.DTOs;
@@ -6,7 +7,7 @@ using System.Reflection;
 
 namespace System.DAL
 {
-    public class ApplicationContext : IdentityDbContext<UserDTO, RoleDTO, int, UserClaimDTO, UserRoleDTO, UserLoginDTO, RoleClaimDTO, UserTokenDTO>
+    public class ApplicationContext : IdentityDbContext<UserDTO, RoleDTO, int, UserClaimDTO, UserRoleDTO, IdentityUserLogin<int>, RoleClaimDTO, IdentityUserToken<int>>
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)

@@ -34,22 +34,22 @@ namespace System.BLL.Helpers.SystemHelpers
                 //CreatedBy = _userInformation.GetUserName(),
             };
             var result = await _roleManager.CreateAsync(role);
-            if (result.Succeeded)
-            {
-                foreach (var item in model.SelectedRoleClaims)
-                {
-                    RoleClaimDTO selectedRoleClaim = new RoleClaimDTO() { Id = 0, RoleId = role.Id, RoleClaimId = item.RoleClaimId, RoleClaimGroupId = item.RoleClaimGroupId };
-                    var roleClaim = await _unitOfWork.ActionRepository.GetByIdAsync(item.RoleClaimId);
-                    var roleClaimGroup = await _unitOfWork.ControllerRepository.GetByIdAsync(item.RoleClaimGroupId);
-                    if (roleClaim != null && roleClaimGroup != null)
-                    {
-                        selectedRoleClaim.ClaimType = roleClaimGroup.Name.Trim() + "_" + roleClaim.Name.Trim();
-                        selectedRoleClaim.ClaimValue = roleClaimGroup.Name.Trim() + "_" + roleClaim.Name.Trim();
-                        await _unitOfWork.RoleClaimRepository.CreateAsync(selectedRoleClaim);
-                    }
-                }
-                await _unitOfWork.SaveChangesAsync();
-            }
+            //if (result.Succeeded)
+            //{
+            //    foreach (var item in model.SelectedRoleClaims)
+            //    {
+            //        RoleClaimDTO selectedRoleClaim = new RoleClaimDTO() { Id = 0, RoleId = role.Id, RoleClaimId = item.RoleClaimId, RoleClaimGroupId = item.RoleClaimGroupId };
+            //        var roleClaim = await _unitOfWork.ActionRepository.GetByIdAsync(item.RoleClaimId);
+            //        var roleClaimGroup = await _unitOfWork.ControllerRepository.GetByIdAsync(item.RoleClaimGroupId);
+            //        if (roleClaim != null && roleClaimGroup != null)
+            //        {
+            //            selectedRoleClaim.ClaimType = roleClaimGroup.Name.Trim() + "_" + roleClaim.Name.Trim();
+            //            selectedRoleClaim.ClaimValue = roleClaimGroup.Name.Trim() + "_" + roleClaim.Name.Trim();
+            //            await _unitOfWork.RoleClaimRepository.CreateAsync(selectedRoleClaim);
+            //        }
+            //    }
+            //    await _unitOfWork.SaveChangesAsync();
+            //}
             return result.Succeeded;
         }
         public async Task<IEnumerable<OptionModel>> GetOptionListAsync()
@@ -99,23 +99,23 @@ namespace System.BLL.Helpers.SystemHelpers
             //data.ModifiedBy = _userInformation.GetUserName();
 
             var result = await _roleManager.UpdateAsync(data);
-            if (result.Succeeded)
-            {
-                await _unitOfWork.RoleClaimRepository.RemoveSelectedRoleClaimByRoleID(model.Id);
-                foreach (var item in model.SelectedRoleClaims)
-                {
-                    RoleClaimDTO selectedRoleClaim = new RoleClaimDTO() { Id = 0, RoleId = model.Id, RoleClaimId = item.RoleClaimId, RoleClaimGroupId = item.RoleClaimGroupId };
-                    var roleClaim = await _unitOfWork.ActionRepository.GetByIdAsync(item.RoleClaimId);
-                    var roleClaimGroup = await _unitOfWork.ControllerRepository.GetByIdAsync(item.RoleClaimGroupId);
-                    if (roleClaim != null && roleClaimGroup != null)
-                    {
-                        selectedRoleClaim.ClaimType = roleClaimGroup.Name.Trim() + "_" + roleClaim.Name.Trim();
-                        selectedRoleClaim.ClaimValue = roleClaimGroup.Name.Trim() + "_" + roleClaim.Name.Trim();
-                        await _unitOfWork.RoleClaimRepository.CreateAsync(selectedRoleClaim);
-                    }
-                }
-                await _unitOfWork.SaveChangesAsync();
-            }
+            //if (result.Succeeded)
+            //{
+            //    await _unitOfWork.RoleClaimRepository.RemoveSelectedRoleClaimByRoleID(model.Id);
+            //    foreach (var item in model.SelectedRoleClaims)
+            //    {
+            //        RoleClaimDTO selectedRoleClaim = new RoleClaimDTO() { Id = 0, RoleId = model.Id, RoleClaimId = item.RoleClaimId, RoleClaimGroupId = item.RoleClaimGroupId };
+            //        var roleClaim = await _unitOfWork.ActionRepository.GetByIdAsync(item.RoleClaimId);
+            //        var roleClaimGroup = await _unitOfWork.ControllerRepository.GetByIdAsync(item.RoleClaimGroupId);
+            //        if (roleClaim != null && roleClaimGroup != null)
+            //        {
+            //            selectedRoleClaim.ClaimType = roleClaimGroup.Name.Trim() + "_" + roleClaim.Name.Trim();
+            //            selectedRoleClaim.ClaimValue = roleClaimGroup.Name.Trim() + "_" + roleClaim.Name.Trim();
+            //            await _unitOfWork.RoleClaimRepository.CreateAsync(selectedRoleClaim);
+            //        }
+            //    }
+            //    await _unitOfWork.SaveChangesAsync();
+            //}
             return result.Succeeded;
         }
 

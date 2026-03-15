@@ -1,9 +1,9 @@
-﻿using System.DAL.DTOs;
+﻿//using System.DAL.DTOs;
 
-namespace System.DAL.IRepositories
-{
-    public interface IModuleRepository : IGenericRepository<ModuleDTO>
-    {
-        public Task<ICollection<ModuleDTO>> GetEagerAllAsync();
-    }
-}
+//namespace System.DAL.IRepositories
+//{
+//    public interface IModuleRepository : IGenericRepository<ModuleDTO>
+//    {
+//        public Task<ICollection<ModuleDTO>> GetEagerAllAsync();
+//    }
+//}

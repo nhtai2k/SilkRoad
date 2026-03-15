@@ -1,8 +1,8 @@
-﻿using System.DAL.DTOs;
+﻿//using System.DAL.DTOs;
 
-namespace System.DAL.IRepositories
-{
-    public interface IActionRepository : IGenericRepository<ActionDTO>
-    {
-    }
-}
+//namespace System.DAL.IRepositories
+//{
+//    public interface IActionRepository : IGenericRepository<ActionDTO>
+//    {
+//    }
+//}

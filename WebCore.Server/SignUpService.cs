@@ -157,10 +157,10 @@ namespace WebCore.Server
             services.AddScoped<System.DAL.IUnitOfWork, System.DAL.UnitOfWork>();
             //system
             services.AddScoped<System.BLL.IHelpers.ISystemHelpers.IUserHelper, System.BLL.Helpers.SystemHelpers.UserHelper>();
-            services.AddScoped<System.BLL.IHelpers.ISystemHelpers.IModuleHelper, System.BLL.Helpers.SystemHelpers.ModuleHelper>();
+            //services.AddScoped<System.BLL.IHelpers.ISystemHelpers.IModuleHelper, System.BLL.Helpers.SystemHelpers.ModuleHelper>();
             services.AddScoped<System.BLL.IHelpers.ISystemHelpers.IRoleHelper, System.BLL.Helpers.SystemHelpers.RoleHelper>();
             services.AddScoped<System.BLL.IHelpers.ISystemHelpers.IMyAccountHelper, System.BLL.Helpers.SystemHelpers.MyAccountHelper>();
-            services.AddScoped<System.BLL.IHelpers.ISystemHelpers.IActionHelper, System.BLL.Helpers.SystemHelpers.ActionHelper>();
+            //services.AddScoped<System.BLL.IHelpers.ISystemHelpers.IActionHelper, System.BLL.Helpers.SystemHelpers.ActionHelper>();
             services.AddScoped<System.BLL.IHelpers.ISystemHelpers.ISettingHelper, System.BLL.Helpers.SystemHelpers.SettingHelper>();
             services.AddScoped<System.BLL.IHelpers.ISystemHelpers.INavigationHelper, System.BLL.Helpers.SystemHelpers.NavigationHelper>();
             #endregion

@@ -1,21 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.DAL.DTOs;
+﻿//using Microsoft.EntityFrameworkCore;
+//using Microsoft.EntityFrameworkCore.Metadata.Builders;
+//using System.DAL.DTOs;
 
-namespace System.DAL.Configurations
-{
-    public class ControllerActionConfiguration : IEntityTypeConfiguration<ControllerActionDTO>
-    {
-        public void Configure(EntityTypeBuilder<ControllerActionDTO> builder)
-        {
-            builder.ToTable("ControllerActions");
-            builder.HasKey(s => new { s.ControllerId, s.ActionId });
-            builder.HasOne(s => s.Controller)
-                .WithMany(g => g.ControllerActions)
-                .HasForeignKey(s => s.ControllerId);
-            builder.HasOne(s => s.Action)
-                .WithMany(g => g.ControllerActions)
-                .HasForeignKey(s => s.ActionId);
-        }
-    }
-}
+//namespace System.DAL.Configurations
+//{
+//    public class ControllerActionConfiguration : IEntityTypeConfiguration<ControllerActionDTO>
+//    {
+//        public void Configure(EntityTypeBuilder<ControllerActionDTO> builder)
+//        {
+//            builder.ToTable("ControllerActions");
+//            builder.HasKey(s => new { s.ControllerId, s.ActionId });
+//            builder.HasOne(s => s.Controller)
+//                .WithMany(g => g.ControllerActions)
+//                .HasForeignKey(s => s.ControllerId);
+//            builder.HasOne(s => s.Action)
+//                .WithMany(g => g.ControllerActions)
+//                .HasForeignKey(s => s.ActionId);
+//        }
+//    }
+//}

@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿//using Microsoft.AspNetCore.Identity;
 
-namespace System.DAL.DTOs
-{
-    public class UserTokenDTO : IdentityUserToken<int>
-    {
-        public DateTime ExpirationTime { get; set; }
-    }
-}
+//namespace System.DAL.DTOs
+//{
+//    public class UserTokenDTO : IdentityUserToken<int>
+//    {
+//        public DateTime ExpirationTime { get; set; }
+//    }
+//}

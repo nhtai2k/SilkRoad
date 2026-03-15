@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿//using Microsoft.AspNetCore.Identity;
 
-namespace System.DAL.DTOs
-{
-    public class UserLoginDTO : IdentityUserLogin<int>
-    {
-    }
-}
+//namespace System.DAL.DTOs
+//{
+//    public class UserLoginDTO : IdentityUserLogin<int>
+//    {
+//    }
+//}

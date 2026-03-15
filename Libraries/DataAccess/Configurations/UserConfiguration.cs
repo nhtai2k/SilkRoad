@@ -8,7 +8,6 @@ namespace System.DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<UserDTO> builder)
         {
-            builder.ToTable("Users");
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Id).ValueGeneratedOnAdd();
             builder.Property(s => s.CreatedOn).IsRequired();
@@ -33,26 +32,28 @@ namespace System.DAL.Configurations
                 //IsDeleted = false,
                 CreatedOn = DateTime.Now,
                 ModifiedOn = DateTime.Now
-            },
-            new UserDTO()
-            {
-                Id = 2,
-                Email = "tranthibaongoc779152@gmail.com",
-                UserName = "baongoc",
-                NormalizedUserName ="BAONGOC",
-                NormalizedEmail = "TRANTHIBAONGOC779152@GMAIL.COM",
-                //123123
-                PasswordHash = "AQAAAAIAAYagAAAAEJQIa+hJeFzLkVaHpmxKMrO4mfQ9867u0fyjan1pdVP5hQMvQd9VcJC0zP0De/FH2w==",
-                SecurityStamp = "WPN32OCCQQ27WSIHMJDYFU3MXZDKYM4K",
-                ConcurrencyStamp = "3d8f3fdf-c482-4b8b-879e-66ed6e6ba863",
-                CreatedBy = "System",
-                ModifiedBy = "System",
-                IsActive = true,
-                Provider = "Internal",
-                //IsDeleted = false,
-                CreatedOn = DateTime.Now,
-                ModifiedOn = DateTime.Now
-            }]);
+            }
+            //new UserDTO()
+            //{
+            //    Id = 2,
+            //    Email = "tranthibaongoc779152@gmail.com",
+            //    UserName = "baongoc",
+            //    NormalizedUserName ="BAONGOC",
+            //    NormalizedEmail = "TRANTHIBAONGOC779152@GMAIL.COM",
+            //    //123123
+            //    PasswordHash = "AQAAAAIAAYagAAAAEJQIa+hJeFzLkVaHpmxKMrO4mfQ9867u0fyjan1pdVP5hQMvQd9VcJC0zP0De/FH2w==",
+            //    SecurityStamp = "WPN32OCCQQ27WSIHMJDYFU3MXZDKYM4K",
+            //    ConcurrencyStamp = "3d8f3fdf-c482-4b8b-879e-66ed6e6ba863",
+            //    CreatedBy = "System",
+            //    ModifiedBy = "System",
+            //    IsActive = true,
+            //    Provider = "Internal",
+            //    //IsDeleted = false,
+            //    CreatedOn = DateTime.Now,
+            //    ModifiedOn = DateTime.Now
+            //}
+            ]
+            );
         }
     }
 }

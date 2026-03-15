@@ -8,12 +8,13 @@ namespace System.DAL
 
         #region System
         IUserRepository UserSystemRepository { get; }
-        IUserTokenRepository UserTokenRepository { get; }
-        IModuleRepository ModuleRepository { get; }
+        //IUserTokenRepository UserTokenRepository { get; }
+        //IModuleRepository ModuleRepository { get; }
         IRoleRepository RoleRepository { get; }
-        IRoleClaimRepository RoleClaimRepository { get; }
-        IControllerRepository ControllerRepository { get; }
-        IActionRepository ActionRepository { get; }
+        IRefreshTokenRepository RefreshTokenRepository { get; }
+        //IRoleClaimRepository RoleClaimRepository { get; }
+        //IControllerRepository ControllerRepository { get; }
+        //IActionRepository ActionRepository { get; }
         #endregion
 
         IDbContextTransaction BeginTransaction();

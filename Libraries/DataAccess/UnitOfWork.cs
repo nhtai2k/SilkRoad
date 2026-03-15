@@ -12,12 +12,13 @@ namespace System.DAL
 
         #region System
         public IUserRepository UserSystemRepository { get; private set; }
-        public IUserTokenRepository UserTokenRepository { get; private set; }
+        //public IUserTokenRepository UserTokenRepository { get; private set; }
         public IRoleRepository RoleRepository { get; private set; }
-        public IRoleClaimRepository RoleClaimRepository { get; private set; }
-        public IModuleRepository ModuleRepository { get; private set; }
-        public IControllerRepository ControllerRepository { get; private set; }
-        public IActionRepository ActionRepository { get; private set; }
+        public IRefreshTokenRepository RefreshTokenRepository { get; private set; }
+        //public IRoleClaimRepository RoleClaimRepository { get; private set; }
+        //public IModuleRepository ModuleRepository { get; private set; }
+        //public IControllerRepository ControllerRepository { get; private set; }
+        //public IActionRepository ActionRepository { get; private set; }
         #endregion
 
         public UnitOfWork(ApplicationContext context)
@@ -25,12 +26,13 @@ namespace System.DAL
             this.context = context;
             #region System
             UserSystemRepository = new UserRepository(context);
-            UserTokenRepository = new UserTokenRepository(context);
-            ModuleRepository = new ModuleRepository(context);
+            //UserTokenRepository = new UserTokenRepository(context);
+            //ModuleRepository = new ModuleRepository(context);
             RoleRepository = new RoleRepository(context);
-            RoleClaimRepository = new RoleClaimRepository(context);
-            ControllerRepository = new ControllerRepository(context);
-            ActionRepository = new ActionRepository(context);
+            RefreshTokenRepository = new RefreshTokenRepository(context);
+            //RoleClaimRepository = new RoleClaimRepository(context);
+            //ControllerRepository = new ControllerRepository(context);
+            //ActionRepository = new ActionRepository(context);
             #endregion
 
         }

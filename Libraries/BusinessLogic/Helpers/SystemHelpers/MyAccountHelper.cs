@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Google.Apis.Auth;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.BLL.IHelpers.ISystemHelpers;
 using System.DAL;
 using System.DAL.DTOs;
@@ -60,27 +61,20 @@ namespace System.BLL.Helpers.SystemHelpers
             }
             jwtViewModel.Token = _jwtService.CreateToken(authClaims);
             jwtViewModel.RefreshToken = _jwtService.GenerateRefreshToken();
-            UserTokenDTO userToken = new UserTokenDTO
+            _unitOfWork.RefreshTokenRepository.DeleteTokenByUserId(user.Id);
+            RefreshTokenDTO userToken = new RefreshTokenDTO
             {
+                Id = Guid.NewGuid(),
                 UserId = user.Id,
-                LoginProvider = "Web API",
-                Name = "RefreshToken",
-                Value = jwtViewModel.RefreshToken,
-                ExpirationTime = DateTime.Now.AddDays(1)
+                TokenHash = jwtViewModel.RefreshToken,
+                ExpiresAt = DateTime.Now.AddDays(1),
+                IsRevoked = false
             };
             if (rememberMe)
             {
-                userToken.ExpirationTime = DateTime.Now.AddYears(100);
+                userToken.ExpiresAt = DateTime.Now.AddYears(100);
             }
-            var userTokens = await _unitOfWork.UserTokenRepository.GetAllAsync(s => s.UserId == user.Id);
-            if (userTokens != null)
-            {
-                foreach (var item in userTokens)
-                {
-                    _unitOfWork.UserTokenRepository.Delete(item);
-                }
-            }
-            await _unitOfWork.UserTokenRepository.CreateAsync(userToken);
+            await _unitOfWork.RefreshTokenRepository.CreateAsync(userToken);
             await _unitOfWork.SaveChangesAsync();
 
             return jwtViewModel;
@@ -145,10 +139,10 @@ namespace System.BLL.Helpers.SystemHelpers
         {
             try
             {
-                var data = await _unitOfWork.UserTokenRepository.GetUserTokenByRefreshToken(refreshToken);
+                var data = await _unitOfWork.RefreshTokenRepository.Query(s => s.TokenHash == refreshToken).FirstOrDefaultAsync();
                 if (data != null)
                 {
-                    if (data.ExpirationTime > DateTime.Now)
+                    if (data.ExpiresAt > DateTime.Now)
                     {
                         return true;
                     }
@@ -179,8 +173,8 @@ namespace System.BLL.Helpers.SystemHelpers
 
         public async Task<string?> RefreshTokenAsync(string refreshToken)
         {
-            var data = await _unitOfWork.UserTokenRepository.GetUserTokenByRefreshToken(refreshToken);
-            if (data != null && data.ExpirationTime > DateTime.Now)
+            var data = await _unitOfWork.RefreshTokenRepository.Query(s => s.TokenHash == refreshToken).FirstOrDefaultAsync();
+            if (data != null && data.ExpiresAt > DateTime.Now && !data.IsRevoked)
             {
                 var user = await _userManager.FindByIdAsync(data.UserId.ToString());
                 if (user == null)
@@ -264,11 +258,11 @@ namespace System.BLL.Helpers.SystemHelpers
         {
             try
             {
-                var data = await _unitOfWork.UserTokenRepository.GetUserTokenByRefreshToken(refreshToken);
+                var data = await _unitOfWork.RefreshTokenRepository.Query(s => s.TokenHash == refreshToken).FirstOrDefaultAsync();
                 if (data == null)
                     return false;
 
-                _unitOfWork.UserTokenRepository.Delete(data);
+                data.IsRevoked = true;
                 await _unitOfWork.SaveChangesAsync();
                 return true;
             }

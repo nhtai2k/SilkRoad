@@ -1,18 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿//using System.ComponentModel.DataAnnotations;
 
-namespace System.Share.ViewModels.SystemViewModels
-{
-    public class ControllerViewModel
-    {
-        public int Id { get; set; }
-        public required string Name { get; set; }
-        public required string Label { get; set; }
-        [Range(1, 100)]
-        public int Priority { get; set; }
-        public ICollection<ControllerActionViewModel> ControllerActions { get; set; }
-        public ControllerViewModel()
-        {
-            ControllerActions = new List<ControllerActionViewModel>();
-        }
-    }
-}
+//namespace System.Share.ViewModels.SystemViewModels
+//{
+//    public class ControllerViewModel
+//    {
+//        public int Id { get; set; }
+//        public required string Name { get; set; }
+//        public required string Label { get; set; }
+//        [Range(1, 100)]
+//        public int Priority { get; set; }
+//        public ICollection<ControllerActionViewModel> ControllerActions { get; set; }
+//        public ControllerViewModel()
+//        {
+//            ControllerActions = new List<ControllerActionViewModel>();
+//        }
+//    }
+//}

@@ -7,12 +7,7 @@ namespace System.BLL.Helpers.SystemHelpers
 {
     public class SettingHelper : ISettingHelper
     {
-        private readonly IMapper _mapper;
         private const string webConfigurationPath = @".\LocalData\WebConfiguration.json";
-        public SettingHelper(IMapper mapper)
-        {
-            _mapper = mapper;
-        }
 
         public IEnumerable<SettingViewModel> GetAll()
         {

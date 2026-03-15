@@ -8,7 +8,6 @@ namespace System.DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<RoleDTO> builder)
         {
-            builder.ToTable("Roles");
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Id).ValueGeneratedOnAdd();
             builder.HasData([
